@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import unsw.loopmania.path.PathPosition;
+
 /**
  * represents the main character in the backend of the game world
  */

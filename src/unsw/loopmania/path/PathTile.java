@@ -1,6 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.path;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.StaticEntity;
 
 /**
  * this class represents a path tile.

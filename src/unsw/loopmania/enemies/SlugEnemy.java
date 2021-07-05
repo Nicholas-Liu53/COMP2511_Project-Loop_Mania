@@ -1,4 +1,6 @@
-package unsw.loopmania;
+package unsw.loopmania.enemies;
+
+import unsw.loopmania.path.PathPosition;
 
 /**
  * a basic form of enemy in the world

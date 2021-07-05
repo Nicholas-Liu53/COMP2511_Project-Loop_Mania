@@ -1,6 +1,9 @@
-package unsw.loopmania;
+package unsw.loopmania.enemies;
 
 import java.util.Random;
+
+import unsw.loopmania.MovingEntity;
+import unsw.loopmania.path.PathPosition;
 
 public abstract class Enemy extends MovingEntity {
     // TODO = modify this, and add additional forms of enemy
