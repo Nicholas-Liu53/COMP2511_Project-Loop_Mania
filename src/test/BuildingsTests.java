@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.*;
 import unsw.loopmania.buildings.*;
+import unsw.loopmania.buildingcards.*;
 
 
 public class BuildingsTests {
+
+    // NOTE: this test files considers both buildings AND cards
     
     @Test
     public void herosCastleTest() {
@@ -25,5 +28,54 @@ public class BuildingsTests {
         // Testing Requirement 2:
         // Testing Requirement 3:
         
+    } 
+
+    @Test
+    public void vampireCastleTest() {
+        /* 
+            Requirements to test:
+             1. Can only be placed on non-path tiles adjacent to the path
+             2. Spawns vampires every 5 cycles
+             3. Vampires spawns nearby on path
+             4. Number of vampires increase by 1 every 5 cycles
+             
+        */
+        
+        // Testing Requirement 1:
+    }
+    
+    @Test
+    public void zombiePitTest() {
+        /* 
+            Requirements to test:
+             1. Can only be placed on non-path tiles adjacent to the path
+             2. Spawns zombies every 2 cycles
+             3. Zombies spawns nearby on path
+             4. Number of vampires increase by 1 every 2 cycles
+        */
+        
+        // Testing Requirement 1:
+    } 
+
+    @Test
+    public void towerTest() {
+        /* 
+            Requirements to test:
+             1. Can only be placed on non-path tiles adjacent to the path
+             2. Deals 10 damage per second to enemies within 2 tile radius during battles
+        */
+        
+        // Testing Requirement 1:
+    } 
+
+    @Test
+    public void villageTest() {
+        /* 
+            Requirements to test:
+             1. Can only be placed on path tiles
+             2. Restores all of characters health points
+        */
+        
+        // Testing Requirement 1:
     } 
 }
