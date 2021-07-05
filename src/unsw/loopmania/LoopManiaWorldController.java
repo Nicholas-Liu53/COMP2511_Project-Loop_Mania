@@ -28,10 +28,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
-import unsw.loopmania.buildingcards.VampireCastleCard;
-import unsw.loopmania.buildings.VampireCastleBuilding;
-import unsw.loopmania.enemies.Enemy;
-import unsw.loopmania.items.Sword;
+
+import unsw.loopmania.buildingcards.*;
+import unsw.loopmania.buildings.*;
+import unsw.loopmania.enemies.*;
+import unsw.loopmania.items.*;
 
 import java.util.EnumMap;
 
