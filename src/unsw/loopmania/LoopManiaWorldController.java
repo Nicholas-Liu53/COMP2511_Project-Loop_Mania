@@ -104,7 +104,7 @@ public class LoopManiaWorldController {
     @FXML
     private GridPane unequippedInventory;
 
-    // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
+    // All image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
     /**
@@ -124,6 +124,7 @@ public class LoopManiaWorldController {
     private Image slugEnemyImage;
     private Image swordImage;
     private Image basicBuildingImage;
+    private Image heroesCastleImage;
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -169,6 +170,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
         entityImages = new ArrayList<>(initialEntities);
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
         slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
@@ -193,7 +195,7 @@ public class LoopManiaWorldController {
         Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
 
-        // Add the ground first so it is below all other entities (inculding all the twists and turns)
+        // Add the ground first so it is below all other entities (including all the twists and turns)
         for (int x = 0; x < world.getWidth(); x++) {
             for (int y = 0; y < world.getHeight(); y++) {
                 ImageView groundView = new ImageView(pathTilesImage);
@@ -202,19 +204,21 @@ public class LoopManiaWorldController {
             }
         }
 
-        // load entities loaded from the file in the loader into the squares gridpane
+        ImageView heroesCastleView = new ImageView(heroesCastleImage);
+        entityImages.add(heroesCastleView);
+        // Load entities loaded from the file in the loader into the squares gridpane
         for (ImageView entity : entityImages){
             squares.getChildren().add(entity);
         }
         
-        // add the ground underneath the cards
+        // Add the ground underneath the cards
         for (int x=0; x<world.getWidth(); x++){
             ImageView groundView = new ImageView(pathTilesImage);
             groundView.setViewport(imagePart);
             cards.add(groundView, x, 0);
         }
 
-        // add the empty slot images for the unequipped inventory
+        // Add the empty slot images for the unequipped inventory
         for (int x=0; x<LoopManiaWorld.unequippedInventoryWidth; x++){
             for (int y=0; y<LoopManiaWorld.unequippedInventoryHeight; y++){
                 ImageView emptySlotView = new ImageView(inventorySlotImage);
@@ -222,7 +226,7 @@ public class LoopManiaWorldController {
             }
         }
 
-        // create the draggable icon
+        // Create the draggable icon
         draggedEntity = new DragIcon();
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
