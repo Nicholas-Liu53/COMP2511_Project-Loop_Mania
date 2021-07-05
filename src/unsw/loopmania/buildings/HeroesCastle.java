@@ -1,5 +1,11 @@
 package unsw.loopmania.buildings;
 
-public class HeroesCastle {
+import javafx.beans.property.SimpleIntegerProperty;
+
+public class HeroesCastle extends Building {
     
+    // Constructor
+    public HeroesCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y);
+    }
 }
