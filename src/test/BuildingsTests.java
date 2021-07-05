@@ -73,7 +73,41 @@ public class BuildingsTests {
         /* 
             Requirements to test:
              1. Can only be placed on path tiles
-             2. Restores all of characters health points
+             2. Restores all of characters health points when character walks onto it
+        */
+        
+        // Testing Requirement 1:
+    }
+    
+    @Test
+    public void barracksTest() {
+        /* 
+            Requirements to test:
+             1. Can only be placed on path tiles
+             2. Gives character an "allied solider" when character walks onto it
+        */
+        
+        // Testing Requirement 1:
+    } 
+
+    @Test
+    public void trapTest() {
+        /* 
+            Requirements to test:
+             1. Only one trap can only be placed on path tiles
+             2. Deals 30 damage to enemy when enemy steps upon it
+             3. Is destroyed after dealing damage to enemy
+        */
+        
+        // Testing Requirement 1:
+    } 
+
+    @Test
+    public void campfireTest() {
+        /* 
+            Requirements to test:
+             1. Can only be placed on non-path tiles
+             2. Character does double damage when within a radius of 4 tiles from campfire
         */
         
         // Testing Requirement 1:
