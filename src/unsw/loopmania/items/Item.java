@@ -8,8 +8,8 @@ import unsw.loopmania.StaticEntity;
  * which doesn't move
  */
 public abstract class Item extends StaticEntity {
-    private String itemType; // Armour or weapon
-    protected String itemID; // Specific armour/weapon
+    private String itemType; // Armour or weapon or potion
+    protected String itemID; // Specific armour/weapon/potion
     protected int purchasePrice;
     protected int sellPrice;
 
