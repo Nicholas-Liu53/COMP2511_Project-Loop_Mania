@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.path;
 
 import java.util.List;
 

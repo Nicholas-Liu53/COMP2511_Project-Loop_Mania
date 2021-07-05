@@ -8,6 +8,12 @@ import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
+import unsw.loopmania.buildingcards.*;
+import unsw.loopmania.buildings.*;
+import unsw.loopmania.enemies.*;
+import unsw.loopmania.items.*;
+import unsw.loopmania.path.*;
+
 /**
  * A backend world.
  *
@@ -40,7 +46,7 @@ public class LoopManiaWorld {
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
-    private List<BasicEnemy> enemies;
+    private List<Enemy> enemies;
 
     // TODO = expand the range of cards
     private List<Card> cardEntities;
@@ -105,13 +111,13 @@ public class LoopManiaWorld {
      * spawns enemies if the conditions warrant it, adds to world
      * @return list of the enemies to be displayed on screen
      */
-    public List<BasicEnemy> possiblySpawnEnemies(){
+    public List<Enemy> possiblySpawnEnemies(){
         // TODO = expand this very basic version
-        Pair<Integer, Integer> pos = possiblyGetBasicEnemySpawnPosition();
-        List<BasicEnemy> spawningEnemies = new ArrayList<>();
+        Pair<Integer, Integer> pos = possiblyGetSlugEnemySpawnPosition();
+        List<Enemy> spawningEnemies = new ArrayList<>();
         if (pos != null){
             int indexInPath = orderedPath.indexOf(pos);
-            BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
+            SlugEnemy enemy = new SlugEnemy(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
@@ -122,7 +128,7 @@ public class LoopManiaWorld {
      * kill an enemy
      * @param enemy enemy to be killed
      */
-    private void killEnemy(BasicEnemy enemy){
+    private void killEnemy(Enemy enemy){
         enemy.destroy();
         enemies.remove(enemy);
     }
@@ -131,10 +137,10 @@ public class LoopManiaWorld {
      * run the expected battles in the world, based on current world state
      * @return list of enemies which have been killed
      */
-    public List<BasicEnemy> runBattles() {
+    public List<Enemy> runBattles() {
         // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
-        for (BasicEnemy e: enemies){
+        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+        for (Enemy e: enemies){
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
@@ -142,7 +148,7 @@ public class LoopManiaWorld {
                 defeatedEnemies.add(e);
             }
         }
-        for (BasicEnemy e: defeatedEnemies){
+        for (Enemy e: defeatedEnemies){
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
             // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
             // due to mutating list we're iterating over
@@ -213,7 +219,7 @@ public class LoopManiaWorld {
      */
     public void runTickMoves(){
         character.moveDownPath();
-        moveBasicEnemies();
+        moveEnemies();
     }
 
     /**
@@ -283,9 +289,9 @@ public class LoopManiaWorld {
     /**
      * move all enemies
      */
-    private void moveBasicEnemies() {
+    private void moveEnemies() {
         // TODO = expand to more types of enemy
-        for (BasicEnemy e: enemies){
+        for (Enemy e: enemies){
             e.move();
         }
     }
@@ -294,7 +300,7 @@ public class LoopManiaWorld {
      * get a randomly generated position which could be used to spawn an enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
-    private Pair<Integer, Integer> possiblyGetBasicEnemySpawnPosition(){
+    private Pair<Integer, Integer> possiblyGetSlugEnemySpawnPosition(){
         // TODO = modify this
         
         // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...

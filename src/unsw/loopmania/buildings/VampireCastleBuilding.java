@@ -1,6 +1,7 @@
-package unsw.loopmania;
+package unsw.loopmania.buildings;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.StaticEntity;
 
 /**
  * a basic form of building in the world
