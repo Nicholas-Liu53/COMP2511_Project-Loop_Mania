@@ -65,25 +65,4 @@ public class SlugEnemyTest {
         assertEquals(newChar.getHealth(), 88);
     }
 
-    @Test
-    public void movementTest() {
-        // Testing that the slug moves as expected
-        SlugEnemy newSlug = new SlugEnemy(null);
-
-        int initialX = newSlug.getX();
-        int initialY = newSlug.getY();
-        boolean posChange = false;
-        int i = 0;
-
-        // Checking that slug moves
-        while (i < 100) {
-            newSlug.move();
-            if (newSlug.getX() != initialX || newSlug.getY() != initialY) {
-                posChange = true;
-                break;
-            }
-        }
-
-        assertTrue(posChange);
-    }
 }

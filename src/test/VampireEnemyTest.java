@@ -91,25 +91,4 @@ public class VampireEnemyTest {
         assertTrue(normAttack);
     }
 
-    @Test
-    public void movementTest() {
-        // Testing that the vampire moves as expected
-        VampireEnemy newVampire = new VampireEnemy(null);
-
-        int initialX = newVampire.getX();
-        int initialY = newVampire.getY();
-        boolean posChange = false;
-        int i = 0;
-
-        // Checking that Vampire moves
-        while (i < 100) {
-            newVampire.move();
-            if (newVampire.getX() != initialX || newVampire.getY() != initialY) {
-                posChange = true;
-                break;
-            }
-        }
-
-        assertTrue(posChange);
-    }
 }
