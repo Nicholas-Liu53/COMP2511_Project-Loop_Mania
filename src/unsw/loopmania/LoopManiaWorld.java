@@ -61,7 +61,7 @@ public class LoopManiaWorld {
     private int cycleShopLinear;
     private int cycleShopTotal;
     private boolean showShop;
-    private List<StaticEntity> pathItems;
+    private List<Item> pathItems;
     private int numGoldPileSpawned;
     private int numHealthPotionSpawned;
 
@@ -152,8 +152,8 @@ public class LoopManiaWorld {
                 HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
                 pathItems.add(hp);
                 spawningPathItems.add(hp);
+                numHealthPotionSpawned++;
             }
-            numHealthPotionSpawned++;
         } 
         return spawningPathItems;
     }
@@ -171,12 +171,34 @@ public class LoopManiaWorld {
                 GoldPile gp = new GoldPile(new PathPosition(indexInPath, orderedPath));
                 pathItems.add(gp);
                 spawningPathItems.add(gp);
+                numGoldPileSpawned++;
             }
-            numGoldPileSpawned++;
         } 
         return spawningPathItems;
     }
 
+    /**
+     * pick up an item
+     * @param item item to be picked up
+     */
+    private void pickUpItem(Item item){
+        if (Math.pow((character.getX()-item.getX()), 2) +  Math.pow((character.getY()-item.getY()), 2) == 0) {
+            if (item.getItemType().equals("Gold")) numGoldPileSpawned--;
+            else numHealthPotionSpawned--;
+            item.destroy();
+            pathItems.remove(item);
+        }
+    }
+
+    /**
+     * pick up expected items in the world
+     * @return list of items to be picked up
+     */
+    public List<Item> pickUpItems() {
+        List<Item> pickedUpItems = new ArrayList<Item>();
+        for (Item pathItem: pathItems) pickUpItem(pathItem);
+        return pickedUpItems;
+    }
 
     /**
      * kill an enemy
@@ -256,6 +278,31 @@ public class LoopManiaWorld {
         Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(sword);
         return sword;
+    }
+
+    /**
+     * spawn a item in the world and return the item entity
+     * @return a item to be spawned in the controller as a JavaFX node
+     */
+    public Item addItem(Item itemToAdd){
+    
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest item
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        
+        // now we insert the new item, as we know we have at least made a slot available...
+        if (itemToAdd.getItemID().equals("HealthPotion")) { 
+            HealthPotion item = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(item);
+            return item;
+        } else {
+            // Add gold
+        }
+        return itemToAdd;
     }
 
     /**
@@ -407,7 +454,7 @@ public class LoopManiaWorld {
         Random rand = new Random();
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
-        if ((choice == 0) && (pathItems.size() < 5)){
+        if ((choice == 0)){
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
             // inclusive start and exclusive end of range of positions not allowed

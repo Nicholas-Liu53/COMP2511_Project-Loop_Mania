@@ -268,6 +268,10 @@ public class LoopManiaWorldController {
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
+            List<Item> itemsOnPath = world.pickUpItems();
+            for (Item i: itemsOnPath) {
+                putItemInInventory(i);
+            }
             // Spawn enemies randomly
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy: newEnemies){
@@ -333,6 +337,16 @@ public class LoopManiaWorldController {
     }
 
     /**
+     * load an item from the world, and pair it with an image in the GUI
+     */
+    private void loadItem(Item item){
+        // start by getting first available coordinates
+        Item itemToLoad = world.addItem(item);
+        if (!itemToLoad.equals(item))
+            onLoad(itemToLoad);
+    }
+
+    /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
      * @param enemy defeated enemy for which we should react to the death of
      */
@@ -342,6 +356,15 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         loadSword();
         loadVampireCard();
+    }
+
+    /**
+     * run GUI events after an character steps on item, putting item in inventory
+     * @param item picked up item for which we should put in the inventory
+     */
+    private void putItemInInventory(Item item){
+        // Load it into inventory
+        loadItem(item);
     }
 
     /**
@@ -371,6 +394,20 @@ public class LoopManiaWorldController {
         ImageView view = new ImageView(swordImage);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(sword, view);
+        unequippedInventory.getChildren().add(view);
+    }
+
+    /**
+     * load a item into the GUI.
+     * Particularly, we must connect to the drag detection event handler,
+     * and load the image into the unequippedInventory GridPane.
+     * @param item
+     */
+    private void onLoad(Item item) {
+        ImageView view = new ImageView(healthPotionImage); // For now all items are health potions
+        // TODO: If Item isn't a health potion
+        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        addEntity(item, view);
         unequippedInventory.getChildren().add(view);
     }
 
