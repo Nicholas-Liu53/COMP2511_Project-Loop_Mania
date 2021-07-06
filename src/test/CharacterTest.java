@@ -39,4 +39,28 @@ public class CharacterTest {
         character.receiveAttack(3);
         assertEquals(character.getHealth(), 0);
     }
+
+    @Test
+    public void movementTest() {
+        // Testing that the Character moves as expected
+        Character character = new Character(null);
+
+        int initialX = character.getX();
+        int initialY = character.getY();
+        boolean posChange = false;
+        int i = 0;
+
+        // Checking that Character moves
+        while (i < 100) {
+            character.moveUpPath();
+            if (!character.getX().equals(initialX) || !character.getY().equals(initialY)) {
+                posChange = true;
+                break;
+            }
+        }
+
+        assertTrue(posChange);
+
+        // maybe add test for direction checkm of upPath and downPath??
+    }
 }
