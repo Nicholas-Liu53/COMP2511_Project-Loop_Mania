@@ -38,7 +38,6 @@ public class BuildingsTests {
              2. Spawns vampires every 5 cycles
              3. Vampires spawns nearby on path
              4. Number of vampires increase by 1 every 5 cycles
-             
         */
         
         // Testing Requirement 1:

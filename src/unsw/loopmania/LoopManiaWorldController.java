@@ -120,11 +120,23 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
-    private Image vampireCastleCardImage;
-    private Image slugEnemyImage;
-    private Image swordImage;
-    private Image basicBuildingImage;
+    // Buildings
+    private Image basicBuildingImage; // vampire
     private Image heroesCastleImage;
+    private Image vampireCastleCardImage;
+    
+    // Items
+    private Image bodyArmourImage;
+    private Image healthPotionImage;
+    private Image helmetImage;
+    private Image shieldImage;
+    private Image staffImage;
+    private Image stakeImage;
+    private Image swordImage;
+    private Image goldImage;
+    // Enemies
+    private Image slugEnemyImage;
+
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -170,12 +182,21 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
-        heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
         entityImages = new ArrayList<>(initialEntities);
+        // Buildings
+        heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
-        slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
-        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        // Enemies
+        slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        // Items
+        bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
+        healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
+        helmetImage = new Image((new File("src/images/helmet.png")).toURI().toString());
+        shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
+        stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
+        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
+        goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -247,9 +268,15 @@ public class LoopManiaWorldController {
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
+            // Spawn enemies randomly
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
+            }
+            // Spawn health potion + gold randomly
+            List<HealthPotion> newPathItems = world.possiblySpawnHealthPotion();
+            for (HealthPotion newPI: newPathItems){
+                onLoad(newPI);
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -350,6 +377,16 @@ public class LoopManiaWorldController {
     private void onLoad(Enemy enemy) {
         ImageView view = new ImageView(slugEnemyImage);
         addEntity(enemy, view);
+        squares.getChildren().add(view);
+    }
+
+    /**
+     * load a health potion into the GUI
+     * @param hp
+     */
+    private void onLoad(HealthPotion hp) {
+        ImageView view = new ImageView(healthPotionImage);
+        addEntity(hp, view);
         squares.getChildren().add(view);
     }
 

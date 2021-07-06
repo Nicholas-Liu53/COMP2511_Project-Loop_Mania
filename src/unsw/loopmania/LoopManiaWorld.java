@@ -61,6 +61,9 @@ public class LoopManiaWorld {
     private int cycleShopLinear;
     private int cycleShopTotal;
     private boolean showShop;
+    private List<StaticEntity> pathItems;
+    private int numGoldSpawned;
+    private int numHealthPotionSpawned;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -88,6 +91,9 @@ public class LoopManiaWorld {
         cycleShopLinear = 1;
         cycleShopTotal = 1;
         showShop = false;
+        pathItems = new ArrayList<>();
+        numGoldSpawned = 0;
+        numHealthPotionSpawned = 0;
     }
 
     public int getWidth() {
@@ -131,6 +137,31 @@ public class LoopManiaWorld {
             spawningEnemies.add(enemy);
         }
         return spawningEnemies;
+    }
+
+    /**
+     * spawns health potions + gold if the conditions warrant it, adds to world
+     * @return list of the health potions + gold 
+     */
+    public List<HealthPotion> possiblySpawnHealthPotion(){
+        // TODO = expand this very basic version
+        Pair<Integer, Integer> pos = possiblyGetPathItemSpawnPosition();
+        List<HealthPotion> spawningPathItems = new ArrayList<>();
+        if (pos != null){
+            int indexInPath = orderedPath.indexOf(pos);
+            // if (numGoldSpawned == 0) {
+            //     // pathItems.add(enemy);
+            //     // spawningPathItems.add(enemy);
+            // } else {
+            //     HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
+            //     // pathItems.add(enemy);
+            //     // spawningPathItems.add(enemy);
+            // }
+            HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
+            pathItems.add(hp);
+            spawningPathItems.add(hp);
+        }
+        return spawningPathItems;
     }
 
     /**
@@ -339,6 +370,30 @@ public class LoopManiaWorld {
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
         if ((choice == 0) && (enemies.size() < 2)){
+            List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
+            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+            // inclusive start and exclusive end of range of positions not allowed
+            int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
+            int endNotAllowed = (indexPosition + 3)%orderedPath.size();
+            // note terminating condition has to be != rather than < since wrap around...
+            for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
+                orderedPathSpawnCandidates.add(orderedPath.get(i));
+            }
+
+            // choose random choice
+            Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+
+            return spawnPosition;
+        }
+        return null;
+    }
+
+    private Pair<Integer, Integer> possiblyGetPathItemSpawnPosition() {
+        // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
+        Random rand = new Random();
+        int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
+        // TODO = change based on spec
+        if ((choice == 0) && (pathItems.size() < 2)){
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
             // inclusive start and exclusive end of range of positions not allowed
