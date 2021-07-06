@@ -279,11 +279,11 @@ public class LoopManiaWorldController {
                 onLoad(newEnemy);
             }
             // Spawn health potion + gold randomly
-            List<HealthPotion> newHealthPotions = world.possiblySpawnHealthPotion();
+            List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
             for (HealthPotion newHP: newHealthPotions){
                 onLoad(newHP);
             }
-            List<GoldPile> newGoldPiles = world.possiblySpawnGoldPiles();
+            List<GoldPile> newGoldPiles = world.spawnGoldPile();
             for (GoldPile newGP: newGoldPiles){
                 onLoad(newGP);
             }

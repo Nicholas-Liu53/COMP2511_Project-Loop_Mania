@@ -154,10 +154,10 @@ public class LoopManiaWorld {
      * spawns health potions + gold if the conditions warrant it, adds to world
      * @return list of the health potions + gold 
      */
-    public List<HealthPotion> possiblySpawnHealthPotion(){
+    public List<HealthPotion> spawnHealthPotion(){
         List<HealthPotion> spawningPathItems = new ArrayList<>();
         if (numHealthPotionSpawned < 1) {
-            Pair<Integer, Integer> pos = possiblyGetPathItemSpawnPosition();
+            Pair<Integer, Integer> pos = getPathItemSpawnPosition();
             if (pos != null){
                 int indexInPath = orderedPath.indexOf(pos);
                 HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
@@ -173,10 +173,10 @@ public class LoopManiaWorld {
      * spawns health potions + gold if the conditions warrant it, adds to world
      * @return list of the health potions + gold 
      */
-    public List<GoldPile> possiblySpawnGoldPiles(){
+    public List<GoldPile> spawnGoldPile(){
         List<GoldPile> spawningPathItems = new ArrayList<>();
         if (numGoldPileSpawned < 1) {
-            Pair<Integer, Integer> pos = possiblyGetPathItemSpawnPosition();
+            Pair<Integer, Integer> pos = getPathItemSpawnPosition();
             if (pos != null){
                 int indexInPath = orderedPath.indexOf(pos);
                 GoldPile gp = new GoldPile(new PathPosition(indexInPath, orderedPath));
@@ -218,28 +218,26 @@ public class LoopManiaWorld {
         return null;
     }
 
-    private Pair<Integer, Integer> possiblyGetPathItemSpawnPosition() {
+    private Pair<Integer, Integer> getPathItemSpawnPosition() {
         // has a chance spawning a path item on a tile the character isn't on or immediately before or after (currently space required = 2)...
         Random rand = new Random();
-        int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
-        // TODO = change based on spec
-        if ((choice == 0)){
-            List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
-            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
-            // inclusive start and exclusive end of range of positions not allowed
-            int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
-            int endNotAllowed = (indexPosition + 3)%orderedPath.size();
-            // note terminating condition has to be != rather than < since wrap around...
-            for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
-                orderedPathSpawnCandidates.add(orderedPath.get(i));
-            }
-
-            // choose random choice
-            Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
-
-            return spawnPosition;
+        List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
+        int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+        // inclusive start and exclusive end of range of positions not allowed
+        int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
+        int endNotAllowed = (indexPosition + 3)%orderedPath.size();
+        // note terminating condition has to be != rather than < since wrap around...
+        for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
+            orderedPathSpawnCandidates.add(orderedPath.get(i));
         }
-        return null;
+
+        // Choose random choice
+        Pair<Integer, Integer> origin = new Pair<>(0,0);
+        Pair<Integer, Integer> spawnPosition = new Pair<>(0,0);
+        while (spawnPosition.equals(origin)) {
+            spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+        }
+        return spawnPosition;
     }
 
     //*-------------------------------------------------------------------------
