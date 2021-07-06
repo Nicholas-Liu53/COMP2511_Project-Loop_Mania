@@ -144,23 +144,17 @@ public class LoopManiaWorld {
      * @return list of the health potions + gold 
      */
     public List<HealthPotion> possiblySpawnHealthPotion(){
-        // TODO = expand this very basic version
-        Pair<Integer, Integer> pos = possiblyGetPathItemSpawnPosition();
         List<HealthPotion> spawningPathItems = new ArrayList<>();
-        if (pos != null){
-            int indexInPath = orderedPath.indexOf(pos);
-            // if (numGoldSpawned == 0) {
-            //     // pathItems.add(enemy);
-            //     // spawningPathItems.add(enemy);
-            // } else {
-            //     HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
-            //     // pathItems.add(enemy);
-            //     // spawningPathItems.add(enemy);
-            // }
-            HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
-            pathItems.add(hp);
-            spawningPathItems.add(hp);
-        }
+        if (numHealthPotionSpawned < 1) {
+            Pair<Integer, Integer> pos = possiblyGetPathItemSpawnPosition();
+            if (pos != null){
+                int indexInPath = orderedPath.indexOf(pos);
+                HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
+                pathItems.add(hp);
+                spawningPathItems.add(hp);
+            }
+            numHealthPotionSpawned++;
+        } 
         return spawningPathItems;
     }
 
