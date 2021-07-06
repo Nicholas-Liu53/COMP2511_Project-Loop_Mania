@@ -10,6 +10,11 @@ public class Sword extends Weapon {
     public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         itemID = "Sword";
-        damagePoints = 10;
-    }    
+        damageIncrease = 10;
+    }
+    public Sword() {
+        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        itemID = "Sword";
+        damageIncrease = 10;
+    }     
 }

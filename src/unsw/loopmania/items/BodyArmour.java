@@ -11,4 +11,13 @@ public class BodyArmour extends Armour {
         itemID = "BodyArmour";
         damageReductionFactor = 0.5;
     }
+
+    public BodyArmour() {
+        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        purchasePrice = 500;
+        sellPrice = 400;
+        itemID = "BodyArmour";
+        damageReductionFactor = 0.5;
+    }
+
 }

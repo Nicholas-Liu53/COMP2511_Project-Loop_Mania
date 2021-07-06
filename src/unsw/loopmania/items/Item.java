@@ -25,4 +25,12 @@ public abstract class Item extends StaticEntity {
     public String getItemID() {
         return this.itemID;
     }
+
+    public int getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public int getSellPrice() {
+        return sellPrice;
+    }
 }
