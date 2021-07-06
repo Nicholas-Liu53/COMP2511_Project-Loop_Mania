@@ -1,12 +1,14 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.LoopManiaWorldControllerLoader;
 import unsw.loopmania.enemies.SlugEnemy;
 
 
@@ -49,6 +51,7 @@ public class SlugEnemyTest {
 
     @Test
     public void giveDamageTest() {
+        // Tests that the slug gives out correct damage in attacks
         Character newChar = new Character(null);
         SlugEnemy newSlug = new SlugEnemy(null);
 
@@ -64,6 +67,23 @@ public class SlugEnemyTest {
 
     @Test
     public void movementTest() {
-        
+        // Testing that the slug moves as expected
+        SlugEnemy newSlug = new SlugEnemy(null);
+
+        int initialX = newSlug.getX();
+        int initialY = newSlug.getY();
+        boolean posChange = false;
+        int i = 0;
+
+        // Checking that slug moves
+        while (i < 100) {
+            newSlug.move();
+            if (newSlug.getX() != initialX || newSlug.getY() != initialY) {
+                posChange = true;
+                break;
+            }
+        }
+
+        assertTrue(posChange);
     }
 }
