@@ -21,8 +21,8 @@ public class LoopManiaWorldTest {
         // Check if character and enemy damage reduce as expected during the battle
 
         // Test Case B:
-        // Ensure that probability of receiving rewards is random and does not happen
-        // everytime - how tho?
+        // Ensure that probability of receiving different rewards is random such as
+        // gold/xp/item - how tho?
         // Check for rewards when discarding oldest card of any type (currently
         // applicable to vampireCard)
         // Check for rewards when discarding oldest item of any type (currently
