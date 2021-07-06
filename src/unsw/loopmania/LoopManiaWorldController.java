@@ -319,6 +319,30 @@ public class LoopManiaWorldController {
     }
 
     /**
+     * run GUI events after an enemy is defeated, such as spawning items/experience/gold
+     * @param enemy defeated enemy for which we should react to the death of
+     */
+    private void reactToEnemyDefeat(Enemy enemy){
+        // react to character defeating an enemy
+        // in starter code, spawning extra card/weapon...
+        // TODO = provide different benefits to defeating the enemy based on the type of enemy
+        loadSword();
+        loadVampireCard();
+    }
+
+    /**
+     * run GUI events after an character steps on item, putting item in inventory
+     * @param item picked up item for which we should put in the inventory
+     */
+    private void putItemInInventory(Item item){
+        // Load it into inventory
+        loadItem(item);
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                             Loaders
+    //*-------------------------------------------------------------------------
+    /**
      * load a vampire card from the world, and pair it with an image in the GUI
      */
     private void loadVampireCard() {
@@ -347,28 +371,6 @@ public class LoopManiaWorldController {
             onLoad(itemToLoad);
         }
     }
-
-    /**
-     * run GUI events after an enemy is defeated, such as spawning items/experience/gold
-     * @param enemy defeated enemy for which we should react to the death of
-     */
-    private void reactToEnemyDefeat(Enemy enemy){
-        // react to character defeating an enemy
-        // in starter code, spawning extra card/weapon...
-        // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadSword();
-        loadVampireCard();
-    }
-
-    /**
-     * run GUI events after an character steps on item, putting item in inventory
-     * @param item picked up item for which we should put in the inventory
-     */
-    private void putItemInInventory(Item item){
-        // Load it into inventory
-        loadItem(item);
-    }
-
     /**
      * load a vampire castle card into the GUI.
      * Particularly, we must connect to the drag detection event handler,
@@ -453,6 +455,33 @@ public class LoopManiaWorldController {
         squares.getChildren().add(view);
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Coordinates
+    //*-------------------------------------------------------------------------
+    /**
+     * remove the card from the world, and spawn and return a building instead where the card was dropped
+     * @param cardNodeX the x coordinate of the card which was dragged, from 0 to width-1
+     * @param cardNodeY the y coordinate of the card which was dragged (in starter code this is 0 as only 1 row of cards)
+     * @param buildingNodeX the x coordinate of the drop location for the card, where the building will spawn, from 0 to width-1
+     * @param buildingNodeY the y coordinate of the drop location for the card, where the building will spawn, from 0 to height-1
+     * @return building entity returned from the world
+     */
+    private VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+        return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
+    }
+    
+    /**
+     * remove an item from the unequipped inventory by its x and y coordinates in the unequipped inventory gridpane
+     * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
+     * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
+     */
+    private void removeItemByCoordinates(int nodeX, int nodeY) {
+        world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    }
+    
+    //*-------------------------------------------------------------------------
+    //*                             Drag EventHandlers
+    //*-------------------------------------------------------------------------
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the background, dropping over the background.
      * These are not attached to invidual items such as swords/cards.
@@ -569,27 +598,6 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * remove the card from the world, and spawn and return a building instead where the card was dropped
-     * @param cardNodeX the x coordinate of the card which was dragged, from 0 to width-1
-     * @param cardNodeY the y coordinate of the card which was dragged (in starter code this is 0 as only 1 row of cards)
-     * @param buildingNodeX the x coordinate of the drop location for the card, where the building will spawn, from 0 to width-1
-     * @param buildingNodeY the y coordinate of the drop location for the card, where the building will spawn, from 0 to height-1
-     * @return building entity returned from the world
-     */
-    private VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
-        return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
-    }
-
-    /**
-     * remove an item from the unequipped inventory by its x and y coordinates in the unequipped inventory gridpane
-     * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
-     * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
-     */
-    private void removeItemByCoordinates(int nodeX, int nodeY) {
-        world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
-    }
-
-    /**
      * add drag event handlers to an ImageView
      * @param view the view to attach drag event handlers to
      * @param draggableType the type of item being dragged - card or item
@@ -691,6 +699,10 @@ public class LoopManiaWorldController {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Key Press
+    //*-------------------------------------------------------------------------
+
     /**
      * handle the pressing of keyboard keys.
      * Specifically, we should pause when pressing SPACE
@@ -713,6 +725,10 @@ public class LoopManiaWorldController {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Menu Switch
+    //*-------------------------------------------------------------------------
+
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
         // TODO = possibly set other menu switchers
         this.mainMenuSwitcher = mainMenuSwitcher;
@@ -729,6 +745,9 @@ public class LoopManiaWorldController {
         mainMenuSwitcher.switchMenu();
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Track Position
+    //*-------------------------------------------------------------------------
     /**
      * Set a node in a GridPane to have its position track the position of an
      * entity in the world.
@@ -801,6 +820,9 @@ public class LoopManiaWorldController {
         });
     }
 
+    //*-------------------------------------------------------------------------
+    //*                                 Threading
+    //*-------------------------------------------------------------------------
     /**
      * we added this method to help with debugging so you could check your code is running on the application thread.
      * By running everything on the application thread, you will not need to worry about implementing locks, which is outside the scope of the course.
