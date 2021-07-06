@@ -11,9 +11,7 @@ import unsw.loopmania.enemies.SlugEnemy;
 
 
 /**
- * this class is a dummy class demonstrating how to setup tests for the project
- * you should setup additional test classes in a similar fashion, aiming to achieve high coverage.
- * A clickable "Run Test" link should appear if you have installed the Java Extension Pack properly.
+ * Unite tests for the slug enemy class
  */
 public class SlugEnemyTest {
     @Test
@@ -35,6 +33,33 @@ public class SlugEnemyTest {
     public void takeDamageTest() {
         SlugEnemy newSlug = new SlugEnemy();
 
-        
+        // Testing basic damage
+        newSlug.receiveAttack(10);
+        assertEquals(newSlug.getHealth(), 15);
+        newSlug.receiveAttack(5);
+        assertEquals(newSlug.getHealth(), 10);
+        newSlug.receiveAttack(3);
+        assertEquals(newSlug.getHealth(), 12);
+        newSlug.receiveAttack(0);
+        assertEquals(newSlug.getHealth(), 12);
+        newSlug.receiveAttack(12);
+        assertEquals(newSlug.getHealth(), 0);
+        newSlug.receiveAttack(5);
+        assertEquals(newSlug.getHealth(), 0);
+    }
+
+    @Test
+    public void giveDamageTest() {
+        Character newChar = new Character();
+        SlugEnemy newSlug = new SlugEnemy();
+
+        newSlug.launchAttack(newChar);
+        assertEquals(newChar.getHealth(), 97);
+        newSlug.launchAttack(newChar);
+        assertEquals(newChar.getHealth(), 94);
+        newSlug.launchAttack(newChar);
+        assertEquals(newChar.getHealth(), 91);
+        newSlug.launchAttack(newChar);
+        assertEquals(newChar.getHealth(), 88);
     }
 }
