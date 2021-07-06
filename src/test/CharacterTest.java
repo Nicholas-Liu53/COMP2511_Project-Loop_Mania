@@ -41,6 +41,18 @@ public class CharacterTest {
     }
 
     @Test
+    public void giveDamageTest() {
+        // Tests that the character gives out correct damage in attacks, is this
+        // applicable? By how many points do we decrease health of the enemy?
+        Character character = new Character(null);
+        SlugEnemy slug = new SlugEnemy(null);
+        VampireEnemy vampire = new VampireEnemy(null);
+
+        character.launchAttack(vampire);
+        assertEquals(vampire.getHealth(), ?);
+    }
+
+    @Test
     public void clockwiseMovementTest() {
         // Testing that the Character moves as expected
         Character character = new Character(null);
