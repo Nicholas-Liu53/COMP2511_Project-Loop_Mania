@@ -137,6 +137,8 @@ public class LoopManiaWorldController {
     // Enemies
     private Image slugEnemyImage;
 
+    private int spawnCycle;
+
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -182,6 +184,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        spawnCycle = 0;
         entityImages = new ArrayList<>(initialEntities);
         // Buildings
         heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
@@ -278,14 +281,17 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
             }
-            // Spawn health potion + gold randomly
-            List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
-            for (HealthPotion newHP: newHealthPotions){
-                onLoad(newHP);
-            }
-            List<GoldPile> newGoldPiles = world.spawnGoldPile();
-            for (GoldPile newGP: newGoldPiles){
-                onLoad(newGP);
+            if (world.getCurrCycle() == spawnCycle) {
+                // Spawn health potion + gold randomly
+                List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
+                for (HealthPotion newHP: newHealthPotions){
+                    onLoad(newHP);
+                }
+                List<GoldPile> newGoldPiles = world.spawnGoldPile();
+                for (GoldPile newGP: newGoldPiles){
+                    onLoad(newGP);
+                }
+                spawnCycle++;
             }
             printThreadingNotes("HANDLED TIMER");
         }));
