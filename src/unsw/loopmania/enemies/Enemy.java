@@ -31,7 +31,7 @@ public abstract class Enemy extends MovingEntity {
     }
 
     /**
-     * @return enemy's health value
+     * @return enemy's health value, should never be less than 0
      */
     public abstract int getHealth();
 
