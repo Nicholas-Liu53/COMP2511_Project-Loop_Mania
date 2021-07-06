@@ -268,7 +268,8 @@ public class LoopManiaWorldController {
             for (Enemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            List<Item> itemsOnPath = world.pickUpItems();
+            // Pick up items on path
+            List<Item> itemsOnPath = world.attemptToPickUpItems();
             for (Item i: itemsOnPath) {
                 putItemInInventory(i);
             }
@@ -342,8 +343,9 @@ public class LoopManiaWorldController {
     private void loadItem(Item item){
         // start by getting first available coordinates
         Item itemToLoad = world.addItem(item);
-        if (!itemToLoad.equals(item))
+        if (!itemToLoad.equals(item)) {
             onLoad(itemToLoad);
+        }
     }
 
     /**
