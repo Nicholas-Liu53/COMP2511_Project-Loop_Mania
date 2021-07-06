@@ -18,8 +18,7 @@ public class SlugEnemyTest {
     public void constructTest(){
         // Testing construction + basic getters
         
-        // TODO, figure out how to make SlugEnemy init work
-        SlugEnemy newSlug = new SlugEnemy();
+        SlugEnemy newSlug = new SlugEnemy(null);
         
         // Ensure attributes are correct
         assertEquals(newSlug.getHealth(), 25);
@@ -31,7 +30,7 @@ public class SlugEnemyTest {
 
     @Test
     public void takeDamageTest() {
-        SlugEnemy newSlug = new SlugEnemy();
+        SlugEnemy newSlug = new SlugEnemy(null);
 
         // Testing basic damage
         newSlug.receiveAttack(10);
@@ -50,8 +49,8 @@ public class SlugEnemyTest {
 
     @Test
     public void giveDamageTest() {
-        Character newChar = new Character();
-        SlugEnemy newSlug = new SlugEnemy();
+        Character newChar = new Character(null);
+        SlugEnemy newSlug = new SlugEnemy(null);
 
         newSlug.launchAttack(newChar);
         assertEquals(newChar.getHealth(), 97);
@@ -61,5 +60,10 @@ public class SlugEnemyTest {
         assertEquals(newChar.getHealth(), 91);
         newSlug.launchAttack(newChar);
         assertEquals(newChar.getHealth(), 88);
+    }
+
+    @Test
+    public void movementTest() {
+        
     }
 }

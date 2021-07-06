@@ -12,15 +12,14 @@ import unsw.loopmania.enemies.VampireEnemy;
 
 
 /**
- * Unit tests for the slug enemy class
+ * Unit tests for the vampire enemy class
  */
 public class VampireEnemyTest {
     @Test
     public void constructTest(){
         // Testing construction + basic getters
         
-        // TODO, figure out how to make VampireEnemy init work
-        VampireEnemy newVampire = new VampireEnemy();
+        VampireEnemy newVampire = new VampireEnemy(null);
         
         // Ensure attributes are correct
         assertEquals(newVampire.getHealth(), 75);
@@ -32,7 +31,7 @@ public class VampireEnemyTest {
 
     @Test
     public void takeDamageTest() {
-        VampireEnemy newVampire = new VampireEnemy();
+        VampireEnemy newVampire = new VampireEnemy(null);
 
         // Testing basic damage, accounting for defence
         newVampire.receiveAttack(10);
@@ -50,7 +49,7 @@ public class VampireEnemyTest {
     @Test
     public void giveDamageTest() {
         // Testing vampire attack
-        VampireEnemy newVampire = new VampireEnemy();
+        VampireEnemy newVampire = new VampireEnemy(null);
 
         // Checks that both a critical and normal attack have occurred
         boolean critAttack = false;
@@ -59,7 +58,7 @@ public class VampireEnemyTest {
         int iterator = 0;
 
         while (iterator < 100) {
-            Character newChar = new Character();
+            Character newChar = new Character(null);
 
             newVampire.launchAttack(newChar);
 
@@ -90,5 +89,10 @@ public class VampireEnemyTest {
 
         assertEquals(critAttack, true);
         assertEquals(normAttack, true);
+    }
+
+    @Test
+    public void movementTest() {
+        
     }
 }
