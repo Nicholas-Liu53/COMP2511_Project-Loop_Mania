@@ -26,6 +26,8 @@ public class CharacterTest {
         Character character = new Character(null);
 
         // Testing basic damage, and checking that health never goes beyond 0
+        character.receiveAttack(0);
+        assertEquals(character.getHealth(), 100);
         character.receiveAttack(10);
         assertEquals(character.getHealth(), 90);
         character.receiveAttack(5);
@@ -33,6 +35,8 @@ public class CharacterTest {
         character.receiveAttack(3);
         assertEquals(character.getHealth(), 82);
         character.receiveAttack(82);
+        assertEquals(character.getHealth(), 0);
+        character.receiveAttack(3);
         assertEquals(character.getHealth(), 0);
     }
 }
