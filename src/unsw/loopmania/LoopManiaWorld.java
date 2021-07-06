@@ -66,6 +66,7 @@ public class LoopManiaWorld {
     private List<Item> pathItems;
     private int numGoldPileSpawned;
     private int numHealthPotionSpawned;
+    private int numGold;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -99,6 +100,7 @@ public class LoopManiaWorld {
         pathItems = new ArrayList<>();
         numGoldPileSpawned = 0;
         numHealthPotionSpawned = 0;
+        numGold = 0;
     }
 
     //--------------------------------------------------------------------------
@@ -310,7 +312,7 @@ public class LoopManiaWorld {
             unequippedInventoryItems.add(healthPotion);
             return healthPotion;
         } else {
-            // Add gold
+            numGold += 100;
         }
         return itemToAdd;
     }
