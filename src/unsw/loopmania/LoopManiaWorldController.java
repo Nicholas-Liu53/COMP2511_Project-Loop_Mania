@@ -718,6 +718,7 @@ public class LoopManiaWorldController {
     public void handleKeyPress(KeyEvent event) {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
+        // Pause game
         case SPACE:
             if (isPaused){
                 startTimer();
@@ -726,6 +727,15 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
+        // Equip health potion
+        case P:
+            // if (isPaused){
+            //     startTimer();
+            // }
+            // else{
+            //     pause();
+            // }
+            // break;
         default:
             break;
         }
