@@ -37,7 +37,7 @@ public class LoopManiaWorld {
     private int height;
 
     /**
-     * generic entitites - i.e. those which don't have dedicated fields
+     * generic entities - i.e. those which don't have dedicated fields
      */
     private List<Entity> nonSpecifiedEntities;
 
@@ -56,6 +56,11 @@ public class LoopManiaWorld {
 
     // TODO = expand the range of buildings
     private List<VampireCastleBuilding> buildingEntities;
+
+    private int numCycles;
+    private int cycleShopLinear;
+    private int cycleShopTotal;
+    private boolean showShop;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -79,6 +84,10 @@ public class LoopManiaWorld {
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        numCycles = 0;
+        cycleShopLinear = 1;
+        cycleShopTotal = 1;
+        showShop = false;
     }
 
     public int getWidth() {
@@ -220,6 +229,28 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveEnemies();
+        if (character.getX() == 0 && character.getY() == 0) {
+            updateCharacterCycles();
+        }
+    }
+
+    /**
+     * Update number of cycles character has completed in the loop
+     */
+    private void updateCharacterCycles() {
+        numCycles++;
+        if (numCycles == cycleShopTotal) {
+            cycleShopLinear++;
+            cycleShopTotal += cycleShopLinear;
+            showShop = true;
+        } else {
+            showShop = false;
+        }
+
+        //TODO Observer pattern
+        // if (showShop) {
+        //     //! shopMenu.showMenu();
+        // }
     }
 
     /**
