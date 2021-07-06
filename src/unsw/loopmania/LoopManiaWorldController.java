@@ -133,7 +133,7 @@ public class LoopManiaWorldController {
     private Image staffImage;
     private Image stakeImage;
     private Image swordImage;
-    private Image goldImage;
+    private Image goldPileImage;
     // Enemies
     private Image slugEnemyImage;
 
@@ -196,7 +196,7 @@ public class LoopManiaWorldController {
         shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
         stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
-        goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
+        goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -274,9 +274,13 @@ public class LoopManiaWorldController {
                 onLoad(newEnemy);
             }
             // Spawn health potion + gold randomly
-            List<HealthPotion> newPathItems = world.possiblySpawnHealthPotion();
-            for (HealthPotion newPI: newPathItems){
-                onLoad(newPI);
+            List<HealthPotion> newHealthPotions = world.possiblySpawnHealthPotion();
+            for (HealthPotion newHP: newHealthPotions){
+                onLoad(newHP);
+            }
+            List<GoldPile> newGoldPiles = world.possiblySpawnGoldPiles();
+            for (GoldPile newGP: newGoldPiles){
+                onLoad(newGP);
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -387,6 +391,16 @@ public class LoopManiaWorldController {
     private void onLoad(HealthPotion hp) {
         ImageView view = new ImageView(healthPotionImage);
         addEntity(hp, view);
+        squares.getChildren().add(view);
+    }
+
+    /**
+     * load a gold pile into the GUI
+     * @param gp
+     */
+    private void onLoad(GoldPile gp) {
+        ImageView view = new ImageView(goldPileImage);
+        addEntity(gp, view);
         squares.getChildren().add(view);
     }
 

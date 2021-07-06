@@ -62,7 +62,7 @@ public class LoopManiaWorld {
     private int cycleShopTotal;
     private boolean showShop;
     private List<StaticEntity> pathItems;
-    private int numGoldSpawned;
+    private int numGoldPileSpawned;
     private int numHealthPotionSpawned;
 
     /**
@@ -92,7 +92,7 @@ public class LoopManiaWorld {
         cycleShopTotal = 1;
         showShop = false;
         pathItems = new ArrayList<>();
-        numGoldSpawned = 0;
+        numGoldPileSpawned = 0;
         numHealthPotionSpawned = 0;
     }
 
@@ -157,6 +157,26 @@ public class LoopManiaWorld {
         } 
         return spawningPathItems;
     }
+
+    /**
+     * spawns health potions + gold if the conditions warrant it, adds to world
+     * @return list of the health potions + gold 
+     */
+    public List<GoldPile> possiblySpawnGoldPiles(){
+        List<GoldPile> spawningPathItems = new ArrayList<>();
+        if (numGoldPileSpawned < 1) {
+            Pair<Integer, Integer> pos = possiblyGetPathItemSpawnPosition();
+            if (pos != null){
+                int indexInPath = orderedPath.indexOf(pos);
+                GoldPile gp = new GoldPile(new PathPosition(indexInPath, orderedPath));
+                pathItems.add(gp);
+                spawningPathItems.add(gp);
+            }
+            numGoldPileSpawned++;
+        } 
+        return spawningPathItems;
+    }
+
 
     /**
      * kill an enemy
@@ -387,7 +407,7 @@ public class LoopManiaWorld {
         Random rand = new Random();
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
-        if ((choice == 0) && (pathItems.size() < 2)){
+        if ((choice == 0) && (pathItems.size() < 5)){
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
             // inclusive start and exclusive end of range of positions not allowed
