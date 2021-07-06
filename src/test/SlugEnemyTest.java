@@ -18,6 +18,8 @@ import unsw.loopmania.enemies.SlugEnemy;
 public class SlugEnemyTest {
     @Test
     public void constructTest(){
+        // Testing construction + basic getters
+        
         // TODO, figure out how to make SlugEnemy init work
         SlugEnemy newSlug = new SlugEnemy();
         
@@ -27,5 +29,12 @@ public class SlugEnemyTest {
         // 2 Being the equivalent of 1 tile
         assertEquals(newSlug.getAttackRadius(), 2);
         assertEquals(newSlug.getSupportRadius(), 2);
+    }
+
+    @Test
+    public void takeDamageTest() {
+        SlugEnemy newSlug = new SlugEnemy();
+
+        
     }
 }
