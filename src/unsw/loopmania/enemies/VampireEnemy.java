@@ -7,7 +7,7 @@ import unsw.loopmania.path.PathPosition;
  */
 public class VampireEnemy extends Enemy {
     // TODO = modify this, and add additional forms of enemy
-    public SlugEnemy(PathPosition position) {
+    public VampireEnemy(PathPosition position) {
         super(position);
     }
 
