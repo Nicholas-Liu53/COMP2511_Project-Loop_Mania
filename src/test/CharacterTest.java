@@ -41,26 +41,46 @@ public class CharacterTest {
     }
 
     @Test
-    public void movementTest() {
+    public void clockwiseMovementTest() {
         // Testing that the Character moves as expected
         Character character = new Character(null);
 
-        int initialX = character.getX();
-        int initialY = character.getY();
+        int clockwiseInitialX = character.getX();
+        int clockwiseInitialY = character.getY();
         boolean posChange = false;
         int i = 0;
 
-        // Checking that Character moves
-        while (i < 100) {
-            character.moveUpPath();
-            if (!character.getX().equals(initialX) || !character.getY().equals(initialY)) {
+        // Checking that Character moves clockwise
+        while (i < 10) {
+            character.moveDownPath();
+            if (!character.getX().equals(clockwiseInitialX) || !character.getY().equals(clockwiseInitialY)) {
                 posChange = true;
                 break;
             }
         }
 
         assertTrue(posChange);
+    }
 
-        // maybe add test for direction checkm of upPath and downPath??
+    @Test
+    public void clockwiseMovementTest() {
+        // Testing that the Character moves as expected
+        Character character = new Character(null);
+
+        int anticlockwiseInitialX = character.getX();
+        int anticlockwiseInitialY = character.getY();
+        boolean posChange = false;
+        int i = 0;
+
+        // Checking that Character moves anticlockwise
+        while (i < 10) {
+            character.moveUpPath();
+            if (!character.getX().equals(anticlockwiseInitialX) || !character.getY().equals(anticlockwiseInitialY)) {
+                posChange = true;
+                break;
+            }
+        }
+
+        assertTrue(posChange);
     }
 }
