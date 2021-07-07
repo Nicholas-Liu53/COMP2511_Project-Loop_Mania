@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.Enemy;
+import unsw.loopmania.items.Item;
 
 /**
  * represents the main character in the backend of the game world
@@ -39,6 +40,14 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
+
+    }
+
+    public void getInBattle(boolean battleStatus) {
+
+    }
+
+    public void equipItem(Item item) {
 
     }
 
