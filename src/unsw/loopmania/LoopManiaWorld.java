@@ -3,6 +3,7 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.javatuples.Pair;
 
@@ -165,6 +166,7 @@ public class LoopManiaWorld {
 
                 if (e.getHealth() == 0) {
                     defeatedEnemies.add(e);
+                    // give character a card
                 }
                 // TODO handle character death
 
@@ -180,6 +182,10 @@ public class LoopManiaWorld {
                 }
             }
         }
+
+        if (enemies.size() == defeatedEnemies.size())
+            battleWon();
+
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from
             // the enemies list
@@ -189,6 +195,35 @@ public class LoopManiaWorld {
             killEnemy(e);
         }
         return defeatedEnemies;
+    }
+
+    public void battleWon() {
+        giveRandomRewards();
+    }
+
+    public void giveRandomRewards() {
+        List<String> rewards = new ArrayList<>(List.of("gold", "experience", "card", "equipment"));
+        Random rand = new Random();
+
+        List<Integer> values = new ArrayList<>(List.of(100, 200, 300, 400, 500));
+        List<String> card = new ArrayList<>(List.of("cardTypes"));
+        List<String> equipments = new ArrayList<>(List.of("equipmentTypes"));
+
+        String reward = rewards.get(rand.nextInt(4));
+        switch (reward) {
+            case "gold":
+                character.giveGold(values.get(rand.nextInt(5)));
+                break;
+            case "experience":
+                character.giveExperiencePoints(values.get(rand.nextInt(2)));
+                break;
+            case "card":
+                // add card to inventory
+                break;
+            case "equipment":
+                // add equipment to inventory
+                break;
+        }
     }
 
     /**

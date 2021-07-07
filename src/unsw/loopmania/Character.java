@@ -1,6 +1,9 @@
 package unsw.loopmania;
 
 import unsw.loopmania.path.PathPosition;
+
+import java.util.ArrayList;
+
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.Item;
 
@@ -8,26 +11,57 @@ import unsw.loopmania.items.Item;
  * represents the main character in the backend of the game world
  */
 public class Character extends MovingEntity {
+    private int health;
+    private int damage;
+    private boolean inBattle;
+    private ArrayList<Item> equippedItems;
+    private int experience;
+    private int gold;
+
     // TODO = potentially implement relationships between this class and other
     // classes
     public Character(PathPosition position) {
         super(position);
-        // TODO: add initial health for character
+        this.health = 100;
+        this.damage = 5;
+        this.inBattle = false;
+        this.equippedItems = new ArrayList<>();
+        this.experience = 0;
+        this.gold = 0;
     }
 
     /**
-     * @return Characters's health value
+     * @return Characters's health value, can never be less than 0
      */
     public int getHealth() {
-        return 0;
+        if (this.health < 0)
+            return 0;
+
+        return this.health;
+    }
+
+    public int getDamage() {
+        return this.damage;
     }
 
     public boolean getInBattle() {
-        return false;
+        return this.inBattle;
+    }
+
+    public ArrayList<Item> getEquippedItems() {
+        return this.equippedItems;
+    }
+
+    public int getExperience() {
+        return this.experience;
+    }
+
+    public int getGold() {
+        return this.gold;
     }
 
     public void setInBattle(boolean battleStatus) {
-
+        this.inBattle = battleStatus;
     }
 
     /**
@@ -37,7 +71,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-
+        enemy.receiveAttack(this.damage);
     }
 
     /**
@@ -48,11 +82,22 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-
+        this.health -= damage;
     }
 
     public void equipItem(Item item) {
+        if (item.getItemID().equals("HealthPotion"))
+            this.health = 100;
 
+        this.equippedItems.add(item); // equipping item
+    }
+
+    public void giveExperiencePoints(int xp) {
+        this.experience += xp; // max xp?
+    }
+
+    public void giveGold(int gold) {
+        this.gold += gold; // max gold?
     }
 
 }
