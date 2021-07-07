@@ -24,6 +24,7 @@ public class CharacterTest {
         assertEquals(character.getDamage(), 5);
         assertEquals(character.getInBattle(), false);
         assertEquals(character.getExperience(), 0);
+        assertEquals(character.getGold(), 0);
     }
 
     @Test
@@ -120,4 +121,13 @@ public class CharacterTest {
         assertEquals(character.getExperience(), 11);
     }
 
+    @Test
+    public void giveGoldTest() {
+        Character character = new Character(null);
+        assertEquals(character.getGold(), 0);
+        character.giveGold(1000);
+        assertEquals(character.getGold(), 1000);
+        character.giveGold(100);
+        assertEquals(character.getGold(), 1100);
+    }
 }
