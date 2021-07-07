@@ -142,10 +142,16 @@ public class LoopManiaWorld {
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
         for (Enemy e: enemies){
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
+            // Currently the character attacks every enemy
+            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < Math.pow(e.getAttackRadius(), 2)){
                 // fight...
-                defeatedEnemies.add(e);
+                character.launchAttack(e);
+                e.launchAttack(character);
+
+                if (e.getHealth() == 0) {
+                    defeatedEnemies.add(e);
+                }
+                // TODO handle character death
             }
         }
         for (Enemy e: defeatedEnemies){

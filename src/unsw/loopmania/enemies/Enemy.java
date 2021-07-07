@@ -13,6 +13,7 @@ public abstract class Enemy extends MovingEntity {
     int attackRadius;
     int damage;
     float defenceFactor;
+    boolean inBattle;
 
     /**
      * Takes in path position and spawns enemy there
@@ -25,18 +26,21 @@ public abstract class Enemy extends MovingEntity {
         this.attackRadius = attackRadius;
         this.damage = damage;
         this.defenceFactor = 1 - (defence / 100);
+        this.inBattle = false;
     }
 
     /**
      * move the enemy
      */
     public void move(){
-        int directionChoice = (new Random()).nextInt(2);
-        if (directionChoice == 0){
-            moveUpPath();
-        }
-        else if (directionChoice == 1){
-            moveDownPath();
+        if (!inBattle) {
+            int directionChoice = (new Random()).nextInt(2);
+            if (directionChoice == 0){
+                moveUpPath();
+            }
+            else if (directionChoice == 1){
+                moveDownPath();
+            }
         }
     }
 
@@ -76,6 +80,7 @@ public abstract class Enemy extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int recvDamage) {
+        this.inBattle = true;
         // Adjusting for defence
         recvDamage = (int)(recvDamage * this.defenceFactor);
         this.health -= recvDamage;

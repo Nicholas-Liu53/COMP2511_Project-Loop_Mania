@@ -4,12 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.Character;
-import unsw.loopmania.LoopManiaWorldControllerLoader;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.path.PathPosition;
 
@@ -72,7 +70,7 @@ public class SlugEnemyTest {
         PathPosition position = null;
 
         try {
-            position = TestHelper.generatePathPosition("/worlds/world_with_twists_and_turns.json");
+            position = TestHelper.generatePathPosition("worlds/world_with_twists_and_turns.json");
         } catch (FileNotFoundException e) {
             // Failed to generate PathPostion
             assertTrue(false);

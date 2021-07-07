@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.Character;
