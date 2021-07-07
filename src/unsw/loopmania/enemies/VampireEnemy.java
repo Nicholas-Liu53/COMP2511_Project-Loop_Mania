@@ -3,6 +3,7 @@ package unsw.loopmania.enemies;
 import java.util.Random;
 
 import unsw.loopmania.path.PathPosition;
+import unsw.loopmania.Character;
 
 /**
  * vampire enemy type
