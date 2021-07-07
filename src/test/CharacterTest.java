@@ -73,7 +73,7 @@ public class CharacterTest {
     }
 
     @Test
-    public void clockwiseMovementTest() {
+    public void anticlockwiseMovementTest() {
         // Testing that the Character moves as expected
         Character character = new Character(null);
 
