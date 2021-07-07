@@ -21,7 +21,9 @@ public class CharacterTest {
 
         // Ensure attributes are correct
         assertEquals(character.getHealth(), 100);
+        assertEquals(character.getDamage(), 5);
         assertEquals(character.getInBattle(), false);
+        assertEquals(character.getExperience(), 0);
     }
 
     @Test
@@ -53,6 +55,14 @@ public class CharacterTest {
 
         character.launchAttack(vampire);
         assertEquals(vampire.getHealth(), 70);
+        character.launchAttack(vampire);
+        assertEquals(vampire.getHealth(), 65);
+        character.launchAttack(slug);
+        assertEquals(slug.getHealth(), 20);
+        character.launchAttack(vampire);
+        assertEquals(vampire.getHealth(), 60);
+        character.launchAttack(slug);
+        assertEquals(slug.getHealth(), 15);
     }
 
     @Test
@@ -94,10 +104,20 @@ public class CharacterTest {
     }
 
     @Test
-    public void HealthPotionTest() {
+    public void healthPotionTest() {
         Character character = new Character(null);
         HealthPotion healthPotion = new HealthPotion();
         character.equipItem(healthPotion);
+    }
+
+    @Test
+    public void giveExperiencePointsTest() {
+        Character character = new Character(null);
+        assertEquals(character.getExperience(), 0);
+        character.giveExperiencePoints(10);
+        assertEquals(character.getExperience(), 10);
+        character.giveExperiencePoints(1);
+        assertEquals(character.getExperience(), 11);
     }
 
 }
