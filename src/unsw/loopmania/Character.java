@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import unsw.loopmania.path.PathPosition;
+import unsw.loopmania.enemies.Enemy;
 
 /**
  * represents the main character in the backend of the game world
@@ -16,7 +17,9 @@ public class Character extends MovingEntity {
     /**
      * @return Characters's health value
      */
-    public abstract int getHealth();
+    public int getHealth() {
+        return 0;
+    }
 
     /**
      * Allows the Character to launch an attack against an enemy, resulting in
@@ -24,7 +27,9 @@ public class Character extends MovingEntity {
      * 
      * @param mainChar
      */
-    public abstract void launchAttack(Enemy enemy);
+    public void launchAttack(Enemy enemy) {
+
+    }
 
     /**
      * Allows Character to receive an attack, takes in the amount of damage to be
@@ -33,6 +38,8 @@ public class Character extends MovingEntity {
      * 
      * @param damage
      */
-    public abstract void receiveAttack(int damage);
+    public void receiveAttack(int damage) {
+
+    }
 
 }
