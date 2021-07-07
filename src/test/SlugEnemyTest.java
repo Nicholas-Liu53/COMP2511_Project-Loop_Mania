@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorldControllerLoader;
-import unsw.loopmania.TestHelper;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.path.PathPosition;
 

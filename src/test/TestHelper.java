@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,7 +27,7 @@ public class TestHelper {
      * @throws FileNotFoundException
      */
     public static PathPosition generatePathPosition(String fileName) throws FileNotFoundException {
-        System.err.println(fileName);
+        // This doesn't work, and I don't know why :(
         JSONObject json = new JSONObject(new JSONTokener(new FileReader(fileName)));
 
         int width = json.getInt("width");

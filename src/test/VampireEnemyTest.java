@@ -3,12 +3,14 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.enemies.VampireEnemy;
+import unsw.loopmania.path.PathPosition;
 
 
 /**
@@ -91,4 +93,38 @@ public class VampireEnemyTest {
         assertTrue(normAttack);
     }
 
+    @Test
+    public void movementTest() {
+        // Tests that the slug moves around the map
+        PathPosition position = null;
+
+        try {
+            position = TestHelper.generatePathPosition("/worlds/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Failed to generate PathPostion
+            assertTrue(false);
+        }
+
+        VampireEnemy newVampire = new VampireEnemy(position);
+
+        int initialX = newVampire.getX();
+        int initialY = newVampire.getY();
+        boolean moved = false;
+        int i = 0;
+
+        System.out.println(initialX);
+        System.out.println(initialY);
+
+        while (i < 100) {
+            newVampire.move();
+
+            if (initialX != newVampire.getX() || initialY != newVampire.getY()) {
+                moved = true;
+            }
+
+            i++;
+        }
+
+        assertTrue(moved);
+    }
 }
