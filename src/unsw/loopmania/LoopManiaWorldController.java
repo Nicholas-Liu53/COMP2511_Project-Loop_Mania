@@ -283,17 +283,25 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
             }
-            if (world.getCurrCycle() == spawnCycle) {
-                // Spawn health potion + gold randomly
-                List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
-                for (HealthPotion newHP: newHealthPotions){
-                    onLoad(newHP);
-                }
-                List<GoldPile> newGoldPiles = world.spawnGoldPile();
-                for (GoldPile newGP: newGoldPiles){
-                    onLoad(newGP);
-                }
-                spawnCycle++;
+            // if (world.getCurrCycle() == spawnCycle) {
+            //     // Spawn health potion + gold randomly
+            //     List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
+            //     for (HealthPotion newHP: newHealthPotions){
+            //         onLoad(newHP);
+            //     }
+            //     List<GoldPile> newGoldPiles = world.spawnGoldPile();
+            //     for (GoldPile newGP: newGoldPiles){
+            //         onLoad(newGP);
+            //     }
+            //     spawnCycle++;
+            // }
+            List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
+            for (HealthPotion newHP: newHealthPotions){
+                onLoad(newHP);
+            }
+            List<GoldPile> newGoldPiles = world.spawnGoldPile();
+            for (GoldPile newGP: newGoldPiles){
+                onLoad(newGP);
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -374,6 +382,9 @@ public class LoopManiaWorldController {
      */
     private void loadItem(Item item){
         // Start by getting first available coordinates
+        // if (item.getItemType().equals("Potion")) {
+        //     world.addItem(item);
+        // }
         Item itemToLoad = world.addItem(item);
         if (!itemToLoad.equals(item)) {
             onLoad(itemToLoad);

@@ -278,6 +278,7 @@ public class LoopManiaWorld {
      */
     public List<Item> attemptToPickUpItems() {
         List<Item> pickedUpItems = new ArrayList<Item>();
+        // List<Item> itemsToRemove
         for (Item pathItem: pathItems) {
             if (canPickUpItem(pathItem)) {
                 if (pathItem.getItemType().equals("Gold")) {
@@ -286,9 +287,11 @@ public class LoopManiaWorld {
                     numHealthPotionSpawned--;
                 }
                 pickedUpItems.add(pathItem);
-                pathItems.remove(pathItem);
                 pathItem.destroy();
             }
+        }
+        for (Item pathItem : pickedUpItems) {
+            pathItems.remove(pathItem);
         }
         return pickedUpItems;
     }
@@ -299,11 +302,11 @@ public class LoopManiaWorld {
      */
     public Item addItem(Item itemToAdd){
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null) {
+        if (firstAvailableSlot == null && !itemToAdd.getItemID().equals("GoldPile")) {
             // Eject the oldest unequipped item and replace it... oldest item is that at beginning of items
             removeItemByPositionInUnequippedInventoryItems(0);
-            firstAvailableSlot = getFirstAvailableSlotForItem();
             // TODO = give some cash/experience rewards for the discarding of the oldest item
+            firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
         // Insert the new item, as we know we have at least made a slot available...
