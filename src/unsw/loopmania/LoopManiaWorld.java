@@ -198,18 +198,22 @@ public class LoopManiaWorld {
     }
 
     public void battleWon() {
-        giveRandomRewards();
+        giveRandomRewards(true);
     }
 
-    public void giveRandomRewards() {
-        List<String> rewards = new ArrayList<>(List.of("gold", "experience", "card", "equipment"));
-        Random rand = new Random();
-
+    public void giveRandomRewards(boolean isCardAReward) {
+        List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "card"));
         List<Integer> values = new ArrayList<>(List.of(100, 200, 300, 400, 500));
         List<String> card = new ArrayList<>(List.of("cardTypes"));
         List<String> equipments = new ArrayList<>(List.of("equipmentTypes"));
+        String reward;
 
-        String reward = rewards.get(rand.nextInt(4));
+        Random rand = new Random();
+        if (isCardAReward)
+            reward = rewards.get(rand.nextInt(4));
+        else
+            reward = rewards.get(rand.nextInt(3));
+
         switch (reward) {
             case "gold":
                 character.giveGold(values.get(rand.nextInt(5)));
