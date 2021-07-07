@@ -121,7 +121,7 @@ public class LoopManiaWorldController {
     private Timeline timeline;
 
     // Buildings
-    private Image basicBuildingImage; // vampire
+    private Image vampireCastleBuildingImage; // vampire
     private Image heroesCastleImage;
     private Image vampireCastleCardImage;
     
@@ -189,7 +189,7 @@ public class LoopManiaWorldController {
         // Buildings
         heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
-        basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        vampireCastleBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         // Enemies
         slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
         // Items
@@ -203,7 +203,7 @@ public class LoopManiaWorldController {
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
-        // initialize them all...
+        // Initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
         anchorPaneRootSetOnDragOver = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
         anchorPaneRootSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -228,8 +228,10 @@ public class LoopManiaWorldController {
             }
         }
 
+        // Load Heroe's Castle
         ImageView heroesCastleView = new ImageView(heroesCastleImage);
         entityImages.add(heroesCastleView);
+        
         // Load entities loaded from the file in the loader into the squares gridpane
         for (ImageView entity : entityImages){
             squares.getChildren().add(entity);
@@ -258,7 +260,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * create and run the timer
+     * Create and run the timer
      */
     public void startTimer(){
         // TODO = handle more aspects of the behaviour required by the specification
@@ -300,7 +302,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * pause the execution of the game loop
+     * Pause the execution of the game loop
      * the human player can still drag and drop items during the game pause
      */
     public void pause(){
@@ -314,7 +316,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * pair the entity an view so that the view copies the movements of the entity.
+     * Pair the entity an view so that the view copies the movements of the entity.
      * add view to list of entity images
      * @param entity backend entity to be paired with view
      * @param view frontend imageview to be paired with backend entity
@@ -325,7 +327,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * run GUI events after an enemy is defeated, such as spawning items/experience/gold
+     * Run GUI events after an enemy is defeated, such as spawning items/experience/gold
      * @param enemy defeated enemy for which we should react to the death of
      */
     private void reactToEnemyDefeat(Enemy enemy){
@@ -337,7 +339,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * run GUI events after an character steps on item, putting item in inventory
+     * Run GUI events after an character steps on item, putting item in inventory
      * @param item picked up item for which we should put in the inventory
      */
     private void putItemInInventory(Item item){
@@ -349,7 +351,7 @@ public class LoopManiaWorldController {
     //*                             Loaders
     //*-------------------------------------------------------------------------
     /**
-     * load a vampire card from the world, and pair it with an image in the GUI
+     * Load a vampire card from the world, and pair it with an image in the GUI
      */
     private void loadVampireCard() {
         // TODO = load more types of card
@@ -358,7 +360,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a sword from the world, and pair it with an image in the GUI
+     * Load a sword from the world, and pair it with an image in the GUI
      */
     private void loadSword(){
         // TODO = load more types of weapon
@@ -368,17 +370,17 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load an item from the world, and pair it with an image in the GUI
+     * Load an item from the world, and pair it with an image in the GUI
      */
     private void loadItem(Item item){
-        // start by getting first available coordinates
+        // Start by getting first available coordinates
         Item itemToLoad = world.addItem(item);
         if (!itemToLoad.equals(item)) {
             onLoad(itemToLoad);
         }
     }
     /**
-     * load a vampire castle card into the GUI.
+     * Load a vampire castle card into the GUI.
      * Particularly, we must connect to the drag detection event handler,
      * and load the image into the cards GridPane.
      * @param vampireCastleCard
@@ -395,7 +397,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a sword into the GUI.
+     * Load a sword into the GUI.
      * Particularly, we must connect to the drag detection event handler,
      * and load the image into the unequippedInventory GridPane.
      * @param sword
@@ -408,7 +410,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a item into the GUI.
+     * Load a item into the GUI.
      * Particularly, we must connect to the drag detection event handler,
      * and load the image into the unequippedInventory GridPane.
      * @param item
@@ -422,7 +424,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load an enemy into the GUI
+     * Load an enemy into the GUI
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
@@ -432,7 +434,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a health potion into the GUI
+     * Load a health potion into the GUI
      * @param hp
      */
     private void onLoad(HealthPotion hp) {
@@ -442,7 +444,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a gold pile into the GUI
+     * Load a gold pile into the GUI
      * @param gp
      */
     private void onLoad(GoldPile gp) {
@@ -452,11 +454,11 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a building into the GUI
+     * Load a building into the GUI
      * @param building
      */
     private void onLoad(VampireCastleBuilding building){
-        ImageView view = new ImageView(basicBuildingImage);
+        ImageView view = new ImageView(vampireCastleBuildingImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
@@ -465,7 +467,7 @@ public class LoopManiaWorldController {
     //*                             Coordinates
     //*-------------------------------------------------------------------------
     /**
-     * remove the card from the world, and spawn and return a building instead where the card was dropped
+     * Remove the card from the world, and spawn and return a building instead where the card was dropped
      * @param cardNodeX the x coordinate of the card which was dragged, from 0 to width-1
      * @param cardNodeY the y coordinate of the card which was dragged (in starter code this is 0 as only 1 row of cards)
      * @param buildingNodeX the x coordinate of the drop location for the card, where the building will spawn, from 0 to width-1
@@ -477,7 +479,7 @@ public class LoopManiaWorldController {
     }
     
     /**
-     * remove an item from the unequipped inventory by its x and y coordinates in the unequipped inventory gridpane
+     * Remove an item from the unequipped inventory by its x and y coordinates in the unequipped inventory gridpane
      * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
      * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
      */

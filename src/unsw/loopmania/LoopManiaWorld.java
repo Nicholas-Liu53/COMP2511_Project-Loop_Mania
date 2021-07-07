@@ -454,7 +454,7 @@ public class LoopManiaWorld {
     }
 
     /**
-     * remove a card by its x, y coordinates
+     * Remove a card by its x, y coordinates
      * @param cardNodeX x index from 0 to width-1 of card to be removed
      * @param cardNodeY y index from 0 to height-1 of card to be removed
      * @param buildingNodeX x index from 0 to width-1 of building to be added
