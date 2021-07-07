@@ -497,7 +497,7 @@ public class LoopManiaWorldController {
      * @param sourceGridPane the gridpane being dragged from
      * @param targetGridPane the gridpane the human player should be dragging to (but we of course cannot guarantee they will do so)
      */
-    private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane){
+    private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane) {
         // TODO = be more selective about where something can be dropped
         // for example, in the specification, villages can only be dropped on path, whilst vampire castles cannot go on the path
 
@@ -505,7 +505,7 @@ public class LoopManiaWorldController {
             public void handle(DragEvent event) {
                 // TODO = for being more selective about where something can be dropped, consider applying additional if-statement logic
                 /*
-                 *you might want to design the application so dropping at an invalid location drops at the most recent valid location hovered over,
+                 * You might want to design the application so dropping at an invalid location drops at the most recent valid location hovered over,
                  * or simply allow the card/item to return to its slot (the latter is easier, as you won't have to store the last valid drop location!)
                  */
                 if (currentlyDraggedType == draggableType){
@@ -513,17 +513,16 @@ public class LoopManiaWorldController {
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
                     // putting drop completed at start not making complete on VLAB...
 
-                    //Data dropped
-                    //If there is an image on the dragboard, read it and use it
+                    // Data dropped
+                    // If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
-                    if(node != targetGridPane && db.hasImage()){
-
+                    if (node != targetGridPane && db.hasImage()) {
                         Integer cIndex = GridPane.getColumnIndex(node);
                         Integer rIndex = GridPane.getRowIndex(node);
                         int x = cIndex == null ? 0 : cIndex;
                         int y = rIndex == null ? 0 : rIndex;
-                        //Places at 0,0 - will need to take coordinates once that is implemented
+                        // Places at 0,0 - will need to take coordinates once that is implemented
                         ImageView image = new ImageView(db.getImage());
 
                         int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
@@ -561,7 +560,7 @@ public class LoopManiaWorldController {
             }
         });
 
-        // this doesn't fire when we drag over GridPane because in the event handler for dragging over GridPanes, we consume the event
+        // This doesn't fire when we drag over GridPane because in the event handler for dragging over GridPanes, we consume the event
         anchorPaneRootSetOnDragOver.put(draggableType, new EventHandler<DragEvent>(){
             // https://github.com/joelgraff/java_fx_node_link_demo/blob/master/Draggable_Node/DraggableNodeDemo/src/application/RootLayout.java#L110
             @Override
@@ -578,16 +577,16 @@ public class LoopManiaWorldController {
             }
         });
 
-        // this doesn't fire when we drop over GridPane because in the event handler for dropping over GridPanes, we consume the event
+        // This doesn't fire when we drop over GridPane because in the event handler for dropping over GridPanes, we consume the event
         anchorPaneRootSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 if (currentlyDraggedType == draggableType){
-                    //Data dropped
-                    //If there is an image on the dragboard, read it and use it
+                    // Data dropped
+                    // If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
                     if(node != anchorPaneRoot && db.hasImage()){
-                        //Places at 0,0 - will need to take coordinates once that is implemented
+                        // Places at 0,0 - will need to take coordinates once that is implemented
                         currentlyDraggedImage.setVisible(true);
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);
@@ -598,7 +597,7 @@ public class LoopManiaWorldController {
                         currentlyDraggedType = null;
                     }
                 }
-                //let the source know whether the image was successfully transferred and used
+                // Let the source know whether the image was successfully transferred and used
                 event.setDropCompleted(true);
                 event.consume();
             }
