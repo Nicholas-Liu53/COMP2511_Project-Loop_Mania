@@ -21,6 +21,7 @@ public class CharacterTest {
 
         // Ensure attributes are correct
         assertEquals(character.getHealth(), 100);
+        assertEquals(character.getInBattle(), false);
     }
 
     @Test
