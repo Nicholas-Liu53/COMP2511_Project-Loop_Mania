@@ -66,6 +66,21 @@ public abstract class Enemy extends MovingEntity {
     }
 
     /**
+     * @return true if enemy is in a battle, otherwise false
+     */
+    public boolean getInBattle() {
+        return this.inBattle;
+    }
+
+    /**
+     * Sets whether an enemy is currently in battle, preventing it from moving
+     * @param inBattle
+     */
+    public void setInBattle(boolean inBattle) {
+        this.inBattle = inBattle;
+    }
+
+    /**
      * Allows the enemy to launch an attack against a character, doing damage and possibly
      * using a special attack
      * @param mainChar

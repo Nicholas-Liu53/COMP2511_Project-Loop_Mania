@@ -138,11 +138,11 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<Enemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles without any damage!
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
         for (Enemy e: enemies){
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // Currently the character attacks every enemy
+
+            // Currently the character attacks every enemy and vice versa
             if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < Math.pow(e.getAttackRadius(), 2)){
                 // fight...
                 character.launchAttack(e);
@@ -152,6 +152,16 @@ public class LoopManiaWorld {
                     defeatedEnemies.add(e);
                 }
                 // TODO handle character death
+
+            } else if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < Math.pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
+                // Support radius logic
+                e.setInBattle(true);
+                // TODO account for end of path
+                if (e.getPathIndex() < character.getPathIndex()) {
+                    e.moveUpPath();
+                } else {
+                    e.moveDownPath();
+                }
             }
         }
         for (Enemy e: defeatedEnemies){
