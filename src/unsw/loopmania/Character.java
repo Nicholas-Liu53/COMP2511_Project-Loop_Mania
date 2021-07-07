@@ -22,6 +22,14 @@ public class Character extends MovingEntity {
         return 0;
     }
 
+    public boolean getInBattle() {
+        return false;
+    }
+
+    public void setInBattle(boolean battleStatus) {
+
+    }
+
     /**
      * Allows the Character to launch an attack against an enemy, resulting in
      * damage and possibly using a special attack using inventory items
@@ -40,10 +48,6 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-
-    }
-
-    public void getInBattle(boolean battleStatus) {
 
     }
 
