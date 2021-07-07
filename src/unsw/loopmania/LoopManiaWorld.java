@@ -202,9 +202,9 @@ public class LoopManiaWorld {
     }
 
     public void giveRandomRewards(boolean isCardAReward) {
-        List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "card"));
+        List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
         List<Integer> values = new ArrayList<>(List.of(100, 200, 300, 400, 500));
-        List<String> card = new ArrayList<>(List.of("cardTypes"));
+        List<String> buildingCards = new ArrayList<>(List.of("cardTypes"));
         List<String> equipments = new ArrayList<>(List.of("equipmentTypes"));
         String reward;
 
@@ -221,7 +221,7 @@ public class LoopManiaWorld {
             case "experience":
                 character.giveExperiencePoints(values.get(rand.nextInt(2)));
                 break;
-            case "card":
+            case "buildingCard":
                 // add card to inventory
                 break;
             case "equipment":
