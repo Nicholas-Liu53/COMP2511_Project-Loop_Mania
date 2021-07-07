@@ -156,8 +156,8 @@ public class LoopManiaWorld {
             } else if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < Math.pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
                 // Support radius logic
                 e.setInBattle(true);
-                // TODO account for end of path
-                if (e.getPathIndex() < character.getPathIndex()) {
+                
+                if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
                     e.moveUpPath();
                 } else {
                     e.moveDownPath();
