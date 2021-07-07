@@ -51,7 +51,7 @@ public class CharacterTest {
         VampireEnemy vampire = new VampireEnemy(null);
 
         character.launchAttack(vampire);
-        assertEquals(vampire.getHealth(), ?);
+        assertEquals(vampire.getHealth(), 70);
     }
 
     @Test
@@ -90,4 +90,6 @@ public class CharacterTest {
         }
 
         assertTrue(posChange);
+    }
+
 }
