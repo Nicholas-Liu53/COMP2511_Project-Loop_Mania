@@ -93,4 +93,11 @@ public class CharacterTest {
         assertTrue(posChange);
     }
 
+    @Test
+    public void HealthPotionTest() {
+        Character character = new Character(null);
+        HealthPotion healthPotion = new HealthPotion();
+        character.equipItem(healthPotion);
+    }
+
 }
