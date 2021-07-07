@@ -61,15 +61,12 @@ public class CharacterTest {
         int clockwiseInitialX = character.getX();
         int clockwiseInitialY = character.getY();
         boolean posChange = false;
-        int i = 0;
 
         // Checking that Character moves clockwise
-        while (i < 10) {
+        for (int i = 0; i < 10; i++) {
             character.moveDownPath();
-            if (!character.getX().equals(clockwiseInitialX) || !character.getY().equals(clockwiseInitialY)) {
+            if (clockwiseInitialX != character.getX() || clockwiseInitialY != character.getY())
                 posChange = true;
-                break;
-            }
         }
 
         assertTrue(posChange);
@@ -83,17 +80,13 @@ public class CharacterTest {
         int anticlockwiseInitialX = character.getX();
         int anticlockwiseInitialY = character.getY();
         boolean posChange = false;
-        int i = 0;
 
-        // Checking that Character moves anticlockwise
-        while (i < 10) {
+        // Checking that Character moves clockwise
+        for (int i = 0; i < 10; i++) {
             character.moveUpPath();
-            if (!character.getX().equals(anticlockwiseInitialX) || !character.getY().equals(anticlockwiseInitialY)) {
+            if (anticlockwiseInitialX != character.getX() || anticlockwiseInitialY != character.getY())
                 posChange = true;
-                break;
-            }
         }
 
         assertTrue(posChange);
-    }
 }
