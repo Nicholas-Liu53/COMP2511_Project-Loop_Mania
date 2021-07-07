@@ -283,25 +283,17 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy: newEnemies){
                 onLoad(newEnemy);
             }
-            // if (world.getCurrCycle() == spawnCycle) {
-            //     // Spawn health potion + gold randomly
-            //     List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
-            //     for (HealthPotion newHP: newHealthPotions){
-            //         onLoad(newHP);
-            //     }
-            //     List<GoldPile> newGoldPiles = world.spawnGoldPile();
-            //     for (GoldPile newGP: newGoldPiles){
-            //         onLoad(newGP);
-            //     }
-            //     spawnCycle++;
-            // }
-            List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
-            for (HealthPotion newHP: newHealthPotions){
-                onLoad(newHP);
-            }
-            List<GoldPile> newGoldPiles = world.spawnGoldPile();
-            for (GoldPile newGP: newGoldPiles){
-                onLoad(newGP);
+            if (world.getCurrCycle() == spawnCycle) {
+                // Spawn health potion + gold randomly
+                List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
+                for (HealthPotion newHP: newHealthPotions){
+                    onLoad(newHP);
+                }
+                List<GoldPile> newGoldPiles = world.spawnGoldPile();
+                for (GoldPile newGP: newGoldPiles){
+                    onLoad(newGP);
+                }
+                spawnCycle++;
             }
             printThreadingNotes("HANDLED TIMER");
         }));
