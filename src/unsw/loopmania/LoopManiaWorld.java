@@ -55,7 +55,7 @@ public class LoopManiaWorld {
     private List<Entity> unequippedInventoryItems;
 
     // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
+    private List<Building> buildingEntities;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -112,11 +112,11 @@ public class LoopManiaWorld {
      * @return list of the enemies to be displayed on screen
      */
     public List<Enemy> possiblySpawnEnemies(){
-        // TODO = expand this very basic version
-        Pair<Integer, Integer> pos = possiblyGetSlugEnemySpawnPosition();
+        // Spawn slugs
+        Pair<Integer, Integer> slugPos = possiblyGetSlugEnemySpawnPosition();
         List<Enemy> spawningEnemies = new ArrayList<>();
-        if (pos != null){
-            int indexInPath = orderedPath.indexOf(pos);
+        if (slugPos != null){
+            int indexInPath = orderedPath.indexOf(slugPos);
             SlugEnemy enemy = new SlugEnemy(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
@@ -156,7 +156,7 @@ public class LoopManiaWorld {
             } else if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < Math.pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
                 // Support radius logic
                 e.setInBattle(true);
-                
+
                 if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
                     e.moveUpPath();
                 } else {
@@ -313,11 +313,10 @@ public class LoopManiaWorld {
     }
 
     /**
-     * get a randomly generated position which could be used to spawn an enemy
+     * get a randomly generated position which could be used to spawn a slug enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
     private Pair<Integer, Integer> possiblyGetSlugEnemySpawnPosition(){
-        // TODO = modify this
         
         // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
         Random rand = new Random();

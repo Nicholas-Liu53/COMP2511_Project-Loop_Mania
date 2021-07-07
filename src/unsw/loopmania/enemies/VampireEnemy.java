@@ -6,7 +6,7 @@ import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.Character;
 
 /**
- * vampire enemy type
+ * Vampire enemy type
  */
 public class VampireEnemy extends Enemy {
     // Attributes
