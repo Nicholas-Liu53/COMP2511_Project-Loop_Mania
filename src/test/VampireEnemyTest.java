@@ -24,7 +24,6 @@ public class VampireEnemyTest {
         
         // Ensure attributes are correct
         assertEquals(newVampire.getHealth(), 75);
-        assertEquals(newVampire.getAttackRadius(), newVampire.getSupportRadius());
         
         assertEquals(newVampire.getAttackRadius(), 3);
         assertEquals(newVampire.getSupportRadius(), 4);
@@ -68,8 +67,8 @@ public class VampireEnemyTest {
                 normAttack = true;
             } else {
                 // Testing critical attack is within correct range (btwn 5 and 10)
-                assertTrue((newChar.getHealth() >= (baseHealth - 20)));
-                assertTrue((newChar.getHealth() <= (baseHealth - 25)));
+                assertTrue((newChar.getHealth() <= (baseHealth - 20)));
+                assertTrue((newChar.getHealth() >= (baseHealth - 25)));
 
                 // Testing critical attack lasts for correct time (btwn 1 and 3 attacks)
                 int i = 0;
@@ -81,6 +80,7 @@ public class VampireEnemyTest {
                     }
 
                     startHealth = newChar.getHealth();
+                    newVampire.launchAttack(newChar);
                     i++;
                 }
             }
@@ -98,7 +98,7 @@ public class VampireEnemyTest {
         PathPosition position = null;
 
         try {
-            position = TestHelper.generatePathPosition("/worlds/world_with_twists_and_turns.json");
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
         } catch (FileNotFoundException e) {
             // Failed to generate PathPostion
             assertTrue(false);
@@ -110,9 +110,6 @@ public class VampireEnemyTest {
         int initialY = newVampire.getY();
         boolean moved = false;
         int i = 0;
-
-        System.out.println(initialX);
-        System.out.println(initialY);
 
         while (i < 100) {
             newVampire.move();

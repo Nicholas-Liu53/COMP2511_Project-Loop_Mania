@@ -12,7 +12,7 @@ import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.path.PathPosition;
 
 /**
- * Unite tests for the slug enemy class
+ * Unit tests for the slug enemy class
  */
 public class SlugEnemyTest {
     @Test
@@ -39,9 +39,9 @@ public class SlugEnemyTest {
         newSlug.receiveAttack(5);
         assertEquals(newSlug.getHealth(), 10);
         newSlug.receiveAttack(3);
-        assertEquals(newSlug.getHealth(), 12);
+        assertEquals(newSlug.getHealth(), 7);
         newSlug.receiveAttack(0);
-        assertEquals(newSlug.getHealth(), 12);
+        assertEquals(newSlug.getHealth(), 7);
         newSlug.receiveAttack(12);
         assertEquals(newSlug.getHealth(), 0);
         newSlug.receiveAttack(5);
@@ -70,7 +70,7 @@ public class SlugEnemyTest {
         PathPosition position = null;
 
         try {
-            position = TestHelper.generatePathPosition("worlds/world_with_twists_and_turns.json");
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
         } catch (FileNotFoundException e) {
             // Failed to generate PathPostion
             assertTrue(false);
@@ -82,9 +82,6 @@ public class SlugEnemyTest {
         int initialY = newSlug.getY();
         boolean moved = false;
         int i = 0;
-
-        System.out.println(initialX);
-        System.out.println(initialY);
 
         while (i < 100) {
             newSlug.move();
