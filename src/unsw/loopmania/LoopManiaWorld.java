@@ -191,6 +191,7 @@ public class LoopManiaWorld {
             // due to mutating list we're iterating over
             killEnemy(e);
         }
+
         return defeatedEnemies;
     }
 

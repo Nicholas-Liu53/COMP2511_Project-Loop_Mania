@@ -34,9 +34,6 @@ public class Character extends MovingEntity {
      * @return Characters's health value, can never be less than 0
      */
     public int getHealth() {
-        if (this.health < 0)
-            return 0;
-
         return this.health;
     }
 
@@ -82,7 +79,10 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
+        this.inBattle = true;
         this.health -= damage;
+        if (this.health < 0)
+            this.health = 0;
     }
 
     public void equipItem(Item item) {
