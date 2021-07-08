@@ -507,16 +507,12 @@ public class LoopManiaWorldController {
 
         gridPaneSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                // TODO = for being more selective about where something can be dropped, consider applying additional if-statement logic
-                
-                // if (draggableType.equals(DRAGGABLE_TYPE.CARD)) {
-
-                // } 
-                
+                // TODO = for being more selective about where something can be dropped, consider applying additional if-statement logic                
                 /*
                  * You might want to design the application so dropping at an invalid location drops at the most recent valid location hovered over,
                  * or simply allow the card/item to return to its slot (the latter is easier, as you won't have to store the last valid drop location!)
                  */
+                boolean canPlace = false;
                 if (currentlyDraggedType == draggableType){
                     // problem = event is drop completed is false when should be true...
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
@@ -538,30 +534,39 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType){
                             case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn a building here of different types
                                 VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                onLoad(newBuilding);
+                                if (newBuilding != null) {
+                                    canPlace = true;
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    onLoad(newBuilding);
+                                }
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
+                                canPlace = true;
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
                             default:
                                 break;
                         }
-                        
-                        draggedEntity.setVisible(false);
-                        draggedEntity.setMouseTransparent(false);
-                        // remove drag event handlers before setting currently dragged image to null
-                        currentlyDraggedImage = null;
-                        currentlyDraggedType = null;
+                        if (canPlace) {
+                            draggedEntity.setVisible(false);
+                            draggedEntity.setMouseTransparent(false);
+                            // remove drag event handlers before setting currently dragged image to null
+                            currentlyDraggedImage = null;
+                            currentlyDraggedType = null;
+                        }
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
-                event.setDropCompleted(true);
+                if (canPlace) {
+                    event.setDropCompleted(true);
+                } else {
+                    event.setDropCompleted(false);
+                }
                 // consuming prevents the propagation of the event to the anchorPaneRoot (as a sub-node of anchorPaneRoot, GridPane is prioritized)
                 // https://openjfx.io/javadoc/11/javafx.base/javafx/event/Event.html#consume()
                 // to understand this in full detail, ask your tutor or read https://docs.oracle.com/javase/8/javafx/events-tutorial/processing.htm

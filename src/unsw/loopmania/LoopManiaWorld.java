@@ -472,7 +472,10 @@ public class LoopManiaWorld {
                 break;
             }
         }
-        
+        Pair<Integer, Integer> newLocation = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
+        if (orderedPath.contains(newLocation)) {
+            return null;
+        }
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
         buildingEntities.add(newBuilding);
