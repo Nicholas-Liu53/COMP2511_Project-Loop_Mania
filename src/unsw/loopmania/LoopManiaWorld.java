@@ -180,8 +180,9 @@ public class LoopManiaWorld {
             }
         }
 
-        if (enemies.size() == defeatedEnemies.size())
+        if (enemies.size() == defeatedEnemies.size()) {
             battleWon();
+        }
 
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from

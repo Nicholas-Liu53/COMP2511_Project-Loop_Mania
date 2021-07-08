@@ -100,4 +100,11 @@ public class Character extends MovingEntity {
         this.gold += gold; // max gold?
     }
 
+    @Override
+    public void moveUpPath() {
+        if(!this.inBattle) {
+            super.moveUpPath();
+        }
+    }
+
 }
