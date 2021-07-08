@@ -158,9 +158,6 @@ public class LoopManiaWorld {
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2)) {
                 // fight...
-                // setting battle status to true, as as soon as character attacks an enemy, a
-                // battle begins
-                character.setInBattle(true);
                 character.launchAttack(e);
                 e.launchAttack(character);
 

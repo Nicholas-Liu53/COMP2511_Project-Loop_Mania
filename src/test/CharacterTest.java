@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.Character;
 import unsw.loopmania.enemies.SlugEnemy;
+import unsw.loopmania.path.PathPosition;
 
 public class CharacterTest {
     @Test
@@ -68,8 +71,17 @@ public class CharacterTest {
 
     @Test
     public void clockwiseMovementTest() {
-        // Testing that the Character moves as expected
-        Character character = new Character(null);
+        // Tests that the character moves around the map in anticlockwise direction
+        PathPosition position = null;
+
+        try {
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Failed to generate PathPostion
+            assertTrue(false);
+        }
+
+        Character character = new Character(position);
 
         int clockwiseInitialX = character.getX();
         int clockwiseInitialY = character.getY();
@@ -78,6 +90,7 @@ public class CharacterTest {
         // Checking that Character moves clockwise
         for (int i = 0; i < 10; i++) {
             character.moveDownPath();
+
             if (clockwiseInitialX != character.getX() || clockwiseInitialY != character.getY())
                 posChange = true;
         }
@@ -87,8 +100,17 @@ public class CharacterTest {
 
     @Test
     public void anticlockwiseMovementTest() {
-        // Testing that the Character moves as expected
-        Character character = new Character(null);
+        // Tests that the character moves around the map in anticlockwise direction
+        PathPosition position = null;
+
+        try {
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Failed to generate PathPostion
+            assertTrue(false);
+        }
+
+        Character character = new Character(position);
 
         int anticlockwiseInitialX = character.getX();
         int anticlockwiseInitialY = character.getY();
@@ -97,6 +119,7 @@ public class CharacterTest {
         // Checking that Character moves clockwise
         for (int i = 0; i < 10; i++) {
             character.moveUpPath();
+
             if (anticlockwiseInitialX != character.getX() || anticlockwiseInitialY != character.getY())
                 posChange = true;
         }
