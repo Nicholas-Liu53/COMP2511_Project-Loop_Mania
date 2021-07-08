@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.javatuples.Pair;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
@@ -10,6 +11,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -134,11 +136,13 @@ public class LoopManiaWorldController {
     private Image stakeImage;
     private Image swordImage;
     private Image goldPileImage;
+    
     // Enemies
     private Image slugEnemyImage;
-
     private int spawnCycle;
 
+    // Path Starting position
+    private Pair<Integer, Integer> startingPoint;
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -203,6 +207,9 @@ public class LoopManiaWorldController {
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
+        // Path starting point
+        startingPoint = world.getStartingPoint();
+
         // Initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
         anchorPaneRootSetOnDragOver = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -228,15 +235,13 @@ public class LoopManiaWorldController {
             }
         }
 
-        // Load Heroe's Castle
-        ImageView heroesCastleView = new ImageView(heroesCastleImage);
-        entityImages.add(heroesCastleView);
-        
         // Load entities loaded from the file in the loader into the squares gridpane
         for (ImageView entity : entityImages){
             squares.getChildren().add(entity);
         }
         
+        addHeroesCastle();
+
         // Add the ground underneath the cards
         for (int x=0; x<world.getWidth(); x++){
             ImageView groundView = new ImageView(pathTilesImage);
@@ -257,6 +262,8 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        // addEntity(new HeroesCastle(new SimpleIntegerProperty(startingPoint.getValue0()), new SimpleIntegerProperty(startingPoint.getValue1())), new ImageView(heroesCastleImage));
     }
 
     /**
@@ -324,6 +331,13 @@ public class LoopManiaWorldController {
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entityImages.add(view);
+    }
+
+    // Load Hero's Castle
+    private void addHeroesCastle() {
+        // Load Hero's Castle
+        ImageView heroesCastleView = new ImageView(heroesCastleImage);
+        squares.add(heroesCastleView, startingPoint.getValue0(), startingPoint.getValue1());
     }
 
     /**
