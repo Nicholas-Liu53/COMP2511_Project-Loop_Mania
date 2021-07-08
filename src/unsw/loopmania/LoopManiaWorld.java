@@ -198,10 +198,10 @@ public class LoopManiaWorld {
     }
 
     public void battleWon() {
-        giveRandomRewards(true);
+        giveRandomRewards("withCard");
     }
 
-    public void giveRandomRewards(boolean isCardAReward) {
+    public void giveRandomRewards(String rewardSetting) {
         List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
         List<Integer> values = new ArrayList<>(List.of(100, 200, 300, 400, 500));
         List<String> buildingCards = new ArrayList<>(List.of("cardTypes"));
@@ -209,10 +209,14 @@ public class LoopManiaWorld {
         String reward;
 
         Random rand = new Random();
-        if (isCardAReward)
+        if (rewardSetting.equals("withCard"))
             reward = rewards.get(rand.nextInt(4));
-        else
+        else if (rewardSetting.equals("noCard"))
             reward = rewards.get(rand.nextInt(3));
+        else if (rewardSetting.equals("onlyGoldXP"))
+            reward = rewards.get(rand.nextInt(3));
+        else // onlyCard
+            reward = "buildingCard";
 
         switch (reward) {
             case "gold":
@@ -223,9 +227,11 @@ public class LoopManiaWorld {
                 break;
             case "buildingCard":
                 // add card to inventory
+                // cardEntities.add(card);
                 break;
             case "equipment":
                 // add equipment to inventory
+                // unequippedInventoryItems.add(itemObject);
                 break;
         }
     }
@@ -240,6 +246,7 @@ public class LoopManiaWorld {
         if (cardEntities.size() >= getWidth()) {
             // TODO = give some cash/experience/item rewards for the discarding of the
             // oldest card
+            giveRandomRewards("noCard");
             removeCard(0);
         }
         VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()),
@@ -276,6 +283,7 @@ public class LoopManiaWorld {
             // beginning of items
             // TODO = give some cash/experience rewards for the discarding of the oldest
             // sword
+            giveRandomRewards("onlyGoldXP");
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
