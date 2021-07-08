@@ -35,4 +35,8 @@ public abstract class StaticEntity extends Entity {
     public int getY() {
         return y().get();
     }
+
+    public String getStaticEntityType() {
+        return "";
+    }
 }

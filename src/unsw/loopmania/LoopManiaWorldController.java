@@ -667,8 +667,6 @@ public class LoopManiaWorldController {
                 // int y = GridPane.getRowIndex(targetGridPane);
                 // int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
                 // int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
-                // VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                // if (newBuilding == null) return;
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType){
@@ -731,7 +729,7 @@ public class LoopManiaWorldController {
     }
 
     // Generalised for items ONLY --> Must do for cards
-    private void addDragEventHandlers(Item item, ImageView view, DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane){
+    private void addDragEventHandlers(StaticEntity staticEntity, ImageView view, DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane){
         view.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can detect it...
@@ -747,6 +745,10 @@ public class LoopManiaWorldController {
                 view.setVisible(false);
 
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
+                int x = GridPane.getColumnIndex(targetGridPane);
+                int y = GridPane.getRowIndex(targetGridPane);
+                int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
+                int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType){
@@ -754,6 +756,7 @@ public class LoopManiaWorldController {
                         draggedEntity.setImage(vampireCastleCardImage);
                         break;
                     case ITEM:
+                        Item item = (Item) staticEntity;
                         if (item.getItemID().equals("Sword")) draggedEntity.setImage(swordImage);
                         if (item.getItemID().equals("HealthPotion")) draggedEntity.setImage(healthPotionImage);
                         break;
@@ -780,11 +783,30 @@ public class LoopManiaWorldController {
                         // TODO = be more selective about whether highlighting changes - if it cannot be dropped in the location, the location shouldn't be highlighted!
                         public void handle(DragEvent event) {
                             if (currentlyDraggedType == draggableType){
-                            //The drag-and-drop gesture entered the target
-                            //show the user that it is an actual gesture target
-                                if(event.getGestureSource() != n && event.getDragboard().hasImage()){
-                                    n.setOpacity(0.7);
+                                switch(draggableType) {
+                                    case CARD:
+                                        //The drag-and-drop gesture entered the target
+                                        //show the user that it is an actual gesture target
+                                        Card card = (Card) staticEntity;
+                                        if (!world.canPlaceCard(new Pair<Integer,Integer>(x, y), card)) {
+                                            event.consume();    
+                                            return;
+                                        }
+                                        if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                            n.setOpacity(0.7);
+                                        } 
+                                        break;
+                                    case ITEM:
+                                        //The drag-and-drop gesture entered the target
+                                        //show the user that it is an actual gesture target
+                                        if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    default: 
+                                        break;
                                 }
+                                
                             }
                             event.consume();
                         }
@@ -792,9 +814,32 @@ public class LoopManiaWorldController {
                     gridPaneNodeSetOnDragExited.put(draggableType, new EventHandler<DragEvent>() {
                         // TODO = since being more selective about whether highlighting changes, you could program the game so if the new highlight location is invalid the highlighting doesn't change, or leave this as-is
                         public void handle(DragEvent event) {
-                            if (currentlyDraggedType == draggableType){
-                                n.setOpacity(1);
+                            switch(draggableType) {
+                                case CARD:
+                                    //The drag-and-drop gesture entered the target
+                                    //show the user that it is an actual gesture target
+                                    Card card = (Card) staticEntity;
+                                    if (!world.canPlaceCard(new Pair<Integer,Integer>(x, y), card)) {
+                                        event.consume();    
+                                        return;
+                                    }
+                                    if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                        n.setOpacity(1);
+                                    } 
+                                    break;
+                                case ITEM:
+                                    //The drag-and-drop gesture entered the target
+                                    //show the user that it is an actual gesture target
+                                    if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                        n.setOpacity(1);
+                                    }
+                                    break;
+                                default: 
+                                    break;
                             }
+                            // if (currentlyDraggedType == draggableType){
+                            //     n.setOpacity(1);
+                            // }
                 
                             event.consume();
                         }

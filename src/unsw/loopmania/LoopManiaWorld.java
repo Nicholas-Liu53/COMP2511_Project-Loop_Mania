@@ -480,17 +480,8 @@ public class LoopManiaWorld {
         }
         
         Pair<Integer, Integer> newLocation = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
-        if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard") || card.getCardId().equals("TrapCard")) {
-            if (!orderedPath.contains(newLocation))
-                return null;
-        } else {
-            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
-                return null;
-            else {
-                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
-                    return null;
-            }
-        }
+        if (!canPlaceCard(newLocation, card))
+            return null;
 
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
@@ -580,5 +571,21 @@ public class LoopManiaWorld {
         for (Enemy e: enemies){
             e.move();
         }
+    }
+    
+    // Can place boolean function
+    public boolean canPlaceCard(Pair<Integer,Integer> newLocation, Card card) {
+    if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard") || card.getCardId().equals("TrapCard")) {
+        if (!orderedPath.contains(newLocation))
+            return false;
+        } else {
+            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+                return false;
+            else {
+                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
+                    return false;
+            }
+        }
+        return true;
     }
 }
