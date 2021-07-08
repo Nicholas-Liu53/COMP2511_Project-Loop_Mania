@@ -209,14 +209,21 @@ public class LoopManiaWorld {
         String reward;
 
         Random rand = new Random();
-        if (rewardSetting.equals("withCard"))
-            reward = rewards.get(rand.nextInt(4));
-        else if (rewardSetting.equals("noCard"))
-            reward = rewards.get(rand.nextInt(3));
-        else if (rewardSetting.equals("onlyGoldXP"))
-            reward = rewards.get(rand.nextInt(3));
-        else // onlyCard
-            reward = "buildingCard";
+
+        switch (rewardSetting) {
+            case "withCard":
+                reward = rewards.get(rand.nextInt(4));
+                break;
+            case "noCard":
+                reward = rewards.get(rand.nextInt(3));
+                break;
+            case "onlyGoldXP":
+                reward = rewards.get(rand.nextInt(2));
+                break;
+            default: // is this even neeeded?
+                reward = "buildingCard";
+                break;
+        }
 
         switch (reward) {
             case "gold":
