@@ -472,10 +472,20 @@ public class LoopManiaWorld {
                 break;
             }
         }
+        
         Pair<Integer, Integer> newLocation = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
-        if (orderedPath.contains(newLocation)) {
-            return null;
+        if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard") || card.getCardId().equals("TrapCard")) {
+            if (!orderedPath.contains(newLocation))
+                return null;
+        } else {
+            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+                return null;
+            else {
+                if (!adjacentToPath(orderedPath, newLocation) || orderedPath.contains(newLocation))
+                    return null;
+            }
         }
+
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
         buildingEntities.add(newBuilding);
@@ -510,6 +520,17 @@ public class LoopManiaWorld {
                 c.x().set(c.getX()-1);
             }
         }
+    }
+
+    // Helper Function to check if location is adjacent to path
+    private boolean adjacentToPath(List<Pair<Integer, Integer>> list, Pair<Integer, Integer> location) {
+        for (int i = location.getValue0() - 1 ; i <= location.getValue0() + 1; i++) {
+            for (int j = location.getValue1() - 1; j <= location.getValue1() + 1; j++) {
+                if (i != j && list.contains(new Pair<Integer, Integer>(i,j)))
+                    return true;
+            }
+        }
+        return false;
     }
 
     //*-------------------------------------------------------------------------
