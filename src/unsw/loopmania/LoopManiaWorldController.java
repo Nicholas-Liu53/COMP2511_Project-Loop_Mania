@@ -413,7 +413,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * Load a item into the GUI.
+     * Load a item into the inventory
      * Particularly, we must connect to the drag detection event handler,
      * and load the image into the unequippedInventory GridPane.
      * @param item

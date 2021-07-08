@@ -161,18 +161,18 @@ public class LoopManiaWorld {
      * @return list of the health potions + gold 
      */
     public List<HealthPotion> spawnHealthPotion(){
-        List<HealthPotion> spawningPathItems = new ArrayList<>();
+        List<HealthPotion> spawningHealthPotions = new ArrayList<>();
         if (numHealthPotionSpawned < 1) {
             Pair<Integer, Integer> pos = getPathItemSpawnPosition();
             if (pos != null){
                 int indexInPath = orderedPath.indexOf(pos);
                 HealthPotion hp = new HealthPotion(new PathPosition(indexInPath, orderedPath));
                 pathItems.add(hp);
-                spawningPathItems.add(hp);
+                spawningHealthPotions.add(hp);
                 numHealthPotionSpawned++;
             }
         } 
-        return spawningPathItems;
+        return spawningHealthPotions;
     }
 
     /**
@@ -180,18 +180,18 @@ public class LoopManiaWorld {
      * @return list of the health potions + gold 
      */
     public List<GoldPile> spawnGoldPile(){
-        List<GoldPile> spawningPathItems = new ArrayList<>();
+        List<GoldPile> spawningGoldPiles = new ArrayList<>();
         if (numGoldPileSpawned < 1) {
             Pair<Integer, Integer> pos = getPathItemSpawnPosition();
             if (pos != null){
                 int indexInPath = orderedPath.indexOf(pos);
                 GoldPile gp = new GoldPile(new PathPosition(indexInPath, orderedPath));
                 pathItems.add(gp);
-                spawningPathItems.add(gp);
+                spawningGoldPiles.add(gp);
                 numGoldPileSpawned++;
             }
         } 
-        return spawningPathItems;
+        return spawningGoldPiles;
     }
 
     /**
