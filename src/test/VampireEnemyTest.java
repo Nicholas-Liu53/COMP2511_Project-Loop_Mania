@@ -23,10 +23,10 @@ public class VampireEnemyTest {
         VampireEnemy newVampire = new VampireEnemy(null);
         
         // Ensure attributes are correct
-        assertEquals(newVampire.getHealth(), 75);
+        assertEquals(75, newVampire.getHealth());
         
-        assertEquals(newVampire.getAttackRadius(), 3);
-        assertEquals(newVampire.getSupportRadius(), 4);
+        assertEquals(3, newVampire.getAttackRadius());
+        assertEquals(4, newVampire.getSupportRadius());
     }
 
     @Test
@@ -35,15 +35,15 @@ public class VampireEnemyTest {
 
         // Testing basic damage, accounting for defence
         newVampire.receiveAttack(10);
-        assertEquals(newVampire.getHealth(), 67);
+        assertEquals(67, newVampire.getHealth());
         newVampire.receiveAttack(5);
-        assertEquals(newVampire.getHealth(), 63);
+        assertEquals(63, newVampire.getHealth());
         newVampire.receiveAttack(5);
-        assertEquals(newVampire.getHealth(), 59);
+        assertEquals(59, newVampire.getHealth());
         newVampire.receiveAttack(0);
-        assertEquals(newVampire.getHealth(), 59);
+        assertEquals(59, newVampire.getHealth());
         newVampire.receiveAttack(100);
-        assertEquals(newVampire.getHealth(), 0);
+        assertEquals(0, newVampire.getHealth());
     }
 
     @Test
