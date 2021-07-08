@@ -82,6 +82,7 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
+        this.inBattle = true;
         this.health -= damage;
     }
 
@@ -98,6 +99,13 @@ public class Character extends MovingEntity {
 
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    @Override
+    public void moveUpPath() {
+        if(!this.inBattle) {
+            super.moveUpPath();
+        }
     }
 
 }
