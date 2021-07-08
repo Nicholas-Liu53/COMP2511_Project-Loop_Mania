@@ -536,9 +536,9 @@ public class LoopManiaWorldController {
                             case CARD:
                                 // TODO = spawn a building here of different types
                                 VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 if (newBuilding != null) {
                                     canPlace = true;
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     onLoad(newBuilding);
                                 }
                                 break;
@@ -555,10 +555,13 @@ public class LoopManiaWorldController {
                         if (canPlace) {
                             draggedEntity.setVisible(false);
                             draggedEntity.setMouseTransparent(false);
-                            // remove drag event handlers before setting currently dragged image to null
                             currentlyDraggedImage = null;
                             currentlyDraggedType = null;
-                        }
+                        } // else {
+                        //     draggedEntity.setVisible(true);
+                        //     draggedEntity.setMouseTransparent(true);
+                        // }
+                        // remove drag event handlers before setting currently dragged image to null
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
@@ -587,6 +590,7 @@ public class LoopManiaWorldController {
                 if (currentlyDraggedType != null){
                     draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 }
+                // for (int i = 0; i < 100; i++) System.out.println("Yes");
                 event.consume();
             }
         });
@@ -611,6 +615,7 @@ public class LoopManiaWorldController {
                         currentlyDraggedType = null;
                     }
                 }
+                // for (int i = 0; i < 100; i++) System.out.println("Yes");
                 // Let the source know whether the image was successfully transferred and used
                 event.setDropCompleted(true);
                 event.consume();
@@ -641,6 +646,12 @@ public class LoopManiaWorldController {
                 view.setVisible(false);
 
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
+                // int x = GridPane.getColumnIndex(targetGridPane);
+                // int y = GridPane.getRowIndex(targetGridPane);
+                // int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
+                // int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
+                // VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                // if (newBuilding == null) return;
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType){
