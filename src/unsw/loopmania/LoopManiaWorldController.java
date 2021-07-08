@@ -382,6 +382,7 @@ public class LoopManiaWorldController {
             onLoad(itemToLoad);
         }
     }
+    
     /**
      * Load a vampire castle card into the GUI.
      * Particularly, we must connect to the drag detection event handler,
@@ -507,6 +508,11 @@ public class LoopManiaWorldController {
         gridPaneSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 // TODO = for being more selective about where something can be dropped, consider applying additional if-statement logic
+                
+                // if (draggableType.equals(DRAGGABLE_TYPE.CARD)) {
+
+                // } 
+                
                 /*
                  * You might want to design the application so dropping at an invalid location drops at the most recent valid location hovered over,
                  * or simply allow the card/item to return to its slot (the latter is easier, as you won't have to store the last valid drop location!)
