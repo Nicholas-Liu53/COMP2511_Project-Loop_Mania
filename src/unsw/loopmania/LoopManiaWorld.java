@@ -3,6 +3,7 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.javatuples.Pair;
 
@@ -17,8 +18,8 @@ import unsw.loopmania.path.*;
 /**
  * A backend world.
  *
- * A world can contain many entities, each occupy a square. More than one
- * entity can occupy the same square.
+ * A world can contain many entities, each occupy a square. More than one entity
+ * can occupy the same square.
  */
 public class LoopManiaWorld {
     //*-------------------------------------------------------------------------
@@ -44,7 +45,8 @@ public class LoopManiaWorld {
 
     private Character character;
 
-    // TODO = add more lists for other entities, for equipped inventory items, etc...
+    // TODO = add more lists for other entities, for equipped inventory items,
+    // etc...
 
     // TODO = expand the range of enemies
     private List<Enemy> enemies;
@@ -57,7 +59,7 @@ public class LoopManiaWorld {
     private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
+    private List<Building> buildingEntities;
 
     private int numCycles;
     private int cycleShopLinear;
@@ -69,7 +71,8 @@ public class LoopManiaWorld {
     private int numGold;
 
     /**
-     * list of x,y coordinate pairs in the order by which moving entities traverse them
+     * list of x,y coordinate pairs in the order by which moving entities traverse
+     * them
      */
     private List<Pair<Integer, Integer>> orderedPath;
 
@@ -79,9 +82,10 @@ public class LoopManiaWorld {
     /**
      * create the world (constructor)
      * 
-     * @param width width of world in number of cells
-     * @param height height of world in number of cells
-     * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
+     * @param width       width of world in number of cells
+     * @param height      height of world in number of cells
+     * @param orderedPath ordered list of x, y coordinate pairs representing
+     *                    position of path cells in world
      */
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath) {
         this.width = width;
@@ -119,7 +123,9 @@ public class LoopManiaWorld {
     }
 
     /**
-     * set the character. This is necessary because it is loaded as a special entity out of the file
+     * set the character. This is necessary because it is loaded as a special entity
+     * out of the file
+     * 
      * @param character the character
      */
     public void setCharacter(Character character) {
@@ -127,12 +133,15 @@ public class LoopManiaWorld {
     }
 
     /**
-     * add a generic entity (without it's own dedicated method for adding to the world)
+     * add a generic entity (without it's own dedicated method for adding to the
+     * world)
+     * 
      * @param entity
      */
     public void addEntity(Entity entity) {
         // for adding non-specific entities (ones without another dedicated list)
-        // TODO = if more specialised types being added from main menu, add more methods like this with specific input types...
+        // TODO = if more specialised types being added from main menu, add more methods
+        // like this with specific input types...
         nonSpecifiedEntities.add(entity);
     }
 
@@ -141,14 +150,15 @@ public class LoopManiaWorld {
     //*-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
+     * 
      * @return list of the enemies to be displayed on screen
      */
-    public List<Enemy> possiblySpawnEnemies(){
-        // TODO = expand this very basic version
-        Pair<Integer, Integer> pos = possiblyGetSlugEnemySpawnPosition();
+    public List<Enemy> possiblySpawnEnemies() {
+        // Spawn slugs
+        Pair<Integer, Integer> slugPos = possiblyGetSlugEnemySpawnPosition();
         List<Enemy> spawningEnemies = new ArrayList<>();
-        if (pos != null){
-            int indexInPath = orderedPath.indexOf(pos);
+        if (slugPos != null) {
+            int indexInPath = orderedPath.indexOf(slugPos);
             SlugEnemy enemy = new SlugEnemy(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
@@ -322,10 +332,12 @@ public class LoopManiaWorld {
 
     /**
      * spawn a sword in the world and return the sword entity
+     * 
      * @return a sword to be spawned in the controller as a JavaFX node
      */
-    public Sword addUnequippedSword(){
-        // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
+    public Sword addUnequippedSword() {
+        // TODO = expand this - we would like to be able to add multiple types of items,
+        // apart from swords
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
@@ -334,9 +346,11 @@ public class LoopManiaWorld {
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
-        
-        // now we insert the new sword, as we know we have at least made a slot available...
-        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+
+        // now we insert the new sword, as we know we have at least made a slot
+        // available...
+        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(sword);
         return sword;
     }
@@ -352,10 +366,11 @@ public class LoopManiaWorld {
 
     /**
      * remove an item by x,y coordinates
+     * 
      * @param x x coordinate from 0 to width-1
      * @param y y coordinate from 0 to height-1
      */
-    public void removeUnequippedInventoryItemByCoordinates(int x, int y){
+    public void removeUnequippedInventoryItemByCoordinates(int x, int y) {
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
     }
@@ -371,15 +386,16 @@ public class LoopManiaWorld {
     }
 
     /**
-     * return an unequipped inventory item by x and y coordinates
-     * assumes that no 2 unequipped inventory items share x and y coordinates
+     * return an unequipped inventory item by x and y coordinates assumes that no 2
+     * unequipped inventory items share x and y coordinates
+     * 
      * @param x x index from 0 to width-1
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Entity e: unequippedInventoryItems){
-            if ((e.getX() == x) && (e.getY() == y)){
+    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Entity e : unequippedInventoryItems) {
+            if ((e.getX() == x) && (e.getY() == y)) {
                 return e;
             }
         }
@@ -390,12 +406,13 @@ public class LoopManiaWorld {
      * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
      * @return x,y coordinate pair
      */
-    private Pair<Integer, Integer> getFirstAvailableSlotForItem(){
+    private Pair<Integer, Integer> getFirstAvailableSlotForItem() {
         // first available slot for an item...
-        // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
-        for (int y=0; y<unequippedInventoryHeight; y++){
-            for (int x=0; x<unequippedInventoryWidth; x++){
-                if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
+        // IMPORTANT - have to check by y then x, since trying to find first available
+        // slot defined by looking row by row
+        for (int y = 0; y < unequippedInventoryHeight; y++) {
+            for (int x = 0; x < unequippedInventoryWidth; x++) {
+                if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null) {
                     return new Pair<Integer, Integer>(x, y);
                 }
             }
@@ -465,11 +482,12 @@ public class LoopManiaWorld {
      * @param buildingNodeX x index from 0 to width-1 of building to be added
      * @param buildingNodeY y index from 0 to height-1 of building to be added
      */
-    public VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+    public VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
+            int buildingNodeY) {
         // start by getting card
         Card card = null;
-        for (Card c: cardEntities){
-            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)){
+        for (Card c : cardEntities) {
+            if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)) {
                 card = c;
                 break;
             }

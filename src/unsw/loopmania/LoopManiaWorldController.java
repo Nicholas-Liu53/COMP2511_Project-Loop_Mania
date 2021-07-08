@@ -434,7 +434,14 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
-        ImageView view = new ImageView(slugEnemyImage);
+        ImageView view = null;
+
+        if (enemy instanceof SlugEnemy) {
+            view = new ImageView(slugEnemyImage);
+        } else if (enemy instanceof VampireEnemy) {
+            view = new ImageView(vampireEnemyImage);
+        }
+
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }

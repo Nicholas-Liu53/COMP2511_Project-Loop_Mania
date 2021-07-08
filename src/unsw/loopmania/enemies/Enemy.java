@@ -3,26 +3,105 @@ package unsw.loopmania.enemies;
 import java.util.Random;
 
 import unsw.loopmania.MovingEntity;
+import unsw.loopmania.Character;
 import unsw.loopmania.path.PathPosition;
 
 public abstract class Enemy extends MovingEntity {
-    // TODO = modify this, and add additional forms of enemy
-    public Enemy(PathPosition position) {
+    // Attribute
+    int health;
+    int supportRadius;
+    int attackRadius;
+    int damage;
+    float defenceFactor;
+    boolean inBattle;
+
+    /**
+     * Takes in path position and spawns enemy there
+     * @param position
+     */
+    public Enemy(PathPosition position, int health, int supportRadius, int attackRadius, int damage, int defence) {
         super(position);
+        this.health = health;
+        this.supportRadius = supportRadius;
+        this.attackRadius = attackRadius;
+        this.damage = damage;
+        this.defenceFactor = 1 - ((float)defence / 100);
+        this.inBattle = false;
     }
 
     /**
      * move the enemy
      */
     public void move(){
-        // TODO = modify this, since this implementation doesn't provide the expected enemy behaviour
-        // this basic enemy moves in a random direction... 25% chance up or down, 50% chance not at all...
-        int directionChoice = (new Random()).nextInt(2);
-        if (directionChoice == 0){
-            moveUpPath();
+        if (!inBattle) {
+            int directionChoice = (new Random()).nextInt(2);
+            if (directionChoice == 0){
+                moveUpPath();
+            }
+            else if (directionChoice == 1){
+                moveDownPath();
+            }
         }
-        else if (directionChoice == 1){
-            moveDownPath();
+    }
+
+    /**
+     * @return enemy's health value, should never be less than 0
+     */
+    public int getHealth() {
+        return this.health;
+    }
+
+    /**
+     * @return Enemy's support radius
+     */
+    public int getSupportRadius() {
+        return this.supportRadius;
+    }
+
+    /**
+     * @return Enemy's support radius
+     */
+    public int getAttackRadius() {
+        return this.attackRadius;
+    }
+
+    /**
+     * @return true if enemy is in a battle, otherwise false
+     */
+    public boolean getInBattle() {
+        return this.inBattle;
+    }
+
+    /**
+     * Sets whether an enemy is currently in battle, preventing it from moving
+     * @param inBattle
+     */
+    public void setInBattle(boolean inBattle) {
+        this.inBattle = inBattle;
+    }
+
+    /**
+     * Allows the enemy to launch an attack against a character, doing damage and possibly
+     * using a special attack
+     * @param mainChar
+     */
+    public void launchAttack(Character mainChar) {
+        mainChar.receiveAttack(this.damage);
+    }
+
+    /**
+     * Allows enemy to receive an attack, takes in the amount of damage to be done and subtracts
+     * the relavent amount from health after defence is factored in 
+     * @param damage
+     */
+    public void receiveAttack(int recvDamage) {
+        this.inBattle = true;
+        // Adjusting for defence
+        recvDamage = (int)(recvDamage * this.defenceFactor);
+        this.health -= recvDamage;
+        // Health should not be less than 0
+        if (this.health < 0) {
+            this.health = 0;
         }
     }
 }
