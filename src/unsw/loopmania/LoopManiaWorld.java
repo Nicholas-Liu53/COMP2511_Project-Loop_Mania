@@ -75,6 +75,7 @@ public class LoopManiaWorld {
      * them
      */
     private List<Pair<Integer, Integer>> orderedPath;
+    private Pair<Integer, Integer> startingPoint;
 
     //--------------------------------------------------------------------------
     //                             Constructor
@@ -96,6 +97,7 @@ public class LoopManiaWorld {
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
+        startingPoint = orderedPath.get(0);
         buildingEntities = new ArrayList<>();
         numCycles = 0;
         cycleShopLinear = 1;
@@ -143,6 +145,10 @@ public class LoopManiaWorld {
         // TODO = if more specialised types being added from main menu, add more methods
         // like this with specific input types...
         nonSpecifiedEntities.add(entity);
+    }
+
+    public Pair<Integer, Integer> getStartingPoint() {
+        return startingPoint;
     }
 
     //*-------------------------------------------------------------------------
@@ -492,10 +498,20 @@ public class LoopManiaWorld {
                 break;
             }
         }
+        
         Pair<Integer, Integer> newLocation = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
-        if (orderedPath.contains(newLocation)) {
-            return null;
+        if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard") || card.getCardId().equals("TrapCard")) {
+            if (!orderedPath.contains(newLocation))
+                return null;
+        } else {
+            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+                return null;
+            else {
+                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
+                    return null;
+            }
         }
+
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
         buildingEntities.add(newBuilding);
@@ -532,6 +548,17 @@ public class LoopManiaWorld {
         }
     }
 
+    // Helper Function to check if location is adjacent to path
+    private boolean adjacentToPath(Pair<Integer, Integer> location) {
+        for (int i = location.getValue0() - 1 ; i <= location.getValue0() + 1; i++) {
+            for (int j = location.getValue1() - 1; j <= location.getValue1() + 1; j++) {
+                if (i != location.getValue0() && j != location.getValue1() && orderedPath.contains(new Pair<Integer, Integer>(i,j)))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     //*-------------------------------------------------------------------------
     //*                                 Movement
     //*-------------------------------------------------------------------------
@@ -541,7 +568,7 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveEnemies();
-        if (character.getX() == 0 && character.getY() == 0) {
+        if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
     }
