@@ -526,7 +526,6 @@ public class LoopManiaWorldController {
                  * You might want to design the application so dropping at an invalid location drops at the most recent valid location hovered over,
                  * or simply allow the card/item to return to its slot (the latter is easier, as you won't have to store the last valid drop location!)
                  */
-                boolean canPlace = false;
                 if (currentlyDraggedType == draggableType){
                     // problem = event is drop completed is false when should be true...
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
@@ -555,19 +554,13 @@ public class LoopManiaWorldController {
                                     canPlace = true;
                                     onLoad(newBuilding);
                                 } else {
+                                    // Return card to original spot if human player tries to drag onto invalid tile
                                     if (currentlyDraggedType == draggableType){
-                                        // Data dropped
-                                        // If there is an image on the dragboard, read it and use it
-                                        // Dragboard db = event.getDragboard();
-                                        // Node node = event.getPickResult().getIntersectedNode();
-                                        if(node != anchorPaneRoot && db.hasImage()){
-                                            // Places at 0,0 - will need to take coordinates once that is implemented
+                                        if (node != anchorPaneRoot && db.hasImage()){
                                             currentlyDraggedImage.setVisible(true);
                                             draggedEntity.setVisible(false);
                                             draggedEntity.setMouseTransparent(false);
-                                            // remove drag event handlers before setting currently dragged image to null
                                             removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                            
                                             currentlyDraggedImage = null;
                                             currentlyDraggedType = null;
                                         }
@@ -592,25 +585,10 @@ public class LoopManiaWorldController {
                         draggedEntity.setMouseTransparent(false);
                         currentlyDraggedImage = null;
                         currentlyDraggedType = null;
-                        // if (canPlace) {
-                        //     draggedEntity.setVisible(false);
-                        //     draggedEntity.setMouseTransparent(false);
-                        //     currentlyDraggedImage = null;
-                        //     currentlyDraggedType = null;
-                        // } else {
-                        //     draggedEntity.setVisible(true);
-                        //     draggedEntity.setMouseTransparent(true);
-                        // }
-
                         // Remove drag event handlers before setting currently dragged image to null
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
-                // if (canPlace) {
-                //     event.setDropCompleted(true);
-                // } else {
-                //     event.setDropCompleted(false);
-                // }
                 event.setDropCompleted(true);
                 // consuming prevents the propagation of the event to the anchorPaneRoot (as a sub-node of anchorPaneRoot, GridPane is prioritized)
                 // https://openjfx.io/javadoc/11/javafx.base/javafx/event/Event.html#consume()
