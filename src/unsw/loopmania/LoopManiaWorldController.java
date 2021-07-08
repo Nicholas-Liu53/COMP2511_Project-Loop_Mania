@@ -746,10 +746,10 @@ public class LoopManiaWorldController {
 
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
                 Node node = event.getPickResult().getIntersectedNode();
-                Integer cIndex = GridPane.getColumnIndex(node);
-                Integer rIndex = GridPane.getRowIndex(node);
-                int x = cIndex == null ? 0 : cIndex;
-                int y = rIndex == null ? 0 : rIndex;
+                // Integer cIndex = GridPane.getColumnIndex(node);
+                // Integer rIndex = GridPane.getRowIndex(node);
+                // int x = cIndex == null ? 0 : cIndex;
+                // int y = rIndex == null ? 0 : rIndex;
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType){
@@ -784,32 +784,32 @@ public class LoopManiaWorldController {
                         // TODO = be more selective about whether highlighting changes - if it cannot be dropped in the location, the location shouldn't be highlighted!
                         public void handle(DragEvent event) {
                             if (currentlyDraggedType == draggableType){
-                                switch(draggableType) {
-                                    case CARD:
-                                        //The drag-and-drop gesture entered the target
-                                        //show the user that it is an actual gesture target
-                                        Card card = (Card) staticEntity;
-                                        if (!world.canPlaceCard(new Pair<Integer,Integer>(x, y), card)) {
-                                            event.consume();    
-                                            return;
-                                        }
-                                        if(event.getGestureSource() != n && event.getDragboard().hasImage()){
-                                            n.setOpacity(0.7);
-                                        } 
-                                        break;
-                                    case ITEM:
-                                        //The drag-and-drop gesture entered the target
-                                        //show the user that it is an actual gesture target
-                                        if(event.getGestureSource() != n && event.getDragboard().hasImage()){
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    default: 
-                                        break;
-                                }
-                                // if (currentlyDraggedType == draggableType){
-                                //     n.setOpacity(0.7);
+                                // switch(draggableType) {
+                                //     case CARD:
+                                //         //The drag-and-drop gesture entered the target
+                                //         //show the user that it is an actual gesture target
+                                //         Card card = (Card) staticEntity;
+                                //         // if (!world.canPlaceCard(new Pair<Integer,Integer>(x, y), card)) {
+                                //         //     event.consume();    
+                                //         //     return;
+                                //         // }
+                                //         if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                //             n.setOpacity(0.7);
+                                //         } 
+                                //         break;
+                                //     case ITEM:
+                                //         //The drag-and-drop gesture entered the target
+                                //         //show the user that it is an actual gesture target
+                                //         if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                //             n.setOpacity(0.7);
+                                //         }
+                                //         break;
+                                //     default: 
+                                //         break;
                                 // }
+                                if (currentlyDraggedType == draggableType){
+                                    n.setOpacity(0.7);
+                                }
                                 
                             }
                             event.consume();
