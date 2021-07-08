@@ -35,17 +35,17 @@ public class CharacterTest {
 
         // Testing basic damage, and checking that health never goes beyond 0
         character.receiveAttack(0);
-        assertEquals(character.getHealth(), 100);
+        assertEquals(100, character.getHealth());
         character.receiveAttack(10);
-        assertEquals(character.getHealth(), 90);
+        assertEquals(90, character.getHealth());
         character.receiveAttack(5);
-        assertEquals(character.getHealth(), 85);
+        assertEquals(85, character.getHealth());
         character.receiveAttack(3);
-        assertEquals(character.getHealth(), 82);
+        assertEquals(82, character.getHealth());
         character.receiveAttack(82);
-        assertEquals(character.getHealth(), 0);
+        assertEquals(0, character.getHealth());
         character.receiveAttack(3);
-        assertEquals(character.getHealth(), 0);
+        assertEquals(0, character.getHealth());
     }
 
     @Test
@@ -57,15 +57,15 @@ public class CharacterTest {
         VampireEnemy vampire = new VampireEnemy(null);
 
         character.launchAttack(vampire);
-        assertEquals(vampire.getHealth(), 70);
+        assertEquals(71, vampire.getHealth());
         character.launchAttack(vampire);
-        assertEquals(vampire.getHealth(), 65);
+        assertEquals(67, vampire.getHealth());
         character.launchAttack(slug);
-        assertEquals(slug.getHealth(), 20);
+        assertEquals(20, slug.getHealth());
         character.launchAttack(vampire);
-        assertEquals(vampire.getHealth(), 60);
+        assertEquals(63, vampire.getHealth());
         character.launchAttack(slug);
-        assertEquals(slug.getHealth(), 15);
+        assertEquals(15, slug.getHealth());
     }
 
     @Test
@@ -136,20 +136,20 @@ public class CharacterTest {
     @Test
     public void giveExperiencePointsTest() {
         Character character = new Character(null);
-        assertEquals(character.getExperience(), 0);
+        assertEquals(0, character.getExperience());
         character.giveExperiencePoints(10);
-        assertEquals(character.getExperience(), 10);
+        assertEquals(10, character.getExperience());
         character.giveExperiencePoints(1);
-        assertEquals(character.getExperience(), 11);
+        assertEquals(11, character.getExperience());
     }
 
     @Test
     public void giveGoldTest() {
         Character character = new Character(null);
-        assertEquals(character.getGold(), 0);
+        assertEquals(0, character.getGold());
         character.giveGold(1000);
-        assertEquals(character.getGold(), 1000);
+        assertEquals(1000, character.getGold());
         character.giveGold(100);
-        assertEquals(character.getGold(), 1100);
+        assertEquals(1100, character.getGold());
     }
 }
