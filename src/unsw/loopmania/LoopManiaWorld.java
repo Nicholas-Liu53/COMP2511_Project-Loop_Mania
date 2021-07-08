@@ -526,7 +526,7 @@ public class LoopManiaWorld {
     private boolean adjacentToPath(List<Pair<Integer, Integer>> list, Pair<Integer, Integer> location) {
         for (int i = location.getValue0() - 1 ; i <= location.getValue0() + 1; i++) {
             for (int j = location.getValue1() - 1; j <= location.getValue1() + 1; j++) {
-                if (i != j && list.contains(new Pair<Integer, Integer>(i,j)))
+                if (i != location.getValue0() && j != location.getValue1() && list.contains(new Pair<Integer, Integer>(i,j)))
                     return true;
             }
         }
