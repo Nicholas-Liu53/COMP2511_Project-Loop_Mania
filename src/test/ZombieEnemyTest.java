@@ -14,7 +14,7 @@ import unsw.loopmania.path.PathPosition;
 /**
  * Unit tests for the zombie enemy class
  */
-public class ZombieTest {
+public class ZombieEnemyTest {
     @Test
     public void constructTest(){
         // Testing construction + basic getters
