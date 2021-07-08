@@ -139,6 +139,8 @@ public class LoopManiaWorldController {
     
     // Enemies
     private Image slugEnemyImage;
+    private Image vampireEnemyImage;
+
     private int spawnCycle;
 
     // Path Starting position
@@ -196,6 +198,7 @@ public class LoopManiaWorldController {
         vampireCastleBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         // Enemies
         slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        vampireEnemyImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         // Items
         bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
@@ -446,7 +449,14 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
-        ImageView view = new ImageView(slugEnemyImage);
+        ImageView view = null;
+
+        if (enemy instanceof SlugEnemy) {
+            view = new ImageView(slugEnemyImage);
+        } else if (enemy instanceof VampireEnemy) {
+            view = new ImageView(vampireEnemyImage);
+        }
+
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }
