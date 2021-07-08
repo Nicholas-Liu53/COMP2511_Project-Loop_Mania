@@ -549,11 +549,33 @@ public class LoopManiaWorldController {
                         switch (draggableType){
                             case CARD:
                                 // TODO = spawn a building here of different types
-                                VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
                                     canPlace = true;
                                     onLoad(newBuilding);
+                                } else {
+                                    if (currentlyDraggedType == draggableType){
+                                        // Data dropped
+                                        // If there is an image on the dragboard, read it and use it
+                                        // Dragboard db = event.getDragboard();
+                                        // Node node = event.getPickResult().getIntersectedNode();
+                                        if(node != anchorPaneRoot && db.hasImage()){
+                                            // Places at 0,0 - will need to take coordinates once that is implemented
+                                            currentlyDraggedImage.setVisible(true);
+                                            draggedEntity.setVisible(false);
+                                            draggedEntity.setMouseTransparent(false);
+                                            // remove drag event handlers before setting currently dragged image to null
+                                            removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                            
+                                            currentlyDraggedImage = null;
+                                            currentlyDraggedType = null;
+                                        }
+                                    }
+                                    // Let the source know whether the image was successfully transferred and used
+                                    event.setDropCompleted(true);
+                                    event.consume();
+                                    return;
                                 }
                                 break;
                             case ITEM:
@@ -566,24 +588,30 @@ public class LoopManiaWorldController {
                             default:
                                 break;
                         }
-                        if (canPlace) {
-                            draggedEntity.setVisible(false);
-                            draggedEntity.setMouseTransparent(false);
-                            currentlyDraggedImage = null;
-                            currentlyDraggedType = null;
-                        } // else {
+                        draggedEntity.setVisible(false);
+                        draggedEntity.setMouseTransparent(false);
+                        currentlyDraggedImage = null;
+                        currentlyDraggedType = null;
+                        // if (canPlace) {
+                        //     draggedEntity.setVisible(false);
+                        //     draggedEntity.setMouseTransparent(false);
+                        //     currentlyDraggedImage = null;
+                        //     currentlyDraggedType = null;
+                        // } else {
                         //     draggedEntity.setVisible(true);
                         //     draggedEntity.setMouseTransparent(true);
                         // }
-                        // remove drag event handlers before setting currently dragged image to null
+
+                        // Remove drag event handlers before setting currently dragged image to null
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
-                if (canPlace) {
-                    event.setDropCompleted(true);
-                } else {
-                    event.setDropCompleted(false);
-                }
+                // if (canPlace) {
+                //     event.setDropCompleted(true);
+                // } else {
+                //     event.setDropCompleted(false);
+                // }
+                event.setDropCompleted(true);
                 // consuming prevents the propagation of the event to the anchorPaneRoot (as a sub-node of anchorPaneRoot, GridPane is prioritized)
                 // https://openjfx.io/javadoc/11/javafx.base/javafx/event/Event.html#consume()
                 // to understand this in full detail, ask your tutor or read https://docs.oracle.com/javase/8/javafx/events-tutorial/processing.htm
@@ -629,7 +657,6 @@ public class LoopManiaWorldController {
                         currentlyDraggedType = null;
                     }
                 }
-                // for (int i = 0; i < 100; i++) System.out.println("Yes");
                 // Let the source know whether the image was successfully transferred and used
                 event.setDropCompleted(true);
                 event.consume();
