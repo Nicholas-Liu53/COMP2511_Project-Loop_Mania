@@ -619,19 +619,23 @@ public class LoopManiaWorld {
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2)) {
                 // fight...
+                character.addBattle(e);
                 character.launchAttack(e);
                 e.launchAttack(character);
 
                 if (e.getHealth() == 0) {
+                    // Remove enemy
                     defeatedEnemies.add(e);
-                    // give character a card
+                    character.removeBattle(e);
+
+                    // give character rewards
+                    battleWon();
                 }
                 // TODO handle character death
 
             } else if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
                     .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
                 // Support radius logic
-                e.setInBattle(true);
 
                 if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
                     e.moveUpPath();
@@ -639,10 +643,6 @@ public class LoopManiaWorld {
                     e.moveDownPath();
                 }
             }
-        }
-
-        if (enemies.size() == defeatedEnemies.size()) {
-            battleWon();
         }
 
         for (Enemy e : defeatedEnemies) {

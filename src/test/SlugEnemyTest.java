@@ -22,11 +22,11 @@ public class SlugEnemyTest {
         SlugEnemy newSlug = new SlugEnemy(null);
         
         // Ensure attributes are correct
-        assertEquals(newSlug.getHealth(), 25);
+        assertEquals(25, newSlug.getHealth());
         assertEquals(newSlug.getAttackRadius(), newSlug.getSupportRadius());
         // 2 Being the equivalent of 1 tile
-        assertEquals(newSlug.getAttackRadius(), 2);
-        assertEquals(newSlug.getSupportRadius(), 2);
+        assertEquals(2, newSlug.getAttackRadius());
+        assertEquals(2, newSlug.getSupportRadius());
     }
 
     @Test
@@ -35,17 +35,17 @@ public class SlugEnemyTest {
 
         // Testing basic damage
         newSlug.receiveAttack(10);
-        assertEquals(newSlug.getHealth(), 15);
+        assertEquals(15, newSlug.getHealth());
         newSlug.receiveAttack(5);
-        assertEquals(newSlug.getHealth(), 10);
+        assertEquals(10, newSlug.getHealth());
         newSlug.receiveAttack(3);
-        assertEquals(newSlug.getHealth(), 7);
+        assertEquals(7, newSlug.getHealth());
         newSlug.receiveAttack(0);
-        assertEquals(newSlug.getHealth(), 7);
+        assertEquals(7, newSlug.getHealth());
         newSlug.receiveAttack(12);
-        assertEquals(newSlug.getHealth(), 0);
+        assertEquals(0, newSlug.getHealth());
         newSlug.receiveAttack(5);
-        assertEquals(newSlug.getHealth(), 0);
+        assertEquals(0, newSlug.getHealth());
     }
 
     @Test
@@ -55,13 +55,13 @@ public class SlugEnemyTest {
         SlugEnemy newSlug = new SlugEnemy(null);
 
         newSlug.launchAttack(newChar);
-        assertEquals(newChar.getHealth(), 97);
+        assertEquals(97, newChar.getHealth());
         newSlug.launchAttack(newChar);
-        assertEquals(newChar.getHealth(), 94);
+        assertEquals(94, newChar.getHealth());
         newSlug.launchAttack(newChar);
-        assertEquals(newChar.getHealth(), 91);
+        assertEquals(91, newChar.getHealth());
         newSlug.launchAttack(newChar);
-        assertEquals(newChar.getHealth(), 88);
+        assertEquals(88, newChar.getHealth());
     }
 
     @Test

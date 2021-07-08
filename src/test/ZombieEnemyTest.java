@@ -22,10 +22,10 @@ public class ZombieEnemyTest {
         ZombieEnemy newZombie = new ZombieEnemy(null);
         
         // Ensure attributes are correct
-        assertEquals(newZombie.getHealth(), 50);
+        assertEquals(50, newZombie.getHealth());
         assertEquals(newZombie.getAttackRadius(), newZombie.getSupportRadius());
         // 2 Being the equivalent of 1 tile
-        assertEquals(newZombie.getAttackRadius(), 3);
-        assertEquals(newZombie.getSupportRadius(), 3);
+        assertEquals(3, newZombie.getAttackRadius());
+        assertEquals(3, newZombie.getSupportRadius());
     }
 }
