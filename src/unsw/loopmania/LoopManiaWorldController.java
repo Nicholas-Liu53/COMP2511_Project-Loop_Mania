@@ -408,7 +408,7 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Sword sword) {
         ImageView view = new ImageView(swordImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        addDragEventHandlers(sword, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(sword, view);
         unequippedInventory.getChildren().add(view);
     }
@@ -422,7 +422,7 @@ public class LoopManiaWorldController {
     private void onLoad(Item item) {
         ImageView view = new ImageView(healthPotionImage); // For now all items are health potions
         // TODO: If Item isn't a health potion
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
     }
@@ -643,7 +643,86 @@ public class LoopManiaWorldController {
                         draggedEntity.setImage(vampireCastleCardImage);
                         break;
                     case ITEM:
+
                         draggedEntity.setImage(swordImage);
+                        break;
+                    default:
+                        break;
+                }
+                
+                draggedEntity.setVisible(true);
+                draggedEntity.setMouseTransparent(true);
+                draggedEntity.toFront();
+
+                // IMPORTANT!!!
+                // to be able to remove event handlers, need to use addEventHandler
+                // https://stackoverflow.com/a/67283792
+                targetGridPane.addEventHandler(DragEvent.DRAG_DROPPED, gridPaneSetOnDragDropped.get(draggableType));
+                anchorPaneRoot.addEventHandler(DragEvent.DRAG_OVER, anchorPaneRootSetOnDragOver.get(draggableType));
+                anchorPaneRoot.addEventHandler(DragEvent.DRAG_DROPPED, anchorPaneRootSetOnDragDropped.get(draggableType));
+
+                for (Node n: targetGridPane.getChildren()){
+                    // events for entering and exiting are attached to squares children because that impacts opacity change
+                    // these do not affect visibility of original image...
+                    // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
+                    gridPaneNodeSetOnDragEntered.put(draggableType, new EventHandler<DragEvent>() {
+                        // TODO = be more selective about whether highlighting changes - if it cannot be dropped in the location, the location shouldn't be highlighted!
+                        public void handle(DragEvent event) {
+                            if (currentlyDraggedType == draggableType){
+                            //The drag-and-drop gesture entered the target
+                            //show the user that it is an actual gesture target
+                                if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                    n.setOpacity(0.7);
+                                }
+                            }
+                            event.consume();
+                        }
+                    });
+                    gridPaneNodeSetOnDragExited.put(draggableType, new EventHandler<DragEvent>() {
+                        // TODO = since being more selective about whether highlighting changes, you could program the game so if the new highlight location is invalid the highlighting doesn't change, or leave this as-is
+                        public void handle(DragEvent event) {
+                            if (currentlyDraggedType == draggableType){
+                                n.setOpacity(1);
+                            }
+                
+                            event.consume();
+                        }
+                    });
+                    n.addEventHandler(DragEvent.DRAG_ENTERED, gridPaneNodeSetOnDragEntered.get(draggableType));
+                    n.addEventHandler(DragEvent.DRAG_EXITED, gridPaneNodeSetOnDragExited.get(draggableType));
+                }
+                event.consume();
+            }
+            
+        });
+    }
+
+    // Generalised for items ONLY --> Must do for cards
+    private void addDragEventHandlers(Item item, ImageView view, DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane){
+        view.setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can detect it...
+                currentlyDraggedType = draggableType;
+                //Drag was detected, start drap-and-drop gesture
+                //Allow any transfer node
+                Dragboard db = view.startDragAndDrop(TransferMode.MOVE);
+    
+                //Put ImageView on dragboard
+                ClipboardContent cbContent = new ClipboardContent();
+                cbContent.putImage(view.getImage());
+                db.setContent(cbContent);
+                view.setVisible(false);
+
+                buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
+
+                draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+                switch (draggableType){
+                    case CARD:
+                        draggedEntity.setImage(vampireCastleCardImage);
+                        break;
+                    case ITEM:
+                        if (item.getItemID().equals("Sword")) draggedEntity.setImage(swordImage);
+                        if (item.getItemID().equals("HealthPotion")) draggedEntity.setImage(healthPotionImage);
                         break;
                     default:
                         break;
