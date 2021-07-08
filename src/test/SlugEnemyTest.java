@@ -70,7 +70,7 @@ public class SlugEnemyTest {
         PathPosition position = null;
 
         try {
-            position = TestHelper.generatePathPosition("worlds/world_with_twists_and_turns.json");
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
         } catch (FileNotFoundException e) {
             // Failed to generate PathPostion
             assertTrue(false);
@@ -82,9 +82,6 @@ public class SlugEnemyTest {
         int initialY = newSlug.getY();
         boolean moved = false;
         int i = 0;
-
-        System.out.println(initialX);
-        System.out.println(initialY);
 
         while (i < 100) {
             newSlug.move();
