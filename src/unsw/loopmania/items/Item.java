@@ -8,8 +8,29 @@ import unsw.loopmania.StaticEntity;
  * which doesn't move
  */
 public abstract class Item extends StaticEntity {
-    // TODO = implement other varieties of card than VampireCastleCard
-    public Item(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private String itemType; // Armour or weapon or potion
+    protected String itemID; // Specific armour/weapon/potion
+    protected int purchasePrice;
+    protected int sellPrice;
+
+    public Item(SimpleIntegerProperty x, SimpleIntegerProperty y, String itemType) {
         super(x, y);
+        this.itemType = itemType;
+    }
+
+    public String getItemType() {
+        return this.itemType;
+    }
+    
+    public String getItemID() {
+        return this.itemID;
+    }
+
+    public int getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public int getSellPrice() {
+        return sellPrice;
     }
 }
