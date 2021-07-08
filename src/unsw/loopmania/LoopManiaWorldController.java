@@ -551,7 +551,6 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
-                                    canPlace = true;
                                     onLoad(newBuilding);
                                 } else {
                                     // Return card to original spot if human player tries to drag onto invalid tile
@@ -574,7 +573,6 @@ public class LoopManiaWorldController {
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
-                                canPlace = true;
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
