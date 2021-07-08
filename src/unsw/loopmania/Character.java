@@ -13,7 +13,7 @@ import unsw.loopmania.items.Item;
 public class Character extends MovingEntity {
     private int health;
     private int damage;
-    private boolean inBattle;
+    private ArrayList<Enemy> currentlyBattling;
     private ArrayList<Item> equippedItems;
     private int experience;
     private int gold;
@@ -24,7 +24,7 @@ public class Character extends MovingEntity {
         super(position);
         this.health = 100;
         this.damage = 5;
-        this.inBattle = false;
+        this.currentlyBattling = new ArrayList<Enemy>();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
@@ -41,8 +41,15 @@ public class Character extends MovingEntity {
         return this.damage;
     }
 
+    /**
+     * @return true if the character is in a battle, else false
+     */
     public boolean getInBattle() {
-        return this.inBattle;
+        if (this.currentlyBattling.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public ArrayList<Item> getEquippedItems() {
@@ -57,8 +64,26 @@ public class Character extends MovingEntity {
         return this.gold;
     }
 
-    public void setInBattle(boolean battleStatus) {
-        this.inBattle = battleStatus;
+    /**
+     * Adds enemy to list of enemies that the character is currently battling
+     * only adds enemy it it is not already on the list
+     * @param enemy
+     */
+    public void addBattle(Enemy enemy) {
+        if (!this.currentlyBattling.contains(enemy)) {
+            this.currentlyBattling.add(enemy);
+        }
+    }
+
+    /**
+     * Removes enemy from list of enemies that the character is currently battling
+     * should only be invoked if the enemy is defeated
+     * @param enemy
+     */
+    public void removeBattle(Enemy enemy) {
+        if (this.currentlyBattling.contains(enemy)) {
+            this.currentlyBattling.remove(enemy);
+        }
     }
 
     /**
@@ -79,7 +104,6 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-        this.inBattle = true;
         this.health -= damage;
         if (this.health < 0)
             this.health = 0;
@@ -101,8 +125,8 @@ public class Character extends MovingEntity {
     }
 
     @Override
-    public void moveUpPath() {
-        if(!this.inBattle) {
+    public void moveDownPath() {
+        if(!this.getInBattle()) {
             super.moveUpPath();
         }
     }
