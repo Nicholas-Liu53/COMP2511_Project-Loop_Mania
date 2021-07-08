@@ -12,7 +12,7 @@ import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.path.PathPosition;
 
 /**
- * Unite tests for the slug enemy class
+ * Unit tests for the slug enemy class
  */
 public class SlugEnemyTest {
     @Test
@@ -39,9 +39,9 @@ public class SlugEnemyTest {
         newSlug.receiveAttack(5);
         assertEquals(newSlug.getHealth(), 10);
         newSlug.receiveAttack(3);
-        assertEquals(newSlug.getHealth(), 12);
+        assertEquals(newSlug.getHealth(), 7);
         newSlug.receiveAttack(0);
-        assertEquals(newSlug.getHealth(), 12);
+        assertEquals(newSlug.getHealth(), 7);
         newSlug.receiveAttack(12);
         assertEquals(newSlug.getHealth(), 0);
         newSlug.receiveAttack(5);

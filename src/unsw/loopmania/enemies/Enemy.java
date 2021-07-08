@@ -25,7 +25,7 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackRadius = attackRadius;
         this.damage = damage;
-        this.defenceFactor = 1 - (defence / 100);
+        this.defenceFactor = 1 - ((float)defence / 100);
         this.inBattle = false;
     }
 
