@@ -808,9 +808,7 @@ public class LoopManiaWorld {
                 character.giveExperiencePoints(values.get(rand.nextInt(2)));
                 break;
             case "buildingCard":
-                Card rewardCard = loadCard(buildingCards.get(rand.nextInt(7)));
-                // add card to inventory
-                cardEntities.add(rewardCard);
+                loadCard(buildingCards.get(rand.nextInt(7)));
                 break;
             case "equipment":
                 Item rewardItem = generateRewardItem(equipments.get(rand.nextInt(6)));
