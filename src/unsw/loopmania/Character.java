@@ -1,11 +1,10 @@
 package unsw.loopmania;
 
-import unsw.loopmania.path.PathPosition;
-
 import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.Item;
+import unsw.loopmania.path.PathPosition;
 
 /**
  * represents the main character in the backend of the game world
@@ -65,8 +64,9 @@ public class Character extends MovingEntity {
     }
 
     /**
-     * Adds enemy to list of enemies that the character is currently battling
-     * only adds enemy it it is not already on the list
+     * Adds enemy to list of enemies that the character is currently battling only
+     * adds enemy it it is not already on the list
+     * 
      * @param enemy
      */
     public void addBattle(Enemy enemy) {
@@ -78,6 +78,7 @@ public class Character extends MovingEntity {
     /**
      * Removes enemy from list of enemies that the character is currently battling
      * should only be invoked if the enemy is defeated
+     * 
      * @param enemy
      */
     public void removeBattle(Enemy enemy) {
@@ -126,7 +127,7 @@ public class Character extends MovingEntity {
 
     @Override
     public void moveDownPath() {
-        if(!this.getInBattle()) {
+        if (!this.getInBattle()) {
             super.moveUpPath();
         }
     }
