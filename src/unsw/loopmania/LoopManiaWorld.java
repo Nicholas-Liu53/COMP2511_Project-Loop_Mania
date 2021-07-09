@@ -128,6 +128,10 @@ public class LoopManiaWorld {
         return this.numCycles;
     }
 
+    public List<Pair<Integer, Integer>> getPath() {
+        return this.orderedPath;
+    }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity
      * out of the file
