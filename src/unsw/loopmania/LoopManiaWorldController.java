@@ -462,10 +462,10 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * Load a vampire castle card into the GUI. Particularly, we must connect to the
-     * drag detection event handler, and load the image into the cards GridPane.
+     * Load a card into the GUI. Particularly, we must connect to the drag detection
+     * event handler, and load the image into the cards GridPane.
      * 
-     * @param vampireCastleCard
+     * @param card
      */
     public void onLoad(Card card) {
         ImageView view = null;
