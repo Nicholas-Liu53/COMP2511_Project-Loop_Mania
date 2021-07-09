@@ -12,4 +12,9 @@ public abstract class Building extends StaticEntity {
     public Building(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
+
+    @Override
+    public String getStaticEntityType() {
+        return "Building";
+    }
 }

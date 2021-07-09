@@ -19,4 +19,9 @@ public abstract class Card extends StaticEntity {
     public String getCardId() {
         return cardId;
     }
+
+    @Override
+    public String getStaticEntityType() {
+        return "Card";
+    }
 }
