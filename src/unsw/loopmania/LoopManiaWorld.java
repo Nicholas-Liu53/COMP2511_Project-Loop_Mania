@@ -579,16 +579,16 @@ public class LoopManiaWorld {
     public boolean canPlaceCard(Pair<Integer,Integer> newLocation, Card card) {
         if (placedBuildings.contains(newLocation)) return false;
         if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard") || card.getCardId().equals("TrapCard")) {
-            if (!orderedPath.contains(newLocation))
+            if (!orderedPath.contains(newLocation) || newLocation.equals(new Pair<Integer,Integer>(startingPoint.getValue0(), startingPoint.getValue1())))
                 return false;
-            } else {
-                if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+        } else {
+            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+                return false;
+            else {
+                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
                     return false;
-                else {
-                    if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
-                        return false;
-                }
             }
+        }
             return true;
     }
 }
