@@ -361,6 +361,7 @@ public class LoopManiaWorld {
             removeItemByPositionInUnequippedInventoryItems(0);
             // TODO = give some cash/experience rewards for the discarding of the oldest
             // item
+            
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
 
@@ -525,18 +526,18 @@ public class LoopManiaWorld {
      * @return a card to be spawned in the controller as a JavaFX node
      */
     // public VampireCastleCard loadVampireCard() {
-    // // if adding more cards than have, remove the first card...
-    // if (cardEntities.size() >= getWidth()) {
-    // // TODO = give some cash/experience/item rewards for the discarding of the
-    // // oldest card
-    // giveRandomRewards("noCard");
-    // removeCard(0);
-    // }
-    // VampireCastleCard vampireCastleCard = new VampireCastleCard(new
-    // SimpleIntegerProperty(cardEntities.size()),
-    // new SimpleIntegerProperty(0));
-    // cardEntities.add(vampireCastleCard);
-    // return vampireCastleCard;
+    //     // if adding more cards than have, remove the first card...
+    //     if (cardEntities.size() >= getWidth()) {
+    //         // TODO = give some cash/experience/item rewards for the discarding of the
+    //         // oldest card
+    //         giveRandomRewards("noCard");
+    //         removeCard(0);
+    //     }
+    //     VampireCastleCard vampireCastleCard = new VampireCastleCard(new
+    //     SimpleIntegerProperty(cardEntities.size()),
+    //     new SimpleIntegerProperty(0));
+    //     cardEntities.add(vampireCastleCard);
+    //     return vampireCastleCard;
     // }
 
     public Card loadCard(String cardType) {
@@ -552,19 +553,28 @@ public class LoopManiaWorld {
         switch (cardType) {
             case "BarracksCard":
                 card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                break;
             case "CampfireCard":
                 card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                break;
             case "TowerCard":
                 card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                break;
             case "TrapCard":
                 card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                break;
             case "VillageCard":
                 card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                break;
             case "ZombiePitCard":
                 card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                break;
             case "VampireCastleCard":
                 card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()),
                         new SimpleIntegerProperty(0));
+                break;
+            default:
+                break;
         }
         cardEntities.add(card);
         return card;

@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.javatuples.Pair;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
@@ -409,8 +410,9 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
-        loadSword();
-        loadVampireCard();
+        world.giveRandomRewards("withCard");
+        // loadSword();
+        // loadVampireCard();
     }
 
     /**
@@ -465,7 +467,7 @@ public class LoopManiaWorldController {
      * 
      * @param vampireCastleCard
      */
-    private void onLoad(Card card) {
+    public void onLoad(Card card) {
         ImageView view = null;
 
         if (card instanceof BarracksCard)
@@ -766,95 +768,6 @@ public class LoopManiaWorldController {
      * @param targetGridPane the relevant gridpane to which the entity would be
      *                       dragged to
      */
-    private void addDragEventHandlers(ImageView view, DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
-            GridPane targetGridPane) {
-        view.setOnDragDetected(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can
-                                              // detect it...
-                currentlyDraggedType = draggableType;
-                // Drag was detected, start drap-and-drop gesture
-                // Allow any transfer node
-                Dragboard db = view.startDragAndDrop(TransferMode.MOVE);
-
-                // Put ImageView on dragboard
-                ClipboardContent cbContent = new ClipboardContent();
-                cbContent.putImage(view.getImage());
-                db.setContent(cbContent);
-                view.setVisible(false);
-
-                buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
-                // int x = GridPane.getColumnIndex(targetGridPane);
-                // int y = GridPane.getRowIndex(targetGridPane);
-                // int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
-                // int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
-
-                draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
-                switch (draggableType) {
-                    case CARD:
-                        draggedEntity.setImage(vampireCastleCardImage);
-                        break;
-                    case ITEM:
-
-                        draggedEntity.setImage(swordImage);
-                        break;
-                    default:
-                        break;
-                }
-
-                draggedEntity.setVisible(true);
-                draggedEntity.setMouseTransparent(true);
-                draggedEntity.toFront();
-
-                // IMPORTANT!!!
-                // to be able to remove event handlers, need to use addEventHandler
-                // https://stackoverflow.com/a/67283792
-                targetGridPane.addEventHandler(DragEvent.DRAG_DROPPED, gridPaneSetOnDragDropped.get(draggableType));
-                anchorPaneRoot.addEventHandler(DragEvent.DRAG_OVER, anchorPaneRootSetOnDragOver.get(draggableType));
-                anchorPaneRoot.addEventHandler(DragEvent.DRAG_DROPPED,
-                        anchorPaneRootSetOnDragDropped.get(draggableType));
-
-                for (Node n : targetGridPane.getChildren()) {
-                    // events for entering and exiting are attached to squares children because that
-                    // impacts opacity change
-                    // these do not affect visibility of original image...
-                    // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
-                    gridPaneNodeSetOnDragEntered.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = be more selective about whether highlighting changes - if it cannot be
-                        // dropped in the location, the location shouldn't be highlighted!
-                        public void handle(DragEvent event) {
-                            if (currentlyDraggedType == draggableType) {
-                                // The drag-and-drop gesture entered the target
-                                // show the user that it is an actual gesture target
-                                if (event.getGestureSource() != n && event.getDragboard().hasImage()) {
-                                    n.setOpacity(0.7);
-                                }
-                            }
-                            event.consume();
-                        }
-                    });
-                    gridPaneNodeSetOnDragExited.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = since being more selective about whether highlighting changes, you
-                        // could program the game so if the new highlight location is invalid the
-                        // highlighting doesn't change, or leave this as-is
-                        public void handle(DragEvent event) {
-                            if (currentlyDraggedType == draggableType) {
-                                n.setOpacity(1);
-                            }
-
-                            event.consume();
-                        }
-                    });
-                    n.addEventHandler(DragEvent.DRAG_ENTERED, gridPaneNodeSetOnDragEntered.get(draggableType));
-                    n.addEventHandler(DragEvent.DRAG_EXITED, gridPaneNodeSetOnDragExited.get(draggableType));
-                }
-                event.consume();
-            }
-
-        });
-    }
-
-    // Generalised for items ONLY --> Must do for cards
     private void addDragEventHandlers(StaticEntity staticEntity, ImageView view, DRAGGABLE_TYPE draggableType,
             GridPane sourceGridPane, GridPane targetGridPane) {
         view.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -877,7 +790,21 @@ public class LoopManiaWorldController {
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
                     case CARD:
-                        draggedEntity.setImage(vampireCastleCardImage);
+                        Card card = (Card) staticEntity;
+                        if (card.getCardId().equals("VampireCastleCard"))
+                            draggedEntity.setImage(vampireCastleCardImage);
+                        else if (card.getCardId().equals("BarracksCard"))
+                            draggedEntity.setImage(barracksCardImage);
+                        else if (card.getCardId().equals("ZombiePitCard"))
+                            draggedEntity.setImage(zombiePitCardImage);
+                        else if (card.getCardId().equals("CampfireCard"))
+                            draggedEntity.setImage(campfireCardImage);
+                        else if (card.getCardId().equals("TowerCard"))
+                            draggedEntity.setImage(towerCardImage);
+                        else if (card.getCardId().equals("TrapCard"))
+                            draggedEntity.setImage(trapCardImage);
+                        else
+                            draggedEntity.setImage(villageCardImage);
                         break;
                     case ITEM:
                         Item item = (Item) staticEntity;
