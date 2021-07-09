@@ -18,6 +18,6 @@ public class ZombiePitBuilding  extends Building {
     public void notify(LoopManiaWorld worldState) {
         // Spawns zombie from bulding every cycle
         // TODO must figure out location to spawn
-        worldState.addNewEnemy(new ZombieEnemy(null));
+        worldState.addNewEnemy(new ZombieEnemy(this.getAdjacentPathTile(worldState.getPath())));
     }
 }
