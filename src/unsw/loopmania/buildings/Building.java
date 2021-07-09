@@ -48,7 +48,7 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
         } 
         
         for (int y : yList) {
-            int x = super.getY();
+            int x = super.getX();
             int pairIterator = 0;
             for (Pair<Integer, Integer> pair : orderedPath) {
                 if (pair.getValue0() == x && pair.getValue1() == y) {
