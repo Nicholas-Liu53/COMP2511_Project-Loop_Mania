@@ -8,8 +8,20 @@ import unsw.loopmania.StaticEntity;
  * which doesn't move
  */
 public abstract class Card extends StaticEntity {
-    // TODO = implement other varieties of card than VampireCastleCard
-    public Card(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    
+    String cardId;
+
+    public Card(SimpleIntegerProperty x, SimpleIntegerProperty y, String cardId) {
         super(x, y);
+        this.cardId = cardId;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    @Override
+    public String getStaticEntityType() {
+        return "Card";
     }
 }
