@@ -33,33 +33,32 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
      * @return PathPosition if an adjacent tile is found, otherwise null
      */
     public PathPosition getAdjacentPathTile(List<Pair<Integer, Integer>> orderedPath) {
-        int[] xList = {super.getX() + 1, super.getX() - 1};
-        int[] yList = {super.getY() + 1, super.getY() - 1};
+        int x = super.getX() - 1;
+        int y = super.getY() - 1;
 
-        for (int x : xList) {
-            int y = super.getY();
-            int pairIterator = 0;
-            for (Pair<Integer, Integer> pair : orderedPath) {
-                if (pair.getValue0() == x && pair.getValue1() == y) {
-                    // Adjacent tile found, returning path position at that tile
-                    return new PathPosition(pairIterator, orderedPath);
+        int xIterator = 0;
+        // Iterating through x
+        while (xIterator < 3) {
+            int yIterator = 0;
+            // Iterating through y
+            while (yIterator < 3) {
+                // Iterating through path to find relevant tile
+                int pairIterator = 0;
+                for (Pair<Integer, Integer> pair : orderedPath) {
+                    if (pair.getValue0() == x + xIterator && pair.getValue1() == y + yIterator) {
+                        // Adjacent tile found, returning path position at that tile
+                        return new PathPosition(pairIterator, orderedPath);
+                    }
+                    pairIterator++;
                 }
+                yIterator++;
             }
-        } 
-        
-        for (int y : yList) {
-            int x = super.getX();
-            int pairIterator = 0;
-            for (Pair<Integer, Integer> pair : orderedPath) {
-                if (pair.getValue0() == x && pair.getValue1() == y) {
-                    // Adjacent tile found, returning path position at that tile
-                    return new PathPosition(pairIterator, orderedPath);
-                }
-            }
-        } 
+            xIterator++;
+        }
 
         return null;
     }
+
     
     @Override
     public String getStaticEntityType() {
