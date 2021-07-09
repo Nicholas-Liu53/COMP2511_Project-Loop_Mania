@@ -59,8 +59,8 @@ public class LoopManiaWorld {
     private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
-    private List<Building> buildingEntities;
-
+    private List<VampireCastleBuilding> buildingEntities;
+    private List<Pair<Integer, Integer>> placedBuildings;
     private int numCycles;
     private int cycleShopLinear;
     private int cycleShopTotal;
@@ -69,6 +69,8 @@ public class LoopManiaWorld {
     private int numGoldPileSpawned;
     private int numHealthPotionSpawned;
     private int numGold;
+    private ArrayList<Enemy> newEnemies;
+    private ArrayList<WorldStateObserver> observers;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -99,6 +101,7 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         startingPoint = orderedPath.get(0);
         buildingEntities = new ArrayList<>();
+        placedBuildings = new ArrayList<>();
         numCycles = 0;
         cycleShopLinear = 1;
         cycleShopTotal = 1;
@@ -107,6 +110,8 @@ public class LoopManiaWorld {
         numGoldPileSpawned = 0;
         numHealthPotionSpawned = 0;
         numGold = 0;
+        newEnemies = new ArrayList<Enemy>();
+        observers = new ArrayList<WorldStateObserver>();
     }
 
     // --------------------------------------------------------------------------
@@ -122,6 +127,10 @@ public class LoopManiaWorld {
 
     public int getCurrCycle() {
         return this.numCycles;
+    }
+
+    public List<Pair<Integer, Integer>> getPath() {
+        return this.orderedPath;
     }
 
     /**
@@ -147,6 +156,15 @@ public class LoopManiaWorld {
         nonSpecifiedEntities.add(entity);
     }
 
+    /**
+     * Allows external classes to queue new enemies to be spawned on the next tick
+     * 
+     * @param newEnemy
+     */
+    public void addNewEnemy(Enemy newEnemy) {
+        newEnemies.add(newEnemy);
+    }
+
     public Pair<Integer, Integer> getStartingPoint() {
         return startingPoint;
     }
@@ -169,6 +187,16 @@ public class LoopManiaWorld {
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
+
+        // Adding enemies spawned by world state observers
+        for (Enemy e : newEnemies) {
+            enemies.add(e);
+            spawningEnemies.add(e);
+        }
+
+        // All newEnemies added, clearing
+        newEnemies.clear();
+
         return spawningEnemies;
     }
 
@@ -532,23 +560,15 @@ public class LoopManiaWorld {
         }
 
         Pair<Integer, Integer> newLocation = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
-        if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard")
-                || card.getCardId().equals("TrapCard")) {
-            if (!orderedPath.contains(newLocation))
-                return null;
-        } else {
-            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
-                return null;
-            else {
-                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
-                    return null;
-            }
-        }
+        if (!canPlaceCard(newLocation, card))
+            return null;
 
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
                 new SimpleIntegerProperty(buildingNodeY));
+        observers.add(newBuilding);
         buildingEntities.add(newBuilding);
+        placedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
 
         // Destroy the card
         card.destroy();
@@ -625,6 +645,11 @@ public class LoopManiaWorld {
             showShop = false;
         }
 
+        // Notifying world state observers of new cycle
+        for (WorldStateObserver observer : observers) {
+            observer.notify(this);
+        }
+
         // TODO Observer pattern
         // if (showShop) {
         // //! shopMenu.showMenu();
@@ -639,6 +664,26 @@ public class LoopManiaWorld {
         for (Enemy e : enemies) {
             e.move();
         }
+    }
+
+    // Can place boolean function
+    public boolean canPlaceCard(Pair<Integer, Integer> newLocation, Card card) {
+        if (placedBuildings.contains(newLocation))
+            return false;
+        if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard")
+                || card.getCardId().equals("TrapCard")) {
+            if (!orderedPath.contains(newLocation) || newLocation
+                    .equals(new Pair<Integer, Integer>(startingPoint.getValue0(), startingPoint.getValue1())))
+                return false;
+        } else {
+            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+                return false;
+            else {
+                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
+                    return false;
+            }
+        }
+        return true;
     }
 
     // *-------------------------------------------------------------------------

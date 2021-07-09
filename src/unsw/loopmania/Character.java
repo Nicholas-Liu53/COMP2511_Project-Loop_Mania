@@ -128,7 +128,7 @@ public class Character extends MovingEntity {
     @Override
     public void moveDownPath() {
         if (!this.getInBattle()) {
-            super.moveUpPath();
+            super.moveDownPath();
         }
     }
 
