@@ -1,7 +1,6 @@
 package unsw.loopmania.items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.StaticEntity;
 
 public class Helmet extends Armour {
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {

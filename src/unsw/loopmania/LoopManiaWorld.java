@@ -708,7 +708,7 @@ public class LoopManiaWorld {
                 if (e.getHealth() == 0) {
                     // Remove enemy
                     defeatedEnemies.add(e);
-                    character.removeBattle(e);
+                    character.removeEnemyFromBattle(e);
 
                     // give character rewards
                     battleWon();
