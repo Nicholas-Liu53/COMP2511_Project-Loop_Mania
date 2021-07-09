@@ -33,4 +33,9 @@ public abstract class Item extends StaticEntity {
     public int getSellPrice() {
         return sellPrice;
     }
+
+    @Override
+    public String getStaticEntityType() {
+        return "Item";
+    }
 }
