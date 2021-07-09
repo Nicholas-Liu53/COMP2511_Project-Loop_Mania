@@ -591,4 +591,107 @@ public class LoopManiaWorld {
         }
             return true;
     }
+
+    //*-------------------------------------------------------------------------
+    //*                                 CC
+    //*-------------------------------------------------------------------------
+    /**
+     * run the expected battles in the world, based on current world state
+     * 
+     * @return list of enemies which have been killed
+     */
+    public List<Enemy> runBattles() {
+        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
+            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+
+            // Currently the character attacks every enemy and vice versa
+            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
+                    .pow(e.getAttackRadius(), 2)) {
+                // fight...
+                character.addBattle(e);
+                character.launchAttack(e);
+                e.launchAttack(character);
+
+                if (e.getHealth() == 0) {
+                    // Remove enemy
+                    defeatedEnemies.add(e);
+                    character.removeBattle(e);
+
+                    // give character rewards
+                    battleWon();
+                }
+                // TODO handle character death
+
+            } else if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
+                    .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
+                // Support radius logic
+
+                if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
+                    e.moveUpPath();
+                } else {
+                    e.moveDownPath();
+                }
+            }
+        }
+
+        for (Enemy e : defeatedEnemies) {
+            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from
+            // the enemies list
+            // if we killEnemy in prior loop, we get
+            // java.util.ConcurrentModificationException
+            // due to mutating list we're iterating over
+            killEnemy(e);
+        }
+
+        return defeatedEnemies;
+    }
+
+    public void battleWon() {
+        giveRandomRewards("withCard");
+    }
+
+    public void giveRandomRewards(String rewardSetting) {
+        List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
+        List<Integer> values = new ArrayList<>(List.of(100, 200, 300, 400, 500));
+        List<String> buildingCards = new ArrayList<>(List.of("cardTypes"));
+        List<String> equipments = new ArrayList<>(List.of("equipmentTypes"));
+        String reward;
+
+        Random rand = new Random();
+
+        switch (rewardSetting) {
+            case "withCard":
+                reward = rewards.get(rand.nextInt(4));
+                break;
+            case "noCard":
+                reward = rewards.get(rand.nextInt(3));
+                break;
+            case "onlyGoldXP":
+                reward = rewards.get(rand.nextInt(2));
+                break;
+            default: // is this even neeeded?
+                reward = "buildingCard";
+                break;
+        }
+
+        switch (reward) {
+            case "gold":
+                character.giveGold(values.get(rand.nextInt(5)));
+                break;
+            case "experience":
+                character.giveExperiencePoints(values.get(rand.nextInt(2)));
+                break;
+            case "buildingCard":
+                // add card to inventory
+                // cardEntities.add(card);
+                break;
+            case "equipment":
+                // add equipment to inventory
+                // unequippedInventoryItems.add(itemObject);
+                break;
+        }
+    }
+
 }
+
