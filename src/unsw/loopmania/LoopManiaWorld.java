@@ -69,6 +69,8 @@ public class LoopManiaWorld {
     private int numGoldPileSpawned;
     private int numHealthPotionSpawned;
     private int numGold;
+    private ArrayList<Enemy> newEnemies;
+    private ArrayList<WorldStateObserver> observers;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -108,6 +110,8 @@ public class LoopManiaWorld {
         numGoldPileSpawned = 0;
         numHealthPotionSpawned = 0;
         numGold = 0;
+        newEnemies = new ArrayList<Enemy>();
+        observers = new ArrayList<WorldStateObserver>();
     }
 
     //--------------------------------------------------------------------------
@@ -123,6 +127,10 @@ public class LoopManiaWorld {
 
     public int getCurrCycle() {
         return this.numCycles;
+    }
+
+    public List<Pair<Integer, Integer>> getPath() {
+        return this.orderedPath;
     }
 
     /**
@@ -148,6 +156,15 @@ public class LoopManiaWorld {
         nonSpecifiedEntities.add(entity);
     }
 
+    /**
+     * Allows external classes to queue new enemies to be spawned on
+     * the next tick
+     * @param newEnemy
+     */
+    public void addNewEnemy(Enemy newEnemy) {
+        newEnemies.add(newEnemy);
+    }
+ 
     public Pair<Integer, Integer> getStartingPoint() {
         return startingPoint;
     }
@@ -170,6 +187,16 @@ public class LoopManiaWorld {
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
+
+        // Adding enemies spawned by world state observers
+        for (Enemy e : newEnemies) {
+            enemies.add(e);
+            spawningEnemies.add(e);
+        }
+
+        // All newEnemies added, clearing
+        newEnemies.clear();
+
         return spawningEnemies;
     }
 
@@ -506,6 +533,7 @@ public class LoopManiaWorld {
 
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+        observers.add(newBuilding);
         buildingEntities.add(newBuilding);
         placedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
 
@@ -577,6 +605,11 @@ public class LoopManiaWorld {
             showShop = true;
         } else {
             showShop = false;
+        }
+
+        // Notifying world state observers of new cycle
+        for (WorldStateObserver observer : observers) {
+            observer.notify(this);
         }
 
         //TODO Observer pattern
