@@ -775,11 +775,11 @@ public class LoopManiaWorld {
             case "experience":
                 character.giveExperiencePoints(values.get(rand.nextInt(2)));
                 break;
-            // case "buildingCard":
-            // Card rewardCard = generateRewardCard(buildingCards.get(rand.nextInt(7)));
-            // // add card to inventory
-            // cardEntities.add(rewardCard);
-            // break;
+            case "buildingCard":
+                Card rewardCard = generateRewardCard(buildingCards.get(rand.nextInt(7)));
+                // add card to inventory
+                cardEntities.add(rewardCard);
+                break;
             case "equipment":
                 Item rewardItem = generateRewardItem(equipments.get(rand.nextInt(6)));
                 // add equipment to inventory
@@ -788,24 +788,26 @@ public class LoopManiaWorld {
         }
     }
 
-    // public Card generateRewardCard(String rewardCard) {
-    // switch (rewardCard) {
-    // case "BarracksCard":
-    // return (new BarracksCard());
-    // case "CampfireCard":
-    // return (new CampfireCard());
-    // case "TowerCard":
-    // return (new TowerCard());
-    // case "TrapCard":
-    // return (new TrapCard());
-    // case "VillageCard":
-    // return (new VillageCard());
-    // case "ZombiePitCard":
-    // return (new ZombiePitCard());
-    // default:
-    // return (new VampireCastleCard());
-    // }
-    // }
+    public Card generateRewardCard(String rewardCard) {
+        switch (rewardCard) {
+            case "BarracksCard":
+                return (new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0)));
+            case "CampfireCard":
+                return (new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0)));
+            case "TowerCard":
+                return (new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0)));
+            case "TrapCard":
+                return (new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0)));
+            case "VillageCard":
+                return (new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0)));
+            case "ZombiePitCard":
+                return (new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()),
+                        new SimpleIntegerProperty(0)));
+            default:
+                return (new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()),
+                        new SimpleIntegerProperty(0)));
+        }
+    }
 
     public Item generateRewardItem(String rewardItem) {
         switch (rewardItem) {
