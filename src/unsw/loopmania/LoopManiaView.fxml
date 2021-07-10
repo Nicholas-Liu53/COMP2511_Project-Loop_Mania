@@ -128,7 +128,7 @@
                         <Image url="@../../images/gold_pile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="healthNum1" layoutX="65.0" layoutY="47.0" prefHeight="47.0" prefWidth="131.0" text="0" textFill="#9a850d">
+                  <Label fx:id="goldNum" layoutX="65.0" layoutY="47.0" prefHeight="47.0" prefWidth="131.0" text="0" textFill="#9a850d">
                      <font>
                         <Font name="System Bold" size="32.0" />
                      </font>

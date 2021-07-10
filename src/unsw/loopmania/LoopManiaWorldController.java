@@ -109,6 +109,8 @@ public class LoopManiaWorldController {
 
     @FXML
     private Label healthNum;
+    @FXML
+    private Label goldNum;
 
     // All image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -273,6 +275,7 @@ public class LoopManiaWorldController {
         anchorPaneRoot.getChildren().add(draggedEntity);
 
         world.healthProperty().bindBidirectional(healthNum.textProperty());
+        world.goldProperty().bindBidirectional(goldNum.textProperty());
     }
 
     /**
