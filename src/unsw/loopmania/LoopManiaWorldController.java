@@ -419,20 +419,21 @@ public class LoopManiaWorldController {
         StaticEntity reward = world.giveRandomRewards("withCard");
         if (reward != null) {
             if (reward.getStaticEntityType().equals("Card")) {
-                if (reward.getClass().getSimpleName().equals("BarracksCard"))
-                    loadCard("BarracksCard");
-                else if (reward.getClass().getSimpleName().equals("CampfireCard"))
-                    loadCard("CampfireCard");
-                else if (reward.getClass().getSimpleName().equals("TowerCard"))
-                    loadCard("TowerCard");
-                else if (reward.getClass().getSimpleName().equals("TrapCard"))
-                    loadCard("TrapCard");
-                else if (reward.getClass().getSimpleName().equals("VampireCastleCard"))
-                    loadCard("VampireCastleCard");
-                else if (reward.getClass().getSimpleName().equals("VillageCard"))
-                    loadCard("VillageCard");
-                else if (reward.getClass().getSimpleName().equals("ZombiePitCard"))
-                    loadCard("ZombiePitCard");
+                onLoad((Card) reward);
+                // if (reward.getClass().getSimpleName().equals("BarracksCard"))
+                // loadCard("BarracksCard");
+                // else if (reward.getClass().getSimpleName().equals("CampfireCard"))
+                // loadCard("CampfireCard");
+                // else if (reward.getClass().getSimpleName().equals("TowerCard"))
+                // loadCard("TowerCard");
+                // else if (reward.getClass().getSimpleName().equals("TrapCard"))
+                // loadCard("TrapCard");
+                // else if (reward.getClass().getSimpleName().equals("VampireCastleCard"))
+                // loadCard("VampireCastleCard");
+                // else if (reward.getClass().getSimpleName().equals("VillageCard"))
+                // loadCard("VillageCard");
+                // else if (reward.getClass().getSimpleName().equals("ZombiePitCard"))
+                // loadCard("ZombiePitCard");
             } else if (reward.getStaticEntityType().equals("Item")) {
                 loadSword();
             }
