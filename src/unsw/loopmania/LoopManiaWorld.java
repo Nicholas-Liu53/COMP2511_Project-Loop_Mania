@@ -768,7 +768,7 @@ public class LoopManiaWorld {
     }
 
     //*-------------------------------------------------------------------------
-    //*                                 UI
+    //*                                 UIS
     //*-------------------------------------------------------------------------
     public StringProperty healthProperty() {
         charHealth.set(String.valueOf(character.getHealth()));
