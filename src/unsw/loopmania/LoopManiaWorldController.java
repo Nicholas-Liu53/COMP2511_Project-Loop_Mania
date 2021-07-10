@@ -49,7 +49,8 @@ import java.io.IOException;
  */
 enum DRAGGABLE_TYPE{
     CARD,
-    ITEM
+    ITEM,
+    WEAPON,
 }
 
 /**
@@ -427,7 +428,7 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Sword sword) {
         ImageView view = new ImageView(swordImage);
-        addDragEventHandlers(sword, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        addDragEventHandlers(sword, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
         addEntity(sword, view);
         unequippedInventory.getChildren().add(view);
     }
@@ -590,6 +591,14 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
+                            case WEAPON:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                // Placing in sword cell
+                                targetGridPane.add(image, 0, 1, 1, 1);
+                                // Equip sword
+                                world.equipItem(new Sword());
+                            break;
                             default:
                                 break;
                         }
