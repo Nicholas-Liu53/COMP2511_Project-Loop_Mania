@@ -123,12 +123,22 @@
                         <Font name="System Bold" size="32.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/gold_pile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="goldNum" layoutX="65.0" layoutY="47.0" prefHeight="47.0" prefWidth="131.0" text="0" textFill="#9a850d">
+                  <Label fx:id="goldNum" layoutX="65.0" layoutY="63.0" prefHeight="47.0" prefWidth="131.0" text="0" textFill="#9a850d">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="healthNum1" layoutX="11.0" layoutY="116.0" prefHeight="31.0" prefWidth="47.0" text="XP" textFill="#f500ff">
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="32.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="65.0" layoutY="117.0" prefHeight="47.0" prefWidth="131.0" text="0" textFill="#f500ff" fx:id="xpNum">
                      <font>
                         <Font name="System Bold" size="32.0" />
                      </font>

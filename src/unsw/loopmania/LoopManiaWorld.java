@@ -75,6 +75,7 @@ public class LoopManiaWorld {
     private ArrayList<WorldStateObserver> observers;
     private StringProperty charHealth;
     private StringProperty charGold;
+    private StringProperty charXP;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -118,6 +119,7 @@ public class LoopManiaWorld {
         observers = new ArrayList<WorldStateObserver>();
         charHealth = new SimpleStringProperty();
         charGold = new SimpleStringProperty();
+        charXP = new SimpleStringProperty();
     }
 
     //--------------------------------------------------------------------------
@@ -366,6 +368,7 @@ public class LoopManiaWorld {
             return healthPotion;
         } else {
             character.giveGold(100);
+            // character.giveExperiencePoints(10);
         }
         return itemToAdd;
     }
@@ -613,6 +616,7 @@ public class LoopManiaWorld {
         moveEnemies();
         healthProperty();
         goldProperty();
+        xpProperty();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -780,6 +784,10 @@ public class LoopManiaWorld {
     public StringProperty goldProperty() {
         charGold.set(String.valueOf(character.getGold()));
         return charGold;
+    }
+    public StringProperty xpProperty() {
+        charXP.set(String.valueOf(character.getExperience()));
+        return charXP;
     }
 }
 
