@@ -110,7 +110,7 @@ public class Character extends MovingEntity {
     }
 
     public void equipItem(Item item) {
-        if (item.getItemID().equals("HealthPotion"))
+        if (item.getClass().getSimpleName().equals("HealthPotion"))
             this.health = 100;
 
         this.equippedItems.add(item); // equipping item

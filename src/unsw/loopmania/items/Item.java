@@ -9,7 +9,6 @@ import unsw.loopmania.StaticEntity;
  */
 public abstract class Item extends StaticEntity {
     private String itemType; // Armour or weapon or potion
-    protected String itemID; // Specific armour/weapon/potion
     protected int purchasePrice;
     protected int sellPrice;
 
@@ -20,10 +19,6 @@ public abstract class Item extends StaticEntity {
 
     public String getItemType() {
         return this.itemType;
-    }
-    
-    public String getItemID() {
-        return this.itemID;
     }
 
     public int getPurchasePrice() {

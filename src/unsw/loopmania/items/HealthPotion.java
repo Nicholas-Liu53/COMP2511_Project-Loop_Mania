@@ -10,7 +10,6 @@ public class HealthPotion extends Item {
 
     public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y, "Potion");
-        itemID = "HealthPotion";
         purchasePrice = 125;
         sellPrice = 100;
         restoreHealthPoints = 100;
@@ -18,7 +17,6 @@ public class HealthPotion extends Item {
 
     public HealthPotion(PathPosition position) {
         super(position.getX(), position.getY(), "Potion");
-        itemID = "HealthPotion";
         purchasePrice = 125;
         sellPrice = 100;
         restoreHealthPoints = 100;
@@ -27,7 +25,6 @@ public class HealthPotion extends Item {
 
     public HealthPotion() {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2), "Potion");
-        itemID = "HealthPotion";
         purchasePrice = 125;
         sellPrice = 100;
         restoreHealthPoints = 100;

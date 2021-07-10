@@ -767,8 +767,8 @@ public class LoopManiaWorldController {
                         break;
                     case ITEM:
                         Item item = (Item) staticEntity;
-                        if (item.getItemID().equals("Sword")) draggedEntity.setImage(swordImage);
-                        if (item.getItemID().equals("HealthPotion")) draggedEntity.setImage(healthPotionImage);
+                        if (item.getClass().getSimpleName().equals("Sword")) draggedEntity.setImage(swordImage);
+                        if (item.getClass().getSimpleName().equals("HealthPotion")) draggedEntity.setImage(healthPotionImage);
                         break;
                     default:
                         break;

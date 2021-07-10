@@ -8,7 +8,6 @@ public class BodyArmour extends Armour {
         super(x, y);
         purchasePrice = 500;
         sellPrice = 400;
-        itemID = "BodyArmour";
         damageReductionFactor = 0.5;
     }
 
@@ -16,7 +15,6 @@ public class BodyArmour extends Armour {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
         purchasePrice = 500;
         sellPrice = 400;
-        itemID = "BodyArmour";
         damageReductionFactor = 0.5;
     }
 
