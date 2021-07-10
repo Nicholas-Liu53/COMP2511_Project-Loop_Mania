@@ -309,6 +309,10 @@ public class LoopManiaWorld {
     //     }
     // }
 
+    public void equipItem(WeaponStrategy item) {
+        character.equipItem(item);
+    }
+
     private boolean canPickUpItem(Item item) {
         if (Math.pow((character.getX()-item.getX()), 2) +  Math.pow((character.getY()-item.getY()), 2) == 0) {
             return true;
@@ -324,7 +328,6 @@ public class LoopManiaWorld {
         List<Item> pickedUpItems = new ArrayList<Item>();
         // List<Item> itemsToRemove
         for (Item pathItem: pathItems) {
-            System.err.println(pathItem.getClass().getSimpleName());
             if (canPickUpItem(pathItem)) {
                 if (pathItem.getItemType().equals("Gold")) {
                     numGoldPileSpawned--;
