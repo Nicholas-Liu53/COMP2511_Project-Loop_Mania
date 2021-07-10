@@ -361,7 +361,7 @@ public class LoopManiaWorld {
             removeItemByPositionInUnequippedInventoryItems(0);
             // TODO = give some cash/experience rewards for the discarding of the oldest
             // item
-            
+
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
 
@@ -504,18 +504,18 @@ public class LoopManiaWorld {
      * @return a card to be spawned in the controller as a JavaFX node
      */
     // public VampireCastleCard loadVampireCard() {
-    //     // if adding more cards than have, remove the first card...
-    //     if (cardEntities.size() >= getWidth()) {
-    //         // TODO = give some cash/experience/item rewards for the discarding of the
-    //         // oldest card
-    //         giveRandomRewards("noCard");
-    //         removeCard(0);
-    //     }
-    //     VampireCastleCard vampireCastleCard = new VampireCastleCard(new
-    //     SimpleIntegerProperty(cardEntities.size()),
-    //     new SimpleIntegerProperty(0));
-    //     cardEntities.add(vampireCastleCard);
-    //     return vampireCastleCard;
+    // // if adding more cards than have, remove the first card...
+    // if (cardEntities.size() >= getWidth()) {
+    // // TODO = give some cash/experience/item rewards for the discarding of the
+    // // oldest card
+    // giveRandomRewards("noCard");
+    // removeCard(0);
+    // }
+    // VampireCastleCard vampireCastleCard = new VampireCastleCard(new
+    // SimpleIntegerProperty(cardEntities.size()),
+    // new SimpleIntegerProperty(0));
+    // cardEntities.add(vampireCastleCard);
+    // return vampireCastleCard;
     // }
 
     public Card loadCard(String cardType) {
@@ -764,13 +764,15 @@ public class LoopManiaWorld {
         giveRandomRewards("withCard");
     }
 
-    public void giveRandomRewards(String rewardSetting) {
+    public Pair<String, String> giveRandomRewards(String rewardSetting) {
         List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
-        List<Integer> values = new ArrayList<>(List.of(50, 100, 200, 300, 400, 500));
+        List<String> values = new ArrayList<>(List.of("50", "100", "200", "300", "400", "500"));
         List<String> buildingCards = new ArrayList<>(List.of("BarracksCard", "CampfireCard", "TowerCard", "TrapCard",
                 "VampireCastleCard", "VillageCard", "ZombiePitCard"));
         List<String> equipments = new ArrayList<>(List.of("Helmet", "BodyArmour", "Shield", "Staff", "Stake", "Sword"));
-        String reward;
+        String reward = null;
+        // StaticEntity rewarded = null;
+        String rewardType = null;
 
         Random rand = new Random();
 
@@ -791,20 +793,27 @@ public class LoopManiaWorld {
 
         switch (reward) {
             case "gold":
-                character.giveGold(values.get(rand.nextInt(6)));
+                rewardType = values.get(rand.nextInt(6));
+                character.giveGold(Integer.parseInt(rewardType));
                 break;
             case "experience":
-                character.giveExperiencePoints(values.get(rand.nextInt(2)));
+                rewardType = values.get(rand.nextInt(2));
+                character.giveExperiencePoints(Integer.parseInt(rewardType));
                 break;
             case "buildingCard":
-                loadCard(buildingCards.get(rand.nextInt(7)));
+                rewardType = buildingCards.get(rand.nextInt(7));
+                loadCard(rewardType);
                 break;
             case "equipment":
-                Item rewardItem = generateRewardItem(equipments.get(rand.nextInt(6)));
+                rewardType = equipments.get(rand.nextInt(6));
+                Item rewardItem = generateRewardItem(rewardType);
+                // rewarded = rewardItem;
                 // add equipment to inventory
                 unequippedInventoryItems.add(rewardItem);
                 break;
         }
+
+        return (new Pair<String, String>(reward, rewardType));
     }
 
     public Item generateRewardItem(String rewardItem) {
