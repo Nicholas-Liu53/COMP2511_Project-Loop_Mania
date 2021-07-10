@@ -309,10 +309,6 @@ public class LoopManiaWorld {
     //     }
     // }
 
-    public void equipItem(WeaponStrategy item) {
-        character.equipItem(item);
-    }
-
     private boolean canPickUpItem(Item item) {
         if (Math.pow((character.getX()-item.getX()), 2) +  Math.pow((character.getY()-item.getY()), 2) == 0) {
             return true;
@@ -413,10 +409,24 @@ public class LoopManiaWorld {
         removeUnequippedInventoryItem(item);
     }
 
-    public void equipWeaponByCoordinates(int x, int y) {
+    /**
+     * Takes weapon from the inventory and equips it as the character's weapon
+     * any currently equipped weapon is placed back into the inventory
+     * @param x
+     * @param y
+     */
+    public WeaponStrategy equipWeaponByCoordinates(int x, int y) {
+        WeaponStrategy oldWeapon = character.getWeapon();
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         unequippedInventoryItems.remove(item);
-        equipItem((WeaponStrategy)item);
+        character.equipItem((WeaponStrategy)item);
+
+        if (oldWeapon instanceof Melee) {
+            // Melee shouldn't be placed in the inventory
+            return null;
+        }
+
+        return oldWeapon;
     }
     
     /**
