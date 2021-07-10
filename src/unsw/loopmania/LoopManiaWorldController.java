@@ -413,27 +413,30 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
         // not accounting for type of enemy at the moment
-        Pair<String, String> reward = world.giveRandomRewards("withCard");
-        if (reward != null) {
-            if (reward.getValue0().equals("buildingCard")) {
-                if (reward.getValue1().equals("BarracksCard"))
-                    loadCard("BarracksCard");
-                else if (reward.getValue1().equals("CampfireCard"))
-                    loadCard("CampfireCard");
-                else if (reward.getValue1().equals("TowerCard"))
-                    loadCard("TowerCard");
-                else if (reward.getValue1().equals("TrapCard"))
-                    loadCard("TrapCard");
-                else if (reward.getValue1().equals("VampireCastleCard"))
-                    loadCard("VampireCastleCard");
-                else if (reward.getValue1().equals("VillageCard"))
-                    loadCard("VillageCard");
-                else if (reward.getValue1().equals("ZombiePitCard"))
-                    loadCard("ZombiePitCard");
-            } else if (reward.getValue0().equals("equipment")) {
-                loadSword();
-            }
-        }
+        loadVampireCard();
+        loadSword();
+
+        // Pair<String, String> reward = world.giveRandomRewards("withCard");
+        // if (reward != null) {
+        // if (reward.getValue0().equals("buildingCard")) {
+        // if (reward.getValue1().equals("BarracksCard"))
+        // loadCard("BarracksCard");
+        // else if (reward.getValue1().equals("CampfireCard"))
+        // loadCard("CampfireCard");
+        // else if (reward.getValue1().equals("TowerCard"))
+        // loadCard("TowerCard");
+        // else if (reward.getValue1().equals("TrapCard"))
+        // loadCard("TrapCard");
+        // else if (reward.getValue1().equals("VampireCastleCard"))
+        // loadCard("VampireCastleCard");
+        // else if (reward.getValue1().equals("VillageCard"))
+        // loadCard("VillageCard");
+        // else if (reward.getValue1().equals("ZombiePitCard"))
+        // loadCard("ZombiePitCard");
+        // } else if (reward.getValue0().equals("equipment")) {
+        // loadSword();
+        // }
+        // }
     }
 
     /**
@@ -452,9 +455,9 @@ public class LoopManiaWorldController {
     /**
      * Load a vampire card from the world, and pair it with an image in the GUI
      */
-    private void loadCard(String cardType) {
+    private void loadVampireCard() {
         // TODO = load more types of card
-        Card card = world.loadCard(cardType);
+        Card card = world.loadCard("VampireCastleCard");
         onLoad(card);
     }
 
@@ -505,13 +508,16 @@ public class LoopManiaWorldController {
             view = new ImageView(villageCardImage);
         else if (card instanceof ZombiePitCard)
             view = new ImageView(zombiePitCardImage);
-        // FROM
-        // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
-        // note target setOnDragOver and setOnDragEntered defined in initialize method
-        addDragEventHandlers(card, view, DRAGGABLE_TYPE.CARD, cards, squares);
 
-        addEntity(card, view);
-        cards.getChildren().add(view);
+        if (view != null) {
+            // FROM
+            // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
+            // note target setOnDragOver and setOnDragEntered defined in initialize method
+            addDragEventHandlers(card, view, DRAGGABLE_TYPE.CARD, cards, squares);
+
+            addEntity(card, view);
+            cards.getChildren().add(view);
+        }
     }
 
     /**

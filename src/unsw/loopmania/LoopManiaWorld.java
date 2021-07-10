@@ -555,7 +555,8 @@ public class LoopManiaWorld {
                 break;
         }
 
-        cardEntities.add(card);
+        if (card != null)
+            cardEntities.add(card);
         return card;
     }
 
@@ -807,7 +808,6 @@ public class LoopManiaWorld {
             case "equipment":
                 rewardType = equipments.get(rand.nextInt(6));
                 Item rewardItem = generateRewardItem(rewardType);
-                // rewarded = rewardItem;
                 // add equipment to inventory
                 unequippedInventoryItems.add(rewardItem);
                 break;
