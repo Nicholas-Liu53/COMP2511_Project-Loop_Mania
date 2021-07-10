@@ -593,11 +593,9 @@ public class LoopManiaWorldController {
                                 break;
                             case WEAPON:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                removeItemByCoordinates(nodeX, nodeY);
+                                world.equipWeaponByCoordinates(nodeX, nodeY);
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
-                                // Equip sword
-                                world.equipItem(new Sword());
                             break;
                             default:
                                 break;

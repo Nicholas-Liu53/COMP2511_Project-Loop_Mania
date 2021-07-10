@@ -412,6 +412,12 @@ public class LoopManiaWorld {
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
     }
+
+    public void equipWeaponByCoordinates(int x, int y) {
+        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        unequippedInventoryItems.remove(item);
+        equipItem((WeaponStrategy)item);
+    }
     
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
