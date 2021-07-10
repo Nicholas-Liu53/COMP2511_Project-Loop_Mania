@@ -18,10 +18,10 @@ public class ItemsTests {
 
         // Testing Requirement 3 & 4:
         HealthPotion hp = new HealthPotion();
-        assertEquals("HealthPotion", hp.getItemID());
-        assertEquals(100, hp.getRestoreHealthPoints());
-        assertEquals(125, hp.getPurchasePrice());
-        assertEquals(100, hp.getSellPrice());
+        assertEquals(hp.getItemID(), "HealthPotion");
+        assertEquals(hp.getRestoreHealthPoints(), 100);
+        assertEquals(hp.getPurchasePrice(), 125);
+        assertEquals(hp.getSellPrice(), 100);
     }
 
     @Test
@@ -33,10 +33,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         BodyArmour ba = new BodyArmour();
-        assertEquals("BodyArmour", ba.getItemID());
-        assertEquals(0.5, ba.getDamageReductionFactor());
-        assertEquals(500, ba.getPurchasePrice());
-        assertEquals(400, ba.getSellPrice());
+        assertEquals(ba.getItemID(), "BodyArmour");
+        assertEquals(ba.getDamageReductionFactor(), 0.5);
+        assertEquals(ba.getPurchasePrice(), 500);
+        assertEquals(ba.getSellPrice(), 400);
     }
 
     @Test
@@ -48,10 +48,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Helmet h = new Helmet();
-        assertEquals("Helmet", h.getItemID());
-        assertEquals(0.8, h.getDamageReductionFactor());
-        assertEquals(200, h.getPurchasePrice());
-        assertEquals(160, h.getSellPrice());
+        assertEquals(h.getItemID(), "Helmet");
+        assertEquals(h.getDamageReductionFactor(), 0.8);
+        assertEquals(h.getPurchasePrice(), 200);
+        assertEquals(h.getSellPrice(), 160);
     }
 
     @Test
@@ -63,10 +63,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Shield s = new Shield();
-        assertEquals("Shield", s.getItemID());
-        assertEquals(0.7, s.getDamageReductionFactor());
-        assertEquals(300, s.getPurchasePrice());
-        assertEquals(240, s.getSellPrice());
+        assertEquals(s.getItemID(), "Shield");
+        assertEquals(s.getDamageReductionFactor(), 0.7);
+        assertEquals(s.getPurchasePrice(), 300);
+        assertEquals(s.getSellPrice(), 240);
     }
 
     @Test
@@ -78,10 +78,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Sword s = new Sword();
-        assertEquals("Sword", s.getItemID());
-        assertEquals(10, s.getDamageIncrease());
-        assertEquals(200, s.getPurchasePrice());
-        assertEquals(160, s.getSellPrice());
+        assertEquals(s.getItemID(), "Sword");
+        assertEquals(s.getDamageIncrease(), 10);
+        assertEquals(s.getPurchasePrice(), 200);
+        assertEquals(s.getSellPrice(), 160);
     }
 
     @Test
@@ -93,10 +93,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Staff s = new Staff();
-        assertEquals("Staff", s.getItemID());
-        assertEquals(3, s.getDamageIncrease());
-        assertEquals(300, s.getPurchasePrice());
-        assertEquals(240, s.getSellPrice());
+        assertEquals(s.getItemID(), "Staff");
+        assertEquals(s.getDamageIncrease(), 3);
+        assertEquals(s.getPurchasePrice(), 300);
+        assertEquals(s.getSellPrice(), 240);
     }
 
     @Test
@@ -108,10 +108,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Stake s = new Stake();
-        assertEquals("Stake", s.getItemID());
-        assertEquals(5, s.getDamageIncrease());
-        assertEquals(15, s.getVampireCrit());
-        assertEquals(150, s.getPurchasePrice());
-        assertEquals(120, s.getSellPrice());
+        assertEquals(s.getItemID(), "Stake");
+        assertEquals(s.getDamageIncrease(), 5);
+        assertEquals(s.getVampireCrit(), 15);
+        assertEquals(s.getPurchasePrice(), 150);
+        assertEquals(s.getSellPrice(), 120);
     }
 }
