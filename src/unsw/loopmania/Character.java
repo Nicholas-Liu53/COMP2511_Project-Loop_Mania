@@ -110,8 +110,9 @@ public class Character extends MovingEntity {
     }
 
     public void equipItem(Item item) {
-        if (item.getItemID().equals("HealthPotion"))
-            this.health = 100;
+        //! NOTE: Health potions are consumed by pressing P (maybe: or double clicking on the health potion)
+        // if (item.getItemID().equals("HealthPotion"))
+        //     this.health = 100;
 
         this.equippedItems.add(item); // equipping item
     }
@@ -122,6 +123,14 @@ public class Character extends MovingEntity {
 
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    public void restoreHealthPoints() {
+        health = 100;
+    }
+
+    public boolean isFullHealth() {
+        return health == 100;
     }
 
     @Override

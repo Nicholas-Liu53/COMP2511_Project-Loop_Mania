@@ -55,7 +55,7 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
     private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
@@ -454,6 +454,23 @@ public class LoopManiaWorld {
         return null;
     }
 
+    // Drinks health potion
+    public void drinkHealthPotion() {
+        if (character.isFullHealth()) return;
+        boolean potionFound = false;
+        for (Item item : unequippedInventoryItems) {
+            if (item.getItemID().equals("HealthPotion")) {
+                removeUnequippedInventoryItem(item);
+                potionFound = true;
+                break;
+            } // else {
+            //     System.out.println("yes");
+            // }
+        }
+        if (potionFound)
+            character.restoreHealthPoints();
+    }
+
     //*-------------------------------------------------------------------------
     //*                                 Battles
     //*-------------------------------------------------------------------------
@@ -642,7 +659,7 @@ public class LoopManiaWorld {
                     return false;
             }
         }
-            return true;
+        return true;
     }
 
     //*-------------------------------------------------------------------------
