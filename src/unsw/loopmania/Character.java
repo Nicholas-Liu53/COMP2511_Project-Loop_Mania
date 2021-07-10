@@ -68,6 +68,10 @@ public class Character extends MovingEntity {
         return this.gold;
     }
 
+    public WeaponStrategy getWeapon() {
+        return this.weaponStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling
      * only adds enemy it it is not already on the list
