@@ -94,7 +94,6 @@ public class ItemsTests {
         // Testing Requirement 2 & 3:
         Sword s = new Sword();
         assertEquals(s.getClass().getSimpleName(), "Sword");
-        assertEquals(s.getDamageIncrease(), 10);
         assertEquals(s.getPurchasePrice(), 200);
         assertEquals(s.getSellPrice(), 160);
     }
@@ -111,7 +110,6 @@ public class ItemsTests {
         // Testing Requirement 2 & 3:
         Staff s = new Staff();
         assertEquals(s.getClass().getSimpleName(), "Staff");
-        assertEquals(s.getDamageIncrease(), 3);
         assertEquals(s.getPurchasePrice(), 300);
         assertEquals(s.getSellPrice(), 240);
     }
@@ -128,8 +126,6 @@ public class ItemsTests {
         // Testing Requirement 2 & 3:
         Stake s = new Stake();
         assertEquals(s.getClass().getSimpleName(), "Stake");
-        assertEquals(s.getDamageIncrease(), 5);
-        assertEquals(s.getVampireCrit(), 15);
         assertEquals(s.getPurchasePrice(), 300);
         assertEquals(s.getSellPrice(), 240);
     }

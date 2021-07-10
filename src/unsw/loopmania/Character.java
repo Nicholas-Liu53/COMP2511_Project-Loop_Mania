@@ -14,7 +14,7 @@ import unsw.loopmania.items.WeaponStrategy;
 public class Character extends MovingEntity {
     private int health;
     private int damage;
-    private WeaponStrategy WeaponStrat;
+    private WeaponStrategy weaponStrat;
     private ArrayList<Enemy> currentlyBattling;
     private ArrayList<Item> equippedItems;
     private int experience;
@@ -26,7 +26,7 @@ public class Character extends MovingEntity {
         super(position);
         this.health = 100;
         this.damage = 5;
-        this.WeaponStrat = new Melee();
+        this.weaponStrat = new Melee();
         this.currentlyBattling = new ArrayList<Enemy>();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
@@ -96,7 +96,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-        this.WeaponStrat.launchAttack(enemy, this.damage);
+        this.weaponStrat.launchAttack(enemy, this.damage);
     }
 
     /**
@@ -125,6 +125,14 @@ public class Character extends MovingEntity {
 
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    /**
+     * Equips new weapon for use in battles
+     * @param weapon
+     */
+    public void equipWeapon(WeaponStrategy weapon) {
+        this.weaponStrat = weapon;
     }
 
     @Override

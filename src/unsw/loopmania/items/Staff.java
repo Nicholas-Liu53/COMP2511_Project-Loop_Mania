@@ -7,7 +7,7 @@ import unsw.loopmania.enemies.Enemy;
 /**
  * represents an equipped or unequipped staff in the backend world
  */
-public class Staff extends Item {
+public class Staff extends Item implements WeaponStrategy {
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y, "Weapon");
         purchasePrice = 300;
