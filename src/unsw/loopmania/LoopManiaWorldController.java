@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -105,6 +106,9 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane unequippedInventory;
+
+    @FXML
+    private Label healthNum;
 
     // All image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -269,6 +273,7 @@ public class LoopManiaWorldController {
         anchorPaneRoot.getChildren().add(draggedEntity);
 
         // addEntity(new HeroesCastle(new SimpleIntegerProperty(startingPoint.getValue0()), new SimpleIntegerProperty(startingPoint.getValue1())), new ImageView(heroesCastleImage));
+        world.healthProperty().bindBidirectional(healthNum.textProperty());
     }
 
     /**

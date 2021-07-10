@@ -8,6 +8,8 @@ import java.util.Set;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
@@ -71,6 +73,7 @@ public class LoopManiaWorld {
     private int numGold;
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
+    private StringProperty charHealth;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -112,6 +115,7 @@ public class LoopManiaWorld {
         numGold = 0;
         newEnemies = new ArrayList<Enemy>();
         observers = new ArrayList<WorldStateObserver>();
+        charHealth = new SimpleStringProperty();
     }
 
     //--------------------------------------------------------------------------
@@ -628,6 +632,8 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : observers) {
             observer.notify(this);
         }
+        
+        healthProperty();
 
         //TODO Observer pattern
         // if (showShop) {
@@ -763,5 +769,16 @@ public class LoopManiaWorld {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                                 UI
+    //*-------------------------------------------------------------------------
+    public StringProperty healthProperty() {
+        // String charHealth = new Integer.toString(character.getHealth());
+        // StringProperty charHealth = new StringProperty(Integer.toString(character.getHealth()));
+        // String temp = String.valueOf(character.getHealth());
+        // StringProperty charHealth = new SimpleStringProperty();
+        charHealth.set(String.valueOf(character.getHealth()));
+        return charHealth;
+    }
 }
 
