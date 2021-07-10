@@ -85,7 +85,7 @@
                         <Image url="@../../images/shield_unequipped.png" />
                      </image>
                   </ImageView>
-                  <ImageView id="helmetCell" fitHeight="39.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView id="helmetCell" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
                      <image>
                         <Image url="@../../images/helmet_slot.png" />
                      </image>
