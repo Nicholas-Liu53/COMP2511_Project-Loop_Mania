@@ -272,7 +272,6 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
-        // addEntity(new HeroesCastle(new SimpleIntegerProperty(startingPoint.getValue0()), new SimpleIntegerProperty(startingPoint.getValue1())), new ImageView(heroesCastleImage));
         world.healthProperty().bindBidirectional(healthNum.textProperty());
     }
 

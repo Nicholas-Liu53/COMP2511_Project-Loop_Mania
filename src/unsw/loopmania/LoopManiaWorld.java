@@ -467,9 +467,7 @@ public class LoopManiaWorld {
                 removeUnequippedInventoryItem(item);
                 potionFound = true;
                 break;
-            } // else {
-            //     System.out.println("yes");
-            // }
+            } 
         }
         if (potionFound)
             character.restoreHealthPoints();
@@ -635,8 +633,6 @@ public class LoopManiaWorld {
             observer.notify(this);
         }
         
-        // healthProperty();
-
         //TODO Observer pattern
         // if (showShop) {
         //     //! shopMenu.showMenu();
@@ -775,10 +771,6 @@ public class LoopManiaWorld {
     //*                                 UI
     //*-------------------------------------------------------------------------
     public StringProperty healthProperty() {
-        // String charHealth = new Integer.toString(character.getHealth());
-        // StringProperty charHealth = new StringProperty(Integer.toString(character.getHealth()));
-        // String temp = String.valueOf(character.getHealth());
-        // StringProperty charHealth = new SimpleStringProperty();
         charHealth.set(String.valueOf(character.getHealth()));
         return charHealth;
     }
