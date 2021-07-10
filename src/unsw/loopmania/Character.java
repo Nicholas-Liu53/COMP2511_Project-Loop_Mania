@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.Item;
+import unsw.loopmania.items.WeaponStrategy;
 
 /**
  * represents the main character in the backend of the game world
@@ -13,6 +14,7 @@ import unsw.loopmania.items.Item;
 public class Character extends MovingEntity {
     private int health;
     private int damage;
+    private WeaponStrategy WeaponStrat;
     private ArrayList<Enemy> currentlyBattling;
     private ArrayList<Item> equippedItems;
     private int experience;
@@ -24,6 +26,7 @@ public class Character extends MovingEntity {
         super(position);
         this.health = 100;
         this.damage = 5;
+        this.WeaponStrat = new Melee();
         this.currentlyBattling = new ArrayList<Enemy>();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
@@ -93,7 +96,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-        enemy.receiveAttack(this.damage);
+        this.WeaponStrat.launchAttack(enemy, this.damage);
     }
 
     /**
