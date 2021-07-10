@@ -918,13 +918,8 @@ public class LoopManiaWorldController {
             break;
         // Equip health potion
         case P:
-            // if (isPaused){
-            //     startTimer();
-            // }
-            // else{
-            //     pause();
-            // }
-            // break;
+            world.drinkHealthPotion();
+            break;
         default:
             break;
         }
