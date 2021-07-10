@@ -3,6 +3,8 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.lang.model.util.ElementScanner6;
+
 import org.javatuples.Pair;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
@@ -410,9 +412,28 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
-        world.giveRandomRewards("withCard");
-        // loadSword();
-        // loadVampireCard();
+        // not accounting for type of enemy at the moment
+        Pair<String, String> reward = world.giveRandomRewards("withCard");
+        if (reward != null) {
+            if (reward.getValue0().equals("buildingCard")) {
+                if (reward.getValue1().equals("BarracksCard"))
+                    loadCard("BarracksCard");
+                else if (reward.getValue1().equals("CampfireCard"))
+                    loadCard("CampfireCard");
+                else if (reward.getValue1().equals("TowerCard"))
+                    loadCard("TowerCard");
+                else if (reward.getValue1().equals("TrapCard"))
+                    loadCard("TrapCard");
+                else if (reward.getValue1().equals("VampireCastleCard"))
+                    loadCard("VampireCastleCard");
+                else if (reward.getValue1().equals("VillageCard"))
+                    loadCard("VillageCard");
+                else if (reward.getValue1().equals("ZombiePitCard"))
+                    loadCard("ZombiePitCard");
+            } else if (reward.getValue0().equals("equipment")) {
+                loadSword();
+            }
+        }
     }
 
     /**
@@ -431,10 +452,10 @@ public class LoopManiaWorldController {
     /**
      * Load a vampire card from the world, and pair it with an image in the GUI
      */
-    private void loadVampireCard() {
+    private void loadCard(String cardType) {
         // TODO = load more types of card
-        Card vampireCastleCard = world.loadCard("VampireCastleCard");
-        onLoad(vampireCastleCard);
+        Card card = world.loadCard(cardType);
+        onLoad(card);
     }
 
     /**
@@ -484,7 +505,6 @@ public class LoopManiaWorldController {
             view = new ImageView(villageCardImage);
         else if (card instanceof ZombiePitCard)
             view = new ImageView(zombiePitCardImage);
-
         // FROM
         // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
         // note target setOnDragOver and setOnDragEntered defined in initialize method
