@@ -8,6 +8,8 @@ import java.util.Set;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
@@ -71,6 +73,7 @@ public class LoopManiaWorld {
     private int numGold;
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
+    private StringProperty charHealth;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -112,6 +115,7 @@ public class LoopManiaWorld {
         numGold = 0;
         newEnemies = new ArrayList<Enemy>();
         observers = new ArrayList<WorldStateObserver>();
+        charHealth = new SimpleStringProperty();
     }
 
     //--------------------------------------------------------------------------
@@ -463,12 +467,11 @@ public class LoopManiaWorld {
                 removeUnequippedInventoryItem(item);
                 potionFound = true;
                 break;
-            } // else {
-            //     System.out.println("yes");
-            // }
+            } 
         }
         if (potionFound)
             character.restoreHealthPoints();
+        healthProperty();
     }
 
     //*-------------------------------------------------------------------------
@@ -606,6 +609,7 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveEnemies();
+        healthProperty();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -628,7 +632,7 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : observers) {
             observer.notify(this);
         }
-
+        
         //TODO Observer pattern
         // if (showShop) {
         //     //! shopMenu.showMenu();
@@ -763,5 +767,12 @@ public class LoopManiaWorld {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                                 UI
+    //*-------------------------------------------------------------------------
+    public StringProperty healthProperty() {
+        charHealth.set(String.valueOf(character.getHealth()));
+        return charHealth;
+    }
 }
 
