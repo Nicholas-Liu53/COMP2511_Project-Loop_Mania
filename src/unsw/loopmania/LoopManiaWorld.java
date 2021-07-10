@@ -765,14 +765,14 @@ public class LoopManiaWorld {
         giveRandomRewards("withCard");
     }
 
-    public Pair<String, String> giveRandomRewards(String rewardSetting) {
+    public StaticEntity giveRandomRewards(String rewardSetting) {
         List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
         List<String> values = new ArrayList<>(List.of("50", "100", "200", "300", "400", "500"));
         List<String> buildingCards = new ArrayList<>(List.of("BarracksCard", "CampfireCard", "TowerCard", "TrapCard",
                 "VampireCastleCard", "VillageCard", "ZombiePitCard"));
         List<String> equipments = new ArrayList<>(List.of("Helmet", "BodyArmour", "Shield", "Staff", "Stake", "Sword"));
         String reward = null;
-        // StaticEntity rewarded = null;
+        StaticEntity rewarded = null;
         String rewardType = null;
 
         Random rand = new Random();
@@ -803,17 +803,17 @@ public class LoopManiaWorld {
                 break;
             case "buildingCard":
                 rewardType = buildingCards.get(rand.nextInt(7));
-                loadCard(rewardType);
+                rewarded = loadCard(rewardType);
                 break;
             case "equipment":
                 rewardType = equipments.get(rand.nextInt(6));
-                Item rewardItem = generateRewardItem(rewardType);
+                rewarded = generateRewardItem(rewardType);
                 // add equipment to inventory
-                unequippedInventoryItems.add(rewardItem);
+                unequippedInventoryItems.add(rewarded);
                 break;
         }
 
-        return (new Pair<String, String>(reward, rewardType));
+        return rewarded;
     }
 
     public Item generateRewardItem(String rewardItem) {
