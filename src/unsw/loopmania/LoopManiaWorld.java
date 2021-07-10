@@ -391,7 +391,7 @@ public class LoopManiaWorld {
             // beginning of items
             // TODO = give some cash/experience rewards for the discarding of the oldest
             // sword
-            giveRandomRewards("onlyGoldXP");
+            // giveRandomRewards("onlyGoldXP");
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
@@ -522,7 +522,7 @@ public class LoopManiaWorld {
         // if adding more cards than have, remove the first card...
         if (this.cardEntities.size() >= this.getWidth()) {
             // give some cash/experience/item rewards for the discarding of the oldest card
-            this.giveRandomRewards("noCard");
+            // this.giveRandomRewards("noCard");
             this.removeCard(0);
         }
 
@@ -762,18 +762,17 @@ public class LoopManiaWorld {
     }
 
     public void battleWon() {
-        giveRandomRewards("withCard");
+        // giveRandomRewards("withCard");
     }
 
     public StaticEntity giveRandomRewards(String rewardSetting) {
         List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
-        List<String> values = new ArrayList<>(List.of("50", "100", "200", "300", "400", "500"));
+        List<Integer> values = new ArrayList<>(List.of(50, 100, 200, 300, 400, 500));
         List<String> buildingCards = new ArrayList<>(List.of("BarracksCard", "CampfireCard", "TowerCard", "TrapCard",
                 "VampireCastleCard", "VillageCard", "ZombiePitCard"));
         List<String> equipments = new ArrayList<>(List.of("Helmet", "BodyArmour", "Shield", "Staff", "Stake", "Sword"));
         String reward = null;
         StaticEntity rewarded = null;
-        String rewardType = null;
 
         Random rand = new Random();
 
@@ -794,20 +793,16 @@ public class LoopManiaWorld {
 
         switch (reward) {
             case "gold":
-                rewardType = values.get(rand.nextInt(6));
-                character.giveGold(Integer.parseInt(rewardType));
+                character.giveGold(values.get(rand.nextInt(6)));
                 break;
             case "experience":
-                rewardType = values.get(rand.nextInt(2));
-                character.giveExperiencePoints(Integer.parseInt(rewardType));
+                character.giveExperiencePoints(values.get(rand.nextInt(2)));
                 break;
             case "buildingCard":
-                rewardType = buildingCards.get(rand.nextInt(7));
-                rewarded = loadCard(rewardType);
+                rewarded = loadCard(buildingCards.get(rand.nextInt(7)));
                 break;
             case "equipment":
-                rewardType = equipments.get(rand.nextInt(6));
-                rewarded = generateRewardItem(rewardType);
+                rewarded = generateRewardItem(equipments.get(rand.nextInt(6)));
                 // add equipment to inventory
                 unequippedInventoryItems.add(rewarded);
                 break;
