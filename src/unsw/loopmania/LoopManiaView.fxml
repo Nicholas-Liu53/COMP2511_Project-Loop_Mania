@@ -110,13 +110,13 @@
 
             <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
+            <Label text="Health" />
+            <Label fx:id="healthNum" prefHeight="32.0" prefWidth="75.0" text="100" textFill="RED">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
    </HBox>
-   <Label layoutX="14.0" layoutY="157.0" text="Health" />
-   <Label fx:id="healthNum" layoutX="57.0" layoutY="142.0" prefHeight="32.0" prefWidth="75.0" text="100" textFill="RED">
-      <font>
-         <Font size="32.0" />
-      </font>
-   </Label>
 </AnchorPane>

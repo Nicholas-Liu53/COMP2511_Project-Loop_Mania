@@ -473,6 +473,7 @@ public class LoopManiaWorld {
         }
         if (potionFound)
             character.restoreHealthPoints();
+        healthProperty();
     }
 
     //*-------------------------------------------------------------------------
@@ -610,6 +611,7 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveEnemies();
+        healthProperty();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -633,7 +635,7 @@ public class LoopManiaWorld {
             observer.notify(this);
         }
         
-        healthProperty();
+        // healthProperty();
 
         //TODO Observer pattern
         // if (showShop) {
