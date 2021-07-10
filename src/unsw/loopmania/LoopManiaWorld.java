@@ -583,6 +583,7 @@ public class LoopManiaWorld {
         if (!canPlaceCard(newLocation, card))
             return null;
 
+        // look for simplename of class then make applicable building and return it
         // Spawn building
         VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
                 new SimpleIntegerProperty(buildingNodeY));
@@ -731,9 +732,6 @@ public class LoopManiaWorld {
                     // Remove enemy
                     defeatedEnemies.add(e);
                     character.removeEnemyFromBattle(e);
-
-                    // give character rewards
-                    battleWon();
                 }
                 // TODO handle character death
 
@@ -759,10 +757,6 @@ public class LoopManiaWorld {
         }
 
         return defeatedEnemies;
-    }
-
-    public void battleWon() {
-        // giveRandomRewards("withCard");
     }
 
     public StaticEntity giveRandomRewards(String rewardSetting) {
