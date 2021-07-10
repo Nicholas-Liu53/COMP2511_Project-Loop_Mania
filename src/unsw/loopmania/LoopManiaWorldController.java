@@ -155,7 +155,13 @@ public class LoopManiaWorldController {
     private Image zombiePitCardImage;
 
     // Buildings
-    private Image vampireCastleBuildingImage; // vampire
+    private Image barracksImage;
+    private Image campfireImage;
+    private Image towerImage;
+    private Image trapImage;
+    private Image villageImage;
+    private Image zombiePitImage;
+    private Image vampireCastleBuildingImage;
     private Image heroesCastleImage;
 
     // Items
@@ -167,11 +173,15 @@ public class LoopManiaWorldController {
     private Image stakeImage;
     private Image swordImage;
     private Image goldPileImage;
+    private Image theOneRingImage;
 
     // Enemies
     private Image slugEnemyImage;
     private Image vampireEnemyImage;
     private Image zombieEnemyImage;
+
+    // Extra images, place wherever applicable
+    private Image heartImage;
 
     private int spawnCycle;
 
@@ -244,23 +254,36 @@ public class LoopManiaWorldController {
         zombiePitCardImage = new Image((new File("src/images/zombie_pit_card.png")).toURI().toString());
 
         // Buildings
-        heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
+        barracksImage = new Image((new File("src/images/barracks.png")).toURI().toString());
+        campfireImage = new Image((new File("src/images/campfire.png")).toURI().toString());
+        towerImage = new Image((new File("src/images/tower.png")).toURI().toString());
+        trapImage = new Image((new File("src/images/trap.png")).toURI().toString());
+        villageImage = new Image((new File("src/images/village.png")).toURI().toString());
+        zombiePitImage = new Image((new File("src/images/zombie_pit.png")).toURI().toString());
         vampireCastleBuildingImage = new Image(
                 (new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
+
         // Enemies
         slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
         vampireEnemyImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieEnemyImage = new Image((new File("src/images/zombie.png")).toURI().toString());
+
         // Items
         bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
         helmetImage = new Image((new File("src/images/helmet.png")).toURI().toString());
         shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
+        staffImage = new Image((new File("src/images/staff.png")).toURI().toString());
         stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
+        theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
+
+        // Extra images, place wherever applicable
+        heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
 
         // Path starting point
         startingPoint = world.getStartingPoint();
@@ -413,27 +436,11 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
         // not accounting for type of enemy at the moment
-        // loadVampireCard();
-        // loadSword();
 
         StaticEntity reward = world.giveRandomRewards("withCard");
         if (reward != null) {
             if (reward.getStaticEntityType().equals("Card")) {
-                onLoad((Card) reward);
-                // if (reward.getClass().getSimpleName().equals("BarracksCard"))
-                // loadCard("BarracksCard");
-                // else if (reward.getClass().getSimpleName().equals("CampfireCard"))
-                // loadCard("CampfireCard");
-                // else if (reward.getClass().getSimpleName().equals("TowerCard"))
-                // loadCard("TowerCard");
-                // else if (reward.getClass().getSimpleName().equals("TrapCard"))
-                // loadCard("TrapCard");
-                // else if (reward.getClass().getSimpleName().equals("VampireCastleCard"))
-                // loadCard("VampireCastleCard");
-                // else if (reward.getClass().getSimpleName().equals("VillageCard"))
-                // loadCard("VillageCard");
-                // else if (reward.getClass().getSimpleName().equals("ZombiePitCard"))
-                // loadCard("ZombiePitCard");
+                loadCard((Card) reward);
             } else if (reward.getStaticEntityType().equals("Item")) {
                 loadSword();
             }
@@ -456,9 +463,8 @@ public class LoopManiaWorldController {
     /**
      * Load a vampire card from the world, and pair it with an image in the GUI
      */
-    private void loadCard(String cardType) {
+    private void loadCard(Card card) {
         // TODO = load more types of card
-        Card card = world.loadCard(cardType);
         onLoad(card);
     }
 
