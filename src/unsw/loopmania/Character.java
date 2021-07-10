@@ -5,6 +5,7 @@ import unsw.loopmania.path.PathPosition;
 import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
+import unsw.loopmania.items.HealthPotion;
 import unsw.loopmania.items.Item;
 import unsw.loopmania.items.WeaponStrategy;
 
@@ -112,11 +113,21 @@ public class Character extends MovingEntity {
             this.health = 0;
     }
 
-    public void equipItem(Item item) {
-        if (item.getClass().getSimpleName().equals("HealthPotion"))
-            this.health = 100;
-
+    /**
+     * Equips health potion
+     * @param item
+     */
+    public void equipItem(HealthPotion item) {
+        this.health = 100;
         this.equippedItems.add(item); // equipping item
+    }
+
+    /**
+     * Equips weapon
+     * @param item
+     */
+    public void equipItem(WeaponStrategy item) {
+        this.weaponStrat = item;
     }
 
     public void giveExperiencePoints(int xp) {
@@ -125,14 +136,6 @@ public class Character extends MovingEntity {
 
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
-    }
-
-    /**
-     * Equips new weapon for use in battles
-     * @param weapon
-     */
-    public void equipWeapon(WeaponStrategy weapon) {
-        this.weaponStrat = weapon;
     }
 
     @Override
