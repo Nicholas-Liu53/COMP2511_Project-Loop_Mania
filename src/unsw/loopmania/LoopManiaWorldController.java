@@ -413,30 +413,30 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
         // not accounting for type of enemy at the moment
-        loadVampireCard();
-        loadSword();
-
-        // Pair<String, String> reward = world.giveRandomRewards("withCard");
-        // if (reward != null) {
-        // if (reward.getValue0().equals("buildingCard")) {
-        // if (reward.getValue1().equals("BarracksCard"))
-        // loadCard("BarracksCard");
-        // else if (reward.getValue1().equals("CampfireCard"))
-        // loadCard("CampfireCard");
-        // else if (reward.getValue1().equals("TowerCard"))
-        // loadCard("TowerCard");
-        // else if (reward.getValue1().equals("TrapCard"))
-        // loadCard("TrapCard");
-        // else if (reward.getValue1().equals("VampireCastleCard"))
-        // loadCard("VampireCastleCard");
-        // else if (reward.getValue1().equals("VillageCard"))
-        // loadCard("VillageCard");
-        // else if (reward.getValue1().equals("ZombiePitCard"))
-        // loadCard("ZombiePitCard");
-        // } else if (reward.getValue0().equals("equipment")) {
+        // loadVampireCard();
         // loadSword();
-        // }
-        // }
+
+        StaticEntity reward = world.giveRandomRewards("withCard");
+        if (reward != null) {
+            if (reward.getStaticEntityType().equals("Card")) {
+                if (reward.getClass().getSimpleName().equals("BarracksCard"))
+                    loadCard("BarracksCard");
+                else if (reward.getClass().getSimpleName().equals("CampfireCard"))
+                    loadCard("CampfireCard");
+                else if (reward.getClass().getSimpleName().equals("TowerCard"))
+                    loadCard("TowerCard");
+                else if (reward.getClass().getSimpleName().equals("TrapCard"))
+                    loadCard("TrapCard");
+                else if (reward.getClass().getSimpleName().equals("VampireCastleCard"))
+                    loadCard("VampireCastleCard");
+                else if (reward.getClass().getSimpleName().equals("VillageCard"))
+                    loadCard("VillageCard");
+                else if (reward.getClass().getSimpleName().equals("ZombiePitCard"))
+                    loadCard("ZombiePitCard");
+            } else if (reward.getStaticEntityType().equals("Item")) {
+                loadSword();
+            }
+        }
     }
 
     /**
@@ -455,11 +455,17 @@ public class LoopManiaWorldController {
     /**
      * Load a vampire card from the world, and pair it with an image in the GUI
      */
-    private void loadVampireCard() {
+    private void loadCard(String cardType) {
         // TODO = load more types of card
-        Card card = world.loadCard("VampireCastleCard");
+        Card card = world.loadCard(cardType);
         onLoad(card);
     }
+
+    // private void loadVampireCard() {
+    // // TODO = load more types of card
+    // Card card = world.loadCard("VampireCastleCard");
+    // onLoad(card);
+    // }
 
     /**
      * Load a sword from the world, and pair it with an image in the GUI
