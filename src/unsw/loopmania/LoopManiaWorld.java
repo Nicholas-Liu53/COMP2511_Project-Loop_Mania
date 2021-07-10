@@ -456,7 +456,7 @@ public class LoopManiaWorld {
 
     // Drinks health potion
     public void drinkHealthPotion() {
-        if (character.getHealth() == 100) return;
+        if (character.isFullHealth()) return;
         boolean potionFound = false;
         for (Item item : unequippedInventoryItems) {
             if (item.getItemID().equals("HealthPotion")) {

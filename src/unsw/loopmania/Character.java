@@ -129,6 +129,10 @@ public class Character extends MovingEntity {
         health = 100;
     }
 
+    public boolean isFullHealth() {
+        return health == 100;
+    }
+
     @Override
     public void moveDownPath() {
         if(!this.getInBattle()) {
