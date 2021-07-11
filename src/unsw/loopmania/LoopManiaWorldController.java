@@ -381,7 +381,7 @@ public class LoopManiaWorldController {
                 onLoad(newEnemy);
             }
             // Check cards is the correct size
-            if (world.cardsIsFull()) {
+            if (world.cardEntityIsFull()) {
                 StaticEntity compensation = world.giveRandomRewards("noCard");
                 if (compensation.getStaticEntityType().equals("Item"))
                     loadSword();

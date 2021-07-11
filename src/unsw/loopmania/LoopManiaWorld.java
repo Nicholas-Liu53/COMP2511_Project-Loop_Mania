@@ -374,6 +374,13 @@ public class LoopManiaWorld {
         }
 
         // Insert the new item, as we know we have at least made a slot available...
+        // if (itemToAdd.getClass().getSimpleName().equals("Sword")) {
+        // Sword sword = new Sword(new
+        // SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+        // new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        // unequippedInventoryItems.add(sword);
+        // return sword;
+        // } else
         if (itemToAdd.getClass().getSimpleName().equals("HealthPotion")) {
             HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                     new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
@@ -551,8 +558,8 @@ public class LoopManiaWorld {
      * 
      * @return boolean
      */
-    public boolean cardsIsFull() {
-        if (this.cardEntities.size() >= this.getWidth()) {
+    public boolean cardEntityIsFull() {
+        if (this.cardEntities.size() > this.getWidth()) {
             this.removeCard(0);
             return true;
         }
