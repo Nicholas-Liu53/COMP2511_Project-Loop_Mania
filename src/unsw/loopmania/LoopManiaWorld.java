@@ -475,6 +475,7 @@ public class LoopManiaWorld {
      * 
      * @param x
      * @param y
+     * @return weapon replaced by equip
      */
     public WeaponStrategy equipWeaponByCoordinates(int x, int y) {
         WeaponStrategy oldWeapon = character.getWeapon();
@@ -488,6 +489,28 @@ public class LoopManiaWorld {
         }
 
         return oldWeapon;
+    }
+
+    /**
+     * Takes body armour from the inventory and equips it as the character's body armour, any
+     * currently equipped weapon is placed back into the inventory
+     * 
+     * @param x
+     * @param y
+     * @return body armour replaced by equip
+     */
+    public BodyArmourStrategy equipBodyArmourByCoordinates(int x, int y) {
+        BodyArmourStrategy oldBodyArmour = character.getBodyArmour();
+        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        unequippedInventoryItems.remove(item);
+        character.equipItem((BodyArmourStrategy) item);
+
+        if (oldBodyArmour instanceof Melee) {
+            // Melee shouldn't be placed in the inventory
+            return null;
+        }
+
+        return oldBodyArmour;
     }
 
     /**
