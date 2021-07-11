@@ -584,35 +584,47 @@ public class LoopManiaWorldController {
      * 
      * @param item
      */
-    private void onLoad(Item item) {
+    private void onLoad(Item item, boolean spawnOnPath) {
         ImageView view = null;
 
-        if (item instanceof Helmet) {
-            view = new ImageView(helmetImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        } else if (item instanceof BodyArmour) {
-            view = new ImageView(bodyArmourImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
-        } else if (item instanceof Shield) {
-            view = new ImageView(shieldImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
-        } else if (item instanceof Staff) {
-            view = new ImageView(staffImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        } else if (item instanceof Stake) {
-            view = new ImageView(stakeImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        } else if (item instanceof Sword) {
-            view = new ImageView(swordImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        } else if (item instanceof HealthPotion) {
-            view = new ImageView(healthPotionImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        }
+        if (!spawnOnPath) {
+            if (item instanceof Helmet) {
+                view = new ImageView(helmetImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            } else if (item instanceof BodyArmour) {
+                view = new ImageView(bodyArmourImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
+            } else if (item instanceof Shield) {
+                view = new ImageView(shieldImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+            } else if (item instanceof Staff) {
+                view = new ImageView(staffImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+            } else if (item instanceof Stake) {
+                view = new ImageView(stakeImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+            } else if (item instanceof Sword) {
+                view = new ImageView(swordImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+            } else if (item instanceof HealthPotion) {
+                view = new ImageView(healthPotionImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            }
 
-        if (view != null) {
-            addEntity(item, view);
-            unequippedInventory.getChildren().add(view);
+            if (view != null) {
+                addEntity(item, view);
+                unequippedInventory.getChildren().add(view);
+            }
+        } else {
+            if (item instanceof HealthPotion)
+                view = new ImageView(healthPotionImage);
+            else if (item instanceof GoldPile)
+                view = new ImageView(goldPileImage);
+
+            if (view != null) {
+                addEntity(item, view);
+                squares.getChildren().add(view);
+            }
         }
     }
 
@@ -636,27 +648,6 @@ public class LoopManiaWorldController {
             addEntity(enemy, view);
             squares.getChildren().add(view);
         }
-
-    /**
-     * Load a health potion into the GUI
-     * 
-     * @param hp
-     */
-    private void onLoad(HealthPotion hp) {
-        ImageView view = new ImageView(healthPotionImage);
-        addEntity(hp, view);
-        squares.getChildren().add(view);
-    }
-
-    /**
-     * Load a gold pile into the GUI
-     * 
-     * @param gp
-     */
-    private void onLoad(GoldPile gp) {
-        ImageView view = new ImageView(goldPileImage);
-        addEntity(gp, view);
-        squares.getChildren().add(view);
     }
 
     /**
