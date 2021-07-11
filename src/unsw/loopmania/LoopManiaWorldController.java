@@ -383,7 +383,7 @@ public class LoopManiaWorldController {
             // Check cards is the correct size
             if (world.cardEntityIsFull()) {
                 StaticEntity compensation = world.giveRandomRewards("noCard");
-                if (compensation.getStaticEntityType().equals("Item"))
+                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
                     loadItem((Item) compensation);
             }
             // Check inventory has atleast one empty slot
