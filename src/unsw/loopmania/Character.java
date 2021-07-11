@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.BodyArmourStrategy;
 import unsw.loopmania.items.Item;
+import unsw.loopmania.items.ShieldStrategy;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.items.WeaponStrategy;
 
@@ -17,6 +18,7 @@ public class Character extends MovingEntity {
     private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
     private BodyArmourStrategy bodyArmourStrat;
+    private ShieldStrategy shieldStrat;
     private ArrayList<Item> equippedItems;
     private int experience;
     private int gold;
@@ -34,6 +36,7 @@ public class Character extends MovingEntity {
         this.enemiesCurrentlyBattling = new ArrayList<Enemy>();
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
+        this.shieldStrat = new Melee();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
@@ -92,6 +95,10 @@ public class Character extends MovingEntity {
         return this.bodyArmourStrat;
     }
 
+    public ShieldStrategy getShield() {
+        return this.shieldStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling, only
      * adds enemy if it is not already on the list
@@ -132,7 +139,11 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-        this.health -= (damage - this.bodyArmourStrat.receiveAttack(damage));
+        // Subtracting armour defence
+        int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
+        actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
+
+        this.health -= actualDamage;
         if (this.health < 0)
             this.health = 0;
     }
@@ -163,8 +174,22 @@ public class Character extends MovingEntity {
         this.weaponStrat = item;
     }
 
+    /**
+     * Equips body armour
+     * 
+     * @param item
+     */
     public void equipItem(BodyArmourStrategy item) {
         this.bodyArmourStrat = item;
+    }
+
+    /**
+     * Equips shield
+     * 
+     * @param item
+     */
+    public void equipItem(ShieldStrategy item) {
+        this.shieldStrat = item;
     }
 
     public void giveExperiencePoints(int xp) {

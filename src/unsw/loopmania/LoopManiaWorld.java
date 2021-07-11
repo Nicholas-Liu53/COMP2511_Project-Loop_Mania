@@ -514,6 +514,28 @@ public class LoopManiaWorld {
     }
 
     /**
+     * Takes shield from the inventory and equips it as the character's shield, any
+     * currently equipped weapon is placed back into the inventory
+     * 
+     * @param x
+     * @param y
+     * @return shield replaced by equip
+     */
+    public ShieldStrategy equipShieldByCoordinates(int x, int y) {
+        ShieldStrategy oldShield = character.getShield();
+        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        unequippedInventoryItems.remove(item);
+        character.equipItem((ShieldStrategy) item);
+
+        if (oldShield instanceof Melee) {
+            // Melee shouldn't be placed in the inventory
+            return null;
+        }
+
+        return oldShield; 
+    }
+
+    /**
      * remove item at a particular index in the unequipped inventory items list
      * (this is ordered based on age in the starter code)
      * 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.lang.model.util.ElementScanner6;
+import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
 
 import org.javatuples.Pair;
 
@@ -55,6 +56,7 @@ enum DRAGGABLE_TYPE {
     ITEM, 
     WEAPON,
     BODYARMOUR,
+    SHIELD,
 }
 
 /**
@@ -617,7 +619,7 @@ public class LoopManiaWorldController {
             addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
         } else if (item instanceof Shield) {
             view = new ImageView(shieldImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
         } else if (item instanceof Staff) {
             view = new ImageView(staffImage);
             addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
@@ -809,13 +811,12 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
                                 // Place weapon back in inventory
-                                if (oldWeapon instanceof Sword) {
+                                if (oldWeapon instanceof Sword) 
                                     loadItem(world.loadItem("Sword"));
-                                } else if (oldWeapon instanceof Staff) {
+                                else if (oldWeapon instanceof Staff) 
                                     loadItem(world.loadItem("Staff"));
-                                } else if (oldWeapon instanceof Stake) {
+                                else if (oldWeapon instanceof Stake) 
                                     loadItem(world.loadItem("Stake"));
-                                }
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
@@ -823,12 +824,19 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 BodyArmourStrategy oldBodyArmour = world.equipBodyArmourByCoordinates(nodeX, nodeY);
                                 // Place armour back in inventory
-                                if (oldBodyArmour instanceof BodyArmour) {
+                                if (oldBodyArmour instanceof BodyArmour) 
                                     loadItem(world.loadItem("BodyArmour"));
-                                }
                                 // Placing in body armour cell
                                 targetGridPane.add(image, 1, 1, 1, 1);
                                 break;
+                            case SHIELD:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                ShieldStrategy oldShield = world.equipShieldByCoordinates(nodeX, nodeY);
+                                // Place shield back in inventory
+                                if (oldShield instanceof Shield) 
+                                    loadItem(world.loadItem("Shield"));
+                                // Placing in shield cell
+                                targetGridPane.add(image, 2, 1, 1, 1);
                             default:
                                 break;
                         }
