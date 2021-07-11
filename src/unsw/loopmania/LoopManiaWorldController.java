@@ -51,7 +51,10 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, WEAPON,
+    CARD, 
+    ITEM, 
+    WEAPON,
+    BODYARMOUR,
 }
 
 /**
@@ -611,7 +614,7 @@ public class LoopManiaWorldController {
             addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         } else if (item instanceof BodyArmour) {
             view = new ImageView(bodyArmourImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
         } else if (item instanceof Shield) {
             view = new ImageView(shieldImage);
             addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
@@ -813,9 +816,18 @@ public class LoopManiaWorldController {
                                 } else if (oldWeapon instanceof Stake) {
                                     loadItem(world.loadItem("Stake"));
                                 }
-                                
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
+                                break;
+                            case BODYARMOUR:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                BodyArmourStrategy oldBodyArmour = world.equipBodyArmourByCoordinates(nodeX, nodeY);
+                                // Place armour back in inventory
+                                if (oldBodyArmour instanceof BodyArmour) {
+                                    loadItem(world.loadItem("BodyArmour"));
+                                }
+                                // Placing in body armour cell
+                                targetGridPane.add(image, 1, 1, 1, 1);
                                 break;
                             default:
                                 break;
