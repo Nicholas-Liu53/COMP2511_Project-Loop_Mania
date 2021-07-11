@@ -1,7 +1,6 @@
 package unsw.loopmania.items;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.StaticEntity;
 import unsw.loopmania.enemies.Enemy;
 
 /**
@@ -13,12 +12,13 @@ public class Sword extends Item implements WeaponStrategy {
         purchasePrice = 200;
         sellPrice = 160;
     }
+
     public Sword() {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2), "Weapon");
         purchasePrice = 200;
         sellPrice = 160;
     }
-    
+
     public void launchAttack(Enemy enemy, int baseDamage) {
         // Simply adds 10 extra damage
         enemy.receiveAttack(baseDamage + 10);

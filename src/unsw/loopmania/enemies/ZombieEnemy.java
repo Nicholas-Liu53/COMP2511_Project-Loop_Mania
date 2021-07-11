@@ -1,7 +1,5 @@
 package unsw.loopmania.enemies;
 
-import java.util.Random;
-
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.Character;
 
@@ -12,7 +10,11 @@ public class ZombieEnemy extends Enemy {
     // Attributes
     private int speedDelay;
 
-    // Basic constructor
+    /**
+     * Creates a new zombie enemey in the game world at specified path position
+     * 
+     * @param position
+     */
     public ZombieEnemy(PathPosition position) {
         super(position, 50, 3, 3, 10, 10);
         // Setting up speedDelay
@@ -20,9 +22,10 @@ public class ZombieEnemy extends Enemy {
     }
 
     /**
-     * Used to simulate slower speed of the zombie, will only perform an action
-     * once out of every three times it's attack and movement methods are called
-     * slowing down movement and attacks
+     * Used to simulate slower speed of the zombie, will only perform an action once
+     * out of every three times it's attack and movement methods are called slowing
+     * down movement and attacks
+     * 
      * @return true if the zombie is ready to do an action, otherwise false
      */
     private boolean doAction() {

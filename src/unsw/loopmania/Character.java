@@ -1,12 +1,10 @@
 package unsw.loopmania;
 
-import unsw.loopmania.path.PathPosition;
-
 import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
-import unsw.loopmania.items.HealthPotion;
 import unsw.loopmania.items.Item;
+import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.items.WeaponStrategy;
 
 /**
@@ -15,20 +13,24 @@ import unsw.loopmania.items.WeaponStrategy;
 public class Character extends MovingEntity {
     private int health;
     private int damage;
+    private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
-    private ArrayList<Enemy> currentlyBattling;
     private ArrayList<Item> equippedItems;
     private int experience;
     private int gold;
 
-    // TODO = potentially implement relationships between this class and other
-    // classes
+    /**
+     * Creates a new Character in the game world at specified path position with
+     * initial health as 100 and ability to damage enemies as 5
+     * 
+     * @param position
+     */
     public Character(PathPosition position) {
         super(position);
         this.health = 100;
         this.damage = 5;
+        this.enemiesCurrentlyBattling = new ArrayList<Enemy>();
         this.weaponStrat = new Melee();
-        this.currentlyBattling = new ArrayList<Enemy>();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
@@ -41,29 +43,40 @@ public class Character extends MovingEntity {
         return this.health;
     }
 
+    /**
+     * @return damage given to an enemy by Character
+     */
     public int getDamage() {
         return this.damage;
     }
 
     /**
-     * @return true if the character is in a battle, else false
+     * @return true if the character is currently battling an enemy, else false
      */
     public boolean getInBattle() {
-        if (this.currentlyBattling.size() == 0) {
+        if (this.enemiesCurrentlyBattling.size() == 0)
             return false;
-        } else {
+        else
             return true;
-        }
     }
 
+    /**
+     * @return list of items equipped by Character in order to defeat the enemy
+     */
     public ArrayList<Item> getEquippedItems() {
         return this.equippedItems;
     }
 
+    /**
+     * @return experience points collected / earned by Character in the game so far
+     */
     public int getExperience() {
         return this.experience;
     }
 
+    /**
+     * @return gold collected / earned by Character in the game so far
+     */
     public int getGold() {
         return this.gold;
     }
@@ -73,25 +86,25 @@ public class Character extends MovingEntity {
     }
 
     /**
-     * Adds enemy to list of enemies that the character is currently battling
-     * only adds enemy it it is not already on the list
+     * Adds enemy to list of enemies that the character is currently battling, only
+     * adds enemy if it is not already on the list
+     * 
      * @param enemy
      */
     public void addBattle(Enemy enemy) {
-        if (!this.currentlyBattling.contains(enemy)) {
-            this.currentlyBattling.add(enemy);
-        }
+        if (!this.enemiesCurrentlyBattling.contains(enemy))
+            this.enemiesCurrentlyBattling.add(enemy);
     }
 
     /**
      * Removes enemy from list of enemies that the character is currently battling
      * should only be invoked if the enemy is defeated
+     * 
      * @param enemy
      */
-    public void removeBattle(Enemy enemy) {
-        if (this.currentlyBattling.contains(enemy)) {
-            this.currentlyBattling.remove(enemy);
-        }
+    public void removeEnemyFromBattle(Enemy enemy) {
+        if (this.enemiesCurrentlyBattling.contains(enemy))
+            this.enemiesCurrentlyBattling.remove(enemy);
     }
 
     /**
@@ -106,8 +119,8 @@ public class Character extends MovingEntity {
 
     /**
      * Allows Character to receive an attack, takes in the amount of damage to be
-     * done and subtracts the relavent amount from health after defence is factored
-     * in
+     * done and subtracts the relavent amount from health, health can never be less
+     * than zero
      * 
      * @param damage
      */
@@ -117,16 +130,26 @@ public class Character extends MovingEntity {
             this.health = 0;
     }
 
+    /**
+     * Allows Character to equip different items to be able to win the battle
+     * against enemy
+     * 
+     * Special Item: Health Potion - restores health to 100
+     * 
+     * @param item
+     */
     public void equipItem(Item item) {
-        //! NOTE: Health potions are consumed by pressing P (maybe: or double clicking on the health potion)
+        // ! NOTE: Health potions are consumed by pressing P (maybe: or double clicking
+        // on the health potion)
         // if (item.getItemID().equals("HealthPotion"))
-        //     this.health = 100;
+        // this.health = 100;
 
         this.equippedItems.add(item); // equipping item
     }
 
     /**
      * Equips weapon
+     * 
      * @param item
      */
     public void equipItem(WeaponStrategy item) {
@@ -137,6 +160,11 @@ public class Character extends MovingEntity {
         this.experience += xp; // max xp?
     }
 
+    /**
+     * Gives Character gold as specified
+     * 
+     * @param xp
+     */
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
     }
@@ -151,9 +179,7 @@ public class Character extends MovingEntity {
 
     @Override
     public void moveDownPath() {
-        if(!this.getInBattle()) {
+        if (!this.getInBattle())
             super.moveDownPath();
-        }
     }
-
 }

@@ -13,9 +13,8 @@ import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.enemies.VampireEnemy;
 
 /**
- * Tests that each weapon deals the correct amount of damage when
- * equipped, also tests to ensure that special attacks work
- * correctly
+ * Tests that each weapon deals the correct amount of damage when equipped, also
+ * tests to ensure that special attacks work correctly
  */
 public class WeaponTest {
     @Test
@@ -24,7 +23,7 @@ public class WeaponTest {
         Character mainChar = new Character(null);
         Enemy enemy = new SlugEnemy(null);
 
-        mainChar.equipWeapon(weapon);
+        mainChar.equipItem(weapon);
         // Testing against slug
         mainChar.launchAttack(enemy);
         assertEquals(10, enemy.getHealth());
@@ -38,7 +37,7 @@ public class WeaponTest {
         Character mainChar = new Character(null);
         Enemy enemy = new SlugEnemy(null);
 
-        mainChar.equipWeapon(weapon);
+        mainChar.equipItem(weapon);
         // Testing against slug
         mainChar.launchAttack(enemy);
         assertEquals(15, enemy.getHealth());
@@ -68,7 +67,7 @@ public class WeaponTest {
         Character mainChar = new Character(null);
         Enemy enemy = new SlugEnemy(null);
 
-        mainChar.equipWeapon(weapon);
+        mainChar.equipItem(weapon);
         // Testing against slug
         mainChar.launchAttack(enemy);
         assertEquals(17, enemy.getHealth());

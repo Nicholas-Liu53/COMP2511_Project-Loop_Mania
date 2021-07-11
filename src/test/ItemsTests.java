@@ -2,44 +2,35 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 
-// import jdk.internal.jshell.tool.resources.l10n;
-import unsw.loopmania.*;
 import unsw.loopmania.items.*;
 
-
 public class ItemsTests {
-    
+
     @Test
     public void healthPotionTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Obtainable through picking up off the ground
-             3. Purchasing price is 500 gold
-             4. Selling price is 240 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Obtainable through picking up off the ground 3. Purchasing price is 500 gold
+         * 4. Selling price is 240 gold
+         */
+
         // Testing Requirement 3 & 4:
         HealthPotion hp = new HealthPotion();
         assertEquals(hp.getClass().getSimpleName(), "HealthPotion");
         assertEquals(hp.getRestoreHealthPoints(), 100);
         assertEquals(hp.getPurchasePrice(), 125);
         assertEquals(hp.getSellPrice(), 100);
-    } 
+    }
 
-    @Test 
+    @Test
     public void bodyArmourTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Purchasing price is 500 gold
-             3. Selling price is 400 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 500 gold 3. Selling price is 400 gold
+         */
+
         // Testing Requirement 2 & 3:
         BodyArmour ba = new BodyArmour();
         assertEquals(ba.getClass().getSimpleName(), "BodyArmour");
@@ -48,15 +39,13 @@ public class ItemsTests {
         assertEquals(ba.getSellPrice(), 400);
     }
 
-    @Test 
+    @Test
     public void helmetTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Purchasing price is 200 gold
-             3. Selling price is 160 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 200 gold 3. Selling price is 160 gold
+         */
+
         // Testing Requirement 2 & 3:
         Helmet h = new Helmet();
         assertEquals(h.getClass().getSimpleName(), "Helmet");
@@ -65,15 +54,13 @@ public class ItemsTests {
         assertEquals(h.getSellPrice(), 160);
     }
 
-    @Test 
+    @Test
     public void shieldTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Purchasing price is 300 gold
-             3. Selling price is 240 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 300 gold 3. Selling price is 240 gold
+         */
+
         // Testing Requirement 2 & 3:
         Shield s = new Shield();
         assertEquals(s.getClass().getSimpleName(), "Shield");
@@ -84,29 +71,25 @@ public class ItemsTests {
 
     @Test
     public void swordTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Purchasing price is 200 gold
-             3. Selling price is 160 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 200 gold 3. Selling price is 160 gold
+         */
+
         // Testing Requirement 2 & 3:
         Sword s = new Sword();
         assertEquals(s.getClass().getSimpleName(), "Sword");
         assertEquals(s.getPurchasePrice(), 200);
         assertEquals(s.getSellPrice(), 160);
     }
-    
+
     @Test
     public void staffTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Purchasing price is 300 gold
-             3. Selling price is 240 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 300 gold 3. Selling price is 240 gold
+         */
+
         // Testing Requirement 2 & 3:
         Staff s = new Staff();
         assertEquals(s.getClass().getSimpleName(), "Staff");
@@ -116,17 +99,15 @@ public class ItemsTests {
 
     @Test
     public void stakeTest() {
-        /* 
-            Requirements to test:
-             1. Obtainable through purchase in the shop
-             2. Purchasing price is 150 gold
-             3. Selling price is 120 gold
-        */
-        
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 150 gold 3. Selling price is 120 gold
+         */
+
         // Testing Requirement 2 & 3:
         Stake s = new Stake();
         assertEquals(s.getClass().getSimpleName(), "Stake");
-        assertEquals(s.getPurchasePrice(), 300);
-        assertEquals(s.getSellPrice(), 240);
+        assertEquals(s.getPurchasePrice(), 150);
+        assertEquals(s.getSellPrice(), 120);
     }
 }
