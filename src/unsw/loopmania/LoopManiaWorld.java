@@ -394,15 +394,6 @@ public class LoopManiaWorld {
      */
     public Item loadItem(String itemType) {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null && !itemType.equals("Gold")) {
-            // Eject the oldest unequipped item and replace it... oldest item is that at
-            // beginning of items
-            removeItemByPositionInUnequippedInventoryItems(0);
-            // TODO = give some cash/experience rewards for the discarding of the oldest
-            // item
-            // giveRandomRewards("onlyGoldXP");
-            firstAvailableSlot = getFirstAvailableSlotForItem();
-        }
 
         Item item = null;
 
@@ -443,6 +434,18 @@ public class LoopManiaWorld {
             unequippedInventoryItems.add(item);
 
         return item;
+    }
+
+    public boolean unequippedItemInventoryIsFull() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            // Eject the oldest unequipped item and replace it... oldest item is that at
+            // beginning of items
+            removeItemByPositionInUnequippedInventoryItems(0);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -586,6 +589,7 @@ public class LoopManiaWorld {
             this.removeCard(0);
             return true;
         }
+
         return false;
     }
 
