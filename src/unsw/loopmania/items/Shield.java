@@ -2,7 +2,7 @@ package unsw.loopmania.items;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Shield extends Armour {
+public class Shield extends Armour implements ShieldStrategy {
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
         purchasePrice = 300;
@@ -15,6 +15,12 @@ public class Shield extends Armour {
         purchasePrice = 300;
         sellPrice = 240;
         damageReductionFactor = 0.7;
+    }
+
+    public int receiveAttack(int damage) {
+        // BodyArmour provides 3 defence
+        int recvDamage = (int)(damage * 0.2);
+        return recvDamage;
     }
 
 }
