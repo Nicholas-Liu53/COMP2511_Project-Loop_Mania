@@ -456,13 +456,13 @@ public class LoopManiaWorldController {
 
         switch (enemy.getClass().getSimpleName()) {
             case "SlugEnemy":
-                giveRandomRewardsWithCards(1);
+                giveRandomRewardsWithCards(2);
                 break;
             case "VampireEnemy":
-                giveRandomRewardsWithCards(1);
+                giveRandomRewardsWithCards(6);
                 break;
             case "ZombieEnemy":
-                giveRandomRewardsWithCards(1);
+                giveRandomRewardsWithCards(4);
                 break;
             default:
                 break;
