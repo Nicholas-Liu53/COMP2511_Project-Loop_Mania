@@ -8,6 +8,8 @@ import java.util.Set;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
@@ -55,7 +57,7 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
     private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
@@ -71,6 +73,9 @@ public class LoopManiaWorld {
     private int numGold;
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
+    private StringProperty charHealth;
+    private StringProperty charGold;
+    private StringProperty charXP;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -112,6 +117,9 @@ public class LoopManiaWorld {
         numGold = 0;
         newEnemies = new ArrayList<Enemy>();
         observers = new ArrayList<WorldStateObserver>();
+        charHealth = new SimpleStringProperty();
+        charGold = new SimpleStringProperty();
+        charXP = new SimpleStringProperty();
     }
 
     //--------------------------------------------------------------------------
@@ -359,7 +367,8 @@ public class LoopManiaWorld {
             unequippedInventoryItems.add(healthPotion);
             return healthPotion;
         } else {
-            numGold += 100;
+            character.giveGold(100);
+            // character.giveExperiencePoints(10);
         }
         return itemToAdd;
     }
@@ -472,6 +481,22 @@ public class LoopManiaWorld {
             }
         }
         return null;
+    }
+
+    // Drinks health potion
+    public void drinkHealthPotion() {
+        if (character.isFullHealth()) return;
+        boolean potionFound = false;
+        for (Item item : unequippedInventoryItems) {
+            if (item.getItemID().equals("HealthPotion")) {
+                removeUnequippedInventoryItem(item);
+                potionFound = true;
+                break;
+            } 
+        }
+        if (potionFound)
+            character.restoreHealthPoints();
+        healthProperty();
     }
 
     //*-------------------------------------------------------------------------
@@ -609,6 +634,9 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveEnemies();
+        healthProperty();
+        goldProperty();
+        xpProperty();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -631,7 +659,7 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : observers) {
             observer.notify(this);
         }
-
+        
         //TODO Observer pattern
         // if (showShop) {
         //     //! shopMenu.showMenu();
@@ -662,7 +690,7 @@ public class LoopManiaWorld {
                     return false;
             }
         }
-            return true;
+        return true;
     }
 
     //*-------------------------------------------------------------------------
@@ -766,5 +794,20 @@ public class LoopManiaWorld {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                                 UIS
+    //*-------------------------------------------------------------------------
+    public StringProperty healthProperty() {
+        charHealth.set(String.valueOf(character.getHealth()));
+        return charHealth;
+    }
+    public StringProperty goldProperty() {
+        charGold.set(String.valueOf(character.getGold()));
+        return charGold;
+    }
+    public StringProperty xpProperty() {
+        charXP.set(String.valueOf(character.getExperience()));
+        return charXP;
+    }
 }
 

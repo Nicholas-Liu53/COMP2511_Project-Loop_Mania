@@ -117,12 +117,11 @@ public class Character extends MovingEntity {
             this.health = 0;
     }
 
-    /**
-     * Equips health potion
-     * @param item
-     */
-    public void equipItem(HealthPotion item) {
-        this.health = 100;
+    public void equipItem(Item item) {
+        //! NOTE: Health potions are consumed by pressing P (maybe: or double clicking on the health potion)
+        // if (item.getItemID().equals("HealthPotion"))
+        //     this.health = 100;
+
         this.equippedItems.add(item); // equipping item
     }
 
@@ -140,6 +139,14 @@ public class Character extends MovingEntity {
 
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    public void restoreHealthPoints() {
+        health = 100;
+    }
+
+    public boolean isFullHealth() {
+        return health == 100;
     }
 
     @Override
