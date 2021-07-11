@@ -492,8 +492,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * Takes body armour from the inventory and equips it as the character's body armour, any
-     * currently equipped weapon is placed back into the inventory
+     * Takes body armour from the inventory and equips it as the character's body
+     * armour, any currently equipped weapon is placed back into the inventory
      * 
      * @param x
      * @param y
@@ -532,7 +532,7 @@ public class LoopManiaWorld {
             return null;
         }
 
-        return oldShield; 
+        return oldShield;
     }
 
     /**
@@ -581,6 +581,7 @@ public class LoopManiaWorld {
                 }
             }
         }
+
         return null;
     }
 
@@ -588,6 +589,7 @@ public class LoopManiaWorld {
     public void drinkHealthPotion() {
         if (character.isFullHealth())
             return;
+
         boolean potionFound = false;
         for (Item item : unequippedInventoryItems) {
             if (item.getClass().getSimpleName().equals("HealthPotion")) {
@@ -596,8 +598,10 @@ public class LoopManiaWorld {
                 break;
             }
         }
+
         if (potionFound)
             character.restoreHealthPoints();
+
         healthProperty();
     }
 
