@@ -10,8 +10,14 @@ import unsw.loopmania.items.BodyArmourStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Testing the equippable armour items
+ */
 public class ArmourTest {
     
+    /**
+     * Testing body armour reduces damage to character
+     */
     @Test
     public void BodyArmourTest() {
         BodyArmourStrategy bodyArmour = new BodyArmour();
