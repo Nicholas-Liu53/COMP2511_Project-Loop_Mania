@@ -88,6 +88,10 @@ public class Character extends MovingEntity {
         return this.weaponStrat;
     }
 
+    public BodyArmourStrategy getBodyArmour() {
+        return this.bodyArmourStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling, only
      * adds enemy if it is not already on the list
