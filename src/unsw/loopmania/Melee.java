@@ -14,6 +14,7 @@ public class Melee implements WeaponStrategy, BodyArmourStrategy {
     }
 
     public int receiveAttack(int damage) {
-        return damage;
+        // Provides no damage protection
+        return 0;
     }
 }
