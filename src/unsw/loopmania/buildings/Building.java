@@ -58,6 +58,7 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
 
         return null;
     }
+
     
     @Override
     public String getStaticEntityType() {

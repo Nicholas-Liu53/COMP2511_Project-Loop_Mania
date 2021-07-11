@@ -6,6 +6,8 @@ import java.util.Random;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
@@ -53,7 +55,7 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
     private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
@@ -69,6 +71,9 @@ public class LoopManiaWorld {
     private int numGold;
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
+    private StringProperty charHealth;
+    private StringProperty charGold;
+    private StringProperty charXP;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -110,6 +115,9 @@ public class LoopManiaWorld {
         numGold = 0;
         newEnemies = new ArrayList<Enemy>();
         observers = new ArrayList<WorldStateObserver>();
+        charHealth = new SimpleStringProperty();
+        charGold = new SimpleStringProperty();
+        charXP = new SimpleStringProperty();
     }
 
     // --------------------------------------------------------------------------
@@ -355,7 +363,7 @@ public class LoopManiaWorld {
      */
     public Item addItem(Item itemToAdd) {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null && !itemToAdd.getItemID().equals("GoldPile")) {
+        if (firstAvailableSlot == null && !itemToAdd.getClass().getSimpleName().equals("GoldPile")) {
             // Eject the oldest unequipped item and replace it... oldest item is that at
             // beginning of items
             removeItemByPositionInUnequippedInventoryItems(0);
@@ -366,13 +374,14 @@ public class LoopManiaWorld {
         }
 
         // Insert the new item, as we know we have at least made a slot available...
-        if (itemToAdd.getItemID().equals("HealthPotion")) {
+        if (itemToAdd.getClass().getSimpleName().equals("HealthPotion")) {
             HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                     new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(healthPotion);
             return healthPotion;
         } else {
-            numGold += 100;
+            character.giveGold(100);
+            // character.giveExperiencePoints(10);
         }
         return itemToAdd;
     }
@@ -426,6 +435,27 @@ public class LoopManiaWorld {
     }
 
     /**
+     * Takes weapon from the inventory and equips it as the character's weapon any
+     * currently equipped weapon is placed back into the inventory
+     * 
+     * @param x
+     * @param y
+     */
+    public WeaponStrategy equipWeaponByCoordinates(int x, int y) {
+        WeaponStrategy oldWeapon = character.getWeapon();
+        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        unequippedInventoryItems.remove(item);
+        character.equipItem((WeaponStrategy) item);
+
+        if (oldWeapon instanceof Melee) {
+            // Melee shouldn't be placed in the inventory
+            return null;
+        }
+
+        return oldWeapon;
+    }
+
+    /**
      * remove item at a particular index in the unequipped inventory items list
      * (this is ordered based on age in the starter code)
      * 
@@ -472,6 +502,23 @@ public class LoopManiaWorld {
             }
         }
         return null;
+    }
+
+    // Drinks health potion
+    public void drinkHealthPotion() {
+        if (character.isFullHealth())
+            return;
+        boolean potionFound = false;
+        for (Item item : unequippedInventoryItems) {
+            if (item.getClass().getSimpleName().equals("HealthPotion")) {
+                removeUnequippedInventoryItem(item);
+                potionFound = true;
+                break;
+            }
+        }
+        if (potionFound)
+            character.restoreHealthPoints();
+        healthProperty();
     }
 
     // *-------------------------------------------------------------------------
@@ -648,6 +695,9 @@ public class LoopManiaWorld {
     public void runTickMoves() {
         character.moveDownPath();
         moveEnemies();
+        healthProperty();
+        goldProperty();
+        xpProperty();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -820,5 +870,23 @@ public class LoopManiaWorld {
             default:
                 return (new Sword());
         }
+    }
+
+    // *-------------------------------------------------------------------------
+    // * UIS
+    // *-------------------------------------------------------------------------
+    public StringProperty healthProperty() {
+        charHealth.set(String.valueOf(character.getHealth()));
+        return charHealth;
+    }
+
+    public StringProperty goldProperty() {
+        charGold.set(String.valueOf(character.getGold()));
+        return charGold;
+    }
+
+    public StringProperty xpProperty() {
+        charXP.set(String.valueOf(character.getExperience()));
+        return charXP;
     }
 }

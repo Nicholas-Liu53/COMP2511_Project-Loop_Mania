@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.Item;
 import unsw.loopmania.path.PathPosition;
+import unsw.loopmania.items.WeaponStrategy;
 
 /**
  * represents the main character in the backend of the game world
@@ -13,6 +14,7 @@ public class Character extends MovingEntity {
     private int health;
     private int damage;
     private ArrayList<Enemy> enemiesCurrentlyBattling;
+    private WeaponStrategy weaponStrat;
     private ArrayList<Item> equippedItems;
     private int experience;
     private int gold;
@@ -28,6 +30,7 @@ public class Character extends MovingEntity {
         this.health = 100;
         this.damage = 5;
         this.enemiesCurrentlyBattling = new ArrayList<Enemy>();
+        this.weaponStrat = new Melee();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
@@ -78,6 +81,10 @@ public class Character extends MovingEntity {
         return this.gold;
     }
 
+    public WeaponStrategy getWeapon() {
+        return this.weaponStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling, only
      * adds enemy if it is not already on the list
@@ -107,7 +114,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-        enemy.receiveAttack(this.damage);
+        this.weaponStrat.launchAttack(enemy, this.damage);
     }
 
     /**
@@ -132,17 +139,23 @@ public class Character extends MovingEntity {
      * @param item
      */
     public void equipItem(Item item) {
-        if (item.getItemID().equals("HealthPotion"))
-            this.health = 100;
+        // ! NOTE: Health potions are consumed by pressing P (maybe: or double clicking
+        // on the health potion)
+        // if (item.getItemID().equals("HealthPotion"))
+        // this.health = 100;
 
         this.equippedItems.add(item); // equipping item
     }
 
     /**
-     * Gives Character experience points as specified
+     * Equips weapon
      * 
-     * @param xp
+     * @param item
      */
+    public void equipItem(WeaponStrategy item) {
+        this.weaponStrat = item;
+    }
+
     public void giveExperiencePoints(int xp) {
         this.experience += xp; // max xp?
     }
@@ -154,6 +167,14 @@ public class Character extends MovingEntity {
      */
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    public void restoreHealthPoints() {
+        health = 100;
+    }
+
+    public boolean isFullHealth() {
+        return health == 100;
     }
 
     @Override

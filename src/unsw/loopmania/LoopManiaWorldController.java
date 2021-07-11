@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -50,7 +51,7 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM
+    CARD, ITEM, WEAPON,
 }
 
 /**
@@ -125,6 +126,13 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane unequippedInventory;
+
+    @FXML
+    private Label healthNum;
+    @FXML
+    private Label goldNum;
+    @FXML
+    private Label xpNum;
 
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
@@ -342,10 +350,9 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
-        // addEntity(new HeroesCastle(new
-        // SimpleIntegerProperty(startingPoint.getValue0()), new
-        // SimpleIntegerProperty(startingPoint.getValue1())), new
-        // ImageView(heroesCastleImage));
+        world.healthProperty().bindBidirectional(healthNum.textProperty());
+        world.goldProperty().bindBidirectional(goldNum.textProperty());
+        world.xpProperty().bindBidirectional(xpNum.textProperty());
     }
 
     /**
@@ -481,7 +488,7 @@ public class LoopManiaWorldController {
         // TODO = load more types of weapon
         // start by getting first available coordinates
         Sword sword = world.addUnequippedSword();
-        onLoad(sword);
+        onLoad((WeaponStrategy) sword);
     }
 
     /**
@@ -534,16 +541,24 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * Load a sword into the GUI. Particularly, we must connect to the drag
+     * Load a weapon into the GUI. Particularly, we must connect to the drag
      * detection event handler, and load the image into the unequippedInventory
      * GridPane.
      * 
-     * @param sword
+     * @param weapon
      */
-    private void onLoad(Sword sword) {
-        ImageView view = new ImageView(swordImage);
-        addDragEventHandlers(sword, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(sword, view);
+    private void onLoad(WeaponStrategy weapon) {
+        ImageView view = null;
+
+        if (weapon instanceof Sword) {
+            view = new ImageView(swordImage);
+        } else if (weapon instanceof Stake) {
+            view = new ImageView(stakeImage);
+        } else if (weapon instanceof Staff) {
+            view = new ImageView(staffImage);
+        }
+        addDragEventHandlers((StaticEntity) weapon, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+        addEntity((StaticEntity) weapon, view);
         unequippedInventory.getChildren().add(view);
     }
 
@@ -729,6 +744,16 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
+                            case WEAPON:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
+                                // Place weapon back in inventory
+                                if (oldWeapon instanceof Sword) {
+                                    loadSword();
+                                }
+                                // Placing in sword cell
+                                targetGridPane.add(image, 0, 1, 1, 1);
+                                break;
                             default:
                                 break;
                         }
@@ -847,9 +872,9 @@ public class LoopManiaWorldController {
                         break;
                     case ITEM:
                         Item item = (Item) staticEntity;
-                        if (item.getItemID().equals("Sword"))
+                        if (item.getClass().getSimpleName().equals("Sword"))
                             draggedEntity.setImage(swordImage);
-                        if (item.getItemID().equals("HealthPotion"))
+                        if (item.getClass().getSimpleName().equals("HealthPotion"))
                             draggedEntity.setImage(healthPotionImage);
                         break;
                     default:
@@ -1007,13 +1032,8 @@ public class LoopManiaWorldController {
                 break;
             // Equip health potion
             case P:
-                // if (isPaused){
-                // startTimer();
-                // }
-                // else{
-                // pause();
-                // }
-                // break;
+                world.drinkHealthPotion();
+                break;
             default:
                 break;
         }
