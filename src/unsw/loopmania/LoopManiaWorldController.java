@@ -367,42 +367,51 @@ public class LoopManiaWorldController {
         // framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), event -> {
             world.runTickMoves();
+
+            // Recieve rewards on defeating enemies
             List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }
+
             // Pick up items on path
             List<Item> itemsOnPath = world.attemptToPickUpItems();
             for (Item i : itemsOnPath) {
                 putItemInInventory(i);
             }
+
             // Spawn enemies randomly
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
+
             // Check card pile is the correct size
             if (world.cardEntityIsFull()) {
                 StaticEntity compensation = world.giveRandomRewards("noCard");
                 if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
                     loadItem((Item) compensation);
             }
+
             // Check unequipped inventory has atleast one empty slot
             if (world.unequippedItemInventoryIsFull()) {
                 world.giveRandomRewards("onlyGoldXP");
             }
+
+            // Spawn health potion + gold randomly
             if (world.getCurrCycle() == spawnCycle) {
-                // Spawn health potion + gold randomly
                 List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
                 for (HealthPotion newHP : newHealthPotions) {
-                    onLoad(newHP);
+                    onLoad((Item) newHP, true);
                 }
+
                 List<GoldPile> newGoldPiles = world.spawnGoldPile();
                 for (GoldPile newGP : newGoldPiles) {
-                    onLoad(newGP);
+                    onLoad((Item) newGP, true);
                 }
                 spawnCycle++;
             }
+
             printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -440,7 +449,6 @@ public class LoopManiaWorldController {
 
     /**
      * Load Hero's Castle to the GUI
-     * 
      */
     private void addHeroesCastle() {
         ImageView heroesCastleView = new ImageView(heroesCastleImage);
@@ -455,7 +463,6 @@ public class LoopManiaWorldController {
      */
     private void reactToEnemyDefeat(Enemy enemy) {
         // provide different benefits to defeating the enemy based on the type of enemy
-
         switch (enemy.getClass().getSimpleName()) {
             case "SlugEnemy":
                 giveRandomRewardsWithCards(2);
@@ -469,7 +476,6 @@ public class LoopManiaWorldController {
             default:
                 break;
         }
-
     }
 
     /**
@@ -649,9 +655,10 @@ public class LoopManiaWorldController {
             view = new ImageView(zombieEnemyImage);
         }
 
-        addEntity(enemy, view);
-        squares.getChildren().add(view);
-    }
+        if (view != null) {
+            addEntity(enemy, view);
+            squares.getChildren().add(view);
+        }
 
     /**
      * Load a health potion into the GUI
