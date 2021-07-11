@@ -578,29 +578,6 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * Load a weapon into the GUI. Particularly, we must connect to the drag
-     * detection event handler, and load the image into the unequippedInventory
-     * GridPane.
-     * 
-     * @param weapon
-     */
-    // private void onLoad(WeaponStrategy weapon) {
-    // ImageView view = null;
-
-    // if (weapon instanceof Sword) {
-    // view = new ImageView(swordImage);
-    // } else if (weapon instanceof Stake) {
-    // view = new ImageView(stakeImage);
-    // } else if (weapon instanceof Staff) {
-    // view = new ImageView(staffImage);
-    // }
-    // addDragEventHandlers((StaticEntity) weapon, view, DRAGGABLE_TYPE.WEAPON,
-    // unequippedInventory, equippedItems);
-    // addEntity((StaticEntity) weapon, view);
-    // unequippedInventory.getChildren().add(view);
-    // }
-
-    /**
      * Load a item into the inventory Particularly, we must connect to the drag
      * detection event handler, and load the image into the unequippedInventory
      * GridPane.
