@@ -448,7 +448,7 @@ public class LoopManiaWorldController {
      * 
      * @param enemy defeated enemy for which we should react to the death of
      */
-    private void reactToEnemyDefeat(Enemy enemy) {.
+    private void reactToEnemyDefeat(Enemy enemy) {
         // provide different benefits to defeating the enemy based on the type of enemy
 
         switch (enemy.getClass().getSimpleName()) {
@@ -943,9 +943,19 @@ public class LoopManiaWorldController {
                         break;
                     case ITEM:
                         Item item = (Item) staticEntity;
-                        if (item.getClass().getSimpleName().equals("Sword"))
+                        if (item.getClass().getSimpleName().equals("BodyArmour"))
+                            draggedEntity.setImage(bodyArmourImage);
+                        else if (item.getClass().getSimpleName().equals("Helmet"))
+                            draggedEntity.setImage(helmetImage);
+                        else if (item.getClass().getSimpleName().equals("Shield"))
+                            draggedEntity.setImage(shieldImage);
+                        else if (item.getClass().getSimpleName().equals("Staff"))
+                            draggedEntity.setImage(staffImage);
+                        else if (item.getClass().getSimpleName().equals("Stake"))
+                            draggedEntity.setImage(stakeImage);
+                        else if (item.getClass().getSimpleName().equals("Sword"))
                             draggedEntity.setImage(swordImage);
-                        if (item.getClass().getSimpleName().equals("HealthPotion"))
+                        else if (item.getClass().getSimpleName().equals("HealthPotion"))
                             draggedEntity.setImage(healthPotionImage);
                         break;
                     default:
