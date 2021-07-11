@@ -45,21 +45,14 @@ public class LoopManiaWorld {
 
     private Character character;
 
-    // TODO = add more lists for other entities, for equipped inventory items,
-    // etc...
-
-    // TODO = expand the range of enemies
     private List<Enemy> enemies;
 
-    // TODO = expand the range of cards
     private List<Card> cardEntities;
 
-    // TODO = expand the range of items
     private List<Item> unequippedInventoryItems;
     private List<Item> equippedInventoryItems;
 
-    // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
+    private List<Building> buildingEntities;
     private List<Pair<Integer, Integer>> placedBuildings;
     private int numCycles;
     private int cycleShopLinear;
@@ -561,6 +554,7 @@ public class LoopManiaWorld {
                 return e;
             }
         }
+
         return null;
     }
 
@@ -749,7 +743,9 @@ public class LoopManiaWorld {
         }
     }
 
-    // Helper Function to check if location is adjacent to path
+    /**
+     * Helper Function to check if location is adjacent to path
+     */
     private boolean adjacentToPath(Pair<Integer, Integer> location) {
         for (int i = location.getValue0() - 1; i <= location.getValue0() + 1; i++) {
             for (int j = location.getValue1() - 1; j <= location.getValue1() + 1; j++) {
@@ -758,6 +754,7 @@ public class LoopManiaWorld {
                     return true;
             }
         }
+
         return false;
     }
 
@@ -765,7 +762,7 @@ public class LoopManiaWorld {
     // * Movement
     // *-------------------------------------------------------------------------
     /**
-     * run moves which occur with every tick without needing to spawn anything
+     * Run moves which occur with every tick without needing to spawn anything
      * immediately
      */
     public void runTickMoves() {
@@ -804,19 +801,23 @@ public class LoopManiaWorld {
     }
 
     /**
-     * move all enemies
+     * Move all enemies
      */
     private void moveEnemies() {
-        // TODO = expand to more types of enemy
         for (Enemy e : enemies) {
             e.move();
         }
     }
 
-    // Can place boolean function
+    /**
+     * Checks if a building card can can be placed on the given location
+     * 
+     * @param newlocation where the card is to be placed, building card to be placed
+     */
     public boolean canPlaceCard(Pair<Integer, Integer> newLocation, Card card) {
         if (placedBuildings.contains(newLocation))
             return false;
+
         if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard")
                 || card.getCardId().equals("TrapCard")) {
             if (!orderedPath.contains(newLocation) || newLocation
@@ -830,6 +831,7 @@ public class LoopManiaWorld {
                     return false;
             }
         }
+
         return true;
     }
 
@@ -837,7 +839,7 @@ public class LoopManiaWorld {
     // * CC
     // *-------------------------------------------------------------------------
     /**
-     * run the expected battles in the world, based on current world state
+     * Run the expected battles in the world, based on current world state
      * 
      * @return list of enemies which have been killed
      */
@@ -885,6 +887,11 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
+    /**
+     * 
+     * @param rewardSetting to account for various types of rewards
+     * @return a buliding card or an item as a reward
+     */
     public StaticEntity giveRandomRewards(String rewardSetting) {
         List<String> rewards = new ArrayList<>(List.of("gold", "experience", "equipment", "buildingCard"));
         List<Integer> values = new ArrayList<>(List.of(50, 100, 200, 300, 400, 500));
@@ -907,24 +914,25 @@ public class LoopManiaWorld {
             case "onlyGoldXP":
                 reward = rewards.get(rand.nextInt(2));
                 break;
-            default: // is this even neeeded?
-                reward = "buildingCard";
+            default:
                 break;
         }
 
-        switch (reward) {
-            case "gold":
-                character.giveGold(values.get(rand.nextInt(6)));
-                break;
-            case "experience":
-                character.giveExperiencePoints(values.get(rand.nextInt(2)));
-                break;
-            case "buildingCard":
-                rewarded = loadCard(buildingCards.get(rand.nextInt(7)));
-                break;
-            case "equipment":
-                rewarded = loadItem(equipments.get(rand.nextInt(7)));
-                break;
+        if (reward != null) {
+            switch (reward) {
+                case "gold":
+                    character.giveGold(values.get(rand.nextInt(6)));
+                    break;
+                case "experience":
+                    character.giveExperiencePoints(values.get(rand.nextInt(2)));
+                    break;
+                case "buildingCard":
+                    rewarded = loadCard(buildingCards.get(rand.nextInt(7)));
+                    break;
+                case "equipment":
+                    rewarded = loadItem(equipments.get(rand.nextInt(7)));
+                    break;
+            }
         }
 
         return rewarded;

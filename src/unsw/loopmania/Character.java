@@ -152,17 +152,10 @@ public class Character extends MovingEntity {
      * Allows Character to equip different items to be able to win the battle
      * against enemy
      * 
-     * Special Item: Health Potion - restores health to 100
-     * 
      * @param item
      */
     public void equipItem(Item item) {
-        // ! NOTE: Health potions are consumed by pressing P (maybe: or double clicking
-        // on the health potion)
-        // if (item.getItemID().equals("HealthPotion"))
-        // this.health = 100;
-
-        this.equippedItems.add(item); // equipping item
+        this.equippedItems.add(item);
     }
 
     /**
@@ -192,23 +185,38 @@ public class Character extends MovingEntity {
         this.shieldStrat = item;
     }
 
+    /**
+     * Gives Character specified amount of experience points
+     * 
+     * @param xp
+     */
     public void giveExperiencePoints(int xp) {
         this.experience += xp; // max xp?
     }
 
     /**
-     * Gives Character gold as specified
+     * Gives Character specified amount of gold
      * 
-     * @param xp
+     * @param gold
      */
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
     }
 
+    /**
+     * Restores Character's health to maximum
+     * 
+     * @param gold
+     */
     public void restoreHealthPoints() {
         health = 100;
     }
 
+    /**
+     * Checks if Character has full health
+     * 
+     * @param gold
+     */
     public boolean isFullHealth() {
         return health == 100;
     }
