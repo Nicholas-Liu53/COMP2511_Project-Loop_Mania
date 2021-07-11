@@ -51,7 +51,7 @@ public class ArmourTest {
         for (int i = 0; i < 100; i++) {
             Character newChar = new Character(null);
             VampireEnemy enemy = new VampireEnemy(null);
-            mainChar.equipItem(shield);
+            newChar.equipItem(shield);
 
             enemy.launchAttack(newChar);
         }
