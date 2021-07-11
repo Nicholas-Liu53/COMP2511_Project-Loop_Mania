@@ -383,16 +383,18 @@ public class LoopManiaWorld {
             character.giveGold(100);
             // character.giveExperiencePoints(10);
         }
+
         return itemToAdd;
     }
 
-    /**
-     * spawn a sword in the world and return the sword entity
-     * 
-     * @return a sword to be spawned in the controller as a JavaFX node
-     */
+    // /**
+    // * spawn a sword in the world and return the sword entity
+    // *
+    // * @return a sword to be spawned in the controller as a JavaFX node
+    // */
     public Sword addUnequippedSword() {
-        // TODO = expand this - we would like to be able to add multiple types of items,
+        // TODO = expand this - we would like to be able to add multiple types of
+        // items,
         // apart from swords
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null) {
@@ -546,33 +548,23 @@ public class LoopManiaWorld {
     // * Building Cards
     // *-------------------------------------------------------------------------
     /**
+     * 
+     * @return boolean
+     */
+    public boolean cardsIsFull() {
+        if (this.cardEntities.size() >= this.getWidth()) {
+            this.removeCard(0);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * spawn a card in the world and return the card entity
      * 
      * @return a card to be spawned in the controller as a JavaFX node
      */
-    // public VampireCastleCard loadVampireCard() {
-    // // if adding more cards than have, remove the first card...
-    // if (cardEntities.size() >= getWidth()) {
-    // // TODO = give some cash/experience/item rewards for the discarding of the
-    // // oldest card
-    // giveRandomRewards("noCard");
-    // removeCard(0);
-    // }
-    // VampireCastleCard vampireCastleCard = new VampireCastleCard(new
-    // SimpleIntegerProperty(cardEntities.size()),
-    // new SimpleIntegerProperty(0));
-    // cardEntities.add(vampireCastleCard);
-    // return vampireCastleCard;
-    // }
-
     public Card loadCard(String cardType) {
-        // if adding more cards than have, remove the first card...
-        if (this.cardEntities.size() >= this.getWidth()) {
-            // give some cash/experience/item rewards for the discarding of the oldest card
-            // this.giveRandomRewards("noCard");
-            this.removeCard(0);
-        }
-
         Card card = null;
 
         switch (cardType) {

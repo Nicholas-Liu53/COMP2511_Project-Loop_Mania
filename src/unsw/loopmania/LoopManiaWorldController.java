@@ -380,6 +380,12 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
+            // Check cards is the correct size
+            if (world.cardsIsFull()) {
+                StaticEntity compensation = world.giveRandomRewards("noCard");
+                if (compensation.getStaticEntityType().equals("Item"))
+                    loadSword();
+            }
             if (world.getCurrCycle() == spawnCycle) {
                 // Spawn health potion + gold randomly
                 List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
