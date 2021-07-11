@@ -488,7 +488,7 @@ public class LoopManiaWorld {
         if (character.isFullHealth()) return;
         boolean potionFound = false;
         for (Item item : unequippedInventoryItems) {
-            if (item.getItemID().equals("HealthPotion")) {
+            if (item.getClass().getSimpleName().equals("HealthPotion")) {
                 removeUnequippedInventoryItem(item);
                 potionFound = true;
                 break;
