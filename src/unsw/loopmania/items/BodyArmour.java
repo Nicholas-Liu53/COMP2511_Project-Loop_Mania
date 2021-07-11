@@ -18,8 +18,8 @@ public class BodyArmour extends Armour implements BodyArmourStrategy {
     }
 
     public int receiveAttack(int damage) {
-        // Adjusting for defence, BodyArmour provides 3 defence
-        int recvDamage = (int)(damage * 0.3);
+        // Adjusting for defence, BodyArmour provides 5 defence
+        int recvDamage = (int)(damage * 0.5);
         return recvDamage;
     }
 }

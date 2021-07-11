@@ -26,10 +26,10 @@ public class ArmourTest {
         mainChar.equipItem(bodyArmour);
         // Testing only body armour
         mainChar.receiveAttack(10);
-        assertEquals(93, mainChar.getHealth());
+        assertEquals(95, mainChar.getHealth());
         mainChar.receiveAttack(20);
-        assertEquals(79, mainChar.getHealth());
+        assertEquals(85, mainChar.getHealth());
         mainChar.receiveAttack(50);
-        assertEquals(44, mainChar.getHealth());
+        assertEquals(60, mainChar.getHealth());
     }
 }
