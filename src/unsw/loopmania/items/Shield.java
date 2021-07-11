@@ -8,7 +8,6 @@ public class Shield extends Armour {
         super(x, y);
         purchasePrice = 300;
         sellPrice = 240;
-        itemID = "Shield";
         damageReductionFactor = 0.7;
     }
 
@@ -16,7 +15,6 @@ public class Shield extends Armour {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
         purchasePrice = 300;
         sellPrice = 240;
-        itemID = "Shield";
         damageReductionFactor = 0.7;
     }
 

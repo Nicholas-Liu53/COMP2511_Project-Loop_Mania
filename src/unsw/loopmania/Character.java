@@ -5,7 +5,9 @@ import unsw.loopmania.path.PathPosition;
 import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
+import unsw.loopmania.items.HealthPotion;
 import unsw.loopmania.items.Item;
+import unsw.loopmania.items.WeaponStrategy;
 
 /**
  * represents the main character in the backend of the game world
@@ -13,6 +15,7 @@ import unsw.loopmania.items.Item;
 public class Character extends MovingEntity {
     private int health;
     private int damage;
+    private WeaponStrategy weaponStrat;
     private ArrayList<Enemy> currentlyBattling;
     private ArrayList<Item> equippedItems;
     private int experience;
@@ -24,6 +27,7 @@ public class Character extends MovingEntity {
         super(position);
         this.health = 100;
         this.damage = 5;
+        this.weaponStrat = new Melee();
         this.currentlyBattling = new ArrayList<Enemy>();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
@@ -64,6 +68,10 @@ public class Character extends MovingEntity {
         return this.gold;
     }
 
+    public WeaponStrategy getWeapon() {
+        return this.weaponStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling
      * only adds enemy it it is not already on the list
@@ -93,7 +101,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-        enemy.receiveAttack(this.damage);
+        this.weaponStrat.launchAttack(enemy, this.damage);
     }
 
     /**
@@ -115,6 +123,14 @@ public class Character extends MovingEntity {
         //     this.health = 100;
 
         this.equippedItems.add(item); // equipping item
+    }
+
+    /**
+     * Equips weapon
+     * @param item
+     */
+    public void equipItem(WeaponStrategy item) {
+        this.weaponStrat = item;
     }
 
     public void giveExperiencePoints(int xp) {

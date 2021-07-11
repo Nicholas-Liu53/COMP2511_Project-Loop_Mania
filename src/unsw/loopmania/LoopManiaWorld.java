@@ -354,7 +354,7 @@ public class LoopManiaWorld {
      */
     public Item addItem(Item itemToAdd){
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null && !itemToAdd.getItemID().equals("GoldPile")) {
+        if (firstAvailableSlot == null && !itemToAdd.getClass().getSimpleName().equals("GoldPile")) {
             // Eject the oldest unequipped item and replace it... oldest item is that at beginning of items
             removeItemByPositionInUnequippedInventoryItems(0);
             // TODO = give some cash/experience rewards for the discarding of the oldest item
@@ -362,7 +362,7 @@ public class LoopManiaWorld {
         }
         
         // Insert the new item, as we know we have at least made a slot available...
-        if (itemToAdd.getItemID().equals("HealthPotion")) { 
+        if (itemToAdd.getClass().getSimpleName().equals("HealthPotion")) { 
             HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(healthPotion);
             return healthPotion;
@@ -417,6 +417,26 @@ public class LoopManiaWorld {
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
     }
+
+    /**
+     * Takes weapon from the inventory and equips it as the character's weapon
+     * any currently equipped weapon is placed back into the inventory
+     * @param x
+     * @param y
+     */
+    public WeaponStrategy equipWeaponByCoordinates(int x, int y) {
+        WeaponStrategy oldWeapon = character.getWeapon();
+        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        unequippedInventoryItems.remove(item);
+        character.equipItem((WeaponStrategy)item);
+
+        if (oldWeapon instanceof Melee) {
+            // Melee shouldn't be placed in the inventory
+            return null;
+        }
+
+        return oldWeapon;
+    }
     
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
@@ -468,7 +488,7 @@ public class LoopManiaWorld {
         if (character.isFullHealth()) return;
         boolean potionFound = false;
         for (Item item : unequippedInventoryItems) {
-            if (item.getItemID().equals("HealthPotion")) {
+            if (item.getClass().getSimpleName().equals("HealthPotion")) {
                 removeUnequippedInventoryItem(item);
                 potionFound = true;
                 break;
