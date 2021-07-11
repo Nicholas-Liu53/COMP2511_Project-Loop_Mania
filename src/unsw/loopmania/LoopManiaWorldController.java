@@ -51,7 +51,10 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, WEAPON,
+    CARD, 
+    ITEM, 
+    WEAPON,
+    BODYARMOUR,
 }
 
 /**
@@ -606,23 +609,30 @@ public class LoopManiaWorldController {
     private void onLoad(Item item) {
         ImageView view = null;
 
-        if (item instanceof Helmet)
+        if (item instanceof Helmet) {
             view = new ImageView(helmetImage);
-        else if (item instanceof BodyArmour)
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        } else if (item instanceof BodyArmour) {
             view = new ImageView(bodyArmourImage);
-        else if (item instanceof Shield)
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
+        } else if (item instanceof Shield) {
             view = new ImageView(shieldImage);
-        else if (item instanceof Staff)
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        } else if (item instanceof Staff) {
             view = new ImageView(staffImage);
-        else if (item instanceof Stake)
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+        } else if (item instanceof Stake) {
             view = new ImageView(stakeImage);
-        else if (item instanceof Sword)
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+        } else if (item instanceof Sword) {
             view = new ImageView(swordImage);
-        else if (item instanceof HealthPotion)
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+        } else if (item instanceof HealthPotion) {
             view = new ImageView(healthPotionImage);
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        }
 
         if (view != null) {
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             addEntity(item, view);
             unequippedInventory.getChildren().add(view);
         }
@@ -795,16 +805,30 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
-                            // case WEAPON:
-                            // removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                            // WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
-                            // // Place weapon back in inventory
-                            // if (oldWeapon instanceof Sword) {
-                            // loadSword();
-                            // }
-                            // // Placing in sword cell
-                            // targetGridPane.add(image, 0, 1, 1, 1);
-                            // break;
+                            case WEAPON:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
+                                // Place weapon back in inventory
+                                if (oldWeapon instanceof Sword) {
+                                    loadItem(world.loadItem("Sword"));
+                                } else if (oldWeapon instanceof Staff) {
+                                    loadItem(world.loadItem("Staff"));
+                                } else if (oldWeapon instanceof Stake) {
+                                    loadItem(world.loadItem("Stake"));
+                                }
+                                // Placing in sword cell
+                                targetGridPane.add(image, 0, 1, 1, 1);
+                                break;
+                            case BODYARMOUR:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                BodyArmourStrategy oldBodyArmour = world.equipBodyArmourByCoordinates(nodeX, nodeY);
+                                // Place armour back in inventory
+                                if (oldBodyArmour instanceof BodyArmour) {
+                                    loadItem(world.loadItem("BodyArmour"));
+                                }
+                                // Placing in body armour cell
+                                targetGridPane.add(image, 1, 1, 1, 1);
+                                break;
                             default:
                                 break;
                         }
