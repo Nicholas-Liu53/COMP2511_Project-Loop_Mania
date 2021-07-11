@@ -798,7 +798,7 @@ public class LoopManiaWorld {
             case "equipment":
                 rewarded = generateRewardItem(equipments.get(rand.nextInt(6)));
                 // add equipment to inventory
-                unequippedInventoryItems.add(rewarded);
+                addItem((Item) rewarded);
                 break;
         }
 
