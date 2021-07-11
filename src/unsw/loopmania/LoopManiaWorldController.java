@@ -444,16 +444,12 @@ public class LoopManiaWorldController {
 
     /**
      * Run GUI events after an enemy is defeated, such as spawning
-     * items/experience/gold
+     * items/experience/gold/cards
      * 
      * @param enemy defeated enemy for which we should react to the death of
      */
-    private void reactToEnemyDefeat(Enemy enemy) {
-        // react to character defeating an enemy
-        // in starter code, spawning extra card/weapon...
-        // TODO = provide different benefits to defeating the enemy based on the type of
-        // enemy
-        // not accounting for type of enemy at the moment
+    private void reactToEnemyDefeat(Enemy enemy) {.
+        // provide different benefits to defeating the enemy based on the type of enemy
 
         switch (enemy.getClass().getSimpleName()) {
             case "SlugEnemy":
@@ -471,6 +467,13 @@ public class LoopManiaWorldController {
 
     }
 
+    /**
+     * Run GUI events after an enemy is defeated, such as spawning
+     * items/experience/gold/cards
+     * 
+     * @param times i.e. the number of rewards to be given, it is different for
+     *              different types of enemies
+     */
     public void giveRandomRewardsWithCards(int times) {
         for (int i = 0; i < times; i++) {
             StaticEntity reward = world.giveRandomRewards("withCard");
@@ -498,29 +501,30 @@ public class LoopManiaWorldController {
     // * Loaders
     // *-------------------------------------------------------------------------
     /**
-     * Load a vampire card from the world, and pair it with an image in the GUI
+     * Load a card from the world, and pair it with an image in the GUI
+     * 
+     * @param card
      */
     private void loadCard(Card card) {
-        // TODO = load more types of card
         onLoad(card);
     }
 
     /**
-     * Load a sword from the world, and pair it with an image in the GUI
+     * Load an item from the world, and pair it with an image in the GUI
+     * 
+     * @param item
      */
     private void loadItem(Item item) {
-        // TODO = load more types of item
         onLoad(item);
     }
 
     /**
-     * Load an item from the world, and pair it with an image in the GUI
+     * Load a path item from the world, and pair it with an image in the GUI
+     * 
+     * @param item
      */
     private void loadPathItem(Item item) {
         // Start by getting first available coordinates
-        // if (item.getItemType().equals("Potion")) {
-        // world.addItem(item);
-        // }
         Item itemToLoad = world.addItem(item);
         if (!itemToLoad.equals(item)) {
             onLoad(itemToLoad);
