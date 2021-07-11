@@ -813,6 +813,7 @@ public class LoopManiaWorldController {
                                 } else if (oldWeapon instanceof Stake) {
                                     loadItem(world.loadItem("Stake"));
                                 }
+                                
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
