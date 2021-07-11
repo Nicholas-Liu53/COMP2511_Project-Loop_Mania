@@ -454,12 +454,31 @@ public class LoopManiaWorldController {
         // enemy
         // not accounting for type of enemy at the moment
 
-        StaticEntity reward = world.giveRandomRewards("withCard");
-        if (reward != null) {
-            if (reward.getStaticEntityType().equals("Card")) {
-                loadCard((Card) reward);
-            } else if (reward.getStaticEntityType().equals("Item")) {
-                loadItem((Item) reward);
+        switch (enemy.getClass().getSimpleName()) {
+            case "SlugEnemy":
+                giveRandomRewardsWithCards(1);
+                break;
+            case "VampireEnemy":
+                giveRandomRewardsWithCards(1);
+                break;
+            case "ZombieEnemy":
+                giveRandomRewardsWithCards(1);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void giveRandomRewardsWithCards(int times) {
+        for (int i = 0; i < times; i++) {
+            StaticEntity reward = world.giveRandomRewards("withCard");
+            if (reward != null) {
+                if (reward.getStaticEntityType().equals("Card")) {
+                    loadCard((Card) reward);
+                } else if (reward.getStaticEntityType().equals("Item")) {
+                    loadItem((Item) reward);
+                }
             }
         }
     }
