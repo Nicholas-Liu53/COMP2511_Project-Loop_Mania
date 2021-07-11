@@ -383,8 +383,12 @@ public class LoopManiaWorldController {
             // Check cards is the correct size
             if (world.cardEntityIsFull()) {
                 StaticEntity compensation = world.giveRandomRewards("noCard");
-                if (compensation.getStaticEntityType().equals("Item"))
-                    loadSword();
+                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
+                    loadItem((Item) compensation);
+            }
+            // Check inventory has atleast one empty slot
+            if (world.unequippedItemInventoryIsFull()) {
+                world.giveRandomRewards("onlyGoldXP");
             }
             if (world.getCurrCycle() == spawnCycle) {
                 // Spawn health potion + gold randomly
@@ -450,12 +454,31 @@ public class LoopManiaWorldController {
         // enemy
         // not accounting for type of enemy at the moment
 
-        StaticEntity reward = world.giveRandomRewards("withCard");
-        if (reward != null) {
-            if (reward.getStaticEntityType().equals("Card")) {
-                loadCard((Card) reward);
-            } else if (reward.getStaticEntityType().equals("Item")) {
-                loadSword();
+        switch (enemy.getClass().getSimpleName()) {
+            case "SlugEnemy":
+                giveRandomRewardsWithCards(2);
+                break;
+            case "VampireEnemy":
+                giveRandomRewardsWithCards(6);
+                break;
+            case "ZombieEnemy":
+                giveRandomRewardsWithCards(4);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void giveRandomRewardsWithCards(int times) {
+        for (int i = 0; i < times; i++) {
+            StaticEntity reward = world.giveRandomRewards("withCard");
+            if (reward != null) {
+                if (reward.getStaticEntityType().equals("Card")) {
+                    loadCard((Card) reward);
+                } else if (reward.getStaticEntityType().equals("Item")) {
+                    loadItem((Item) reward);
+                }
             }
         }
     }
@@ -467,7 +490,7 @@ public class LoopManiaWorldController {
      */
     private void putItemInInventory(Item item) {
         // Load it into inventory
-        loadItem(item);
+        loadPathItem(item);
     }
 
     // *-------------------------------------------------------------------------
@@ -490,17 +513,21 @@ public class LoopManiaWorldController {
     /**
      * Load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadSword() {
-        // TODO = load more types of weapon
-        // start by getting first available coordinates
-        Sword sword = world.addUnequippedSword();
-        onLoad((WeaponStrategy) sword);
+    private void loadItem(Item item) {
+        // TODO = load more types of item
+        onLoad(item);
     }
+    // private void loadSword() {
+    // // TODO = load more types of weapon
+    // // start by getting first available coordinates
+    // Sword sword = world.addUnequippedSword();
+    // onLoad((WeaponStrategy) sword);
+    // }
 
     /**
      * Load an item from the world, and pair it with an image in the GUI
      */
-    private void loadItem(Item item) {
+    private void loadPathItem(Item item) {
         // Start by getting first available coordinates
         // if (item.getItemType().equals("Potion")) {
         // world.addItem(item);
@@ -553,20 +580,21 @@ public class LoopManiaWorldController {
      * 
      * @param weapon
      */
-    private void onLoad(WeaponStrategy weapon) {
-        ImageView view = null;
+    // private void onLoad(WeaponStrategy weapon) {
+    // ImageView view = null;
 
-        if (weapon instanceof Sword) {
-            view = new ImageView(swordImage);
-        } else if (weapon instanceof Stake) {
-            view = new ImageView(stakeImage);
-        } else if (weapon instanceof Staff) {
-            view = new ImageView(staffImage);
-        }
-        addDragEventHandlers((StaticEntity) weapon, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        addEntity((StaticEntity) weapon, view);
-        unequippedInventory.getChildren().add(view);
-    }
+    // if (weapon instanceof Sword) {
+    // view = new ImageView(swordImage);
+    // } else if (weapon instanceof Stake) {
+    // view = new ImageView(stakeImage);
+    // } else if (weapon instanceof Staff) {
+    // view = new ImageView(staffImage);
+    // }
+    // addDragEventHandlers((StaticEntity) weapon, view, DRAGGABLE_TYPE.WEAPON,
+    // unequippedInventory, equippedItems);
+    // addEntity((StaticEntity) weapon, view);
+    // unequippedInventory.getChildren().add(view);
+    // }
 
     /**
      * Load a item into the inventory Particularly, we must connect to the drag
@@ -576,11 +604,28 @@ public class LoopManiaWorldController {
      * @param item
      */
     private void onLoad(Item item) {
-        ImageView view = new ImageView(healthPotionImage); // For now all items are health potions
-        // TODO: If Item isn't a health potion
-        addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(item, view);
-        unequippedInventory.getChildren().add(view);
+        ImageView view = null;
+
+        if (item instanceof Helmet)
+            view = new ImageView(helmetImage);
+        else if (item instanceof BodyArmour)
+            view = new ImageView(bodyArmourImage);
+        else if (item instanceof Shield)
+            view = new ImageView(shieldImage);
+        else if (item instanceof Staff)
+            view = new ImageView(staffImage);
+        else if (item instanceof Stake)
+            view = new ImageView(stakeImage);
+        else if (item instanceof Sword)
+            view = new ImageView(swordImage);
+        else if (item instanceof HealthPotion)
+            view = new ImageView(healthPotionImage);
+
+        if (view != null) {
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            addEntity(item, view);
+            unequippedInventory.getChildren().add(view);
+        }
     }
 
     /**
@@ -750,16 +795,16 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
-                            case WEAPON:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
-                                // Place weapon back in inventory
-                                if (oldWeapon instanceof Sword) {
-                                    loadSword();
-                                }
-                                // Placing in sword cell
-                                targetGridPane.add(image, 0, 1, 1, 1);
-                                break;
+                            // case WEAPON:
+                            // removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                            // WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
+                            // // Place weapon back in inventory
+                            // if (oldWeapon instanceof Sword) {
+                            // loadSword();
+                            // }
+                            // // Placing in sword cell
+                            // targetGridPane.add(image, 0, 1, 1, 1);
+                            // break;
                             default:
                                 break;
                         }

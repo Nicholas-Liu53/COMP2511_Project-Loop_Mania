@@ -374,13 +374,6 @@ public class LoopManiaWorld {
         }
 
         // Insert the new item, as we know we have at least made a slot available...
-        // if (itemToAdd.getClass().getSimpleName().equals("Sword")) {
-        // Sword sword = new Sword(new
-        // SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-        // new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        // unequippedInventoryItems.add(sword);
-        // return sword;
-        // } else
         if (itemToAdd.getClass().getSimpleName().equals("HealthPotion")) {
             HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                     new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
@@ -394,32 +387,65 @@ public class LoopManiaWorld {
         return itemToAdd;
     }
 
-    // /**
-    // * spawn a sword in the world and return the sword entity
-    // *
-    // * @return a sword to be spawned in the controller as a JavaFX node
-    // */
-    public Sword addUnequippedSword() {
-        // TODO = expand this - we would like to be able to add multiple types of
-        // items,
-        // apart from swords
+    /**
+     * spawn a item in the world and return the item entity
+     * 
+     * @return a item to be spawned in the controller as a JavaFX node
+     */
+    public Item loadItem(String itemType) {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null) {
-            // eject the oldest unequipped item and replace it... oldest item is that at
-            // beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest
-            // sword
-            // giveRandomRewards("onlyGoldXP");
-            removeItemByPositionInUnequippedInventoryItems(0);
-            firstAvailableSlot = getFirstAvailableSlotForItem();
+
+        Item item = null;
+
+        switch (itemType) {
+            case "Helmet":
+                item = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case "BodyArmour":
+                item = new BodyArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case "Shield":
+                item = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case "Staff":
+                item = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case "Stake":
+                item = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case "Sword":
+                item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case "HealthPotion":
+                item = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            default:
+                break;
         }
 
-        // now we insert the new sword, as we know we have at least made a slot
-        // available...
-        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(sword);
-        return sword;
+        if (item != null)
+            unequippedInventoryItems.add(item);
+
+        return item;
+    }
+
+    public boolean unequippedItemInventoryIsFull() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            // Eject the oldest unequipped item and replace it... oldest item is that at
+            // beginning of items
+            removeItemByPositionInUnequippedInventoryItems(0);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -563,6 +589,7 @@ public class LoopManiaWorld {
             this.removeCard(0);
             return true;
         }
+
         return false;
     }
 
@@ -603,6 +630,7 @@ public class LoopManiaWorld {
 
         if (card != null)
             cardEntities.add(card);
+
         return card;
     }
 
@@ -813,7 +841,8 @@ public class LoopManiaWorld {
         List<Integer> values = new ArrayList<>(List.of(50, 100, 200, 300, 400, 500));
         List<String> buildingCards = new ArrayList<>(List.of("BarracksCard", "CampfireCard", "TowerCard", "TrapCard",
                 "VampireCastleCard", "VillageCard", "ZombiePitCard"));
-        List<String> equipments = new ArrayList<>(List.of("Helmet", "BodyArmour", "Shield", "Staff", "Stake", "Sword"));
+        List<String> equipments = new ArrayList<>(
+                List.of("Helmet", "BodyArmour", "Shield", "Staff", "Stake", "Sword", "HealthPotion"));
         String reward = null;
         StaticEntity rewarded = null;
 
@@ -845,30 +874,11 @@ public class LoopManiaWorld {
                 rewarded = loadCard(buildingCards.get(rand.nextInt(7)));
                 break;
             case "equipment":
-                rewarded = generateRewardItem(equipments.get(rand.nextInt(6)));
-                // add equipment to inventory
-                addItem((Item) rewarded);
+                rewarded = loadItem(equipments.get(rand.nextInt(7)));
                 break;
         }
 
         return rewarded;
-    }
-
-    public Item generateRewardItem(String rewardItem) {
-        switch (rewardItem) {
-            case "Helmet":
-                return (new Helmet());
-            case "BodyArmour":
-                return (new BodyArmour());
-            case "Shield":
-                return (new Shield());
-            case "Staff":
-                return (new Staff());
-            case "Stake":
-                return (new Stake());
-            default:
-                return (new Sword());
-        }
     }
 
     // *-------------------------------------------------------------------------
