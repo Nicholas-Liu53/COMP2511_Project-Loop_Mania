@@ -386,6 +386,10 @@ public class LoopManiaWorldController {
                 if (compensation.getStaticEntityType().equals("Item"))
                     loadItem((Item) compensation);
             }
+            // Check inventory has atleast one empty slot
+            if (world.unequippedItemInventoryIsFull()) {
+                world.giveRandomRewards("onlyGoldXP");
+            }
             if (world.getCurrCycle() == spawnCycle) {
                 // Spawn health potion + gold randomly
                 List<HealthPotion> newHealthPotions = world.spawnHealthPotion();
