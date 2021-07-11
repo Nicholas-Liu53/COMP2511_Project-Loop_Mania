@@ -381,13 +381,13 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
-            // Check cards is the correct size
+            // Check card pile is the correct size
             if (world.cardEntityIsFull()) {
                 StaticEntity compensation = world.giveRandomRewards("noCard");
                 if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
                     loadItem((Item) compensation);
             }
-            // Check inventory has atleast one empty slot
+            // Check unequipped inventory has atleast one empty slot
             if (world.unequippedItemInventoryIsFull()) {
                 world.giveRandomRewards("onlyGoldXP");
             }
@@ -419,6 +419,9 @@ public class LoopManiaWorldController {
         timeline.stop();
     }
 
+    /**
+     * Terminate the execution of the game loop
+     */
     public void terminate() {
         pause();
     }
@@ -435,9 +438,11 @@ public class LoopManiaWorldController {
         entityImages.add(view);
     }
 
-    // Load Hero's Castle
+    /**
+     * Load Hero's Castle to the GUI
+     * 
+     */
     private void addHeroesCastle() {
-        // Load Hero's Castle
         ImageView heroesCastleView = new ImageView(heroesCastleImage);
         squares.add(heroesCastleView, startingPoint.getValue0(), startingPoint.getValue1());
     }
