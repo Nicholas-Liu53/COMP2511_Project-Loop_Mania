@@ -52,11 +52,7 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, 
-    ITEM, 
-    WEAPON,
-    BODYARMOUR,
-    SHIELD,
+    CARD, ITEM, WEAPON, BODYARMOUR, SHIELD,
 }
 
 /**
@@ -509,12 +505,6 @@ public class LoopManiaWorldController {
         onLoad(card);
     }
 
-    // private void loadVampireCard() {
-    // // TODO = load more types of card
-    // Card card = world.loadCard("VampireCastleCard");
-    // onLoad(card);
-    // }
-
     /**
      * Load a sword from the world, and pair it with an image in the GUI
      */
@@ -522,12 +512,6 @@ public class LoopManiaWorldController {
         // TODO = load more types of item
         onLoad(item);
     }
-    // private void loadSword() {
-    // // TODO = load more types of weapon
-    // // start by getting first available coordinates
-    // Sword sword = world.addUnequippedSword();
-    // onLoad((WeaponStrategy) sword);
-    // }
 
     /**
      * Load an item from the world, and pair it with an image in the GUI
@@ -811,11 +795,11 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
                                 // Place weapon back in inventory
-                                if (oldWeapon instanceof Sword) 
+                                if (oldWeapon instanceof Sword)
                                     loadItem(world.loadItem("Sword"));
-                                else if (oldWeapon instanceof Staff) 
+                                else if (oldWeapon instanceof Staff)
                                     loadItem(world.loadItem("Staff"));
-                                else if (oldWeapon instanceof Stake) 
+                                else if (oldWeapon instanceof Stake)
                                     loadItem(world.loadItem("Stake"));
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
@@ -824,7 +808,7 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 BodyArmourStrategy oldBodyArmour = world.equipBodyArmourByCoordinates(nodeX, nodeY);
                                 // Place armour back in inventory
-                                if (oldBodyArmour instanceof BodyArmour) 
+                                if (oldBodyArmour instanceof BodyArmour)
                                     loadItem(world.loadItem("BodyArmour"));
                                 // Placing in body armour cell
                                 targetGridPane.add(image, 1, 1, 1, 1);
@@ -833,7 +817,7 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 ShieldStrategy oldShield = world.equipShieldByCoordinates(nodeX, nodeY);
                                 // Place shield back in inventory
-                                if (oldShield instanceof Shield) 
+                                if (oldShield instanceof Shield)
                                     loadItem(world.loadItem("Shield"));
                                 // Placing in shield cell
                                 targetGridPane.add(image, 2, 1, 1, 1);
