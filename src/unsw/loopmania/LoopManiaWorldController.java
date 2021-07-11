@@ -526,7 +526,7 @@ public class LoopManiaWorldController {
      * @param item
      */
     private void loadItem(Item item) {
-        onLoad(item);
+        onLoad(item, false);
     }
 
     /**
@@ -538,7 +538,7 @@ public class LoopManiaWorldController {
         // Start by getting first available coordinates
         Item itemToLoad = world.addItem(item);
         if (!itemToLoad.equals(item)) {
-            onLoad(itemToLoad);
+            onLoad(itemToLoad, false);
         }
     }
 
