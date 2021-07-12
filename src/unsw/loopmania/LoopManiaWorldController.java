@@ -99,7 +99,6 @@ enum DRAGGABLE_TYPE {
  * This is run on the JavaFX application thread when it has enough time.
  */
 public class LoopManiaWorldController {
-
     /**
      * squares gridpane includes path images, enemies, character, empty grass,
      * buildings
@@ -132,8 +131,10 @@ public class LoopManiaWorldController {
 
     @FXML
     private Label healthNum;
+
     @FXML
     private Label goldNum;
+   
     @FXML
     private Label xpNum;
 
@@ -496,9 +497,9 @@ public class LoopManiaWorldController {
         loadPathItem(item);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Loaders
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Loaders
+    //*-------------------------------------------------------------------------
     /**
      * Load a vampire card from the world, and pair it with an image in the GUI
      */
@@ -691,9 +692,9 @@ public class LoopManiaWorldController {
         squares.getChildren().add(view);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Coordinates
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Coordinates
+    //*-------------------------------------------------------------------------
     /**
      * Remove the card from the world, and spawn and return a building instead where
      * the card was dropped
@@ -724,9 +725,9 @@ public class LoopManiaWorldController {
         world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Drag EventHandlers
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Drag EventHandlers
+    //*-------------------------------------------------------------------------
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the
      * background, dropping over the background. These are not attached to invidual
@@ -1083,9 +1084,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Key Press
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                            Key Press
+    //*-------------------------------------------------------------------------
 
     /**
      * handle the pressing of keyboard keys. Specifically, we should pause when
@@ -1114,9 +1115,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Menu Switch
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                            Menu Switch
+    //*-------------------------------------------------------------------------
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
         // TODO = possibly set other menu switchers
@@ -1135,9 +1136,9 @@ public class LoopManiaWorldController {
         mainMenuSwitcher.switchMenu();
     }
 
-    // *-------------------------------------------------------------------------
-    // * Track Position
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Track Position
+    //*-------------------------------------------------------------------------
     /**
      * Set a node in a GridPane to have its position track the position of an entity
      * in the world.
@@ -1209,9 +1210,9 @@ public class LoopManiaWorldController {
         });
     }
 
-    // *-------------------------------------------------------------------------
-    // * Threading
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Threading
+    //*-------------------------------------------------------------------------
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application

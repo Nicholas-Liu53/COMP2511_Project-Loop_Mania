@@ -140,17 +140,11 @@ public class Character extends MovingEntity {
     /**
      * Allows Character to equip different items to be able to win the battle
      * against enemy
-     * 
-     * Special Item: Health Potion - restores health to 100
-     * 
+     *
      * @param item
      */
     public void equipItem(Item item) {
-        // ! NOTE: Health potions are consumed by pressing P (maybe: or double clicking
-        // on the health potion)
-        // if (item.getItemID().equals("HealthPotion"))
-        // this.health = 100;
-
+        // ! NOTE: Health potions are consumed by pressing P
         this.equippedItems.add(item); // equipping item
     }
 
@@ -174,7 +168,7 @@ public class Character extends MovingEntity {
     /**
      * Gives Character gold as specified
      * 
-     * @param xp
+     * @param gold
      */
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
