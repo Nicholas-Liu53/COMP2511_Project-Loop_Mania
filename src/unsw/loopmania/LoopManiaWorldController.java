@@ -761,10 +761,8 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType) {
                             case CARD:
-                                // TODO = spawn a building here of different types
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x,
-                                        y);
+                                Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 if (newBuilding != null) {
                                     onLoad(newBuilding);
                                 } else {
