@@ -387,7 +387,14 @@ public class LoopManiaWorld {
      */
     public Item loadItem(String itemType) {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-
+        if (firstAvailableSlot == null) {
+            // eject the oldest unequipped item and replace it... oldest item is that at
+            // beginning of items
+            // giving some cash/experience rewards for the discarding of the oldest item
+            giveRandomRewards("onlyGoldXP");
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
         Item item = null;
 
         switch (itemType) {
@@ -745,7 +752,6 @@ public class LoopManiaWorld {
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
         }
-
         return newBuilding;
     }
 
