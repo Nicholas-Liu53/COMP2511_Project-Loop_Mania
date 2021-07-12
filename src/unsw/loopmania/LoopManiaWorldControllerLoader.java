@@ -27,12 +27,11 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
 
     private List<ImageView> entities;
 
-    //Images
+    // Images
     private Image characterImage;
     private Image pathTilesImage;
 
-    public LoopManiaWorldControllerLoader(String filename)
-            throws FileNotFoundException {
+    public LoopManiaWorldControllerLoader(String filename) throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
         characterImage = new Image((new File("src/images/human_new.png")).toURI().toString());
@@ -140,6 +139,4 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
     public LoopManiaWorldController loadController() throws FileNotFoundException {
         return new LoopManiaWorldController(load(), entities);        
     }
-
-
 }
