@@ -246,6 +246,7 @@ public class LoopManiaWorldController {
      * object handling switching to the main menu
      */
     private MenuSwitcher mainMenuSwitcher;
+    private MenuSwitcher shopMenuSwitcher;
 
     /**
      * @param world           world object loaded from file
@@ -1120,8 +1121,11 @@ public class LoopManiaWorldController {
     //*-------------------------------------------------------------------------
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
-        // TODO = possibly set other menu switchers
         this.mainMenuSwitcher = mainMenuSwitcher;
+    }
+
+    public void setShopMenuSwitcher(MenuSwitcher shopMenuSwitcher) {
+        this.shopMenuSwitcher = shopMenuSwitcher;
     }
 
     /**
@@ -1134,6 +1138,12 @@ public class LoopManiaWorldController {
         // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
+    }
+
+    @FXML
+    private void switchToShopMenu() throws IOException {
+        pause();
+        shopMenuSwitcher.switchMenu();
     }
 
     //*-------------------------------------------------------------------------

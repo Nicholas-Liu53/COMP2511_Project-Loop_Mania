@@ -49,10 +49,6 @@ public class ShopMenuController {
     @FXML
     private GridPane unequippedInventory;
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
-        this.gameSwitcher = gameSwitcher;
-    }
-
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -146,9 +142,9 @@ public class ShopMenuController {
      */
     private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
 
-    public ShopMenuController(LoopManiaWorld world, List<ImageView> initialEntities) {
-        this.world = world;
-        entityImages = new ArrayList<>(initialEntities);
+    public ShopMenuController() {
+        // this.world = world;
+        // entityImages = new ArrayList<>(initialEntities);
 
         // Items
         bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
@@ -173,23 +169,28 @@ public class ShopMenuController {
 
     @FXML
     public void initialize() {
-        Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-        Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
+        // Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
+        // Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
         
-        // Add the empty slot images for the unequipped inventory
-        for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
-            for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
-                ImageView emptySlotView = new ImageView(inventorySlotImage);
-                unequippedInventory.add(emptySlotView, x, y);
-            }
-        }
+        // // // Add the empty slot images for the unequipped inventory
+        // // for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
+        // //     for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
+        // //         ImageView emptySlotView = new ImageView(inventorySlotImage);
+        // //         unequippedInventory.add(emptySlotView, x, y);
+        // //     }
+        // // }
 
-        // Create the draggable icon
-        draggedEntity = new DragIcon();
-        draggedEntity.setVisible(false);
-        draggedEntity.setOpacity(0.7);
-        anchorPaneRoot.getChildren().add(draggedEntity);
+        // // Create the draggable icon
+        // draggedEntity = new DragIcon();
+        // draggedEntity.setVisible(false);
+        // draggedEntity.setOpacity(0.7);
+        // anchorPaneRoot.getChildren().add(draggedEntity);
     }
+
+    public void setGameSwitcher(MenuSwitcher gameSwitcher){
+        this.gameSwitcher = gameSwitcher;
+    }
+
     /**
      * facilitates switching to main game upon button click
      * @throws IOException
