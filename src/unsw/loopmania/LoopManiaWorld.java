@@ -685,7 +685,7 @@ public class LoopManiaWorld {
      * @param buildingNodeX x index from 0 to width-1 of building to be added
      * @param buildingNodeY y index from 0 to height-1 of building to be added
      */
-    public VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
+    public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
             int buildingNodeY) {
         // start by getting card
         Card card = null;
@@ -700,18 +700,51 @@ public class LoopManiaWorld {
         if (!canPlaceCard(newLocation, card))
             return null;
 
-        // look for simplename of class then make applicable building and return it
-        // Spawn building
-        VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
-                new SimpleIntegerProperty(buildingNodeY));
-        observers.add(newBuilding);
-        buildingEntities.add(newBuilding);
-        placedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
+        String buildingForCard = card.getClass().getSimpleName();
+        Building newBuilding = null;
+        switch (buildingForCard) {
+            case "BarracksBuilding":
+                newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            case "CampfireBuilding":
+                newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            case "TowerBuilding":
+                newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            case "TrapBuilding":
+                newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            case "VampireCastleBuilding":
+                newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            case "VillageBuilding":
+                newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            case "ZombiePitBuilding":
+                newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX),
+                        new SimpleIntegerProperty(buildingNodeY));
+                break;
+            default:
+                break;
+        }
 
-        // Destroy the card
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
+        if (newBuilding != null) {
+            observers.add(newBuilding);
+            buildingEntities.add(newBuilding);
+            placedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
+
+            // Destroy the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+        }
 
         return newBuilding;
     }
