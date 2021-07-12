@@ -362,13 +362,6 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), event -> {
             world.runTickMoves();
 
-            // Check card pile is the correct size
-            if (world.cardEntityIsFull()) {
-                StaticEntity compensation = world.giveRandomRewards("noCard");
-                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
-                    loadItem((Item) compensation);
-            }
-
             // Recieve rewards on defeating enemies
             List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e : defeatedEnemies) {
@@ -385,6 +378,13 @@ public class LoopManiaWorldController {
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
+            }
+
+            // Check card pile is the correct size
+            if (world.cardEntityIsFull()) {
+                StaticEntity compensation = world.giveRandomRewards("noCard");
+                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
+                    loadItem((Item) compensation);
             }
 
             // Spawn health potion + gold randomly
