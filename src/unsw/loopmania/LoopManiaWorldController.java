@@ -369,11 +369,6 @@ public class LoopManiaWorldController {
                     loadItem((Item) compensation);
             }
 
-            // Check unequipped inventory has atleast one empty slot
-            if (world.unequippedItemInventoryIsFull()) {
-                world.giveRandomRewards("onlyGoldXP");
-            }
-
             // Recieve rewards on defeating enemies
             List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e : defeatedEnemies) {
