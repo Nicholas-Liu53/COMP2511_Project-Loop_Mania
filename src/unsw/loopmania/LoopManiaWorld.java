@@ -772,9 +772,9 @@ public class LoopManiaWorld {
         }
 
         // TODO Observer pattern
-        // if (showShop) {
-        // //! shopMenu.showMenu();
-        // }
+        if (showShop) {
+            //! shopMenu.showMenu();
+        }
     }
 
     /**
