@@ -47,6 +47,9 @@ public class ShopMenuController {
     private MenuSwitcher gameSwitcher;
 
     @FXML
+    private GridPane equippedItems;
+
+    @FXML
     private GridPane unequippedInventory;
 
     // All image views including tiles, character, enemies, cards... even though
@@ -100,14 +103,7 @@ public class ShopMenuController {
      */
     @FXML
     private AnchorPane anchorPaneRoot;
-
-    /**
-     * equippedItems gridpane is for equipped items (e.g. swords, shield, axe)
-     */
-    @FXML
-    private GridPane equippedItems;
-
-
+    
     /**
      * when we drag a card/item, the picture for whatever we're dragging is set here
      * and we actually drag this node
