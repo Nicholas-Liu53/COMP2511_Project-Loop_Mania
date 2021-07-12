@@ -183,6 +183,12 @@ public class ShopMenuController {
                 unequippedInventory.add(emptySlotView, x, y);
             }
         }
+
+        // Create the draggable icon
+        draggedEntity = new DragIcon();
+        draggedEntity.setVisible(false);
+        draggedEntity.setOpacity(0.7);
+        anchorPaneRoot.getChildren().add(draggedEntity);
     }
     /**
      * facilitates switching to main game upon button click
