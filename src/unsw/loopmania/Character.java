@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.BodyArmourStrategy;
+import unsw.loopmania.items.HelmetStrategy;
 import unsw.loopmania.items.Item;
 import unsw.loopmania.items.ShieldStrategy;
 import unsw.loopmania.path.PathPosition;
@@ -19,6 +20,7 @@ public class Character extends MovingEntity {
     private WeaponStrategy weaponStrat;
     private BodyArmourStrategy bodyArmourStrat;
     private ShieldStrategy shieldStrat;
+    private HelmetStrategy helmetStrat;
     private ArrayList<Item> equippedItems;
     private int experience;
     private int gold;
@@ -37,6 +39,7 @@ public class Character extends MovingEntity {
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
         this.shieldStrat = new Melee();
+        this.helmetStrat = new Melee();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
@@ -99,6 +102,10 @@ public class Character extends MovingEntity {
         return this.shieldStrat;
     }
 
+    public HelmetStrategy getHelmet() {
+        return this.helmetStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling, only
      * adds enemy if it is not already on the list
@@ -128,7 +135,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-        this.weaponStrat.launchAttack(enemy, this.damage);
+        this.weaponStrat.launchAttack(enemy, (this.damage - this.helmetStrat.launchAttack()));
     }
 
     /**
@@ -141,7 +148,11 @@ public class Character extends MovingEntity {
     public void receiveAttack(int damage) {
         // Subtracting armour defence
         int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
+        actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
         actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
+
+        if (actualDamage < 0)
+            actualDamage = 0;
 
         this.health -= actualDamage;
         if (this.health < 0)
@@ -190,6 +201,15 @@ public class Character extends MovingEntity {
      */
     public void equipItem(ShieldStrategy item) {
         this.shieldStrat = item;
+    }
+
+    /**
+     * Equips helmet
+     * 
+     * @param item
+     */
+    public void equipItem(HelmetStrategy item) {
+        this.helmetStrat = item;
     }
 
     public void giveExperiencePoints(int xp) {
