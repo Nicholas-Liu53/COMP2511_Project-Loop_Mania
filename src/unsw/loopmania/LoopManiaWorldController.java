@@ -169,7 +169,8 @@ public class LoopManiaWorldController {
     private Image towerImage;
     private Image trapImage;
     private Image villageImage;
-    private Image zombiePitImage;prildingImage;
+    private Image zombiePitImage;
+    private Image vampireCastleBuildingImage;
     private Image heroesCastleImage;
 
     // Items
@@ -264,7 +265,8 @@ public class LoopManiaWorldController {
         towerImage = new Image((new File("src/images/tower.png")).toURI().toString());
         trapImage = new Image((new File("src/images/trap.png")).toURI().toString());
         villageImage = new Image((new File("src/images/village.png")).toURI().toString());
-        zombiePitImage = new Image((new File("src/images/zombie_pit.png")).toURI().toSildingImage = new Image(
+        zombiePitImage = new Image((new File("src/images/zombie_pit.png")).toURI().toString());
+        vampireCastleBuildingImage = new Image(
                 (new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         heroesCastleImage = new Image((new File("src/images/heros_castle.png")).toURI().toString());
 
@@ -360,6 +362,18 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), event -> {
             world.runTickMoves();
 
+            // Check card pile is the correct size
+            if (world.cardEntityIsFull()) {
+                StaticEntity compensation = world.giveRandomRewards("noCard");
+                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
+                    loadItem((Item) compensation);
+            }
+
+            // Check unequipped inventory has atleast one empty slot
+            if (world.unequippedItemInventoryIsFull()) {
+                world.giveRandomRewards("onlyGoldXP");
+            }
+
             // Recieve rewards on defeating enemies
             List<Enemy> defeatedEnemies = world.runBattles();
             for (Enemy e : defeatedEnemies) {
@@ -376,18 +390,6 @@ public class LoopManiaWorldController {
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
-            }
-
-            // Check card pile is the correct size
-            if (world.cardEntityIsFull()) {
-                StaticEntity compensation = world.giveRandomRewards("noCard");
-                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
-                    loadItem((Item) compensation);
-            }
-
-            // Check unequipped inventory has atleast one empty slot
-            if (world.unequippedItemInventoryIsFull()) {
-                world.giveRandomRewards("onlyGoldXP");
             }
 
             // Spawn health potion + gold randomly
@@ -658,8 +660,8 @@ public class LoopManiaWorldController {
             view = new ImageView(towerImage);
         } else if (building instanceof TrapBuilding) {
             view = new ImageView(trapImage);
-        } else if (buildingilding) {
-            view = neildingImage);
+        } else if (building instanceof VampireCastleBuilding) {
+            view = new ImageView(vampireCastleBuildingImage);
         } else if (building instanceof ZombiePitBuilding) {
             view = new ImageView(zombiePitImage);
         }
