@@ -703,31 +703,31 @@ public class LoopManiaWorld {
         String buildingForCard = card.getClass().getSimpleName();
         Building newBuilding = null;
         switch (buildingForCard) {
-            case "BarracksBuilding":
+            case "BarracksCard":
                 newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
-            case "CampfireBuilding":
+            case "CampfireCard":
                 newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
-            case "TowerBuilding":
+            case "TowerCard":
                 newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
-            case "TrapBuilding":
+            case "TrapCard":
                 newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
-            case "VampireCastleBuilding":
+            case "VampireCastleCard":
                 newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
-            case "VillageBuilding":
+            case "VillageCard":
                 newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
-            case "ZombiePitBuilding":
+            case "ZombiePitCard":
                 newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
                 break;
