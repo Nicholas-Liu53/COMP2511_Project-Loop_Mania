@@ -657,6 +657,8 @@ public class LoopManiaWorldController {
             view = new ImageView(trapImage);
         } else if (building instanceof VampireCastleBuilding) {
             view = new ImageView(vampireCastleBuildingImage);
+        } else if (building instanceof VillageBuilding) {
+            view = new ImageView(villageImage);
         } else if (building instanceof ZombiePitBuilding) {
             view = new ImageView(zombiePitImage);
         }
