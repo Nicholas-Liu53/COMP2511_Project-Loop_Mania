@@ -18,7 +18,7 @@ public class LoopManiaApplication extends Application {
     /**
      * the controller for the game. Stored as a field so can terminate it when click exit button
      */
-    private LoopManiaWorldController mainController;
+    private LoopManiaWorldController mainGameController;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -31,9 +31,9 @@ public class LoopManiaApplication extends Application {
 
         // Load the main game
         LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
-        mainController = loopManiaLoader.loadController();
+        mainGameController = loopManiaLoader.loadController();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
-        gameLoader.setController(mainController);
+        gameLoader.setController(mainGameController);
         Parent gameRoot = gameLoader.load();
 
         // Load the main menu
@@ -47,10 +47,10 @@ public class LoopManiaApplication extends Application {
         
         // Set functions which are activated when button click to switch menu is pressed
         // E.g. from main menu to start the game, or from the game to return to main menu
-        mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+        mainGameController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
-            mainController.startTimer();
+            mainGameController.startTimer();
         });
         
         // Deploy the main onto the stage
@@ -62,7 +62,7 @@ public class LoopManiaApplication extends Application {
     @Override
     public void stop(){
         // Wrap up activities when exit program
-        mainController.terminate();
+        mainGameController.terminate();
     }
 
     /**
