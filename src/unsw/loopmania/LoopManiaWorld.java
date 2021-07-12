@@ -785,7 +785,7 @@ public class LoopManiaWorld {
         } else {
             if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
                 return false;
-            else {
+            else if (!card.getCardId().equals("CampfireCard")) {
                 if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
                     return false;
             }
