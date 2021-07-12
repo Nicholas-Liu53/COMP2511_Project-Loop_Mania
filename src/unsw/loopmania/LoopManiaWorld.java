@@ -492,69 +492,36 @@ public class LoopManiaWorld {
     }
 
     /**
-     * Takes body armour from the inventory and equips it as the character's body armour, any
-     * currently equipped weapon is placed back into the inventory
-     * 
-     * @param x
-     * @param y
-     * @return body armour replaced by equip
-     */
-    public BodyArmourStrategy equipBodyArmourByCoordinates(int x, int y) {
-        BodyArmourStrategy oldBodyArmour = character.getBodyArmour();
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        unequippedInventoryItems.remove(item);
-        character.equipItem((BodyArmourStrategy) item);
-
-        if (oldBodyArmour instanceof Melee) {
-            // Melee shouldn't be placed in the inventory
-            return null;
-        }
-
-        return oldBodyArmour;
-    }
-
-    /**
-     * Takes shield from the inventory and equips it as the character's shield, any
-     * currently equipped weapon is placed back into the inventory
-     * 
-     * @param x
-     * @param y
-     * @return shield replaced by equip
-     */
-    public ShieldStrategy equipShieldByCoordinates(int x, int y) {
-        ShieldStrategy oldShield = character.getShield();
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        unequippedInventoryItems.remove(item);
-        character.equipItem((ShieldStrategy) item);
-
-        if (oldShield instanceof Melee) {
-            // Melee shouldn't be placed in the inventory
-            return null;
-        }
-
-        return oldShield; 
-    }
-
-    /**
-     * Takes Helmet from the inventory and equips it as the character's Helmet, any
-     * currently equipped weapon is placed back into the inventory
+     * Takes armour from inventory and equips it to the character, places
+     * currently equipped armour back into the inventory
      * 
      * @param x
      * @param y
      * @return Helmet replaced by equip
      */
-    public HelmetStrategy equipHelmetByCoordinates(int x, int y) {
-        HelmetStrategy oldHelmet = character.getHelmet();
+    public ArmourStrategy equipArmourByCoordinates(int x, int y) {
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        unequippedInventoryItems.remove(item);
-        character.equipItem((HelmetStrategy) item);
+        ArmourStrategy oldItem = null;
 
-        if (oldHelmet instanceof Melee) {
+        if (item instanceof HelmetStrategy) {
+            oldItem = character.getHelmet();
+            character.equipItem((HelmetStrategy) item);
+        } else if (item instanceof ShieldStrategy) {
+            oldItem = character.getShield();
+            character.equipItem((ShieldStrategy) item);
+        } else if (item instanceof BodyArmourStrategy) {
+            oldItem = character.getBodyArmour();
+            character.equipItem((BodyArmourStrategy) item);
+        }
+
+        unequippedInventoryItems.remove(item);
+
+        if (oldItem instanceof Melee) {
             // Melee shouldn't be placed in the inventory
             return null;
         }
 
-        return oldHelmet; 
+        return oldItem; 
     }
 
     /**

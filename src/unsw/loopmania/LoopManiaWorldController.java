@@ -823,7 +823,7 @@ public class LoopManiaWorldController {
                                 break;
                             case BODYARMOUR:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                BodyArmourStrategy oldBodyArmour = world.equipBodyArmourByCoordinates(nodeX, nodeY);
+                                BodyArmourStrategy oldBodyArmour = (BodyArmourStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place armour back in inventory
                                 if (oldBodyArmour instanceof BodyArmour) 
                                     loadItem(world.loadItem("BodyArmour"));
@@ -832,7 +832,7 @@ public class LoopManiaWorldController {
                                 break;
                             case SHIELD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                ShieldStrategy oldShield = world.equipShieldByCoordinates(nodeX, nodeY);
+                                ShieldStrategy oldShield = (ShieldStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place shield back in inventory
                                 if (oldShield instanceof Shield) 
                                     loadItem(world.loadItem("Shield"));
@@ -841,7 +841,7 @@ public class LoopManiaWorldController {
                                 break;
                             case HELMET:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                HelmetStrategy oldHelmet = world.equipHelmetByCoordinates(nodeX, nodeY);
+                                HelmetStrategy oldHelmet = (HelmetStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place helmet back in inventory
                                 if (oldHelmet instanceof Helmet)
                                     loadItem(world.loadItem("Helmet"));
