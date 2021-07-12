@@ -536,6 +536,28 @@ public class LoopManiaWorld {
     }
 
     /**
+     * Takes Helmet from the inventory and equips it as the character's Helmet, any
+     * currently equipped weapon is placed back into the inventory
+     * 
+     * @param x
+     * @param y
+     * @return Helmet replaced by equip
+     */
+    public HelmetStrategy equipHelmetByCoordinates(int x, int y) {
+        HelmetStrategy oldHelmet = character.getHelmet();
+        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        unequippedInventoryItems.remove(item);
+        character.equipItem((HelmetStrategy) item);
+
+        if (oldHelmet instanceof Melee) {
+            // Melee shouldn't be placed in the inventory
+            return null;
+        }
+
+        return oldHelmet; 
+    }
+
+    /**
      * remove item at a particular index in the unequipped inventory items list
      * (this is ordered based on age in the starter code)
      * 
