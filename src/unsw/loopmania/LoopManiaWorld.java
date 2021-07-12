@@ -216,6 +216,7 @@ public class LoopManiaWorld {
                 numHealthPotionSpawned++;
             }
         }
+
         return spawningHealthPotions;
     }
 
@@ -236,6 +237,7 @@ public class LoopManiaWorld {
                 numGoldPileSpawned++;
             }
         }
+
         return spawningGoldPiles;
     }
 
@@ -270,6 +272,7 @@ public class LoopManiaWorld {
 
             return spawnPosition;
         }
+
         return null;
     }
 
@@ -293,30 +296,13 @@ public class LoopManiaWorld {
         while (spawnPosition.equals(origin)) {
             spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
         }
+
         return spawnPosition;
     }
 
     // *-------------------------------------------------------------------------
     // * Items/Inventory
     // *-------------------------------------------------------------------------
-    /**
-     * pick up an item
-     * 
-     * @param item item to be picked up
-     */
-    // private void attemptToPickUpPathItem(Item item){
-    // if (Math.pow((character.getX()-item.getX()), 2) +
-    // Math.pow((character.getY()-item.getY()), 2) == 0) {
-    // if (item.getItemType().equals("Gold")) {
-    // numGoldPileSpawned--;
-    // } else {
-    // numHealthPotionSpawned--;
-    // }
-    // item.destroy();
-    // pathItems.remove(item);
-    // }
-    // }
-
     private boolean canPickUpItem(Item item) {
         if (Math.pow((character.getX() - item.getX()), 2) + Math.pow((character.getY() - item.getY()), 2) == 0) {
             return true;
@@ -346,6 +332,7 @@ public class LoopManiaWorld {
         for (Item pathItem : pickedUpItems) {
             pathItems.remove(pathItem);
         }
+
         return pickedUpItems;
     }
 
@@ -359,10 +346,8 @@ public class LoopManiaWorld {
         if (firstAvailableSlot == null && !itemToAdd.getClass().getSimpleName().equals("GoldPile")) {
             // Eject the oldest unequipped item and replace it... oldest item is that at
             // beginning of items
+            giveRandomRewards("onlyGoldXP");
             removeItemByPositionInUnequippedInventoryItems(0);
-            // TODO = give some cash/experience rewards for the discarding of the oldest
-            // item
-
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
 
@@ -374,7 +359,6 @@ public class LoopManiaWorld {
             return healthPotion;
         } else {
             character.giveGold(100);
-            // character.giveExperiencePoints(10);
         }
 
         return itemToAdd;
@@ -395,6 +379,7 @@ public class LoopManiaWorld {
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
+
         Item item = null;
 
         switch (itemType) {
@@ -620,12 +605,53 @@ public class LoopManiaWorld {
     }
 
     /**
-     * run the expected battles in the world, based on current world state
+     * Run the expected battles in the world, based on current world state
      * 
      * @return list of enemies which have been killed
      */
-    // public List<Enemy> runBattles() {
-    // }
+    public List<Enemy> runBattles() {
+        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
+            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+
+            // Currently the character attacks every enemy and vice versa
+            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
+                    .pow(e.getAttackRadius(), 2)) {
+                // fight...
+                character.addBattle(e);
+                character.launchAttack(e);
+                e.launchAttack(character);
+
+                if (e.getHealth() == 0) {
+                    // Remove enemy
+                    defeatedEnemies.add(e);
+                    character.removeEnemyFromBattle(e);
+                }
+                // TODO handle character death
+
+            } else if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
+                    .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
+                // Support radius logic
+
+                if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
+                    e.moveUpPath();
+                } else {
+                    e.moveDownPath();
+                }
+            }
+        }
+
+        for (Enemy e : defeatedEnemies) {
+            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from
+            // the enemies list
+            // if we killEnemy in prior loop, we get
+            // java.util.ConcurrentModificationException
+            // due to mutating list we're iterating over
+            killEnemy(e);
+        }
+
+        return defeatedEnemies;
+    }
 
     // *-------------------------------------------------------------------------
     // * Building Cards
@@ -875,58 +901,11 @@ public class LoopManiaWorld {
     }
 
     // *-------------------------------------------------------------------------
-    // * CC
+    // * Rewards
     // *-------------------------------------------------------------------------
     /**
-     * Run the expected battles in the world, based on current world state
-     * 
-     * @return list of enemies which have been killed
-     */
-    public List<Enemy> runBattles() {
-        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
-        for (Enemy e : enemies) {
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-
-            // Currently the character attacks every enemy and vice versa
-            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
-                    .pow(e.getAttackRadius(), 2)) {
-                // fight...
-                character.addBattle(e);
-                character.launchAttack(e);
-                e.launchAttack(character);
-
-                if (e.getHealth() == 0) {
-                    // Remove enemy
-                    defeatedEnemies.add(e);
-                    character.removeEnemyFromBattle(e);
-                }
-                // TODO handle character death
-
-            } else if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
-                    .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
-                // Support radius logic
-
-                if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
-                    e.moveUpPath();
-                } else {
-                    e.moveDownPath();
-                }
-            }
-        }
-
-        for (Enemy e : defeatedEnemies) {
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from
-            // the enemies list
-            // if we killEnemy in prior loop, we get
-            // java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
-            killEnemy(e);
-        }
-
-        return defeatedEnemies;
-    }
-
-    /**
+     * Gives various rewards on type on mode selected Various modes are withCard,
+     * noCard, and OnlyGoldXP
      * 
      * @param rewardSetting to account for various types of rewards
      * @return a buliding card or an item as a reward
