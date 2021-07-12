@@ -655,10 +655,27 @@ public class LoopManiaWorldController {
      * 
      * @param building
      */
-    private void onLoad(VampireCastleBuilding building) {
-        ImageView view = new ImageView(vampireCastleBuildingImage);
-        addEntity(building, view);
-        squares.getChildren().add(view);
+    private void onLoad(Building building) {
+        ImageView view = null;
+
+        if (building instanceof BarracksBuilding) {
+            view = new ImageView(barracksImage);
+        } else if (building instanceof CampfireBuilding) {
+            view = new ImageView(campfireImage);
+        } else if (building instanceof TowerBuilding) {
+            view = new ImageView(towerImage);
+        } else if (building instanceof TrapBuilding) {
+            view = new ImageView(trapImage);
+        } else if (building instanceof VampireCastleBuilding) {
+            view = new ImageView(vampireCastleBuildingImage);
+        } else if (building instanceof ZombiePitBuilding) {
+            view = new ImageView(zombiePitImage);
+        }
+
+        if (view != null) {
+            addEntity(building, view);
+            squares.getChildren().add(view);
+        }
     }
 
     // *-------------------------------------------------------------------------
