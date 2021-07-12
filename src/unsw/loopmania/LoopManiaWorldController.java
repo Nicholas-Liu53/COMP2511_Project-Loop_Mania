@@ -1146,6 +1146,14 @@ public class LoopManiaWorldController {
         shopMenuSwitcher.switchMenu();
     }
 
+    public LoopManiaWorld getWorld() {
+        return this.world;
+    }
+
+    public void replaceWorld(LoopManiaWorld newWorld) {
+        this.world = newWorld;
+    }
+
     //*-------------------------------------------------------------------------
     //*                             Track Position
     //*-------------------------------------------------------------------------

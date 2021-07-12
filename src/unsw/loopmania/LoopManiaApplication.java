@@ -63,6 +63,9 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
+
+        //???
+        shopMenuController.setWorld(mainGameController.getWorld());
         
         // Deploy the main onto the stage
         gameRoot.requestFocus();

@@ -165,16 +165,16 @@ public class ShopMenuController {
 
     @FXML
     public void initialize() {
-        // Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-        // Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
+        Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
+        Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
         
-        // // Add the empty slot images for the unequipped inventory
-        // for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
-        //     for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
-        //         ImageView emptySlotView = new ImageView(inventorySlotImage);
-        //         unequippedInventory.add(emptySlotView, x, y);
-        //     }
-        // }
+        // Add the empty slot images for the unequipped inventory
+        for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
+            for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
+                ImageView emptySlotView = new ImageView(inventorySlotImage);
+                unequippedInventory.add(emptySlotView, x, y);
+            }
+        }
 
         // // Create the draggable icon
         // draggedEntity = new DragIcon();
@@ -194,5 +194,13 @@ public class ShopMenuController {
     @FXML
     private void switchToGame() throws IOException {
         gameSwitcher.switchMenu();
+    }
+
+    public void setWorld(LoopManiaWorld world) {
+        this.world = world;
+    }
+
+    public LoopManiaWorld getWorld() {
+        return this.world;
     }
 }
