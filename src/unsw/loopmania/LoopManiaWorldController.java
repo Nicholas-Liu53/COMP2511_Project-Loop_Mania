@@ -52,12 +52,7 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, 
-    ITEM, 
-    WEAPON,
-    BODYARMOUR,
-    SHIELD,
-    HELMET,
+    CARD, ITEM, WEAPON, BODYARMOUR, SHIELD, HELMET,
 }
 
 /**
@@ -385,12 +380,7 @@ public class LoopManiaWorldController {
                 onLoad(newEnemy);
             }
 
-            // Check card pile is the correct size
-            if (world.cardEntityIsFull()) {
-                StaticEntity compensation = world.giveRandomRewards("noCard");
-                if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
-                    loadItem((Item) compensation);
-            }
+            checkCardPileHasOneSlot();
 
             // Spawn health potion + gold randomly
             if (world.getCurrCycle() == spawnCycle) {
@@ -472,6 +462,15 @@ public class LoopManiaWorldController {
         }
     }
 
+    // Check card pile is the correct size
+    public void checkCardPileHasOneSlot() {
+        if (world.cardEntityIsFull()) {
+            StaticEntity compensation = world.giveRandomRewards("noCard");
+            if ((compensation != null) && (compensation.getStaticEntityType().equals("Item")))
+                loadItem((Item) compensation);
+        }
+    }
+
     /**
      * Run GUI events after an enemy is defeated, such as spawning
      * items/experience/gold/cards
@@ -481,6 +480,7 @@ public class LoopManiaWorldController {
      */
     public void giveRandomRewardsWithCards(int times) {
         for (int i = 0; i < times; i++) {
+            checkCardPileHasOneSlot();
             StaticEntity reward = world.giveRandomRewards("withCard");
             if (reward != null) {
                 if (reward.getStaticEntityType().equals("Card")) {
@@ -581,28 +581,29 @@ public class LoopManiaWorldController {
     private void onLoad(Item item, boolean spawnOnPath) {
         ImageView view = null;
 
-        if (item instanceof Helmet) {
-            view = new ImageView(helmetImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
-        } else if (item instanceof BodyArmour) {
-            view = new ImageView(bodyArmourImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
-        } else if (item instanceof Shield) {
-            view = new ImageView(shieldImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
-        } else if (item instanceof Staff) {
-            view = new ImageView(staffImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        } else if (item instanceof Stake) {
-            view = new ImageView(stakeImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        } else if (item instanceof Sword) {
-            view = new ImageView(swordImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
-        } else if (item instanceof HealthPotion) {
-            view = new ImageView(healthPotionImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        }
+        if (!spawnOnPath) {
+            if (item instanceof Helmet) {
+                view = new ImageView(helmetImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
+            } else if (item instanceof BodyArmour) {
+                view = new ImageView(bodyArmourImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
+            } else if (item instanceof Shield) {
+                view = new ImageView(shieldImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+            } else if (item instanceof Staff) {
+                view = new ImageView(staffImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+            } else if (item instanceof Stake) {
+                view = new ImageView(stakeImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+            } else if (item instanceof Sword) {
+                view = new ImageView(swordImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+            } else if (item instanceof HealthPotion) {
+                view = new ImageView(healthPotionImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            }
 
             if (view != null) {
                 addEntity(item, view);
@@ -800,7 +801,8 @@ public class LoopManiaWorldController {
                                 break;
                             case BODYARMOUR:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                BodyArmourStrategy oldBodyArmour = (BodyArmourStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
+                                BodyArmourStrategy oldBodyArmour = (BodyArmourStrategy) world
+                                        .equipArmourByCoordinates(nodeX, nodeY);
                                 // Place armour back in inventory
                                 if (oldBodyArmour instanceof BodyArmour)
                                     loadItem(world.loadItem("BodyArmour"));
@@ -809,7 +811,8 @@ public class LoopManiaWorldController {
                                 break;
                             case SHIELD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                ShieldStrategy oldShield = (ShieldStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
+                                ShieldStrategy oldShield = (ShieldStrategy) world.equipArmourByCoordinates(nodeX,
+                                        nodeY);
                                 // Place shield back in inventory
                                 if (oldShield instanceof Shield)
                                     loadItem(world.loadItem("Shield"));
@@ -818,7 +821,8 @@ public class LoopManiaWorldController {
                                 break;
                             case HELMET:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                HelmetStrategy oldHelmet = (HelmetStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
+                                HelmetStrategy oldHelmet = (HelmetStrategy) world.equipArmourByCoordinates(nodeX,
+                                        nodeY);
                                 // Place helmet back in inventory
                                 if (oldHelmet instanceof Helmet)
                                     loadItem(world.loadItem("Helmet"));
