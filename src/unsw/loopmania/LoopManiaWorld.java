@@ -566,6 +566,11 @@ public class LoopManiaWorld {
         healthProperty();
     }
 
+    // Get list of items in
+    public List<Item> getUnequippedItems() {
+        return unequippedInventoryItems;
+    }
+
     //*-------------------------------------------------------------------------
     //*                                 Battles
     //*-------------------------------------------------------------------------

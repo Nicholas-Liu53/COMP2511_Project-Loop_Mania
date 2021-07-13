@@ -19,13 +19,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -33,8 +29,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import unsw.loopmania.items.Item;
 
 /**
  * controller for the shop menu.
@@ -58,7 +54,7 @@ public class ShopMenuController {
 
     private LoopManiaWorld world;
 
-    // Items
+    // Item Images
     private Image bodyArmourImage;
     private Image healthPotionImage;
     private Image helmetImage;
@@ -82,19 +78,6 @@ public class ShopMenuController {
      * null if nothing being dragged, or the type of item being dragged
      */
     private DRAGGABLE_TYPE currentlyDraggedType;
-
-    /**
-     * squares gridpane includes path images, enemies, character, empty grass,
-     * buildings
-     */
-    @FXML
-    private GridPane squares;
-
-    /**
-     * cards gridpane includes cards and the ground underneath the cards
-     */
-    @FXML
-    private GridPane cards;
 
     /**
      * anchorPaneRoot is the "background". It is useful since anchorPaneRoot
@@ -202,5 +185,30 @@ public class ShopMenuController {
 
     public LoopManiaWorld getWorld() {
         return this.world;
+    }
+
+    public void addItemsInInventory(List<Item> unequippedInventoryItems) {
+        // int i = 0, j = 0;
+        for (Item unequippedInventoryItem : unequippedInventoryItems) {
+            unequippedInventory.getChildren().add(new ImageView(getImageForItem(unequippedInventoryItem)));
+            // i++;
+            // if (i % 4 == 0) {
+            //     i = 0;
+            //     j++;
+            // }
+        }
+    }
+
+    // Helper functions
+    private Image getImageForItem(Item item) {
+        if (item.getClass().getSimpleName().equals("BodyArmour")) return bodyArmourImage;
+        else if (item.getClass().getSimpleName().equals("HealthPotion")) return healthPotionImage;
+        else if (item.getClass().getSimpleName().equals("Helmet")) return helmetImage;
+        else if (item.getClass().getSimpleName().equals("Shield")) return shieldImage;
+        else if (item.getClass().getSimpleName().equals("Staff")) return staffImage;
+        else if (item.getClass().getSimpleName().equals("Stake")) return stakeImage;
+        else if (item.getClass().getSimpleName().equals("Sword")) return swordImage;
+        // if (item.getClass().getSimpleName().equals("GoldPile")) return goldPileImage;
+        else return theOneRingImage;
     }
 }

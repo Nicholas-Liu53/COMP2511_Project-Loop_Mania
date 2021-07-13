@@ -1143,6 +1143,7 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToShopMenu() throws IOException {
         pause();
+        // addItemsInInventory(unequippedInventory);
         shopMenuSwitcher.switchMenu();
     }
 
@@ -1152,6 +1153,10 @@ public class LoopManiaWorldController {
 
     public void replaceWorld(LoopManiaWorld newWorld) {
         this.world = newWorld;
+    }
+
+    public List<Item> getUnequippedItems() {
+        return world.getUnequippedItems();
     }
 
     //*-------------------------------------------------------------------------
