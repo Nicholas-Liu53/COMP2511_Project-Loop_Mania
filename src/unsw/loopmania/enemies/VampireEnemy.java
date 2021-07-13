@@ -4,6 +4,7 @@ import java.util.Random;
 
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.Character;
+import unsw.loopmania.items.Shield;
 
 /**
  * Vampire enemy type
@@ -47,7 +48,14 @@ public class VampireEnemy extends Enemy {
             }
         } else {
             // Checks if vampire is making a critical attack in the next attack
-            int criticalCheck = (new Random()).nextInt(10);
+            // 10% chance without shield, 4% with
+            int criticalCheck;
+
+            if (mainChar.getShield() instanceof Shield) 
+                criticalCheck = (new Random()).nextInt(25);
+            else 
+                criticalCheck = (new Random()).nextInt(10); 
+
             if (criticalCheck == 5) {
                 // Sets critical attack variables in preparation
                 this.criticalAttack = true;

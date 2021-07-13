@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.BodyArmourStrategy;
+import unsw.loopmania.items.HelmetStrategy;
 import unsw.loopmania.items.Item;
+import unsw.loopmania.items.ShieldStrategy;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.items.WeaponStrategy;
 
@@ -17,6 +19,8 @@ public class Character extends MovingEntity {
     private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
     private BodyArmourStrategy bodyArmourStrat;
+    private ShieldStrategy shieldStrat;
+    private HelmetStrategy helmetStrat;
     private ArrayList<Item> equippedItems;
     private int experience;
     private int gold;
@@ -34,6 +38,8 @@ public class Character extends MovingEntity {
         this.enemiesCurrentlyBattling = new ArrayList<Enemy>();
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
+        this.shieldStrat = new Melee();
+        this.helmetStrat = new Melee();
         this.equippedItems = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
@@ -92,6 +98,14 @@ public class Character extends MovingEntity {
         return this.bodyArmourStrat;
     }
 
+    public ShieldStrategy getShield() {
+        return this.shieldStrat;
+    }
+
+    public HelmetStrategy getHelmet() {
+        return this.helmetStrat;
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling, only
      * adds enemy if it is not already on the list
@@ -121,7 +135,7 @@ public class Character extends MovingEntity {
      * @param mainChar
      */
     public void launchAttack(Enemy enemy) {
-        this.weaponStrat.launchAttack(enemy, this.damage);
+        this.weaponStrat.launchAttack(enemy, (this.damage - this.helmetStrat.launchAttack()));
     }
 
     /**
@@ -132,7 +146,15 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-        this.health -= (damage - this.bodyArmourStrat.receiveAttack(damage));
+        // Subtracting armour defence
+        int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
+        actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
+        actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
+
+        if (actualDamage < 0)
+            actualDamage = 0;
+
+        this.health -= actualDamage;
         if (this.health < 0)
             this.health = 0;
     }
@@ -140,12 +162,11 @@ public class Character extends MovingEntity {
     /**
      * Allows Character to equip different items to be able to win the battle
      * against enemy
-     *
+     * 
      * @param item
      */
     public void equipItem(Item item) {
-        // ! NOTE: Health potions are consumed by pressing P
-        this.equippedItems.add(item); // equipping item
+        this.equippedItems.add(item);
     }
 
     /**
@@ -157,8 +178,31 @@ public class Character extends MovingEntity {
         this.weaponStrat = item;
     }
 
+    /**
+     * Equips body armour
+     * 
+     * @param item
+     */
     public void equipItem(BodyArmourStrategy item) {
         this.bodyArmourStrat = item;
+    }
+
+    /**
+     * Equips shield
+     * 
+     * @param item
+     */
+    public void equipItem(ShieldStrategy item) {
+        this.shieldStrat = item;
+    }
+
+    /**
+     * Equips helmet
+     * 
+     * @param item
+     */
+    public void equipItem(HelmetStrategy item) {
+        this.helmetStrat = item;
     }
 
     public void giveExperiencePoints(int xp) {
@@ -166,7 +210,7 @@ public class Character extends MovingEntity {
     }
 
     /**
-     * Gives Character gold as specified
+     * Gives Character specified amount of gold
      * 
      * @param gold
      */
@@ -174,10 +218,20 @@ public class Character extends MovingEntity {
         this.gold += gold; // max gold?
     }
 
+    /**
+     * Restores Character's health to maximum
+     * 
+     * @param gold
+     */
     public void restoreHealthPoints() {
         health = 100;
     }
 
+    /**
+     * Checks if Character has full health
+     * 
+     * @param gold
+     */
     public boolean isFullHealth() {
         return health == 100;
     }
