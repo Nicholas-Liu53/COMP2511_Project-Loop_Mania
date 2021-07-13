@@ -64,7 +64,7 @@ public class LoopManiaApplication extends Application {
         });
         shopMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
-            mainGameController.startTimer();
+            // mainGameController.startTimer();
         });
 
         //???

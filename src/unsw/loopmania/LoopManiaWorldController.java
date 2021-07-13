@@ -498,6 +498,10 @@ public class LoopManiaWorldController {
         loadPathItem(item);
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
     //*-------------------------------------------------------------------------
     //*                             Loaders
     //*-------------------------------------------------------------------------

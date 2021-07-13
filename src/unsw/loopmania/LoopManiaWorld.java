@@ -81,6 +81,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
+    // Game Paused boolean
+    protected boolean isPaused = false;
+
     //--------------------------------------------------------------------------
     //                             Constructor
     //--------------------------------------------------------------------------
