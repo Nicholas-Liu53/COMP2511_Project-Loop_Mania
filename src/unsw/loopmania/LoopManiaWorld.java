@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
 
+import javafx.beans.binding.IntegerExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -75,6 +76,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
+    // List of villages
+    private List<Pair<Integer, Integer>> villagesList;
+
     // --------------------------------------------------------------------------
     // Constructor
     // --------------------------------------------------------------------------
@@ -111,6 +115,7 @@ public class LoopManiaWorld {
         charHealth = new SimpleStringProperty();
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
+        villagesList = new ArrayList<Pair<Integer,Integer>>();
     }
 
     // --------------------------------------------------------------------------
@@ -748,6 +753,7 @@ public class LoopManiaWorld {
             case "VillageCard":
                 newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                villagesList.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
                 break;
             case "ZombiePitCard":
                 newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -825,6 +831,7 @@ public class LoopManiaWorld {
         healthProperty();
         goldProperty();
         xpProperty();
+        villageCheck();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -961,5 +968,17 @@ public class LoopManiaWorld {
     public StringProperty xpProperty() {
         charXP.set(String.valueOf(character.getExperience()));
         return charXP;
+    }
+
+    // *-------------------------------------------------------------------------
+    // * Buildings
+    // *-------------------------------------------------------------------------
+    private void villageCheck() {
+        boolean inVillage = false;
+        for (Pair<Integer,Integer> village : villagesList) {
+            if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY()))
+                inVillage = true;
+        }
+        if (inVillage) character.restoreHealthPoints();
     }
 }
