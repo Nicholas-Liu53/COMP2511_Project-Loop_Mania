@@ -8,6 +8,8 @@ import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.items.BodyArmour;
 import unsw.loopmania.items.BodyArmourStrategy;
+import unsw.loopmania.items.Helmet;
+import unsw.loopmania.items.HelmetStrategy;
 import unsw.loopmania.items.Shield;
 import unsw.loopmania.items.ShieldStrategy;
 
@@ -55,5 +57,25 @@ public class ArmourTest {
 
             enemy.launchAttack(newChar);
         }
+    }
+
+    @Test
+    public void helmetTest() {
+        HelmetStrategy helmet = new Helmet();
+        Character mainChar = new Character(null);
+
+        mainChar.equipItem(helmet);
+        // Testing only helmet
+        mainChar.receiveAttack(10);
+        assertEquals(94, mainChar.getHealth());
+        mainChar.receiveAttack(20);
+        assertEquals(79, mainChar.getHealth());
+
+        // Testing attack reduction
+        SlugEnemy enemy = new SlugEnemy(null);
+        mainChar.launchAttack(enemy);
+        assertEquals(22, enemy.getHealth());
+        mainChar.launchAttack(enemy);
+        assertEquals(19, enemy.getHealth());
     }
 }
