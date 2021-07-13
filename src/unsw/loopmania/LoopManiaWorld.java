@@ -76,8 +76,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    // List of villages
+    // List of building locationss by type
     private List<Pair<Integer, Integer>> villagesList;
+    private List<Pair<Integer, Integer>> campfireList;
 
     // --------------------------------------------------------------------------
     // Constructor
@@ -116,6 +117,7 @@ public class LoopManiaWorld {
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
         villagesList = new ArrayList<Pair<Integer,Integer>>();
+        campfireList = new ArrayList<Pair<Integer,Integer>>();
     }
 
     // --------------------------------------------------------------------------
@@ -737,6 +739,7 @@ public class LoopManiaWorld {
             case "CampfireCard":
                 newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                campfireList.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
                 break;
             case "TowerCard":
                 newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -831,7 +834,7 @@ public class LoopManiaWorld {
         healthProperty();
         goldProperty();
         xpProperty();
-        villageCheck();
+        restoreHealthIfInVillage();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -971,14 +974,25 @@ public class LoopManiaWorld {
     }
 
     // *-------------------------------------------------------------------------
-    // * Buildings
+    // * Buildings Helper Functions
     // *-------------------------------------------------------------------------
-    private void villageCheck() {
-        boolean inVillage = false;
+    private void restoreHealthIfInVillage() {
+        if (inVillage()) character.restoreHealthPoints();
+    }
+
+    private boolean inVillage() {
         for (Pair<Integer,Integer> village : villagesList) {
             if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY()))
-                inVillage = true;
+                return true;
         }
-        if (inVillage) character.restoreHealthPoints();
+        return false;
+    }
+
+    private boolean inCampfireRadius() {
+        for (Pair<Integer,Integer> campfire : campfireList) {
+            if (Math.pow(campfire.getValue0() - character.getX(), 2) + Math.pow(campfire.getValue1() - character.getY(), 2) < 16)
+                return true;
+        }
+        return false;
     }
 }
