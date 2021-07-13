@@ -57,6 +57,7 @@ enum DRAGGABLE_TYPE {
     WEAPON,
     BODYARMOUR,
     SHIELD,
+    HELMET,
 }
 
 /**
@@ -613,7 +614,7 @@ public class LoopManiaWorldController {
 
         if (item instanceof Helmet) {
             view = new ImageView(helmetImage);
-            addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            addDragEventHandlers(item, view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
         } else if (item instanceof BodyArmour) {
             view = new ImageView(bodyArmourImage);
             addDragEventHandlers(item, view, DRAGGABLE_TYPE.BODYARMOUR, unequippedInventory, equippedItems);
@@ -822,7 +823,7 @@ public class LoopManiaWorldController {
                                 break;
                             case BODYARMOUR:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                BodyArmourStrategy oldBodyArmour = world.equipBodyArmourByCoordinates(nodeX, nodeY);
+                                BodyArmourStrategy oldBodyArmour = (BodyArmourStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place armour back in inventory
                                 if (oldBodyArmour instanceof BodyArmour) 
                                     loadItem(world.loadItem("BodyArmour"));
@@ -831,12 +832,22 @@ public class LoopManiaWorldController {
                                 break;
                             case SHIELD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                ShieldStrategy oldShield = world.equipShieldByCoordinates(nodeX, nodeY);
+                                ShieldStrategy oldShield = (ShieldStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place shield back in inventory
                                 if (oldShield instanceof Shield) 
                                     loadItem(world.loadItem("Shield"));
                                 // Placing in shield cell
                                 targetGridPane.add(image, 2, 1, 1, 1);
+                                break;
+                            case HELMET:
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                HelmetStrategy oldHelmet = (HelmetStrategy)world.equipArmourByCoordinates(nodeX, nodeY);
+                                // Place helmet back in inventory
+                                if (oldHelmet instanceof Helmet)
+                                    loadItem(world.loadItem("Helmet"));
+                                // Placing in helmet cell
+                                targetGridPane.add(image, 1, 0, 1, 1);
+                                break;
                             default:
                                 break;
                         }
