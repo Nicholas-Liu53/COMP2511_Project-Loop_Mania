@@ -75,6 +75,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
+    // List of building locations by type
+    private List<TowerBuilding> towerBuildingList;
+
     // --------------------------------------------------------------------------
     // Constructor
     // --------------------------------------------------------------------------
@@ -106,11 +109,12 @@ public class LoopManiaWorld {
         numGoldPileSpawned = 0;
         numHealthPotionSpawned = 0;
         numGold = 0;
-        newEnemies = new ArrayList<Enemy>();
-        observers = new ArrayList<WorldStateObserver>();
+        newEnemies = new ArrayList<>();
+        observers = new ArrayList<>();
         charHealth = new SimpleStringProperty();
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
+        towerBuildingList = new ArrayList<>();
     }
 
     // --------------------------------------------------------------------------
@@ -477,8 +481,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * Takes armour from inventory and equips it to the character, places
-     * currently equipped armour back into the inventory
+     * Takes armour from inventory and equips it to the character, places currently
+     * equipped armour back into the inventory
      * 
      * @param x
      * @param y
@@ -506,7 +510,7 @@ public class LoopManiaWorld {
             return null;
         }
 
-        return oldItem; 
+        return oldItem;
     }
 
     /**
@@ -610,6 +614,7 @@ public class LoopManiaWorld {
                 character.addBattle(e);
                 character.launchAttack(e);
                 e.launchAttack(character);
+                attackEnemyInTowerRadiusDuringBattle(e);
 
                 if (e.getHealth() == 0) {
                     // Remove enemy
@@ -650,6 +655,7 @@ public class LoopManiaWorld {
      * @return boolean
      */
     public boolean cardEntityIsFull() {
+        // make this conscise with remove card function, same for items as well
         if (this.cardEntities.size() > this.getWidth()) {
             this.removeCard(0);
             return true;
@@ -664,6 +670,9 @@ public class LoopManiaWorld {
      * @return a card to be spawned in the controller as a JavaFX node
      */
     public Card loadCard(String cardType) {
+        // braedon said something about using ItemType instead of string (this is a good
+        // design, so yay)
+        // simple integer property design is ugly, maybe improve it wait pair ??
         Card card = null;
 
         switch (cardType) {
@@ -736,6 +745,7 @@ public class LoopManiaWorld {
             case "TowerCard":
                 newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                // towerBuildingList.add((TowerBuilding) newBuilding);
                 break;
             case "TrapCard":
                 newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -962,4 +972,30 @@ public class LoopManiaWorld {
         charXP.set(String.valueOf(character.getExperience()));
         return charXP;
     }
+
+    // *-------------------------------------------------------------------------
+    // * Buildings Helper Functions
+    // *-------------------------------------------------------------------------
+
+    private void attackEnemyInTowerRadiusDuringBattle(Enemy e) {
+        // During a battle within its shooting radius, enemies will be attacked by the
+        // tower
+        // i.e.
+        // if the battle is occuring within the shooting radius of tower,
+        // enemies will recieve damage of 10 evry 3 secs
+        int counter = 0;
+        // for (TowerBuilding tower : towerBuildingList) {
+        for (Building tower : buildingEntities) {
+            if (tower instanceof TowerBuilding) {
+                if (Math.pow((tower.getX() - e.getX()), 2) + Math.pow((tower.getY() - e.getY()), 2) < Math.pow(3, 2)) {
+                    if (counter == 3) {
+                        e.receiveAttack(10);
+                        counter = 0;
+                    }
+                    counter++;
+                }
+            }
+        }
+    }
+
 }
