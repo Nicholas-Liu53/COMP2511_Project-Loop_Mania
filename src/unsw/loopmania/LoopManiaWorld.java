@@ -76,7 +76,8 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    // List of building locationss by type
+    // List of building locations by type
+    private List<Pair<Integer, Integer>> trapsList;
     private List<Pair<Integer, Integer>> villagesList;
     private List<Pair<Integer, Integer>> campfireList;
 
@@ -116,6 +117,7 @@ public class LoopManiaWorld {
         charHealth = new SimpleStringProperty();
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
+        trapsList = new ArrayList<Pair<Integer,Integer>>();
         villagesList = new ArrayList<Pair<Integer,Integer>>();
         campfireList = new ArrayList<Pair<Integer,Integer>>();
     }
@@ -748,6 +750,7 @@ public class LoopManiaWorld {
             case "TrapCard":
                 newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                trapsList.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
                 break;
             case "VampireCastleCard":
                 newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -868,8 +871,15 @@ public class LoopManiaWorld {
      * Move all enemies
      */
     private void moveEnemies() {
+        List<Enemy> deadEnemies = new ArrayList<>();
         for (Enemy e : enemies) {
             e.move();
+            if (checkIfEnemyStepOnTrapAndDies(e)) {
+                deadEnemies.add(e);
+            }
+        }
+        for (Enemy e : deadEnemies) {
+            killEnemy(e);
         }
     }
 
@@ -984,6 +994,19 @@ public class LoopManiaWorld {
         for (Pair<Integer,Integer> village : villagesList) {
             if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY()))
                 return true;
+        }
+        return false;
+    }
+
+    private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
+        for (Pair<Integer,Integer> trap : trapsList) {
+            if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
+                enemy.receiveAttack(30);
+                if (enemy.getHealth() == 0) {
+                    return true;
+                }
+                break;
+            }
         }
         return false;
     }
