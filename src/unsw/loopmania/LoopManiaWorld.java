@@ -53,7 +53,7 @@ public class LoopManiaWorld {
     private List<Item> equippedInventoryItems;
 
     private List<Building> buildingEntities;
-    private List<Pair<Integer, Integer>> placedBuildings;
+    private List<Pair<Integer, Integer>> loactionOfPlacedBuildings;
     private int numCycles;
     private int cycleShopLinear;
     private int cycleShopTotal;
@@ -74,9 +74,6 @@ public class LoopManiaWorld {
      */
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
-
-    // List of building locations by type
-    private List<TowerBuilding> towerBuildingList;
 
     // --------------------------------------------------------------------------
     // Constructor
@@ -100,7 +97,7 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         startingPoint = orderedPath.get(0);
         buildingEntities = new ArrayList<>();
-        placedBuildings = new ArrayList<>();
+        loactionOfPlacedBuildings = new ArrayList<>();
         numCycles = 0;
         cycleShopLinear = 1;
         cycleShopTotal = 1;
@@ -114,7 +111,6 @@ public class LoopManiaWorld {
         charHealth = new SimpleStringProperty();
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
-        towerBuildingList = new ArrayList<>();
     }
 
     // --------------------------------------------------------------------------
@@ -745,7 +741,6 @@ public class LoopManiaWorld {
             case "TowerCard":
                 newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
-                // towerBuildingList.add((TowerBuilding) newBuilding);
                 break;
             case "TrapCard":
                 newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -770,7 +765,7 @@ public class LoopManiaWorld {
         if (newBuilding != null) {
             observers.add(newBuilding);
             buildingEntities.add(newBuilding);
-            placedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
+            loactionOfPlacedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
 
             // Destroy the card
             card.destroy();
@@ -879,7 +874,7 @@ public class LoopManiaWorld {
      * @param newlocation where the card is to be placed, building card to be placed
      */
     public boolean canPlaceCard(Pair<Integer, Integer> newLocation, Card card) {
-        if (placedBuildings.contains(newLocation))
+        if (loactionOfPlacedBuildings.contains(newLocation))
             return false;
 
         if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard")
@@ -973,10 +968,6 @@ public class LoopManiaWorld {
         return charXP;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Buildings Helper Functions
-    // *-------------------------------------------------------------------------
-
     private void attackEnemyInTowerRadiusDuringBattle(Enemy e) {
         // During a battle within its shooting radius, enemies will be attacked by the
         // tower
@@ -984,10 +975,10 @@ public class LoopManiaWorld {
         // if the battle is occuring within the shooting radius of tower,
         // enemies will recieve damage of 10 evry 3 secs
         int counter = 0;
-        // for (TowerBuilding tower : towerBuildingList) {
-        for (Building tower : buildingEntities) {
-            if (tower instanceof TowerBuilding) {
-                if (Math.pow((tower.getX() - e.getX()), 2) + Math.pow((tower.getY() - e.getY()), 2) < Math.pow(3, 2)) {
+        for (Building b : buildingEntities) {
+            if (b instanceof TowerBuilding) {
+                if (Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < Math
+                        .pow(b.getBuildingRadius(), 2)) {
                     if (counter == 3) {
                         e.receiveAttack(10);
                         counter = 0;
