@@ -55,7 +55,7 @@ public class LoopManiaWorld {
     private List<Item> equippedInventoryItems;
 
     private List<Building> buildingEntities;
-    private List<Pair<Integer, Integer>> placedBuildings;
+    private List<Pair<Integer, Integer>> loactionOfPlacedBuildings;
     private int numCycles;
     private int cycleShopLinear;
     private int cycleShopTotal;
@@ -104,7 +104,7 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         startingPoint = orderedPath.get(0);
         buildingEntities = new ArrayList<>();
-        placedBuildings = new ArrayList<>();
+        loactionOfPlacedBuildings = new ArrayList<>();
         numCycles = 0;
         cycleShopLinear = 1;
         cycleShopTotal = 1;
@@ -113,14 +113,14 @@ public class LoopManiaWorld {
         numGoldPileSpawned = 0;
         numHealthPotionSpawned = 0;
         numGold = 0;
-        newEnemies = new ArrayList<Enemy>();
-        observers = new ArrayList<WorldStateObserver>();
+        newEnemies = new ArrayList<>();
+        observers = new ArrayList<>();
         charHealth = new SimpleStringProperty();
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
-        trapsList = new ArrayList<Pair<Integer,Integer>>();
-        villagesList = new ArrayList<Pair<Integer,Integer>>();
-        campfireList = new ArrayList<Pair<Integer,Integer>>();
+        trapsList = new ArrayList<Pair<Integer, Integer>>();
+        villagesList = new ArrayList<Pair<Integer, Integer>>();
+        campfireList = new ArrayList<Pair<Integer, Integer>>();
     }
 
     // --------------------------------------------------------------------------
@@ -487,8 +487,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * Takes armour from inventory and equips it to the character, places
-     * currently equipped armour back into the inventory
+     * Takes armour from inventory and equips it to the character, places currently
+     * equipped armour back into the inventory
      * 
      * @param x
      * @param y
@@ -516,7 +516,7 @@ public class LoopManiaWorld {
             return null;
         }
 
-        return oldItem; 
+        return oldItem;
     }
 
     /**
@@ -620,6 +620,7 @@ public class LoopManiaWorld {
                 character.addBattle(e);
                 character.launchAttack(e, inCampfireRadius(e));
                 e.launchAttack(character);
+                attackEnemyInTowerRadiusDuringBattle(e);
 
                 if (e.getHealth() == 0) {
                     // Remove enemy
@@ -660,6 +661,7 @@ public class LoopManiaWorld {
      * @return boolean
      */
     public boolean cardEntityIsFull() {
+        // make this conscise with remove card function, same for items as well
         if (this.cardEntities.size() > this.getWidth()) {
             this.removeCard(0);
             return true;
@@ -674,6 +676,9 @@ public class LoopManiaWorld {
      * @return a card to be spawned in the controller as a JavaFX node
      */
     public Card loadCard(String cardType) {
+        // braedon said something about using ItemType instead of string (this is a good
+        // design, so yay)
+        // simple integer property design is ugly, maybe improve it wait pair ??
         Card card = null;
 
         switch (cardType) {
@@ -773,7 +778,7 @@ public class LoopManiaWorld {
         if (newBuilding != null) {
             observers.add(newBuilding);
             buildingEntities.add(newBuilding);
-            placedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
+            loactionOfPlacedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
 
             // Destroy the card
             card.destroy();
@@ -874,7 +879,7 @@ public class LoopManiaWorld {
     private void moveEnemies() {
         List<Enemy> deadEnemies = new ArrayList<>();
         for (Enemy e : enemies) {
-            if (e.getClass().getSimpleName().equals("VampireEnemy") && !e.getInBattle()/*&& inCampfireRadius(e)*/) {
+            if (e.getClass().getSimpleName().equals("VampireEnemy") && !e.getInBattle()/* && inCampfireRadius(e) */) {
                 determineNextVampireMoveAwayFromCampfire(e);
                 continue;
             }
@@ -893,7 +898,7 @@ public class LoopManiaWorld {
      * @param newlocation where the card is to be placed, building card to be placed
      */
     public boolean canPlaceCard(Pair<Integer, Integer> newLocation, Card card) {
-        if (placedBuildings.contains(newLocation))
+        if (loactionOfPlacedBuildings.contains(newLocation))
             return false;
 
         if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard")
@@ -987,15 +992,16 @@ public class LoopManiaWorld {
         return charXP;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                     Buildings Helper Functions
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Buildings Helper Functions
+    // *-------------------------------------------------------------------------
     private void restoreHealthIfInVillage() {
-        if (inVillage()) character.restoreHealthPoints();
+        if (inVillage())
+            character.restoreHealthPoints();
     }
 
     private boolean inVillage() {
-        for (Pair<Integer,Integer> village : villagesList) {
+        for (Pair<Integer, Integer> village : villagesList) {
             if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY()))
                 return true;
         }
@@ -1003,17 +1009,18 @@ public class LoopManiaWorld {
     }
 
     // private void inVillage() {
-    //     for (Pair<Integer,Integer> village : villagesList) {
-    //         if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY())) {
-    //             character.restoreHealthPoints();
-    //             return;
-    //         }
-    //     }
+    // for (Pair<Integer,Integer> village : villagesList) {
+    // if (village.getValue0().equals(character.getX()) &&
+    // village.getValue1().equals(character.getY())) {
+    // character.restoreHealthPoints();
+    // return;
+    // }
+    // }
     // }
 
     private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
         List<Building> usedTraps = new ArrayList<>();
-        for (Pair<Integer,Integer> trap : trapsList) {
+        for (Pair<Integer, Integer> trap : trapsList) {
             if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
                 enemy.receiveAttack(30);
                 // Remove Building
@@ -1037,7 +1044,7 @@ public class LoopManiaWorld {
     }
 
     public boolean inCampfireRadius(MovingEntity me) {
-        for (Pair<Integer,Integer> campfire : campfireList) {
+        for (Pair<Integer, Integer> campfire : campfireList) {
             if (Math.pow(campfire.getValue0() - me.getX(), 2) + Math.pow(campfire.getValue1() - me.getY(), 2) < 16)
                 return true;
         }
@@ -1047,39 +1054,67 @@ public class LoopManiaWorld {
     private double getShortestRadiusFromCampfire(int x, int y) {
         double shortestRadius = 0;
         boolean first = true;
-        for (Pair<Integer,Integer> campfire : campfireList) {
-            double currentRadius = Math.pow(Math.pow(campfire.getValue0() - x, 2) + Math.pow(campfire.getValue1() - y, 2), 0.5);
+        for (Pair<Integer, Integer> campfire : campfireList) {
+            double currentRadius = Math
+                    .pow(Math.pow(campfire.getValue0() - x, 2) + Math.pow(campfire.getValue1() - y, 2), 0.5);
             if (first) {
                 shortestRadius = currentRadius;
                 first = false;
             } else if (shortestRadius > currentRadius)
                 shortestRadius = currentRadius;
-        } 
+        }
         return shortestRadius;
     }
 
-    private ArrayList<Pair<Integer,Integer>> nextPathTilesCoordinates(MovingEntity me) {
+    private ArrayList<Pair<Integer, Integer>> nextPathTilesCoordinates(MovingEntity me) {
         int pathIndex = me.getPathIndex();
-        int beforeIndex = pathIndex - 1; 
+        int beforeIndex = pathIndex - 1;
         int afterIndex = pathIndex + 1;
         if (pathIndex == orderedPath.size() - 1)
             afterIndex = 0;
-        else if (pathIndex == 0) 
+        else if (pathIndex == 0)
             beforeIndex = orderedPath.size() - 1;
-        ArrayList<Pair<Integer,Integer>> pathList = (ArrayList<Pair<Integer,Integer>>) orderedPath;
-        Pair<Integer,Integer> before = pathList.get(beforeIndex);
-        Pair<Integer,Integer> after = pathList.get(afterIndex);
-        ArrayList<Pair<Integer,Integer>> nextPathCoordinates = new ArrayList<Pair<Integer,Integer>>(Arrays.asList(before, after));
+        ArrayList<Pair<Integer, Integer>> pathList = (ArrayList<Pair<Integer, Integer>>) orderedPath;
+        Pair<Integer, Integer> before = pathList.get(beforeIndex);
+        Pair<Integer, Integer> after = pathList.get(afterIndex);
+        ArrayList<Pair<Integer, Integer>> nextPathCoordinates = new ArrayList<Pair<Integer, Integer>>(
+                Arrays.asList(before, after));
         return nextPathCoordinates;
     }
 
     private void determineNextVampireMoveAwayFromCampfire(MovingEntity v) {
-        ArrayList<Pair<Integer,Integer>> nextPathCoordinates = nextPathTilesCoordinates(v);
+        ArrayList<Pair<Integer, Integer>> nextPathCoordinates = nextPathTilesCoordinates(v);
         Pair<Integer, Integer> backCoordinates = nextPathCoordinates.get(0);
         Pair<Integer, Integer> frontCoordinates = nextPathCoordinates.get(1);
-        double backDistanceFromCampfire = getShortestRadiusFromCampfire(backCoordinates.getValue0(), backCoordinates.getValue1());
-        double frontDistanceFromCampfire = getShortestRadiusFromCampfire(frontCoordinates.getValue0(), frontCoordinates.getValue1());
-        if (backDistanceFromCampfire > frontDistanceFromCampfire) v.moveUpPath();
-        else v.moveDownPath();
+        double backDistanceFromCampfire = getShortestRadiusFromCampfire(backCoordinates.getValue0(),
+                backCoordinates.getValue1());
+        double frontDistanceFromCampfire = getShortestRadiusFromCampfire(frontCoordinates.getValue0(),
+                frontCoordinates.getValue1());
+        if (backDistanceFromCampfire > frontDistanceFromCampfire)
+            v.moveUpPath();
+        else
+            v.moveDownPath();
     }
+
+    private void attackEnemyInTowerRadiusDuringBattle(Enemy e) {
+        // During a battle within its shooting radius, enemies will be attacked by the
+        // tower
+        // i.e.
+        // if the battle is occuring within the shooting radius of tower,
+        // enemies will recieve damage of 10 evry 3 secs
+        int counter = 0;
+        for (Building b : buildingEntities) {
+            if (b instanceof TowerBuilding) {
+                if (Math.pow((b.getX() - e.getX()), 2) + Math.pow((b.getY() - e.getY()), 2) < Math
+                        .pow(b.getBuildingRadius(), 2)) {
+                    if (counter == 3) {
+                        e.receiveAttack(10);
+                        counter = 0;
+                    }
+                    counter++;
+                }
+            }
+        }
+    }
+
 }

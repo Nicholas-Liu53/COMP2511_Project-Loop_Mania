@@ -10,18 +10,26 @@ import unsw.loopmania.WorldStateObserver;
 import unsw.loopmania.path.PathPosition;
 
 /**
- * a Building in the world
- * which doesn't move
+ * a Building in the world which doesn't move
  */
 public abstract class Building extends StaticEntity implements WorldStateObserver {
-    // TODO = implement other varieties of card than VampireCastleCard
-    public Building(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private int buildingRadius;
+
+    public Building(SimpleIntegerProperty x, SimpleIntegerProperty y, int radius) {
         super(x, y);
+        this.buildingRadius = -1;
     }
 
     /**
-     * Implementing WorldStateObserver, by default a building does nothing
-     * when notified
+     * @return building's radius
+     */
+    public int getBuildingRadius() {
+        return this.buildingRadius;
+    }
+
+    /**
+     * Implementing WorldStateObserver, by default a building does nothing when
+     * notified
      */
     public void notify(LoopManiaWorld worldState) {
         return;
@@ -29,6 +37,7 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
 
     /**
      * Finds a path tile that is adjacent to this building's position
+     * 
      * @param orderedPath
      * @return PathPosition if an adjacent tile is found, otherwise null
      */
@@ -59,7 +68,6 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
         return null;
     }
 
-    
     @Override
     public String getStaticEntityType() {
         return "Building";
