@@ -24,9 +24,9 @@ import unsw.loopmania.path.*;
  * can occupy the same square.
  */
 public class LoopManiaWorld {
-    // *-------------------------------------------------------------------------
-    // * Variables
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Variables
+    //*-------------------------------------------------------------------------
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
 
@@ -67,6 +67,7 @@ public class LoopManiaWorld {
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
     private StringProperty charHealth;
+    // private Double charHealth;
     private StringProperty charGold;
     private StringProperty charXP;
 
@@ -82,9 +83,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> villagesList;
     private List<Pair<Integer, Integer>> campfireList;
 
-    // --------------------------------------------------------------------------
-    // Constructor
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                              Constructor
+    //--------------------------------------------------------------------------
     /**
      * create the world (constructor)
      * 
@@ -116,6 +117,7 @@ public class LoopManiaWorld {
         newEnemies = new ArrayList<Enemy>();
         observers = new ArrayList<WorldStateObserver>();
         charHealth = new SimpleStringProperty();
+        // charHealth = 0.0;
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
         trapsList = new ArrayList<Pair<Integer,Integer>>();
@@ -123,9 +125,9 @@ public class LoopManiaWorld {
         campfireList = new ArrayList<Pair<Integer,Integer>>();
     }
 
-    // --------------------------------------------------------------------------
-    // General Methods
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                          General Methods
+    //--------------------------------------------------------------------------
     public int getWidth() {
         return width;
     }
@@ -178,9 +180,9 @@ public class LoopManiaWorld {
         return startingPoint;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Spawn
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 Spawn
+    //*-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * 
@@ -310,14 +312,11 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Items/Inventory
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Items/Inventory
+    //*-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
-        if (Math.pow((character.getX() - item.getX()), 2) + Math.pow((character.getY() - item.getY()), 2) == 0) {
-            return true;
-        }
-        return false;
+        return Math.pow((character.getX() - item.getX()), 2) + Math.pow((character.getY() - item.getY()), 2) == 0;
     }
 
     /**
@@ -326,7 +325,7 @@ public class LoopManiaWorld {
      * @return list of items to be picked up
      */
     public List<Item> attemptToPickUpItems() {
-        List<Item> pickedUpItems = new ArrayList<Item>();
+        List<Item> pickedUpItems = new ArrayList<>();
         // List<Item> itemsToRemove
         for (Item pathItem : pathItems) {
             if (canPickUpItem(pathItem)) {
@@ -349,6 +348,7 @@ public class LoopManiaWorld {
     /**
      * spawn a item in the world and return the item entity
      * 
+     * @param itemToAdd
      * @return a item to be spawned in the controller as a JavaFX node
      */
     public Item addItem(Item itemToAdd) {
@@ -377,6 +377,7 @@ public class LoopManiaWorld {
     /**
      * spawn a item in the world and return the item entity
      * 
+     * @param itemType
      * @return a item to be spawned in the controller as a JavaFX node
      */
     public Item loadItem(String itemType) {
@@ -487,8 +488,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * Takes armour from inventory and equips it to the character, places
-     * currently equipped armour back into the inventory
+     * Takes armour from inventory and equips it to the character, places currently
+     * equipped armour back into the inventory
      * 
      * @param x
      * @param y
@@ -516,7 +517,7 @@ public class LoopManiaWorld {
             return null;
         }
 
-        return oldItem; 
+        return oldItem;
     }
 
     /**
@@ -590,9 +591,14 @@ public class LoopManiaWorld {
         healthProperty();
     }
 
-    // *-------------------------------------------------------------------------
-    // * Battles
-    // *-------------------------------------------------------------------------
+    // Get list of items in
+    public List<Item> getUnequippedItems() {
+        return unequippedInventoryItems;
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                             Battles
+    //*-------------------------------------------------------------------------
     /**
      * kill an enemy
      * 
@@ -609,7 +615,7 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<Enemy> runBattles() {
-        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+        List<Enemy> defeatedEnemies = new ArrayList<>();
         for (Enemy e : enemies) {
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
 
@@ -652,9 +658,9 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Building Cards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Building Cards
+    //*-------------------------------------------------------------------------
     /**
      * 
      * @return boolean
@@ -671,6 +677,7 @@ public class LoopManiaWorld {
     /**
      * spawn a card in the world and return the card entity
      * 
+     * @param cardType
      * @return a card to be spawned in the controller as a JavaFX node
      */
     public Card loadCard(String cardType) {
@@ -716,6 +723,7 @@ public class LoopManiaWorld {
      * @param cardNodeY     y index from 0 to height-1 of card to be removed
      * @param buildingNodeX x index from 0 to width-1 of building to be added
      * @param buildingNodeY y index from 0 to height-1 of building to be added
+     * @return newBuilding
      */
     public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
             int buildingNodeY) {
@@ -780,6 +788,7 @@ public class LoopManiaWorld {
             cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
         }
+
         return newBuilding;
     }
 
@@ -825,9 +834,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Movement
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Movement
+    //*-------------------------------------------------------------------------
     /**
      * Run moves which occur with every tick without needing to spawn anything
      * immediately
@@ -890,7 +899,9 @@ public class LoopManiaWorld {
     /**
      * Checks if a building card can can be placed on the given location
      * 
-     * @param newlocation where the card is to be placed, building card to be placed
+     * @param newlocation where the card is to be placed
+     * @param card        building card to be placed
+     * @return true if card can be placed on newLocation
      */
     public boolean canPlaceCard(Pair<Integer, Integer> newLocation, Card card) {
         if (placedBuildings.contains(newLocation))
@@ -913,9 +924,9 @@ public class LoopManiaWorld {
         return true;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Rewards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Rewards
+    //*-------------------------------------------------------------------------
     /**
      * Gives various rewards on type on mode selected Various modes are withCard,
      * noCard, and OnlyGoldXP
@@ -969,13 +980,18 @@ public class LoopManiaWorld {
         return rewarded;
     }
 
-    // *-------------------------------------------------------------------------
-    // * UIS
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 UIS
+    //*-------------------------------------------------------------------------
     public StringProperty healthProperty() {
         charHealth.set(String.valueOf(character.getHealth()));
         return charHealth;
     }
+
+    // public Double healthProperty() {
+    // charHealth = character.getHealth() / 100.0;
+    // return charHealth;
+    // }
 
     public StringProperty goldProperty() {
         charGold.set(String.valueOf(character.getGold()));

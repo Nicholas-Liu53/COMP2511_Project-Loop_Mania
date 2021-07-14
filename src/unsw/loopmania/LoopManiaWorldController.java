@@ -24,6 +24,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+// import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -97,7 +98,6 @@ enum DRAGGABLE_TYPE {
  * This is run on the JavaFX application thread when it has enough time.
  */
 public class LoopManiaWorldController {
-
     /**
      * squares gridpane includes path images, enemies, character, empty grass,
      * buildings
@@ -130,8 +130,13 @@ public class LoopManiaWorldController {
 
     @FXML
     private Label healthNum;
+
+    // @FXML
+    // private ProgressBar healthBar;
+
     @FXML
     private Label goldNum;
+
     @FXML
     private Label xpNum;
 
@@ -240,6 +245,7 @@ public class LoopManiaWorldController {
      * object handling switching to the main menu
      */
     private MenuSwitcher mainMenuSwitcher;
+    private MenuSwitcher shopMenuSwitcher;
 
     /**
      * @param world           world object loaded from file
@@ -345,6 +351,8 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
+        // healthBar = new ProgressBar();
+        // healthBar.setProgress(0.25);
         world.healthProperty().bindBidirectional(healthNum.textProperty());
         world.goldProperty().bindBidirectional(goldNum.textProperty());
         world.xpProperty().bindBidirectional(xpNum.textProperty());
@@ -502,9 +510,13 @@ public class LoopManiaWorldController {
         loadPathItem(item);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Loaders
-    // *-------------------------------------------------------------------------
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                                 Loaders
+    //*-------------------------------------------------------------------------
     /**
      * Load a card from the world, and pair it with an image in the GUI
      * 
@@ -674,9 +686,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Coordinates
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Coordinates
+    //*-------------------------------------------------------------------------
     /**
      * Remove the card from the world, and spawn and return a building instead where
      * the card was dropped
@@ -707,9 +719,9 @@ public class LoopManiaWorldController {
         world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Drag EventHandlers
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Drag EventHandlers
+    //*-------------------------------------------------------------------------
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the
      * background, dropping over the background. These are not attached to invidual
@@ -1093,9 +1105,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Key Press
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Key Press
+    //*-------------------------------------------------------------------------
 
     /**
      * handle the pressing of keyboard keys. Specifically, we should pause when
@@ -1124,13 +1136,16 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Menu Switch
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Menu Switch
+    //*-------------------------------------------------------------------------
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
-        // TODO = possibly set other menu switchers
         this.mainMenuSwitcher = mainMenuSwitcher;
+    }
+
+    public void setShopMenuSwitcher(MenuSwitcher shopMenuSwitcher) {
+        this.shopMenuSwitcher = shopMenuSwitcher;
     }
 
     /**
@@ -1145,9 +1160,28 @@ public class LoopManiaWorldController {
         mainMenuSwitcher.switchMenu();
     }
 
-    // *-------------------------------------------------------------------------
-    // * Track Position
-    // *-------------------------------------------------------------------------
+    @FXML
+    private void switchToShopMenu() throws IOException {
+        pause();
+        // addItemsInInventory(unequippedInventory);
+        shopMenuSwitcher.switchMenu();
+    }
+
+    public LoopManiaWorld getWorld() {
+        return this.world;
+    }
+
+    public void replaceWorld(LoopManiaWorld newWorld) {
+        this.world = newWorld;
+    }
+
+    public List<Item> getUnequippedItems() {
+        return world.getUnequippedItems();
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                             Track Position
+    //*-------------------------------------------------------------------------
     /**
      * Set a node in a GridPane to have its position track the position of an entity
      * in the world.
@@ -1219,9 +1253,9 @@ public class LoopManiaWorldController {
         });
     }
 
-    // *-------------------------------------------------------------------------
-    // * Threading
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Threading
+    //*-------------------------------------------------------------------------
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application

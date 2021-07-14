@@ -15,6 +15,7 @@ import unsw.loopmania.items.WeaponStrategy;
  */
 public class Character extends MovingEntity {
     private int health;
+    // private final int damage; ??
     private int damage;
     private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
@@ -35,7 +36,7 @@ public class Character extends MovingEntity {
         super(position);
         this.health = 100;
         this.damage = 5;
-        this.enemiesCurrentlyBattling = new ArrayList<Enemy>();
+        this.enemiesCurrentlyBattling = new ArrayList<>();
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
         this.shieldStrat = new Melee();
@@ -63,10 +64,7 @@ public class Character extends MovingEntity {
      * @return true if the character is currently battling an enemy, else false
      */
     public boolean getInBattle() {
-        if (this.enemiesCurrentlyBattling.size() == 0)
-            return false;
-        else
-            return true;
+        return !this.enemiesCurrentlyBattling.isEmpty();
     }
 
     /**
@@ -132,7 +130,7 @@ public class Character extends MovingEntity {
      * Allows the Character to launch an attack against an enemy, resulting in
      * damage and possibly using a special attack using inventory items
      * 
-     * @param mainChar
+     * @param enemy
      */
     public void launchAttack(Enemy enemy, boolean inCampfireRadius) {
         if (inCampfireRadius)
@@ -223,17 +221,13 @@ public class Character extends MovingEntity {
 
     /**
      * Restores Character's health to maximum
-     * 
-     * @param gold
      */
     public void restoreHealthPoints() {
         health = 100;
     }
 
     /**
-     * Checks if Character has full health
-     * 
-     * @param gold
+     * @return true if character has full health
      */
     public boolean isFullHealth() {
         return health == 100;
