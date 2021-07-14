@@ -998,6 +998,15 @@ public class LoopManiaWorld {
         return false;
     }
 
+    // private void inVillage() {
+    //     for (Pair<Integer,Integer> village : villagesList) {
+    //         if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY())) {
+    //             character.restoreHealthPoints();
+    //             return;
+    //         }
+    //     }
+    // }
+
     private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
         for (Pair<Integer,Integer> trap : trapsList) {
             if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
