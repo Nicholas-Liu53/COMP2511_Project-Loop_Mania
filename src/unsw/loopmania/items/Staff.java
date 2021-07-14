@@ -9,14 +9,14 @@ import unsw.loopmania.enemies.Enemy;
 public class Staff extends Item implements WeaponStrategy {
     public Staff(Pair<Integer, Integer> position) {
         super(position);
-        purchasePrice = 300;
-        sellPrice = 240;
+        this.purchasePrice = 300;
+        this.sellPrice = 240;
     }
 
     public Staff() {
         super(new Pair<Integer, Integer>(1, 2));
-        purchasePrice = 300;
-        sellPrice = 240;
+        this.purchasePrice = 300;
+        this.sellPrice = 240;
     }
 
     public void launchAttack(Enemy enemy, int baseDamage) {

@@ -10,14 +10,14 @@ import unsw.loopmania.enemies.Enemy;
 public class Sword extends Item implements WeaponStrategy {
     public Sword(Pair<Integer, Integer> position) {
         super(position);
-        purchasePrice = 200;
-        sellPrice = 160;
+        this.purchasePrice = 200;
+        this.sellPrice = 160;
     }
 
     public Sword() {
         super(new Pair<Integer, Integer>(1, 2));
-        purchasePrice = 200;
-        sellPrice = 160;
+        this.purchasePrice = 200;
+        this.sellPrice = 160;
     }
 
     public void launchAttack(Enemy enemy, int baseDamage) {

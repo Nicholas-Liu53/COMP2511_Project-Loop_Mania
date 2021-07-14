@@ -9,23 +9,23 @@ public class GoldPile extends Item {
 
     public GoldPile(Pair<Integer, Integer> position) {
         super(position);
-        purchasePrice = 125;
-        sellPrice = 100;
+        this.purchasePrice = 125;
+        this.sellPrice = 100;
     }
 
     public GoldPile(PathPosition position) {
         super(position);
-        purchasePrice = 125;
-        sellPrice = 100;
+        this.purchasePrice = 125;
+        this.sellPrice = 100;
     }
 
     public GoldPile() {
         super(new Pair<Integer, Integer>(1, 2));
-        purchasePrice = 125;
-        sellPrice = 100;
+        this.purchasePrice = 125;
+        this.sellPrice = 100;
     }
 
     public int getGoldAmount() {
-        return goldAmount;
+        return this.goldAmount;
     }
 }

@@ -11,14 +11,14 @@ import unsw.loopmania.enemies.VampireEnemy;
 public class Stake extends Item implements WeaponStrategy {
     public Stake(Pair<Integer, Integer> position) {
         super(position);
-        purchasePrice = 150;
-        sellPrice = 120;
+        this.purchasePrice = 150;
+        this.sellPrice = 120;
     }
 
     public Stake() {
         super(new Pair<Integer, Integer>(1, 2));
-        purchasePrice = 150;
-        sellPrice = 120;
+        this.purchasePrice = 150;
+        this.sellPrice = 120;
     }
 
     public void launchAttack(Enemy enemy, int baseDamage) {

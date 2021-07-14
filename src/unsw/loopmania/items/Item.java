@@ -21,11 +21,11 @@ public abstract class Item extends StaticEntity {
     }
 
     public int getPurchasePrice() {
-        return purchasePrice;
+        return this.purchasePrice;
     }
 
     public int getSellPrice() {
-        return sellPrice;
+        return this.sellPrice;
     }
 
     @Override
