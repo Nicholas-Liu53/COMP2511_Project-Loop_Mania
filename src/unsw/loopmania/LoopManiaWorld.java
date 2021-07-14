@@ -983,9 +983,9 @@ public class LoopManiaWorld {
         return charXP;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Buildings Helper Functions
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                     Buildings Helper Functions
+    //*-------------------------------------------------------------------------
     private void restoreHealthIfInVillage() {
         if (inVillage()) character.restoreHealthPoints();
     }
@@ -1008,14 +1008,24 @@ public class LoopManiaWorld {
     // }
 
     private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
+        List<Building> usedTraps = new ArrayList<>();
         for (Pair<Integer,Integer> trap : trapsList) {
             if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
                 enemy.receiveAttack(30);
                 if (enemy.getHealth() == 0) {
                     return true;
                 }
+                // Remove Building
+                for (Building b : buildings) {
+                    if (b.getX() == trap.getValue0() && b.getY() == trap.getValue1()) {
+                        usedTraps.add(b);
+                    }
+                }
                 break;
             }
+        }
+        for (Building b : usedTraps) {
+            b.destroy();
         }
         return false;
     }
