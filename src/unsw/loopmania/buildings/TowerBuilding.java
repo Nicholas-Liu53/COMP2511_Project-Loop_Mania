@@ -1,7 +1,6 @@
 package unsw.loopmania.buildings;
 
 import javafx.beans.property.SimpleIntegerProperty;
-// import unsw.loopmania.StaticEntity;
 
 /**
  * a basic form of building in the world
@@ -10,8 +9,7 @@ public class TowerBuilding extends Building {
     private int shootingRadius;
 
     public TowerBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y);
-        this.shootingRadius = 3;
+        super(x, y, 3);
     }
 
     /**

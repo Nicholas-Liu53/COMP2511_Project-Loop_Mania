@@ -13,9 +13,18 @@ import unsw.loopmania.path.PathPosition;
  * a Building in the world which doesn't move
  */
 public abstract class Building extends StaticEntity implements WorldStateObserver {
-    // TODO = implement other varieties of card than VampireCastleCard
-    public Building(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    private int buildingRadius;
+
+    public Building(SimpleIntegerProperty x, SimpleIntegerProperty y, int radius) {
         super(x, y);
+        this.buildingRadius = -1;
+    }
+
+    /**
+     * @return building's radius
+     */
+    public int getBuildingRadius() {
+        return this.buildingRadius;
     }
 
     /**

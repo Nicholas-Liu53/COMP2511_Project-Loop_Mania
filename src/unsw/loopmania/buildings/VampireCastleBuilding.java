@@ -1,7 +1,6 @@
 package unsw.loopmania.buildings;
 
 import javafx.beans.property.SimpleIntegerProperty;
-// import unsw.loopmania.StaticEntity;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.enemies.VampireEnemy;
 
@@ -10,7 +9,7 @@ import unsw.loopmania.enemies.VampireEnemy;
  */
 public class VampireCastleBuilding extends Building {
     public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y);
+        super(x, y, -1);
     }
 
     @Override
