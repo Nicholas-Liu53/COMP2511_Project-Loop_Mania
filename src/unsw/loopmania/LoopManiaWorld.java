@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
@@ -617,7 +618,7 @@ public class LoopManiaWorld {
                     .pow(e.getAttackRadius(), 2)) {
                 // fight...
                 character.addBattle(e);
-                character.launchAttack(e);
+                character.launchAttack(e, inCampfireRadius(e));
                 e.launchAttack(character);
 
                 if (e.getHealth() == 0) {
@@ -873,10 +874,13 @@ public class LoopManiaWorld {
     private void moveEnemies() {
         List<Enemy> deadEnemies = new ArrayList<>();
         for (Enemy e : enemies) {
-            e.move();
-            if (checkIfEnemyStepOnTrapAndDies(e)) {
-                deadEnemies.add(e);
+            if (e.getClass().getSimpleName().equals("VampireEnemy") && !e.getInBattle()/*&& inCampfireRadius(e)*/) {
+                determineNextVampireMoveAwayFromCampfire(e);
+                continue;
             }
+            e.move();
+            if (checkIfEnemyStepOnTrapAndDies(e))
+                deadEnemies.add(e);
         }
         for (Enemy e : deadEnemies) {
             killEnemy(e);
@@ -1032,11 +1036,50 @@ public class LoopManiaWorld {
         return false;
     }
 
-    private boolean inCampfireRadius() {
+    public boolean inCampfireRadius(MovingEntity me) {
         for (Pair<Integer,Integer> campfire : campfireList) {
-            if (Math.pow(campfire.getValue0() - character.getX(), 2) + Math.pow(campfire.getValue1() - character.getY(), 2) < 16)
+            if (Math.pow(campfire.getValue0() - me.getX(), 2) + Math.pow(campfire.getValue1() - me.getY(), 2) < 16)
                 return true;
         }
         return false;
+    }
+
+    private double getShortestRadiusFromCampfire(int x, int y) {
+        double shortestRadius = 0;
+        boolean first = true;
+        for (Pair<Integer,Integer> campfire : campfireList) {
+            double currentRadius = Math.pow(Math.pow(campfire.getValue0() - x, 2) + Math.pow(campfire.getValue1() - y, 2), 0.5);
+            if (first) {
+                shortestRadius = currentRadius;
+                first = false;
+            } else if (shortestRadius > currentRadius)
+                shortestRadius = currentRadius;
+        } 
+        return shortestRadius;
+    }
+
+    private ArrayList<Pair<Integer,Integer>> nextPathTilesCoordinates(MovingEntity me) {
+        int pathIndex = me.getPathIndex();
+        int beforeIndex = pathIndex - 1; 
+        int afterIndex = pathIndex + 1;
+        if (pathIndex == orderedPath.size() - 1)
+            afterIndex = 0;
+        else if (pathIndex == 0) 
+            beforeIndex = orderedPath.size() - 1;
+        ArrayList<Pair<Integer,Integer>> pathList = (ArrayList<Pair<Integer,Integer>>) orderedPath;
+        Pair<Integer,Integer> before = pathList.get(beforeIndex);
+        Pair<Integer,Integer> after = pathList.get(afterIndex);
+        ArrayList<Pair<Integer,Integer>> nextPathCoordinates = new ArrayList<Pair<Integer,Integer>>(Arrays.asList(before, after));
+        return nextPathCoordinates;
+    }
+
+    private void determineNextVampireMoveAwayFromCampfire(MovingEntity v) {
+        ArrayList<Pair<Integer,Integer>> nextPathCoordinates = nextPathTilesCoordinates(v);
+        Pair<Integer, Integer> backCoordinates = nextPathCoordinates.get(0);
+        Pair<Integer, Integer> frontCoordinates = nextPathCoordinates.get(1);
+        double backDistanceFromCampfire = getShortestRadiusFromCampfire(backCoordinates.getValue0(), backCoordinates.getValue1());
+        double frontDistanceFromCampfire = getShortestRadiusFromCampfire(frontCoordinates.getValue0(), frontCoordinates.getValue1());
+        if (backDistanceFromCampfire > frontDistanceFromCampfire) v.moveUpPath();
+        else v.moveDownPath();
     }
 }
