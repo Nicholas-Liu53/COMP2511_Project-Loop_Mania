@@ -77,11 +77,6 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    // List of building locations by type
-    private List<Pair<Integer, Integer>> trapsList;
-    private List<Pair<Integer, Integer>> villagesList;
-    private List<Pair<Integer, Integer>> campfireList;
-
     // --------------------------------------------------------------------------
     // Constructor
     // --------------------------------------------------------------------------
@@ -116,12 +111,9 @@ public class LoopManiaWorld {
         this.newEnemies = new ArrayList<>();
         this.observers = new ArrayList<>();
         this.charHealth = new SimpleStringProperty();
-        // charHealth = 0.0;
+        // this.charHealth = 0.0;
         this.charGold = new SimpleStringProperty();
         this.charXP = new SimpleStringProperty();
-        this.trapsList = new ArrayList<Pair<Integer, Integer>>();
-        this.villagesList = new ArrayList<Pair<Integer, Integer>>();
-        this.campfireList = new ArrayList<Pair<Integer, Integer>>();
     }
 
     // --------------------------------------------------------------------------
@@ -219,9 +211,9 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawns health potions + gold if the conditions warrant it, adds to world
+     * spawns health potions, if the conditions warrant it, adds to world
      * 
-     * @return list of the health potions + gold
+     * @return spawningHealthPotions list of the health potions
      */
     public List<HealthPotion> spawnHealthPotion() {
         List<HealthPotion> spawningHealthPotions = new ArrayList<>();
@@ -240,9 +232,9 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawns health potions + gold if the conditions warrant it, adds to world
+     * spawns gold, if the conditions warrant it, adds to world
      * 
-     * @return list of the health potions + gold
+     * @return spawningGoldPiles list of the gold
      */
     public List<GoldPile> spawnGoldPile() {
         List<GoldPile> spawningGoldPiles = new ArrayList<>();
@@ -267,13 +259,13 @@ public class LoopManiaWorld {
      *         possible, or random coordinate pair if should go ahead
      */
     private Pair<Integer, Integer> possiblyGetSlugEnemySpawnPosition() {
-        // TODO = modify this
+        // @TODO: modify this
 
         // has a chance spawning a basic enemy on a tile the character isn't on or
         // immediately before or after (currently space required = 2)...
         Random rand = new Random();
-        int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
-        // TODO = change based on spec
+        int choice = rand.nextInt(2); // @TODO: change based on spec... currently low value for dev purposes...
+        // @TODO: change based on spec
         if ((choice == 0) && (this.enemies.size() < 2)) {
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = this.orderedPath.indexOf(new Pair<Integer, Integer>(getCharacterX(), getCharacterY()));
@@ -333,18 +325,18 @@ public class LoopManiaWorld {
      */
     public List<Item> attemptToPickUpItems() {
         List<Item> pickedUpItems = new ArrayList<>();
-        // List<Item> itemsToRemove
+
         for (Item pathItem : this.pathItems) {
             if (canPickUpItem(pathItem)) {
-                if (pathItem.getClass().getSimpleName().equals("Gold")) {
+                if (pathItem instanceof GoldPile)
                     this.numGoldPileSpawned--;
-                } else {
+                else
                     this.numHealthPotionSpawned--;
-                }
                 pickedUpItems.add(pathItem);
                 pathItem.destroy();
             }
         }
+
         for (Item pathItem : pickedUpItems) {
             this.pathItems.remove(pathItem);
         }
@@ -360,7 +352,7 @@ public class LoopManiaWorld {
      */
     public Item addItem(Item itemToAdd) {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null && !itemToAdd.getClass().getSimpleName().equals("GoldPile")) {
+        if ((firstAvailableSlot == null) && !(itemToAdd instanceof GoldPile)) {
             // Eject the oldest unequipped item and replace it... oldest item is that at
             // beginning of items
             giveRandomRewards("onlyGoldXP");
@@ -369,9 +361,9 @@ public class LoopManiaWorld {
         }
 
         // Insert the new item, as we know we have at least made a slot available...
-        if (itemToAdd.getClass().getSimpleName().equals("HealthPotion")) {
+        if (itemToAdd instanceof HealthPotion) {
             HealthPotion healthPotion = new HealthPotion(firstAvailableSlot);
-            this.unequippedInventoryItems.add(healthPotion);
+            this.unequippedInventoryItems.add(itemToAdd);
             return healthPotion;
         } else {
             character.giveGold(100);
@@ -431,18 +423,6 @@ public class LoopManiaWorld {
         return item;
     }
 
-    public boolean unequippedItemInventoryIsFull() {
-        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null) {
-            // Eject the oldest unequipped item and replace it... oldest item is that at
-            // beginning of items
-            removeItemByPositionInUnequippedInventoryItems(0);
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * remove an item from the unequipped inventory
      * 
@@ -460,8 +440,7 @@ public class LoopManiaWorld {
      * @param y y coordinate from 0 to height-1
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y) {
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        removeUnequippedInventoryItem(item);
+        removeUnequippedInventoryItem(getUnequippedInventoryItemEntityByCoordinates(x, y));
     }
 
     /**
@@ -576,7 +555,7 @@ public class LoopManiaWorld {
 
         boolean potionFound = false;
         for (Item item : this.unequippedInventoryItems) {
-            if (item.getClass().getSimpleName().equals("HealthPotion")) {
+            if (item instanceof HealthPotion) {
                 removeUnequippedInventoryItem(item);
                 potionFound = true;
                 break;
@@ -631,12 +610,12 @@ public class LoopManiaWorld {
                     defeatedEnemies.add(e);
                     character.removeEnemyFromBattle(e);
                 }
-                // TODO handle character death
+
+                // @TODO: handle character death
 
             } else if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
                 // Support radius logic
-
                 if (e.getPathIndex() < character.getPathIndex() || (e.getPathIndex() - character.getPathIndex()) > 5) {
                     e.moveUpPath();
                 } else {
@@ -661,13 +640,19 @@ public class LoopManiaWorld {
     // * Building Cards
     // *-------------------------------------------------------------------------
     /**
+     * checks if card pile if full i.e. has attained it max width, if so, then
+     * removes card the oldest card of cards (as per position in gridpane of
+     * unplayed cards)
      * 
      * @return boolean
      */
     public boolean cardEntityIsFull() {
-        // make this conscise with remove card function, same for items as well
         if (this.cardEntities.size() > this.getWidth()) {
-            this.removeCard(0);
+            Card c = this.cardEntities.get(0);
+            int x = c.getX();
+            c.destroy();
+            this.cardEntities.remove(0);
+            shiftCardsDownFromXCoordinate(x);
             return true;
         }
 
@@ -743,41 +728,26 @@ public class LoopManiaWorld {
         if (!canPlaceCard(newLocation, card))
             return null;
 
-        String buildingForCard = card.getClass().getSimpleName();
         Building newBuilding = null;
-        switch (buildingForCard) {
-            case "BarracksCard":
-                newBuilding = new BarracksBuilding(newLocation);
-                break;
-            case "CampfireCard":
-                newBuilding = new CampfireBuilding(newLocation);
-                this.campfireList.add(newLocation);
-                break;
-            case "TowerCard":
-                newBuilding = new TowerBuilding(newLocation);
-                break;
-            case "TrapCard":
-                newBuilding = new TrapBuilding(newLocation);
-                this.trapsList.add(newLocation);
-                break;
-            case "VampireCastleCard":
-                newBuilding = new VampireCastleBuilding(newLocation);
-                break;
-            case "VillageCard":
-                newBuilding = new VillageBuilding(newLocation);
-                this.villagesList.add(newLocation);
-                break;
-            case "ZombiePitCard":
-                newBuilding = new ZombiePitBuilding(newLocation);
-                break;
-            default:
-                break;
-        }
+        if (card instanceof BarracksCard)
+            newBuilding = new BarracksBuilding(newLocation);
+        else if (card instanceof CampfireCard)
+            newBuilding = new CampfireBuilding(newLocation);
+        else if (card instanceof TowerCard)
+            newBuilding = new TowerBuilding(newLocation);
+        else if (card instanceof TrapCard)
+            newBuilding = new TrapBuilding(newLocation);
+        else if (card instanceof VampireCastleCard)
+            newBuilding = new VampireCastleBuilding(newLocation);
+        else if (card instanceof VillageCard)
+            newBuilding = new VillageBuilding(newLocation);
+        else if (card instanceof ZombiePitCard)
+            newBuilding = new ZombiePitBuilding(newLocation);
 
         if (newBuilding != null) {
             this.observers.add(newBuilding);
             this.buildingEntities.add(newBuilding);
-            this.loactionOfPlacedBuildings.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
+            this.loactionOfPlacedBuildings.add(newLocation);
 
             // Destroy the card
             card.destroy();
@@ -786,20 +756,6 @@ public class LoopManiaWorld {
         }
 
         return newBuilding;
-    }
-
-    /**
-     * remove card at a particular index of cards (position in gridpane of unplayed
-     * cards)
-     * 
-     * @param index the index of the card, from 0 to length-1
-     */
-    private void removeCard(int index) {
-        Card c = this.cardEntities.get(index);
-        int x = c.getX();
-        c.destroy();
-        this.cardEntities.remove(index);
-        shiftCardsDownFromXCoordinate(x);
     }
 
     /**
@@ -879,7 +835,7 @@ public class LoopManiaWorld {
     private void moveEnemies() {
         List<Enemy> deadEnemies = new ArrayList<>();
         for (Enemy e : this.enemies) {
-            if (e.getClass().getSimpleName().equals("VampireEnemy") && !e.getInBattle()/* && inCampfireRadius(e) */) {
+            if ((e instanceof VampireEnemy) && (!e.getInBattle()) /* && (inCampfireRadius(e)) */) {
                 determineNextVampireMoveAwayFromCampfire(e);
                 continue;
             }
@@ -940,6 +896,13 @@ public class LoopManiaWorld {
         StaticEntity rewarded = null;
 
         Random rand = new Random();
+
+        // small chance to get a oneRing when a battle is won
+        // i.e. rewardSetting is "withCard"
+        if (rewardSetting.equals("withCard")) {
+            if (rand.nextInt(100) == 21)
+                return loadItem("oneRing");
+        }
 
         switch (rewardSetting) {
             case "withCard":
@@ -1002,57 +965,38 @@ public class LoopManiaWorld {
     // * Buildings Helper Functions
     // *-------------------------------------------------------------------------
     private void restoreHealthIfInVillage() {
-        if (inVillage())
-            character.restoreHealthPoints();
-    }
-
-    private boolean inVillage() {
-        for (Pair<Integer, Integer> village : this.villagesList) {
-            if (village.getValue0().equals(getCharacterX()) && village.getValue1().equals(getCharacterY()))
-                return true;
-        }
-        return false;
-    }
-
-    // private void inVillage() {
-    // for (Pair<Integer,Integer> village : villagesList) {
-    // if (village.getValue0().equals(getCharacterX()) &&
-    // village.getValue1().equals(getCharacterY())) {
-    // character.restoreHealthPoints();
-    // return;
-    // }
-    // }
-    // }
-
-    private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
-        List<Building> usedTraps = new ArrayList<>();
-        for (Pair<Integer, Integer> trap : this.trapsList) {
-            if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
-                enemy.receiveAttack(30);
-                // Remove Building
-                for (Building b : this.buildingEntities) {
-                    if (b.getX() == trap.getValue0() && b.getY() == trap.getValue1()) {
-                        usedTraps.add(b);
-                        break;
-                    }
-                }
-                break;
+        for (Building b : this.buildingEntities) {
+            if (b instanceof VillageBuilding) {
+                if (b.getX() == (getCharacterX()) && b.getY() == (getCharacterY()))
+                    character.restoreHealthPoints();
             }
         }
-        for (Building b : usedTraps) {
-            this.buildingEntities.remove(b);
-            b.destroy();
+    }
+
+    private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
+        for (Building b : this.buildingEntities) {
+            if (b instanceof TrapBuilding) {
+                if (b.getX() == (enemy.getX()) && b.getY() == (enemy.getY())) {
+                    enemy.receiveAttack(30);
+                    this.buildingEntities.remove(b);
+                    b.destroy();
+                    break;
+                }
+            }
         }
-        if (enemy.getHealth() == 0) {
+
+        if (enemy.getHealth() == 0)
             return true;
-        }
+
         return false;
     }
 
     public boolean inCampfireRadius(MovingEntity me) {
-        for (Pair<Integer, Integer> campfire : this.campfireList) {
-            if (Math.pow(campfire.getValue0() - me.getX(), 2) + Math.pow(campfire.getValue1() - me.getY(), 2) < 16)
-                return true;
+        for (Building b : this.buildingEntities) {
+            if (b instanceof CampfireBuilding) {
+                if (Math.pow(b.getX() - me.getX(), 2) + Math.pow(b.getY() - me.getY(), 2) < 16)
+                    return true;
+            }
         }
         return false;
     }
@@ -1060,14 +1004,15 @@ public class LoopManiaWorld {
     private double getShortestRadiusFromCampfire(int x, int y) {
         double shortestRadius = 0;
         boolean first = true;
-        for (Pair<Integer, Integer> campfire : this.campfireList) {
-            double currentRadius = Math
-                    .pow(Math.pow(campfire.getValue0() - x, 2) + Math.pow(campfire.getValue1() - y, 2), 0.5);
-            if (first) {
-                shortestRadius = currentRadius;
-                first = false;
-            } else if (shortestRadius > currentRadius)
-                shortestRadius = currentRadius;
+        for (Building b : this.buildingEntities) {
+            if (b instanceof CampfireBuilding) {
+                double currentRadius = Math.pow(Math.pow(b.getX() - x, 2) + Math.pow(b.getY() - y, 2), 0.5);
+                if (first) {
+                    shortestRadius = currentRadius;
+                    first = false;
+                } else if (shortestRadius > currentRadius)
+                    shortestRadius = currentRadius;
+            }
         }
         return shortestRadius;
     }
