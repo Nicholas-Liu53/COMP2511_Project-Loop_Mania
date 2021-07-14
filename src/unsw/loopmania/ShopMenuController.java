@@ -1,27 +1,21 @@
 package unsw.loopmania;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-
-import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -29,32 +23,56 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+import java.util.EnumMap;
+
+import java.io.File;
+import java.io.IOException;
+
 import unsw.loopmania.items.Item;
 
 /**
- * controller for the shop menu.
- * 
+ * the draggable types. If you add more draggable types, add an enum value here.
+ * This is so we can see what type is being dragged.
  */
+enum DRAGGABLE {
+    ITEM
+}
+
 public class ShopMenuController {
     /**
-     * facilitates switching to main game
+     * anchorPaneRoot is the "background". It is useful since anchorPaneRoot
+     * stretches over the entire game world, so we can ****detect dragging of
+     * cards/items***** over this and accordingly update DragIcon coordinates
      */
-    private MenuSwitcher gameSwitcher;
+    @FXML
+    private AnchorPane anchorPaneRoot;
 
+    /**
+     * equippedItems gridpane is for equipped items (e.g. swords, shield, axe)
+     */
     @FXML
     private GridPane equippedItems;
 
     @FXML
     private GridPane unequippedInventory;
 
-    // All image views including tiles, character, enemies, cards... even though
+    // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
 
+    /**
+     * when we ***drag a card/item***, the picture for whatever we're dragging is
+     * set here and we actually drag this node
+     */
+    private DragIcon draggedEntity;
+
     private LoopManiaWorld world;
 
-    // Item Images
+    /**
+     * Item Images
+     */
     private Image bodyArmourImage;
     private Image healthPotionImage;
     private Image helmetImage;
@@ -77,49 +95,40 @@ public class ShopMenuController {
     /**
      * null if nothing being dragged, or the type of item being dragged
      */
-    private DRAGGABLE_TYPE currentlyDraggedType;
-
-    /**
-     * anchorPaneRoot is the "background". It is useful since anchorPaneRoot
-     * stretches over the entire game world, so we can detect dragging of
-     * cards/items over this and accordingly update DragIcon coordinates
-     */
-    @FXML
-    private AnchorPane anchorPaneRoot;
-    
-    /**
-     * when we drag a card/item, the picture for whatever we're dragging is set here
-     * and we actually drag this node
-     */
-    private DragIcon draggedEntity;
+    private DRAGGABLE currentlyDraggedType;
 
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
      * when the draggable type is dropped over its appropriate gridpane
      */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneSetOnDragDropped;
+    private EnumMap<DRAGGABLE, EventHandler<DragEvent>> gridPaneSetOnDragDropped;
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
      * when the draggable type is dragged over the background
      */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> anchorPaneRootSetOnDragOver;
+    private EnumMap<DRAGGABLE, EventHandler<DragEvent>> anchorPaneRootSetOnDragOver;
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
      * when the draggable type is dropped in the background
      */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> anchorPaneRootSetOnDragDropped;
+    private EnumMap<DRAGGABLE, EventHandler<DragEvent>> anchorPaneRootSetOnDragDropped;
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
      * when the draggable type is dragged into the boundaries of its appropriate
      * gridpane
      */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragEntered;
+    private EnumMap<DRAGGABLE, EventHandler<DragEvent>> gridPaneNodeSetOnDragEntered;
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
      * when the draggable type is dragged outside of the boundaries of its
      * appropriate gridpane
      */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
+    private EnumMap<DRAGGABLE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
+
+    /**
+     * object handling switching to the game
+     */
+    private MenuSwitcher gameSwitcher;
 
     public ShopMenuController() {
         // this.world = world;
@@ -139,19 +148,19 @@ public class ShopMenuController {
         currentlyDraggedType = null;
 
         // Initialize them all...
-        gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        anchorPaneRootSetOnDragOver = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        anchorPaneRootSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        gridPaneNodeSetOnDragEntered = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        gridPaneNodeSetOnDragExited = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
+        gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE, EventHandler<DragEvent>>(DRAGGABLE.class);
+        anchorPaneRootSetOnDragOver = new EnumMap<DRAGGABLE, EventHandler<DragEvent>>(DRAGGABLE.class);
+        anchorPaneRootSetOnDragDropped = new EnumMap<DRAGGABLE, EventHandler<DragEvent>>(DRAGGABLE.class);
+        gridPaneNodeSetOnDragEntered = new EnumMap<DRAGGABLE, EventHandler<DragEvent>>(DRAGGABLE.class);
+        gridPaneNodeSetOnDragExited = new EnumMap<DRAGGABLE, EventHandler<DragEvent>>(DRAGGABLE.class);
     }
 
     @FXML
     public void initialize() {
         Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-        Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
-        
-        // Add the empty slot images for the unequipped inventory
+        // Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
+
+        // add the empty slot images for the unequipped inventory
         for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
             for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
                 ImageView emptySlotView = new ImageView(inventorySlotImage);
@@ -159,19 +168,20 @@ public class ShopMenuController {
             }
         }
 
-        // // Create the draggable icon
+        // create the draggable icon
         // draggedEntity = new DragIcon();
         // draggedEntity.setVisible(false);
         // draggedEntity.setOpacity(0.7);
         // anchorPaneRoot.getChildren().add(draggedEntity);
     }
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
+    public void setGameSwitcher(MenuSwitcher gameSwitcher) {
         this.gameSwitcher = gameSwitcher;
     }
 
     /**
      * facilitates switching to main game upon button click
+     * 
      * @throws IOException
      */
     @FXML
@@ -187,28 +197,48 @@ public class ShopMenuController {
         return this.world;
     }
 
+    /**
+     * pair the entity an view so that the view copies the movements of the entity.
+     * add view to list of entity images
+     * 
+     * @param entity backend entity to be paired with view
+     * @param view   frontend imageview to be paired with backend entity
+     */
+    // private void addEntity(Entity entity, ImageView view) {
+    // trackPosition(entity, view);
+    // entityImages.add(view);
+    // }
+
     public void addItemsInInventory(List<Item> unequippedInventoryItems) {
         // int i = 0, j = 0;
         for (Item unequippedInventoryItem : unequippedInventoryItems) {
             unequippedInventory.getChildren().add(new ImageView(getImageForItem(unequippedInventoryItem)));
             // i++;
             // if (i % 4 == 0) {
-            //     i = 0;
-            //     j++;
+            // i = 0;
+            // j++;
             // }
         }
     }
 
     // Helper functions
     private Image getImageForItem(Item item) {
-        if (item.getClass().getSimpleName().equals("BodyArmour")) return bodyArmourImage;
-        else if (item.getClass().getSimpleName().equals("HealthPotion")) return healthPotionImage;
-        else if (item.getClass().getSimpleName().equals("Helmet")) return helmetImage;
-        else if (item.getClass().getSimpleName().equals("Shield")) return shieldImage;
-        else if (item.getClass().getSimpleName().equals("Staff")) return staffImage;
-        else if (item.getClass().getSimpleName().equals("Stake")) return stakeImage;
-        else if (item.getClass().getSimpleName().equals("Sword")) return swordImage;
+        if (item.getClass().getSimpleName().equals("BodyArmour"))
+            return bodyArmourImage;
+        else if (item.getClass().getSimpleName().equals("HealthPotion"))
+            return healthPotionImage;
+        else if (item.getClass().getSimpleName().equals("Helmet"))
+            return helmetImage;
+        else if (item.getClass().getSimpleName().equals("Shield"))
+            return shieldImage;
+        else if (item.getClass().getSimpleName().equals("Staff"))
+            return staffImage;
+        else if (item.getClass().getSimpleName().equals("Stake"))
+            return stakeImage;
+        else if (item.getClass().getSimpleName().equals("Sword"))
+            return swordImage;
         // if (item.getClass().getSimpleName().equals("GoldPile")) return goldPileImage;
-        else return theOneRingImage;
+        else
+            return theOneRingImage;
     }
 }
