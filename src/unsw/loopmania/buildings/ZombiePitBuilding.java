@@ -1,21 +1,21 @@
 package unsw.loopmania.buildings;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
+
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.enemies.ZombieEnemy;
 
 /**
- * a basic form of building in the world
+ * represents a zombie pit building in the backend game world
  */
 public class ZombiePitBuilding extends Building {
-    public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, -1);
+    public ZombiePitBuilding(Pair<Integer, Integer> position) {
+        super(position, -1);
     }
 
     @Override
     public void notify(LoopManiaWorld worldState) {
-        // Spawns zombie from bulding every cycle
-        // TODO must figure out location to spawn
+        // Spawns zombie from bulding every cycle at adjacent path position
         worldState.addNewEnemy(new ZombieEnemy(this.getAdjacentPathTile(worldState.getPath())));
     }
 }

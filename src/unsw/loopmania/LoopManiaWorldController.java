@@ -959,19 +959,19 @@ public class LoopManiaWorldController {
                         break;
                     case ITEM:
                         Item item = (Item) staticEntity;
-                        if (item.getClass().getSimpleName().equals("BodyArmour"))
+                        if (item instanceof BodyArmour)
                             draggedEntity.setImage(bodyArmourImage);
-                        else if (item.getClass().getSimpleName().equals("Helmet"))
+                        else if (item instanceof Helmet)
                             draggedEntity.setImage(helmetImage);
-                        else if (item.getClass().getSimpleName().equals("Shield"))
+                        else if (item instanceof Shield)
                             draggedEntity.setImage(shieldImage);
-                        else if (item.getClass().getSimpleName().equals("Staff"))
+                        else if (item instanceof Staff)
                             draggedEntity.setImage(staffImage);
-                        else if (item.getClass().getSimpleName().equals("Stake"))
+                        else if (item instanceof Stake)
                             draggedEntity.setImage(stakeImage);
-                        else if (item.getClass().getSimpleName().equals("Sword"))
+                        else if (item instanceof Sword)
                             draggedEntity.setImage(swordImage);
-                        else if (item.getClass().getSimpleName().equals("HealthPotion"))
+                        else if (item instanceof HealthPotion)
                             draggedEntity.setImage(healthPotionImage);
                         break;
                     default:
