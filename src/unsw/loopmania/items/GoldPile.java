@@ -5,7 +5,6 @@ import org.javatuples.Pair;
 import unsw.loopmania.path.PathPosition;
 
 public class GoldPile extends Item {
-    private PathPosition position;
     private final int goldAmount = 100;
 
     public GoldPile(Pair<Integer, Integer> position) {
@@ -18,7 +17,6 @@ public class GoldPile extends Item {
         super(position);
         purchasePrice = 125;
         sellPrice = 100;
-        this.position = position;
     }
 
     public GoldPile() {

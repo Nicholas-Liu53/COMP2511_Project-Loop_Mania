@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
 
-import javafx.beans.binding.IntegerExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -97,10 +96,10 @@ public class LoopManiaWorld {
     public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath) {
         this.width = width;
         this.height = height;
-        nonSpecifiedEntities = new ArrayList<>();
-        character = null;
-        enemies = new ArrayList<>();
-        cardEntities = new ArrayList<>();
+        this.nonSpecifiedEntities = new ArrayList<>();
+        this.character = null;
+        this.enemies = new ArrayList<>();
+        this.cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         startingPoint = orderedPath.get(0);
@@ -129,11 +128,11 @@ public class LoopManiaWorld {
     // General Methods
     // --------------------------------------------------------------------------
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     public int getCurrCycle() {
@@ -142,6 +141,14 @@ public class LoopManiaWorld {
 
     public List<Pair<Integer, Integer>> getPath() {
         return this.orderedPath;
+    }
+
+    public int getCharacterX() {
+        return this.character.getX();
+    }
+
+    public int getCharacterY() {
+        return this.character.getY();
     }
 
     /**
@@ -164,7 +171,7 @@ public class LoopManiaWorld {
         // for adding non-specific entities (ones without another dedicated list)
         // TODO = if more specialised types being added from main menu, add more methods
         // like this with specific input types...
-        nonSpecifiedEntities.add(entity);
+        this.nonSpecifiedEntities.add(entity);
     }
 
     /**
@@ -195,13 +202,13 @@ public class LoopManiaWorld {
         if (slugPos != null) {
             int indexInPath = orderedPath.indexOf(slugPos);
             SlugEnemy enemy = new SlugEnemy(new PathPosition(indexInPath, orderedPath));
-            enemies.add(enemy);
+            this.enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
 
         // Adding enemies spawned by world state observers
         for (Enemy e : newEnemies) {
-            enemies.add(e);
+            this.enemies.add(e);
             spawningEnemies.add(e);
         }
 
@@ -267,9 +274,9 @@ public class LoopManiaWorld {
         Random rand = new Random();
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
-        if ((choice == 0) && (enemies.size() < 2)) {
+        if ((choice == 0) && (this.enemies.size() < 2)) {
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
-            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(getCharacterX(), getCharacterY()));
             // inclusive start and exclusive end of range of positions not allowed
             int startNotAllowed = (indexPosition - 2 + orderedPath.size()) % orderedPath.size();
             int endNotAllowed = (indexPosition + 3) % orderedPath.size();
@@ -293,7 +300,7 @@ public class LoopManiaWorld {
         // immediately before or after (currently space required = 2)...
         Random rand = new Random();
         List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
-        int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+        int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(getCharacterX(), getCharacterY()));
         // inclusive start and exclusive end of range of positions not allowed
         int startNotAllowed = (indexPosition - 2 + orderedPath.size()) % orderedPath.size();
         int endNotAllowed = (indexPosition + 3) % orderedPath.size();
@@ -316,7 +323,7 @@ public class LoopManiaWorld {
     // * Items/Inventory
     // *-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
-        return Math.pow((character.getX() - item.getX()), 2) + Math.pow((character.getY() - item.getY()), 2) == 0;
+        return Math.pow((getCharacterX() - item.getX()), 2) + Math.pow((getCharacterY() - item.getY()), 2) == 0;
     }
 
     /**
@@ -598,7 +605,7 @@ public class LoopManiaWorld {
      */
     private void killEnemy(Enemy enemy) {
         enemy.destroy();
-        enemies.remove(enemy);
+        this.enemies.remove(enemy);
     }
 
     /**
@@ -608,11 +615,11 @@ public class LoopManiaWorld {
      */
     public List<Enemy> runBattles() {
         List<Enemy> defeatedEnemies = new ArrayList<>();
-        for (Enemy e : enemies) {
+        for (Enemy e : this.enemies) {
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
 
             // Currently the character attacks every enemy and vice versa
-            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
+            if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2)) {
                 // fight...
                 character.addBattle(e);
@@ -627,7 +634,7 @@ public class LoopManiaWorld {
                 }
                 // TODO handle character death
 
-            } else if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < Math
+            } else if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
                 // Support radius logic
 
@@ -679,36 +686,36 @@ public class LoopManiaWorld {
         // design, so yay)
         // simple integer property design is ugly, maybe improve it wait pair ??
         Card card = null;
+        Pair<Integer, Integer> position = new Pair<Integer, Integer>(this.cardEntities.size(), 0);
 
         switch (cardType) {
             case "BarracksCard":
-                card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new BarracksCard(position);
                 break;
             case "CampfireCard":
-                card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new CampfireCard(position);
                 break;
             case "TowerCard":
-                card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new TowerCard(position);
                 break;
             case "TrapCard":
-                card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new TrapCard(position);
                 break;
             case "VillageCard":
-                card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new VillageCard(position);
                 break;
             case "ZombiePitCard":
-                card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new ZombiePitCard(position);
                 break;
             case "VampireCastleCard":
-                card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()),
-                        new SimpleIntegerProperty(0));
+                card = new VampireCastleCard(position);
                 break;
             default:
                 break;
         }
 
         if (card != null)
-            cardEntities.add(card);
+            this.cardEntities.add(card);
 
         return card;
     }
@@ -726,7 +733,7 @@ public class LoopManiaWorld {
             int buildingNodeY) {
         // start by getting card
         Card card = null;
-        for (Card c : cardEntities) {
+        for (Card c : this.cardEntities) {
             if ((c.getX() == cardNodeX) && (c.getY() == cardNodeY)) {
                 card = c;
                 break;
@@ -782,7 +789,7 @@ public class LoopManiaWorld {
 
             // Destroy the card
             card.destroy();
-            cardEntities.remove(card);
+            this.cardEntities.remove(card);
             shiftCardsDownFromXCoordinate(cardNodeX);
         }
 
@@ -796,10 +803,10 @@ public class LoopManiaWorld {
      * @param index the index of the card, from 0 to length-1
      */
     private void removeCard(int index) {
-        Card c = cardEntities.get(index);
+        Card c = this.cardEntities.get(index);
         int x = c.getX();
         c.destroy();
-        cardEntities.remove(index);
+        this.cardEntities.remove(index);
         shiftCardsDownFromXCoordinate(x);
     }
 
@@ -809,7 +816,7 @@ public class LoopManiaWorld {
      * @param x x coordinate which can range from 0 to width-1
      */
     private void shiftCardsDownFromXCoordinate(int x) {
-        for (Card c : cardEntities) {
+        for (Card c : this.cardEntities) {
             if (c.getX() >= x) {
                 c.x().set(c.getX() - 1);
             }
@@ -845,7 +852,7 @@ public class LoopManiaWorld {
         goldProperty();
         xpProperty();
         restoreHealthIfInVillage();
-        if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
+        if (getCharacterX() == startingPoint.getValue0() && getCharacterY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
     }
@@ -879,7 +886,7 @@ public class LoopManiaWorld {
      */
     private void moveEnemies() {
         List<Enemy> deadEnemies = new ArrayList<>();
-        for (Enemy e : enemies) {
+        for (Enemy e : this.enemies) {
             if (e.getClass().getSimpleName().equals("VampireEnemy") && !e.getInBattle()/* && inCampfireRadius(e) */) {
                 determineNextVampireMoveAwayFromCampfire(e);
                 continue;
@@ -904,16 +911,15 @@ public class LoopManiaWorld {
         if (loactionOfPlacedBuildings.contains(newLocation))
             return false;
 
-        if (card.getCardId().equals("VillageCard") || card.getCardId().equals("BarracksCard")
-                || card.getCardId().equals("TrapCard")) {
+        if ((card instanceof VillageCard) || (card instanceof BarracksCard) || (card instanceof TrapCard)) {
             if (!orderedPath.contains(newLocation) || newLocation
                     .equals(new Pair<Integer, Integer>(startingPoint.getValue0(), startingPoint.getValue1())))
                 return false;
         } else {
-            if (card.getCardId().equals("CampfireCard") && orderedPath.contains(newLocation))
+            if ((card instanceof CampfireCard) && (orderedPath.contains(newLocation)))
                 return false;
             else {
-                if (!adjacentToPath(newLocation) || orderedPath.contains(newLocation))
+                if ((!adjacentToPath(newLocation)) || (orderedPath.contains(newLocation)))
                     return false;
             }
         }
@@ -1010,7 +1016,7 @@ public class LoopManiaWorld {
 
     private boolean inVillage() {
         for (Pair<Integer, Integer> village : villagesList) {
-            if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY()))
+            if (village.getValue0().equals(getCharacterX()) && village.getValue1().equals(getCharacterY()))
                 return true;
         }
         return false;
@@ -1018,8 +1024,8 @@ public class LoopManiaWorld {
 
     // private void inVillage() {
     // for (Pair<Integer,Integer> village : villagesList) {
-    // if (village.getValue0().equals(character.getX()) &&
-    // village.getValue1().equals(character.getY())) {
+    // if (village.getValue0().equals(getCharacterX()) &&
+    // village.getValue1().equals(getCharacterY())) {
     // character.restoreHealthPoints();
     // return;
     // }

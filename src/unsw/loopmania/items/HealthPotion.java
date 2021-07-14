@@ -6,7 +6,6 @@ import unsw.loopmania.path.PathPosition;
 
 public class HealthPotion extends Item {
     private int restoreHealthPoints;
-    private PathPosition position;
 
     public HealthPotion(Pair<Integer, Integer> position) {
         super(position);
@@ -20,7 +19,6 @@ public class HealthPotion extends Item {
         purchasePrice = 125;
         sellPrice = 100;
         restoreHealthPoints = 100;
-        this.position = position;
     }
 
     public HealthPotion() {
