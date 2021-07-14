@@ -1,10 +1,12 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
 
+import javafx.beans.binding.IntegerExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -76,6 +78,11 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
+    // List of building locations by type
+    private List<Pair<Integer, Integer>> trapsList;
+    private List<Pair<Integer, Integer>> villagesList;
+    private List<Pair<Integer, Integer>> campfireList;
+
     // --------------------------------------------------------------------------
     // Constructor
     // --------------------------------------------------------------------------
@@ -113,6 +120,9 @@ public class LoopManiaWorld {
         // charHealth = 0.0;
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
+        trapsList = new ArrayList<Pair<Integer,Integer>>();
+        villagesList = new ArrayList<Pair<Integer,Integer>>();
+        campfireList = new ArrayList<Pair<Integer,Integer>>();
     }
 
     // --------------------------------------------------------------------------
@@ -614,7 +624,7 @@ public class LoopManiaWorld {
                     .pow(e.getAttackRadius(), 2)) {
                 // fight...
                 character.addBattle(e);
-                character.launchAttack(e);
+                character.launchAttack(e, inCampfireRadius(e));
                 e.launchAttack(character);
 
                 if (e.getHealth() == 0) {
@@ -740,6 +750,7 @@ public class LoopManiaWorld {
             case "CampfireCard":
                 newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                campfireList.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
                 break;
             case "TowerCard":
                 newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -748,6 +759,7 @@ public class LoopManiaWorld {
             case "TrapCard":
                 newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                trapsList.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
                 break;
             case "VampireCastleCard":
                 newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -756,6 +768,7 @@ public class LoopManiaWorld {
             case "VillageCard":
                 newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX),
                         new SimpleIntegerProperty(buildingNodeY));
+                villagesList.add(new Pair<Integer, Integer>(buildingNodeX, buildingNodeY));
                 break;
             case "ZombiePitCard":
                 newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX),
@@ -834,6 +847,7 @@ public class LoopManiaWorld {
         healthProperty();
         goldProperty();
         xpProperty();
+        restoreHealthIfInVillage();
         if (character.getX() == startingPoint.getValue0() && character.getY() == startingPoint.getValue1()) {
             updateCharacterCycles();
         }
@@ -867,8 +881,18 @@ public class LoopManiaWorld {
      * Move all enemies
      */
     private void moveEnemies() {
+        List<Enemy> deadEnemies = new ArrayList<>();
         for (Enemy e : enemies) {
+            if (e.getClass().getSimpleName().equals("VampireEnemy") && !e.getInBattle()/*&& inCampfireRadius(e)*/) {
+                determineNextVampireMoveAwayFromCampfire(e);
+                continue;
+            }
             e.move();
+            if (checkIfEnemyStepOnTrapAndDies(e))
+                deadEnemies.add(e);
+        }
+        for (Enemy e : deadEnemies) {
+            killEnemy(e);
         }
     }
 
@@ -977,5 +1001,101 @@ public class LoopManiaWorld {
     public StringProperty xpProperty() {
         charXP.set(String.valueOf(character.getExperience()));
         return charXP;
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                     Buildings Helper Functions
+    //*-------------------------------------------------------------------------
+    private void restoreHealthIfInVillage() {
+        if (inVillage()) character.restoreHealthPoints();
+    }
+
+    private boolean inVillage() {
+        for (Pair<Integer,Integer> village : villagesList) {
+            if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY()))
+                return true;
+        }
+        return false;
+    }
+
+    // private void inVillage() {
+    //     for (Pair<Integer,Integer> village : villagesList) {
+    //         if (village.getValue0().equals(character.getX()) && village.getValue1().equals(character.getY())) {
+    //             character.restoreHealthPoints();
+    //             return;
+    //         }
+    //     }
+    // }
+
+    private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
+        List<Building> usedTraps = new ArrayList<>();
+        for (Pair<Integer,Integer> trap : trapsList) {
+            if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
+                enemy.receiveAttack(30);
+                // Remove Building
+                for (Building b : buildingEntities) {
+                    if (b.getX() == trap.getValue0() && b.getY() == trap.getValue1()) {
+                        usedTraps.add(b);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        for (Building b : usedTraps) {
+            buildingEntities.remove(b);
+            b.destroy();
+        }
+        if (enemy.getHealth() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean inCampfireRadius(MovingEntity me) {
+        for (Pair<Integer,Integer> campfire : campfireList) {
+            if (Math.pow(campfire.getValue0() - me.getX(), 2) + Math.pow(campfire.getValue1() - me.getY(), 2) < 16)
+                return true;
+        }
+        return false;
+    }
+
+    private double getShortestRadiusFromCampfire(int x, int y) {
+        double shortestRadius = 0;
+        boolean first = true;
+        for (Pair<Integer,Integer> campfire : campfireList) {
+            double currentRadius = Math.pow(Math.pow(campfire.getValue0() - x, 2) + Math.pow(campfire.getValue1() - y, 2), 0.5);
+            if (first) {
+                shortestRadius = currentRadius;
+                first = false;
+            } else if (shortestRadius > currentRadius)
+                shortestRadius = currentRadius;
+        } 
+        return shortestRadius;
+    }
+
+    private ArrayList<Pair<Integer,Integer>> nextPathTilesCoordinates(MovingEntity me) {
+        int pathIndex = me.getPathIndex();
+        int beforeIndex = pathIndex - 1; 
+        int afterIndex = pathIndex + 1;
+        if (pathIndex == orderedPath.size() - 1)
+            afterIndex = 0;
+        else if (pathIndex == 0) 
+            beforeIndex = orderedPath.size() - 1;
+        ArrayList<Pair<Integer,Integer>> pathList = (ArrayList<Pair<Integer,Integer>>) orderedPath;
+        Pair<Integer,Integer> before = pathList.get(beforeIndex);
+        Pair<Integer,Integer> after = pathList.get(afterIndex);
+        ArrayList<Pair<Integer,Integer>> nextPathCoordinates = new ArrayList<Pair<Integer,Integer>>(Arrays.asList(before, after));
+        return nextPathCoordinates;
+    }
+
+    private void determineNextVampireMoveAwayFromCampfire(MovingEntity v) {
+        ArrayList<Pair<Integer,Integer>> nextPathCoordinates = nextPathTilesCoordinates(v);
+        Pair<Integer, Integer> backCoordinates = nextPathCoordinates.get(0);
+        Pair<Integer, Integer> frontCoordinates = nextPathCoordinates.get(1);
+        double backDistanceFromCampfire = getShortestRadiusFromCampfire(backCoordinates.getValue0(), backCoordinates.getValue1());
+        double frontDistanceFromCampfire = getShortestRadiusFromCampfire(frontCoordinates.getValue0(), frontCoordinates.getValue1());
+        if (backDistanceFromCampfire > frontDistanceFromCampfire) v.moveUpPath();
+        else v.moveDownPath();
     }
 }
