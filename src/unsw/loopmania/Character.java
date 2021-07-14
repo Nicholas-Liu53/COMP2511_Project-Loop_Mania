@@ -15,8 +15,7 @@ import unsw.loopmania.items.WeaponStrategy;
  */
 public class Character extends MovingEntity {
     private int health;
-    // private final int damage; ??
-    private int damage;
+    private final int damage = 5;
     private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
     private BodyArmourStrategy bodyArmourStrat;
@@ -35,7 +34,6 @@ public class Character extends MovingEntity {
     public Character(PathPosition position) {
         super(position);
         this.health = 100;
-        this.damage = 5;
         this.enemiesCurrentlyBattling = new ArrayList<>();
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
@@ -225,14 +223,14 @@ public class Character extends MovingEntity {
      * Restores Character's health to maximum
      */
     public void restoreHealthPoints() {
-        health = 100;
+        this.health = 100;
     }
 
     /**
      * @return true if character has full health
      */
     public boolean isFullHealth() {
-        return health == 100;
+        return this.health == 100;
     }
 
     @Override
