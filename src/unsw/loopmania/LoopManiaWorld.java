@@ -1016,7 +1016,7 @@ public class LoopManiaWorld {
                     return true;
                 }
                 // Remove Building
-                for (Building b : buildings) {
+                for (Building b : buildingEntities) {
                     if (b.getX() == trap.getValue0() && b.getY() == trap.getValue1()) {
                         usedTraps.add(b);
                     }
