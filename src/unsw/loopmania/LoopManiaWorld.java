@@ -65,6 +65,7 @@ public class LoopManiaWorld {
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
     private StringProperty charHealth;
+    // private Double charHealth;
     private StringProperty charGold;
     private StringProperty charXP;
 
@@ -109,6 +110,7 @@ public class LoopManiaWorld {
         newEnemies = new ArrayList<Enemy>();
         observers = new ArrayList<WorldStateObserver>();
         charHealth = new SimpleStringProperty();
+        // charHealth = 0.0;
         charGold = new SimpleStringProperty();
         charXP = new SimpleStringProperty();
     }
@@ -961,6 +963,11 @@ public class LoopManiaWorld {
         charHealth.set(String.valueOf(character.getHealth()));
         return charHealth;
     }
+
+    // public Double healthProperty() {
+    // charHealth = character.getHealth() / 100.0;
+    // return charHealth;
+    // }
 
     public StringProperty goldProperty() {
         charGold.set(String.valueOf(character.getGold()));
