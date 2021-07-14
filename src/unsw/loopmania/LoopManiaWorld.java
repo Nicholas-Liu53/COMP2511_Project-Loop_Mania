@@ -1012,20 +1012,22 @@ public class LoopManiaWorld {
         for (Pair<Integer,Integer> trap : trapsList) {
             if (trap.getValue0().equals(enemy.getX()) && trap.getValue1().equals(enemy.getY())) {
                 enemy.receiveAttack(30);
-                if (enemy.getHealth() == 0) {
-                    return true;
-                }
                 // Remove Building
                 for (Building b : buildingEntities) {
                     if (b.getX() == trap.getValue0() && b.getY() == trap.getValue1()) {
                         usedTraps.add(b);
+                        break;
                     }
                 }
                 break;
             }
         }
         for (Building b : usedTraps) {
+            buildingEntities.remove(b);
             b.destroy();
+        }
+        if (enemy.getHealth() == 0) {
+            return true;
         }
         return false;
     }
