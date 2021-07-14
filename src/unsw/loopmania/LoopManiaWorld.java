@@ -24,9 +24,9 @@ import unsw.loopmania.path.*;
  * can occupy the same square.
  */
 public class LoopManiaWorld {
-    //*-------------------------------------------------------------------------
-    //*                             Variables
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Variables
+    // *-------------------------------------------------------------------------
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
 
@@ -83,9 +83,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> villagesList;
     private List<Pair<Integer, Integer>> campfireList;
 
-    //--------------------------------------------------------------------------
-    //                              Constructor
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+    // Constructor
+    // --------------------------------------------------------------------------
     /**
      * create the world (constructor)
      * 
@@ -125,9 +125,9 @@ public class LoopManiaWorld {
         campfireList = new ArrayList<Pair<Integer, Integer>>();
     }
 
-    //--------------------------------------------------------------------------
-    //                          General Methods
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+    // General Methods
+    // --------------------------------------------------------------------------
     public int getWidth() {
         return width;
     }
@@ -180,9 +180,9 @@ public class LoopManiaWorld {
         return startingPoint;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                                 Spawn
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Spawn
+    // *-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * 
@@ -312,9 +312,9 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Items/Inventory
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Items/Inventory
+    // *-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
         return Math.pow((character.getX() - item.getX()), 2) + Math.pow((character.getY() - item.getY()), 2) == 0;
     }
@@ -329,7 +329,7 @@ public class LoopManiaWorld {
         // List<Item> itemsToRemove
         for (Item pathItem : pathItems) {
             if (canPickUpItem(pathItem)) {
-                if (pathItem.getItemType().equals("Gold")) {
+                if (pathItem.getClass().getSimpleName().equals("Gold")) {
                     numGoldPileSpawned--;
                 } else {
                     numHealthPotionSpawned--;
@@ -363,8 +363,7 @@ public class LoopManiaWorld {
 
         // Insert the new item, as we know we have at least made a slot available...
         if (itemToAdd.getClass().getSimpleName().equals("HealthPotion")) {
-            HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            HealthPotion healthPotion = new HealthPotion(firstAvailableSlot);
             unequippedInventoryItems.add(healthPotion);
             return healthPotion;
         } else {
@@ -395,32 +394,25 @@ public class LoopManiaWorld {
 
         switch (itemType) {
             case "Helmet":
-                item = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new Helmet(firstAvailableSlot);
                 break;
             case "BodyArmour":
-                item = new BodyArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new BodyArmour(firstAvailableSlot);
                 break;
             case "Shield":
-                item = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new Shield(firstAvailableSlot);
                 break;
             case "Staff":
-                item = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new Staff(firstAvailableSlot);
                 break;
             case "Stake":
-                item = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new Stake(firstAvailableSlot);
                 break;
             case "Sword":
-                item = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new Sword(firstAvailableSlot);
                 break;
             case "HealthPotion":
-                item = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                item = new HealthPotion(firstAvailableSlot);
                 break;
             default:
                 break;
@@ -596,9 +588,9 @@ public class LoopManiaWorld {
         return unequippedInventoryItems;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Battles
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Battles
+    // *-------------------------------------------------------------------------
     /**
      * kill an enemy
      * 
@@ -659,9 +651,9 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Building Cards
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Building Cards
+    // *-------------------------------------------------------------------------
     /**
      * 
      * @return boolean
@@ -839,9 +831,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Movement
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Movement
+    // *-------------------------------------------------------------------------
     /**
      * Run moves which occur with every tick without needing to spawn anything
      * immediately
@@ -929,9 +921,9 @@ public class LoopManiaWorld {
         return true;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Rewards
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Rewards
+    // *-------------------------------------------------------------------------
     /**
      * Gives various rewards on type on mode selected Various modes are withCard,
      * noCard, and OnlyGoldXP
@@ -985,9 +977,9 @@ public class LoopManiaWorld {
         return rewarded;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                                 UIS
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * UIS
+    // *-------------------------------------------------------------------------
     public StringProperty healthProperty() {
         charHealth.set(String.valueOf(character.getHealth()));
         return charHealth;

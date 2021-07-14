@@ -1,17 +1,17 @@
 package unsw.loopmania.items;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
 
 public class Shield extends Armour implements ShieldStrategy {
-    public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y);
+    public Shield(Pair<Integer, Integer> position) {
+        super(position);
         purchasePrice = 300;
         sellPrice = 240;
         damageReductionFactor = 0.7;
     }
 
     public Shield() {
-        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        super(new Pair<Integer, Integer>(1, 2));
         purchasePrice = 300;
         sellPrice = 240;
         damageReductionFactor = 0.7;
@@ -19,7 +19,7 @@ public class Shield extends Armour implements ShieldStrategy {
 
     public int receiveAttack(int damage) {
         // BodyArmour provides 3 defence
-        int recvDamage = (int)(damage * 0.2);
+        int recvDamage = (int) (damage * 0.2);
         return recvDamage;
     }
 

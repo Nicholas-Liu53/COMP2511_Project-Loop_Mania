@@ -1,17 +1,17 @@
 package unsw.loopmania.items;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
 
 public class Helmet extends Armour implements HelmetStrategy {
-    public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y);
+    public Helmet(Pair<Integer, Integer> position) {
+        super(position);
         purchasePrice = 200;
         sellPrice = 160;
         damageReductionFactor = 0.8;
     }
 
     public Helmet() {
-        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        super(new Pair<Integer, Integer>(1, 2));
         purchasePrice = 200;
         sellPrice = 160;
         damageReductionFactor = 0.8;
@@ -19,7 +19,7 @@ public class Helmet extends Armour implements HelmetStrategy {
 
     public int receiveAttack(int damage) {
         // Helmet provides 1 defence
-        int recvDamage = (int)(damage * 0.1) + 3;
+        int recvDamage = (int) (damage * 0.1) + 3;
         return recvDamage;
     }
 

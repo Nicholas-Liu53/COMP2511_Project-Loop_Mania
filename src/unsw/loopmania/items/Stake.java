@@ -1,6 +1,7 @@
 package unsw.loopmania.items;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
+
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.enemies.VampireEnemy;
 
@@ -8,15 +9,14 @@ import unsw.loopmania.enemies.VampireEnemy;
  * represents an equipped or unequipped stake in the backend world
  */
 public class Stake extends Item implements WeaponStrategy {
-
-    public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, "Weapon");
+    public Stake(Pair<Integer, Integer> position) {
+        super(position);
         purchasePrice = 150;
         sellPrice = 120;
     }
 
     public Stake() {
-        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2), "Weapon");
+        super(new Pair<Integer, Integer>(1, 2));
         purchasePrice = 150;
         sellPrice = 120;
     }
