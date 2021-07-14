@@ -133,10 +133,12 @@ public class Character extends MovingEntity {
      * @param enemy
      */
     public void launchAttack(Enemy enemy, boolean inCampfireRadius) {
+        int giveDamage = this.damage;
+
         if (inCampfireRadius)
-            this.weaponStrat.launchAttack(enemy, (2 * this.damage - this.helmetStrat.launchAttack()));
-        else 
-            this.weaponStrat.launchAttack(enemy, (this.damage - this.helmetStrat.launchAttack()));
+            giveDamage *= 2;
+
+        this.weaponStrat.launchAttack(enemy, (giveDamage - this.helmetStrat.launchAttack()));
     }
 
     /**
