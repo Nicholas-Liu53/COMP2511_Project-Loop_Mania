@@ -43,7 +43,7 @@ public class Character extends MovingEntity {
         this.shieldStrat = new Melee();
         this.helmetStrat = new Melee();
         this.equippedItems = new ArrayList<>();
-        this.allies = new ArrayList<>;
+        this.allies = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
     }
@@ -156,7 +156,7 @@ public class Character extends MovingEntity {
     public void receiveAttack(int damage) {
         // Allies receive damage first
         if (this.allies.size() > 0) {
-            Ally currAlly = this.allies.get();
+            Ally currAlly = this.allies.get(0);
             currAlly.receiveAttack(damage);
         } else {
             // Subtracting armour defence
@@ -230,6 +230,17 @@ public class Character extends MovingEntity {
      */
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    /**
+     * Adds a new ally to the character, given there is space
+     * 
+     * @param newAlly
+     */
+    public void addAlly(Ally newAlly) {
+        if (this.allies.size() < 4) {
+            this.allies.add(newAlly);
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package test;
 import org.junit.Test;
 
 import unsw.loopmania.Character;
+import unsw.loopmania.Ally;
 import unsw.loopmania.enemies.SlugEnemy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
