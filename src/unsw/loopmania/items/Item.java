@@ -1,31 +1,32 @@
 package unsw.loopmania.items;
 
-import org.javatuples.Pair;
-
-import unsw.loopmania.path.PathPosition;
+import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.StaticEntity;
 
 /**
- * a Item in the world which doesn't move
+ * a Item in the world
+ * which doesn't move
  */
 public abstract class Item extends StaticEntity {
+    private String itemType; // Armour or weapon or potion
     protected int purchasePrice;
     protected int sellPrice;
 
-    public Item(Pair<Integer, Integer> position) {
-        super(position);
+    public Item(SimpleIntegerProperty x, SimpleIntegerProperty y, String itemType) {
+        super(x, y);
+        this.itemType = itemType;
     }
 
-    public Item(PathPosition position) {
-        super(position);
+    public String getItemType() {
+        return this.itemType;
     }
 
     public int getPurchasePrice() {
-        return this.purchasePrice;
+        return purchasePrice;
     }
 
     public int getSellPrice() {
-        return this.sellPrice;
+        return sellPrice;
     }
 
     @Override

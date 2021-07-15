@@ -1,16 +1,12 @@
 package unsw.loopmania.buildingcards;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * represents a campfire card in the backend game world
  */
 public class CampfireCard extends Card {
-    public CampfireCard(Pair<Integer, Integer> position) {
-        super(position);
-    }
-
-    public CampfireCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
+    public CampfireCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, "CampfireCard");
+    }    
 }

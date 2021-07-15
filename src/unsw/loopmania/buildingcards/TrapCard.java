@@ -1,16 +1,12 @@
 package unsw.loopmania.buildingcards;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * represents a trap card in the backend game world
  */
 public class TrapCard extends Card {
-    public TrapCard(Pair<Integer, Integer> position) {
-        super(position);
-    }
-
-    public TrapCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
+    public TrapCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, "TrapCard");
+    }    
 }

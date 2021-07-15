@@ -15,7 +15,8 @@ import unsw.loopmania.items.WeaponStrategy;
  */
 public class Character extends MovingEntity {
     private int health;
-    private final int damage = 5;
+    // private final int damage; ??
+    private int damage;
     private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
     private BodyArmourStrategy bodyArmourStrat;
@@ -34,6 +35,7 @@ public class Character extends MovingEntity {
     public Character(PathPosition position) {
         super(position);
         this.health = 100;
+        this.damage = 5;
         this.enemiesCurrentlyBattling = new ArrayList<>();
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
@@ -131,12 +133,10 @@ public class Character extends MovingEntity {
      * @param enemy
      */
     public void launchAttack(Enemy enemy, boolean inCampfireRadius) {
-        int giveDamage = this.damage;
-
         if (inCampfireRadius)
-            giveDamage *= 2;
-
-        this.weaponStrat.launchAttack(enemy, (giveDamage - this.helmetStrat.launchAttack()));
+            this.weaponStrat.launchAttack(enemy, (2 * this.damage - this.helmetStrat.launchAttack()));
+        else 
+            this.weaponStrat.launchAttack(enemy, (this.damage - this.helmetStrat.launchAttack()));
     }
 
     /**
@@ -223,14 +223,14 @@ public class Character extends MovingEntity {
      * Restores Character's health to maximum
      */
     public void restoreHealthPoints() {
-        this.health = 100;
+        health = 100;
     }
 
     /**
      * @return true if character has full health
      */
     public boolean isFullHealth() {
-        return this.health == 100;
+        return health == 100;
     }
 
     @Override

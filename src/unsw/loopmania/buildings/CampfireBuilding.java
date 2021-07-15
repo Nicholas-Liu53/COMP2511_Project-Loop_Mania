@@ -1,12 +1,12 @@
 package unsw.loopmania.buildings;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * represents a campfire building in the backend game world
+ * a basic form of building in the world
  */
 public class CampfireBuilding extends Building {
-    public CampfireBuilding(Pair<Integer, Integer> position) {
-        super(position, 5);
+    public CampfireBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, 5);
     }
 }

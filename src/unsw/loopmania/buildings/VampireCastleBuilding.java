@@ -1,21 +1,20 @@
 package unsw.loopmania.buildings;
 
-import org.javatuples.Pair;
-
+import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.enemies.VampireEnemy;
 
 /**
- * represents a vampire castle building in the backend game world
+ * a basic form of building in the world
  */
 public class VampireCastleBuilding extends Building {
-    public VampireCastleBuilding(Pair<Integer, Integer> position) {
-        super(position, -1);
+    public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, -1);
     }
 
     @Override
     public void notify(LoopManiaWorld worldState) {
-        // Spawns vampire from building every 5 cycles
+        // Spawns vampire from building ever 5
         if (worldState.getCurrCycle() % 5 == 0) {
             // Generates new enemy at adjacent path position
             worldState.addNewEnemy(new VampireEnemy(this.getAdjacentPathTile(worldState.getPath())));

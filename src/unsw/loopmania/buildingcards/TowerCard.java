@@ -1,16 +1,12 @@
 package unsw.loopmania.buildingcards;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * represents a tower card in the backend game world
  */
 public class TowerCard extends Card {
-    public TowerCard(Pair<Integer, Integer> position) {
-        super(position);
-    }
-
-    public TowerCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
+    public TowerCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, "TowerCard");
+    }    
 }

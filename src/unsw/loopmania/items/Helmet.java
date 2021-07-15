@@ -1,25 +1,25 @@
 package unsw.loopmania.items;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Helmet extends Armour implements HelmetStrategy {
-    public Helmet(Pair<Integer, Integer> position) {
-        super(position);
-        this.purchasePrice = 200;
-        this.sellPrice = 160;
-        this.damageReductionFactor = 0.8;
+    public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y);
+        purchasePrice = 200;
+        sellPrice = 160;
+        damageReductionFactor = 0.8;
     }
 
     public Helmet() {
-        super(new Pair<Integer, Integer>(1, 2));
-        this.purchasePrice = 200;
-        this.sellPrice = 160;
-        this.damageReductionFactor = 0.8;
+        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        purchasePrice = 200;
+        sellPrice = 160;
+        damageReductionFactor = 0.8;
     }
 
     public int receiveAttack(int damage) {
         // Helmet provides 1 defence
-        int recvDamage = (int) (damage * 0.1) + 3;
+        int recvDamage = (int)(damage * 0.1) + 3;
         return recvDamage;
     }
 

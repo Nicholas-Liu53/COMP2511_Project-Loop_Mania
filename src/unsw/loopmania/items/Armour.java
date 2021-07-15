@@ -1,12 +1,12 @@
 package unsw.loopmania.items;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Armour extends Item {
     protected double damageReductionFactor;
 
-    public Armour(Pair<Integer, Integer> position) {
-        super(position);
+    public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, "Armour");
     }
 
     public double getDamageReductionFactor() {
