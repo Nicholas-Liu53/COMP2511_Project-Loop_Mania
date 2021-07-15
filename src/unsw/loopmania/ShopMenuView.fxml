@@ -1,70 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <!-- TODO = modify and expand the range of menus available from the menu menu, and develop game modes you can select when starting a new game -->
 <!-- vertically stacked label and button -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER" layoutY="-1.0" prefHeight="378.0" prefWidth="168.0" spacing="20.0">
+      <Pane prefHeight="586.0" prefWidth="497.0">
          <children>
-            <Label text="Shop Menu" />
-            <GridPane fx:id="equippedItems">
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                  <RowConstraints />
-               </rowConstraints>
-               <children>
-                  <ImageView id="swordCell" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../../images/sword_unequipped.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView id="blankCell" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../../images/image_just_black_tiny.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../../images/shield_unequipped.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView id="helmetCell" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../../images/helmet_slot.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="unequippedInventory" minHeight="-Infinity" minWidth="-Infinity" prefHeight="124.0" prefWidth="120.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <Button fx:id="startGameButton" onAction="#switchToGame" text="Return to Game" />
+            <Label alignment="CENTER" layoutX="195.0" layoutY="14.0" text="Shop Menu" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="startGameButton" layoutX="199.0" layoutY="547.0" onAction="#switchToGame" text="Return to Game" />
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
+      </Pane>
    </children>
 </AnchorPane>
