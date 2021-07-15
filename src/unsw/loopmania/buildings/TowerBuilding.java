@@ -1,15 +1,15 @@
 package unsw.loopmania.buildings;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
 
 /**
- * a basic form of building in the world
+ * represents a tower building in the backend game world
  */
 public class TowerBuilding extends Building {
     private int shootingRadius;
 
-    public TowerBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, 3);
+    public TowerBuilding(Pair<Integer, Integer> position) {
+        super(position, 3);
     }
 
     /**

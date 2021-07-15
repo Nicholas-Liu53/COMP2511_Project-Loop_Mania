@@ -16,11 +16,11 @@ import unsw.loopmania.path.PathPosition;
  */
 public class ZombieEnemyTest {
     @Test
-    public void constructTest(){
+    public void constructTest() {
         // Testing construction + basic getters
-        
+
         ZombieEnemy newZombie = new ZombieEnemy(null);
-        
+
         // Ensure attributes are correct
         assertEquals(50, newZombie.getHealth());
         assertEquals(newZombie.getAttackRadius(), newZombie.getSupportRadius());

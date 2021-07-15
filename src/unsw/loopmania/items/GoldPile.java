@@ -1,32 +1,31 @@
 package unsw.loopmania.items;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
+
 import unsw.loopmania.path.PathPosition;
 
 public class GoldPile extends Item {
-    private PathPosition position;
-    private int goldAmount = 100;
+    private final int goldAmount = 100;
 
-    public GoldPile(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, "Gold");
-        purchasePrice = 125;
-        sellPrice = 100;
+    public GoldPile(Pair<Integer, Integer> position) {
+        super(position);
+        this.purchasePrice = 125;
+        this.sellPrice = 100;
     }
 
     public GoldPile(PathPosition position) {
-        super(position.getX(), position.getY(), "Gold");
-        purchasePrice = 125;
-        sellPrice = 100;
-        this.position = position;
+        super(position);
+        this.purchasePrice = 125;
+        this.sellPrice = 100;
     }
 
     public GoldPile() {
-        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2), "Gold");
-        purchasePrice = 125;
-        sellPrice = 100;
+        super(new Pair<Integer, Integer>(1, 2));
+        this.purchasePrice = 125;
+        this.sellPrice = 100;
     }
 
     public int getGoldAmount() {
-        return goldAmount;
+        return this.goldAmount;
     }
 }

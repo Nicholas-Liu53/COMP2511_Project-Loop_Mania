@@ -17,6 +17,7 @@ public abstract class Enemy extends MovingEntity {
 
     /**
      * Takes in path position and spawns enemy there
+     * 
      * @param position
      */
     public Enemy(PathPosition position, int health, int supportRadius, int attackRadius, int damage, int defence) {
@@ -25,20 +26,19 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackRadius = attackRadius;
         this.damage = damage;
-        this.defenceFactor = 1 - ((float)defence / 100);
+        this.defenceFactor = 1 - ((float) defence / 100);
         this.inBattle = false;
     }
 
     /**
      * move the enemy
      */
-    public void move(){
-        if (!inBattle) {
+    public void move() {
+        if (!this.inBattle) {
             int directionChoice = (new Random()).nextInt(2);
-            if (directionChoice == 0){
+            if (directionChoice == 0) {
                 moveUpPath();
-            }
-            else if (directionChoice == 1){
+            } else if (directionChoice == 1) {
                 moveDownPath();
             }
         }
@@ -74,6 +74,7 @@ public abstract class Enemy extends MovingEntity {
 
     /**
      * Sets whether an enemy is currently in battle, preventing it from moving
+     * 
      * @param inBattle
      */
     public void setInBattle(boolean inBattle) {
@@ -81,8 +82,9 @@ public abstract class Enemy extends MovingEntity {
     }
 
     /**
-     * Allows the enemy to launch an attack against a character, doing damage and possibly
-     * using a special attack
+     * Allows the enemy to launch an attack against a character, doing damage and
+     * possibly using a special attack
+     * 
      * @param mainChar
      */
     public void launchAttack(Character mainChar) {
@@ -90,14 +92,15 @@ public abstract class Enemy extends MovingEntity {
     }
 
     /**
-     * Allows enemy to receive an attack, takes in the amount of damage to be done and subtracts
-     * the relavent amount from health after defence is factored in 
+     * Allows enemy to receive an attack, takes in the amount of damage to be done
+     * and subtracts the relavent amount from health after defence is factored in
+     * 
      * @param damage
      */
     public void receiveAttack(int recvDamage) {
         this.inBattle = true;
         // Adjusting for defence
-        recvDamage = (int)(recvDamage * this.defenceFactor);
+        recvDamage = (int) (recvDamage * this.defenceFactor);
         this.health -= recvDamage;
         // Health should not be less than 0
         if (this.health < 0) {

@@ -1,9 +1,12 @@
 package unsw.loopmania.buildings;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
 
+/**
+ * represents a hero's castle building in the backend game world
+ */
 public class HeroesCastle extends Building {
-    public HeroesCastle(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, -1);
+    public HeroesCastle(Pair<Integer, Integer> position) {
+        super(position, -1);
     }
 }
