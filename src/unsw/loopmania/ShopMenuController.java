@@ -109,6 +109,7 @@ public class ShopMenuController {
      */
     @FXML
     private void switchToGame() throws IOException {
+        world.goldProperty();
         gameSwitcher.switchMenu();
     }
 
@@ -178,7 +179,9 @@ public class ShopMenuController {
         } else {
             return false;
         }
+        world.addToUnequippedInventory(item);
         worldController.loadItem(item);
+        world.goldProperty();
         return true;
     }
     

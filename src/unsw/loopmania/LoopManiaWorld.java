@@ -76,9 +76,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    // --------------------------------------------------------------------------
-    // Constructor
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                              Constructor
+    //--------------------------------------------------------------------------
     /**
      * create the world (constructor)
      * 
@@ -115,9 +115,9 @@ public class LoopManiaWorld {
         this.charXP = new SimpleStringProperty();
     }
 
-    // --------------------------------------------------------------------------
-    // General Methods
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                              General Methods
+    //--------------------------------------------------------------------------
     public int getWidth() {
         return this.width;
     }
@@ -178,9 +178,9 @@ public class LoopManiaWorld {
         return this.startingPoint;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Spawn
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 Spawn
+    //*-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * 
@@ -310,9 +310,9 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Items/Inventory
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Items/Inventory
+    //*-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
         return Math.pow((getCharacterX() - item.getX()), 2) + Math.pow((getCharacterY() - item.getY()), 2) == 0;
     }
@@ -571,9 +571,21 @@ public class LoopManiaWorld {
         return this.unequippedInventoryItems;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Battles
-    // *-------------------------------------------------------------------------
+    public int getGold() {
+        return character.getGold();
+    }
+
+    public void deductGold(int num) {
+        character.removeGold(num);
+    }
+
+    public void addToUnequippedInventory(Item item) {
+        unequippedInventoryItems.add(item);
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                             Battles
+    //*-------------------------------------------------------------------------
     /**
      * kill an enemy
      * 
@@ -634,9 +646,9 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Building Cards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Building Cards
+    //*-------------------------------------------------------------------------
     /**
      * checks if card pile if full i.e. has attained it max width, if so, then
      * removes card the oldest card of cards (as per position in gridpane of
@@ -784,9 +796,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Movement
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Movement
+    //*-------------------------------------------------------------------------
     /**
      * Run moves which occur with every tick without needing to spawn anything
      * immediately
@@ -873,9 +885,9 @@ public class LoopManiaWorld {
         return true;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Rewards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 Rewards
+    //*-------------------------------------------------------------------------
     /**
      * Gives various rewards on type on mode selected Various modes are withCard,
      * noCard, and OnlyGoldXP
@@ -936,9 +948,9 @@ public class LoopManiaWorld {
         return rewarded;
     }
 
-    // *-------------------------------------------------------------------------
-    // * UIS
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 UIS
+    //*-------------------------------------------------------------------------
     public StringProperty healthProperty() {
         this.charHealth.set(String.valueOf(character.getHealth()));
         return this.charHealth;
@@ -957,14 +969,6 @@ public class LoopManiaWorld {
     public StringProperty xpProperty() {
         this.charXP.set(String.valueOf(character.getExperience()));
         return this.charXP;
-    }
-
-    public int getGold() {
-        return character.getGold();
-    }
-
-    public void deductGold(int num) {
-        character.removeGold(num);
     }
 
     //*-------------------------------------------------------------------------
@@ -1054,8 +1058,7 @@ public class LoopManiaWorld {
     }
 
     private void attackEnemyInTowerRadiusDuringBattle(Enemy e) {
-        // During a battle within its shooting radius, enemies will be attacked by the
-        // tower
+        // During a battle within its shooting radius, enemies will be attacked by the tower
         // i.e.
         // if the battle is occuring within the shooting radius of tower,
         // enemies will recieve damage of 10 evry 3 secs
