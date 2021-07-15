@@ -13,6 +13,11 @@ public class Ally extends StaticEntity {
         this.damage = 5;
     }
 
+    public Ally(){
+        super(new Pair<Integer, Integer>(1, 2));
+        this.damage = 5;
+    }
+
     public int getHealth() {
         return this.health;
     }
