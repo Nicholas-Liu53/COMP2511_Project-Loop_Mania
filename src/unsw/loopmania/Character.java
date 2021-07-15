@@ -219,6 +219,10 @@ public class Character extends MovingEntity {
         this.gold += gold; // max gold?
     }
 
+    public void removeGold(int gold) {
+        this.gold -= gold;
+    }
+
     /**
      * Restores Character's health to maximum
      */
