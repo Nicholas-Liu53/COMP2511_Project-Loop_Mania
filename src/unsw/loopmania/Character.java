@@ -22,6 +22,7 @@ public class Character extends MovingEntity {
     private ShieldStrategy shieldStrat;
     private HelmetStrategy helmetStrat;
     private ArrayList<Item> equippedItems;
+    private ArrayList<Ally> allies;
     private int experience;
     private int gold;
 
@@ -40,6 +41,7 @@ public class Character extends MovingEntity {
         this.shieldStrat = new Melee();
         this.helmetStrat = new Melee();
         this.equippedItems = new ArrayList<>();
+        this.allies = new ArrayList<>;
         this.experience = 0;
         this.gold = 0;
     }
@@ -133,6 +135,11 @@ public class Character extends MovingEntity {
     public void launchAttack(Enemy enemy, boolean inCampfireRadius) {
         int giveDamage = this.damage;
 
+        // Running through allies to launch attacks
+        for (Ally ally : this.allies) {
+            ally.launchAttack(enemy);
+        }
+        
         if (inCampfireRadius)
             giveDamage *= 2;
 
@@ -147,17 +154,23 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-        // Subtracting armour defence
-        int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
-        actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
-        actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
+        // Allies receive damage first
+        if (this.allies.size() > 0) {
+            Ally currAlly = this.allies.get();
+            currAlly.receiveAttack(damage);
+        } else {
+            // Subtracting armour defence
+            int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
+            actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
+            actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
 
-        if (actualDamage < 0)
-            actualDamage = 0;
+            if (actualDamage < 0)
+                actualDamage = 0;
 
-        this.health -= actualDamage;
-        if (this.health < 0)
-            this.health = 0;
+            this.health -= actualDamage;
+            if (this.health < 0)
+                this.health = 0;
+        }
     }
 
     /**
