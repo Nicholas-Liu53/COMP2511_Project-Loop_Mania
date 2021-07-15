@@ -1,12 +1,13 @@
 package unsw.loopmania.buildings;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
+// import unsw.loopmania.StaticEntity;
 
 /**
- * represents a village building in the backend game world
+ * a basic form of building in the world
  */
 public class VillageBuilding extends Building {
-    public VillageBuilding(Pair<Integer, Integer> position) {
-        super(position, -1);
+    public VillageBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, -1);
     }
 }

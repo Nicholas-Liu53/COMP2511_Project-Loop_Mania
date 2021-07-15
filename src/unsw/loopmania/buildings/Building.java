@@ -3,6 +3,7 @@ package unsw.loopmania.buildings;
 import java.util.List;
 import org.javatuples.Pair;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.StaticEntity;
 import unsw.loopmania.WorldStateObserver;
@@ -14,8 +15,8 @@ import unsw.loopmania.path.PathPosition;
 public abstract class Building extends StaticEntity implements WorldStateObserver {
     private int buildingRadius;
 
-    public Building(Pair<Integer, Integer> position, int radius) {
-        super(position);
+    public Building(SimpleIntegerProperty x, SimpleIntegerProperty y, int radius) {
+        super(x, y);
         this.buildingRadius = -1;
     }
 

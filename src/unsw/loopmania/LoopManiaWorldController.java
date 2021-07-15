@@ -514,9 +514,9 @@ public class LoopManiaWorldController {
         return isPaused;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Loaders
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 Loaders
+    //*-------------------------------------------------------------------------
     /**
      * Load a card from the world, and pair it with an image in the GUI
      * 
@@ -686,9 +686,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Coordinates
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Coordinates
+    //*-------------------------------------------------------------------------
     /**
      * Remove the card from the world, and spawn and return a building instead where
      * the card was dropped
@@ -719,9 +719,9 @@ public class LoopManiaWorldController {
         world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Drag EventHandlers
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Drag EventHandlers
+    //*-------------------------------------------------------------------------
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the
      * background, dropping over the background. These are not attached to invidual
@@ -942,36 +942,36 @@ public class LoopManiaWorldController {
                 switch (draggableType) {
                     case CARD:
                         Card card = (Card) staticEntity;
-                        if (card instanceof VampireCastleCard)
+                        if (card.getCardId().equals("VampireCastleCard"))
                             draggedEntity.setImage(vampireCastleCardImage);
-                        else if (card instanceof BarracksCard)
+                        else if (card.getCardId().equals("BarracksCard"))
                             draggedEntity.setImage(barracksCardImage);
-                        else if (card instanceof ZombiePitCard)
+                        else if (card.getCardId().equals("ZombiePitCard"))
                             draggedEntity.setImage(zombiePitCardImage);
-                        else if (card instanceof CampfireCard)
+                        else if (card.getCardId().equals("CampfireCard"))
                             draggedEntity.setImage(campfireCardImage);
-                        else if (card instanceof TowerCard)
+                        else if (card.getCardId().equals("TowerCard"))
                             draggedEntity.setImage(towerCardImage);
-                        else if (card instanceof TrapCard)
+                        else if (card.getCardId().equals("TrapCard"))
                             draggedEntity.setImage(trapCardImage);
                         else
                             draggedEntity.setImage(villageCardImage);
                         break;
                     case ITEM:
                         Item item = (Item) staticEntity;
-                        if (item instanceof BodyArmour)
+                        if (item.getClass().getSimpleName().equals("BodyArmour"))
                             draggedEntity.setImage(bodyArmourImage);
-                        else if (item instanceof Helmet)
+                        else if (item.getClass().getSimpleName().equals("Helmet"))
                             draggedEntity.setImage(helmetImage);
-                        else if (item instanceof Shield)
+                        else if (item.getClass().getSimpleName().equals("Shield"))
                             draggedEntity.setImage(shieldImage);
-                        else if (item instanceof Staff)
+                        else if (item.getClass().getSimpleName().equals("Staff"))
                             draggedEntity.setImage(staffImage);
-                        else if (item instanceof Stake)
+                        else if (item.getClass().getSimpleName().equals("Stake"))
                             draggedEntity.setImage(stakeImage);
-                        else if (item instanceof Sword)
+                        else if (item.getClass().getSimpleName().equals("Sword"))
                             draggedEntity.setImage(swordImage);
-                        else if (item instanceof HealthPotion)
+                        else if (item.getClass().getSimpleName().equals("HealthPotion"))
                             draggedEntity.setImage(healthPotionImage);
                         break;
                     default:
@@ -1105,9 +1105,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Key Press
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Key Press
+    //*-------------------------------------------------------------------------
 
     /**
      * handle the pressing of keyboard keys. Specifically, we should pause when
@@ -1136,9 +1136,9 @@ public class LoopManiaWorldController {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Menu Switch
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Menu Switch
+    //*-------------------------------------------------------------------------
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
         this.mainMenuSwitcher = mainMenuSwitcher;
@@ -1179,9 +1179,9 @@ public class LoopManiaWorldController {
         return world.getUnequippedItems();
     }
 
-    // *-------------------------------------------------------------------------
-    // * Track Position
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Track Position
+    //*-------------------------------------------------------------------------
     /**
      * Set a node in a GridPane to have its position track the position of an entity
      * in the world.
@@ -1253,9 +1253,9 @@ public class LoopManiaWorldController {
         });
     }
 
-    // *-------------------------------------------------------------------------
-    // * Threading
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Threading
+    //*-------------------------------------------------------------------------
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application

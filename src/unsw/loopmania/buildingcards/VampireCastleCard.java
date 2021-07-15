@@ -1,16 +1,12 @@
 package unsw.loopmania.buildingcards;
 
-import org.javatuples.Pair;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * represents a vampire castle card in the backend game world
  */
 public class VampireCastleCard extends Card {
-    public VampireCastleCard(Pair<Integer, Integer> position) {
-        super(position);
-    }
-
-    public VampireCastleCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
+    public VampireCastleCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+        super(x, y, "VampireCastleCard");
+    }    
 }

@@ -2,28 +2,17 @@ package unsw.loopmania;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.path.PathPosition;
 
-import org.javatuples.Pair;
 
 /**
- * represents a non-moving entity unlike the moving entities, this can be placed
- * anywhere on the game map
+ * represents a non-moving entity
+ * unlike the moving entities, this can be placed anywhere on the game map
  */
 public abstract class StaticEntity extends Entity {
     /**
-     * x and y coordinates represented by IntegerProperty, so ChangeListeners can be
-     * added
+     * x and y coordinates represented by IntegerProperty, so ChangeListeners can be added
      */
     private IntegerProperty x, y;
-
-    public StaticEntity(Pair<Integer, Integer> position) {
-        this(new SimpleIntegerProperty(position.getValue0()), new SimpleIntegerProperty(position.getValue1()));
-    }
-
-    public StaticEntity(PathPosition position) {
-        this(position.getX(), position.getY());
-    }
 
     public StaticEntity(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super();
