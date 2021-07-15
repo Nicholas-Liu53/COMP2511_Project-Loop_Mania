@@ -1007,6 +1007,10 @@ public class LoopManiaWorld {
         return character.getGold();
     }
 
+    public void deductGold(int num) {
+        character.removeGold(num);
+    }
+
     //*-------------------------------------------------------------------------
     //*                     Buildings Helper Functions
     //*-------------------------------------------------------------------------

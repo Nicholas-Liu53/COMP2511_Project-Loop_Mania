@@ -118,6 +118,8 @@ public class ShopMenuController {
     private boolean purchase(String string) {
         Item item = null;
         Pair<Integer, Integer> slotPos = world.getFirstAvailableSlotForItem();
+        boolean canBuy = false;
+        
         if (slotPos == null) {
             return false;
         } 
@@ -126,14 +128,47 @@ public class ShopMenuController {
                 return false;
             } 
             item = new Sword(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(Sword.getPurchasePrice());
         } else if (string.equals("Stake")) {
             if (!canAfford(Stake.getPurchasePrice())) {
                 return false;
             } 
-            item = new Sword(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            item = new Stake(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(Stake.getPurchasePrice());
+        } else if (string.equals("Staff")) {
+            if (!canAfford(Staff.getPurchasePrice())) {
+                return false;
+            } 
+            item = new Staff(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(Staff.getPurchasePrice());
+        } else if (string.equals("BodyArmour")) {
+            if (!canAfford(BodyArmour.getPurchasePrice())) {
+                return false;
+            } 
+            item = new BodyArmour(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(BodyArmour.getPurchasePrice());
+        } else if (string.equals("Shield")) {
+            if (!canAfford(Shield.getPurchasePrice())) {
+                return false;
+            } 
+            item = new Shield(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(Shield.getPurchasePrice());
+        } else if (string.equals("Helmet")) {
+            if (!canAfford(Helmet.getPurchasePrice())) {
+                return false;
+            } 
+            item = new Helmet(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(Helmet.getPurchasePrice());
+        } else if (string.equals("HealthPotion")) {
+            if (!canAfford(HealthPotion.getPurchasePrice())) {
+                return false;
+            } 
+            item = new HealthPotion(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+            world.deductGold(HealthPotion.getPurchasePrice());
         }
 
 
+        return true;
     }
 
     private boolean canAfford(int purchasePrice) {
