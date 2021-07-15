@@ -1,22 +1,23 @@
 package unsw.loopmania.items;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
+
 import unsw.loopmania.enemies.Enemy;
 
 /**
  * represents an equipped or unequipped sword in the backend world
  */
 public class Sword extends Item implements WeaponStrategy {
-    public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, "Weapon");
-        // purchasePrice = 200;
-        // sellPrice = 160;
+    public Sword(Pair<Integer, Integer> position) {
+        super(position);
+        // this.purchasePrice = 200;
+        // this.sellPrice = 160;
     }
 
     public Sword() {
-        super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2), "Weapon");
-        // purchasePrice = 200;
-        // sellPrice = 160;
+        super(new Pair<Integer, Integer>(1, 2));
+        // this.purchasePrice = 200;
+        // this.sellPrice = 160;
     }
 
     public void launchAttack(Enemy enemy, int baseDamage) {

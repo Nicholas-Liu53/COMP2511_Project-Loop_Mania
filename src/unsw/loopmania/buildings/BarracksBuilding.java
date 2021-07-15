@@ -1,12 +1,12 @@
 package unsw.loopmania.buildings;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
 
 /**
- * a basic form of building in the world
+ * represents a barracks building in the backend game world
  */
 public class BarracksBuilding extends Building {
-    public BarracksBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
-        super(x, y, -1);
+    public BarracksBuilding(Pair<Integer, Integer> position) {
+        super(position, -1);
     }
 }
