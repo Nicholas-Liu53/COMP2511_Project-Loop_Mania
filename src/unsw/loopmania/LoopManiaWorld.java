@@ -127,6 +127,23 @@ public class LoopManiaWorld {
         // this.charHealthProperty = 0.0;
         this.charGoldProperty = new SimpleStringProperty();
         this.charXPProperty = new SimpleStringProperty();
+
+        this.numSwordProperty = new SimpleStringProperty();
+        this.numStakeProperty = new SimpleStringProperty();
+        this.numStaffProperty = new SimpleStringProperty();
+        this.numBodyArmourProperty = new SimpleStringProperty();
+        this.numHelmetProperty = new SimpleStringProperty();
+        this.numShieldProperty = new SimpleStringProperty();
+        this.numHealthPotionProperty = new SimpleStringProperty();
+
+        this.numSword = 0;
+        this.numStake = 0;
+        this.numStaff = 0;
+        this.numBodyArmour = 0;
+        this.numHelmet = 0;
+        this.numShield = 0;
+        this.numHealthPotion = 0;
+
     }
 
     //--------------------------------------------------------------------------
@@ -445,7 +462,7 @@ public class LoopManiaWorld {
      * 
      * @param item item to be removed
      */
-    private void removeUnequippedInventoryItem(Entity item) {
+    public void removeUnequippedInventoryItem(Entity item) {
         Item temp = (Item) item;
         decreaseUnequippedInventoryItemCount(temp);
         updateItemProperty(temp);
@@ -599,6 +616,10 @@ public class LoopManiaWorld {
 
     public void deductGold(int num) {
         character.removeGold(num);
+    }
+
+    public void giveGold(int num) {
+        character.giveGold(num);
     }
 
     public void addToUnequippedInventory(Item item) {
@@ -1080,6 +1101,34 @@ public class LoopManiaWorld {
     public StringProperty xpProperty() {
         this.charXPProperty.set(String.valueOf(character.getExperience()));
         return this.charXPProperty;
+    }
+    
+    public StringProperty getSwordProperty() {
+        return this.numSwordProperty;
+    }
+
+    public StringProperty getStaffProperty() {
+        return this.numStaffProperty;
+    }
+
+    public StringProperty getStakeProperty() {
+        return this.numStakeProperty;
+    }
+
+    public StringProperty getBodyArmourProperty() {
+        return this.numBodyArmourProperty;
+    }
+
+    public StringProperty getHelmetProperty() {
+        return this.numHelmetProperty;
+    }
+
+    public StringProperty getShieldProperty() {
+        return this.numShieldProperty;
+    }
+
+    public StringProperty getHealthPotionProperty() {
+        return this.numHealthPotionProperty;
     }
 
     //*-------------------------------------------------------------------------

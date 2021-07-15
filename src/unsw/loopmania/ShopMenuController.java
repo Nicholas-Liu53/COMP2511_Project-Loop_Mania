@@ -3,6 +3,7 @@ package unsw.loopmania;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +55,22 @@ public class ShopMenuController {
     @FXML
     private Label shopGoldNum;
 
+    @FXML
+    private Label sellSwordNum;
+    @FXML
+    private Label sellStaffNum;
+    @FXML
+    private Label sellStakeNum;
+    @FXML
+    private Label sellHelmetNum;
+    @FXML
+    private Label sellBodyArmourNum;
+    @FXML
+    private Label sellShieldNum;
+    @FXML
+    private Label sellHealthPotionNum;
+
+
     // Item Images
     private Image bodyArmourImage;
     private Image healthPotionImage;
@@ -89,14 +106,13 @@ public class ShopMenuController {
     @FXML
     public void initialize() {
         world.goldProperty().bindBidirectional(shopGoldNum.textProperty());
-        // HashMap<String, Integer> itemDict = new HashMap<String, Integer>();
-        // for (Item item: world.getUnequippedItems()) {
-        //     try {
-        //         itemDict.put(item.getClass().getSimpleName(), itemDict.get(item.getClass().getSimpleName()) + 1);
-        //     } catch (Exception e) {
-        //         itemDict.put(item.getClass().getSimpleName(), 1);
-        //     }
-        // }
+        world.getSwordProperty().bindBidirectional(sellSwordNum.textProperty());
+        world.getStaffProperty().bindBidirectional(sellStaffNum.textProperty());
+        world.getStakeProperty().bindBidirectional(sellStakeNum.textProperty());
+        world.getBodyArmourProperty().bindBidirectional(sellBodyArmourNum.textProperty());
+        world.getHelmetProperty().bindBidirectional(sellHelmetNum.textProperty());
+        world.getShieldProperty().bindBidirectional(sellShieldNum.textProperty());
+        world.getHealthPotionProperty().bindBidirectional(sellHealthPotionNum.textProperty());
     }
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
@@ -236,7 +252,76 @@ public class ShopMenuController {
                 end if
             end for
         */
-        return true;
+        for (Item item: world.getUnequippedItems()) {
+            if (item.getClass().getSimpleName().equals(itemName)) {
+                // world.decreaseUnequippedInventoryItemCount(item);
+                world.removeUnequippedInventoryItem(item);
+                world.updateItemProperty(item);
+                switch (item.getClass().getSimpleName()) {
+                    case "Sword":
+                        world.giveGold(Sword.getSellPrice());
+                        break;
+                    case "Stake":
+                        world.giveGold(Stake.getSellPrice());
+                        break;
+                    case "Staff":
+                        world.giveGold(Staff.getSellPrice());
+                        break;
+                    case "BodyArmour":
+                        world.giveGold(BodyArmour.getSellPrice());
+                        break;
+                    case "Helmet":
+                        world.giveGold(Helmet.getSellPrice());
+                        break;
+                    case "Shield":
+                        world.giveGold(Shield.getSellPrice());
+                        break;
+                    case "HealthPotion":
+                        world.giveGold(HealthPotion.getSellPrice());
+                        break;
+                    default:
+                        break;
+                }
+                world.goldProperty();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @FXML
+    private boolean sellSword() {
+        return sell("Sword");
+    }
+
+    @FXML
+    private boolean sellStake() {
+        return sell("Stake");
+    }
+
+    @FXML
+    private boolean sellStaff() {
+        return sell("Staff");
+    }
+    
+    @FXML
+    private boolean sellBodyArmour() {
+        return sell("BodyArmour");
+    }
+
+    @FXML
+    private boolean sellShield() {
+        return sell("Shield");
+    }
+
+    @FXML
+    private boolean sellHelmet() {
+        return sell("Helmet");
+    }
+
+    @FXML
+    private boolean sellHealthPotion() {
+        return sell("HealthPotion");
     }
 
     private boolean canAfford(int purchasePrice) {
