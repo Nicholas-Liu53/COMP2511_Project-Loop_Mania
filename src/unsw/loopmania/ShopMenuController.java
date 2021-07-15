@@ -148,16 +148,16 @@ public class ShopMenuController {
 
     @FXML
     public void initialize() {
-        Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-        Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
+        // Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
+        // Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
         
-        // Add the empty slot images for the unequipped inventory
-        for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
-            for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
-                ImageView emptySlotView = new ImageView(inventorySlotImage);
-                unequippedInventory.add(emptySlotView, x, y);
-            }
-        }
+        // // Add the empty slot images for the unequipped inventory
+        // for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
+        //     for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
+        //         ImageView emptySlotView = new ImageView(inventorySlotImage);
+        //         unequippedInventory.add(emptySlotView, x, y);
+        //     }
+        // }
 
         // // Create the draggable icon
         // draggedEntity = new DragIcon();
@@ -187,17 +187,17 @@ public class ShopMenuController {
         return this.world;
     }
 
-    public void addItemsInInventory(List<Item> unequippedInventoryItems) {
-        // int i = 0, j = 0;
-        for (Item unequippedInventoryItem : unequippedInventoryItems) {
-            unequippedInventory.getChildren().add(new ImageView(getImageForItem(unequippedInventoryItem)));
-            // i++;
-            // if (i % 4 == 0) {
-            //     i = 0;
-            //     j++;
-            // }
-        }
-    }
+    // public void addItemsInInventory(List<Item> unequippedInventoryItems) {
+    //     // // int i = 0, j = 0;
+    //     // for (Item unequippedInventoryItem : unequippedInventoryItems) {
+    //     //     unequippedInventory.getChildren().add(new ImageView(getImageForItem(unequippedInventoryItem)));
+    //     //     // i++;
+    //     //     // if (i % 4 == 0) {
+    //     //     //     i = 0;
+    //     //     //     j++;
+    //     //     // }
+    //     // }
+    // }
 
     // Helper functions
     private Image getImageForItem(Item item) {

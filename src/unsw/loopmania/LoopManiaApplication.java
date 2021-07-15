@@ -56,7 +56,7 @@ public class LoopManiaApplication extends Application {
         mainGameController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
         mainGameController.setShopMenuSwitcher(() -> {
             switchToRoot(scene, shopMenuRoot, primaryStage);
-            shopMenuController.addItemsInInventory(mainGameController.getUnequippedItems());
+            // shopMenuController.addItemsInInventory(mainGameController.getUnequippedItems());
         });
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
