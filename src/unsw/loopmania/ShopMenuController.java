@@ -180,8 +180,10 @@ public class ShopMenuController {
             return false;
         }
         world.addToUnequippedInventory(item);
-        worldController.loadItem(item);
+        world.increaseUnequippedInventoryItemCount(item);
+        world.updateItemProperty(item);
         world.goldProperty();
+        worldController.loadItem(item);
         return true;
     }
     
