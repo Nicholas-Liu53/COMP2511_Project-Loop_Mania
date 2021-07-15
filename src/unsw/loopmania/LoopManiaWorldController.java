@@ -246,6 +246,11 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
     private MenuSwitcher shopMenuSwitcher;
+    private ShopMenuController shopMenuController;
+
+    public void setShopController(ShopMenuController shopMenuController) {
+        this.shopMenuController = shopMenuController;
+    }
 
     /**
      * @param world           world object loaded from file
@@ -1164,6 +1169,7 @@ public class LoopManiaWorldController {
     private void switchToShopMenu() throws IOException {
         pause();
         // addItemsInInventory(unequippedInventory);
+        shopMenuController.initialiseNumColours();
         shopMenuSwitcher.switchMenu();
     }
 

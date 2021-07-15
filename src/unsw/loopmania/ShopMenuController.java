@@ -13,11 +13,15 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -51,6 +55,13 @@ public class ShopMenuController {
 
     private LoopManiaWorld world;
     private LoopManiaWorldController worldController;
+
+    // Item list
+    private ArrayList<String> itemsList = new ArrayList<String>(
+        Arrays.asList(
+            "Sword", "Stake", "Staff", "BodyArmour", "Helmet", "Shield", "HealthPotion"
+        )
+    );
     
     @FXML
     private Label shopGoldNum;
@@ -200,6 +211,7 @@ public class ShopMenuController {
         world.updateItemProperty(item);
         world.goldProperty();
         worldController.loadItem(item);
+        checkIfHitsZero(item);
         return true;
     }
     
@@ -283,6 +295,7 @@ public class ShopMenuController {
                         break;
                 }
                 world.goldProperty();
+                checkIfHitsZero(item);
                 return true;
             }
         }
@@ -341,5 +354,110 @@ public class ShopMenuController {
         else if (item.getClass().getSimpleName().equals("Stake")) return stakeImage;
         else if (item.getClass().getSimpleName().equals("Sword")) return swordImage;
         else return theOneRingImage;
+    }
+
+    private void turnRed(Label l) {
+        l.setTextFill(Color.web("#B22222", 0.8));
+        l.setFont(Font.font("System", FontWeight.EXTRA_BOLD, 12));
+    }
+
+    private void turnBlack(Label l) {
+        l.setTextFill(Color.web("#000000"));
+        l.setFont(Font.font("System", FontWeight.NORMAL, 12));
+
+    }
+
+    public void checkIfHitsZero(Item i) {
+        StringProperty p = null;
+        Label l = null;
+        switch (i.getClass().getSimpleName()) {
+            case "Sword":
+                p = world.getSwordProperty();
+                l = sellSwordNum;
+                break;
+            case "Stake":
+                p = world.getStakeProperty();
+                l = sellStakeNum;
+                break;
+            case "Staff":
+                p = world.getStaffProperty();
+                l = sellStaffNum;
+                break;
+            case "BodyArmour":
+                p = world.getBodyArmourProperty();   
+                l = sellBodyArmourNum;
+                break;
+            case "Helmet":
+                p = world.getHelmetProperty();
+                l = sellHelmetNum;
+                break;
+            case "Shield":
+                p = world.getShieldProperty();
+                l = sellShieldNum;
+                break;
+            case "HealthPotion":
+                p = world.getHealthPotionProperty();
+                l = sellHealthPotionNum;
+                break;
+            default:
+                break;
+        }
+        if (p.toString().equals("StringProperty [value: 0]")) {
+            turnRed(l);
+            // System.out.println(p.toString());
+        } else {
+            turnBlack(l);
+            // System.out.println(p.toString());
+        }
+    }
+
+    public void checkIfHitsZero(String i) {
+        StringProperty p = null;
+        Label l = null;
+        switch (i) {
+            case "Sword":
+                p = world.getSwordProperty();
+                l = sellSwordNum;
+                break;
+            case "Stake":
+                p = world.getStakeProperty();
+                l = sellStakeNum;
+                break;
+            case "Staff":
+                p = world.getStaffProperty();
+                l = sellStaffNum;
+                break;
+            case "BodyArmour":
+                p = world.getBodyArmourProperty();   
+                l = sellBodyArmourNum;
+                break;
+            case "Helmet":
+                p = world.getHelmetProperty();
+                l = sellHelmetNum;
+                break;
+            case "Shield":
+                p = world.getShieldProperty();
+                l = sellShieldNum;
+                break;
+            case "HealthPotion":
+                p = world.getHealthPotionProperty();
+                l = sellHealthPotionNum;
+                break;
+            default:
+                break;
+        }
+        if (p.toString().equals("StringProperty [value: 0]")) {
+            turnRed(l);
+            // System.out.println(p.toString());
+        } else {
+            turnBlack(l);
+            // System.out.println(p.toString());
+        }
+    }
+
+    public void initialiseNumColours(){
+        for (String item: itemsList) {
+            checkIfHitsZero(item);
+        }
     }
 }

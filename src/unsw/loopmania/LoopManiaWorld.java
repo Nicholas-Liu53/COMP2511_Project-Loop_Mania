@@ -546,7 +546,9 @@ public class LoopManiaWorld {
      * @param index index from 0 to length-1
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index) {
-        this.unequippedInventoryItems.get(index).destroy();
+        Item item = this.unequippedInventoryItems.get(index);
+        decreaseUnequippedInventoryItemCount(item);
+        item.destroy();
         this.unequippedInventoryItems.remove(index);
     }
 
