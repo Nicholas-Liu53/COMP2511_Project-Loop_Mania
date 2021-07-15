@@ -363,7 +363,7 @@ public class LoopManiaWorld {
         // Insert the new item, as we know we have at least made a slot available...
         if (itemToAdd instanceof HealthPotion) {
             HealthPotion healthPotion = new HealthPotion(firstAvailableSlot);
-            this.unequippedInventoryItems.add(itemToAdd);
+            this.unequippedInventoryItems.add(healthPotion);
             return healthPotion;
         } else {
             character.giveGold(100);
@@ -390,7 +390,7 @@ public class LoopManiaWorld {
         }
 
         Item item = null;
-
+        System.out.println(firstAvailableSlot);
         switch (itemType) {
             case "Helmet":
                 item = new Helmet(firstAvailableSlot);
@@ -899,10 +899,10 @@ public class LoopManiaWorld {
 
         // small chance to get a oneRing when a battle is won
         // i.e. rewardSetting is "withCard"
-        if (rewardSetting.equals("withCard")) {
-            if (rand.nextInt(100) == 21)
-                return loadItem("oneRing");
-        }
+        // if (rewardSetting.equals("withCard")) {
+        // if (rand.nextInt(100) == 21)
+        // return loadItem("oneRing");
+        // }
 
         switch (rewardSetting) {
             case "withCard":
