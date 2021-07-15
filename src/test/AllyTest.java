@@ -13,7 +13,7 @@ public class AllyTest {
     public void AllyAttackTest() {
         // Testing that allies do approrpiate damage
         Character mainChar = new Character(null);
-        Ally allyOne = new Ally(null);
+        Ally allyOne = new Ally();
         mainChar.addAlly(allyOne);
 
         // One Ally
@@ -22,7 +22,7 @@ public class AllyTest {
         assertEquals(15, enemy.getHealth());
 
         // Multiple allies
-        Ally allyTwo = new Ally(null);
+        Ally allyTwo = new Ally();
         mainChar.addAlly(allyTwo);
         mainChar.launchAttack(enemy, false);
         assertEquals(0, enemy.getHealth());
@@ -31,7 +31,7 @@ public class AllyTest {
     public void AllyDefendTest() {
         // Testing that allies take appropriate damage
         Character mainChar = new Character(null);
-        Ally allyOne = new Ally(null);
+        Ally allyOne = new Ally();
         mainChar.addAlly(allyOne);
 
         // One ally taking damage
@@ -45,8 +45,8 @@ public class AllyTest {
         assertEquals(99, mainChar.getHealth());
 
         // Multiple allies taking damage
-        allyOne = new Ally(null);
-        Ally allyTwo = new Ally(null);
+        allyOne = new Ally();
+        Ally allyTwo = new Ally();
         mainChar.addAlly(allyOne);
         mainChar.addAlly(allyTwo);
         enemy.launchAttack(mainChar);
