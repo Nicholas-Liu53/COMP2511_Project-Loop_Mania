@@ -49,6 +49,7 @@ public class ShopMenuController {
     private List<ImageView> entityImages;
 
     private LoopManiaWorld world;
+    private LoopManiaWorldController worldController;
     
     @FXML
     private Label shopGoldNum;
@@ -115,6 +116,10 @@ public class ShopMenuController {
         this.world = world;
     }
 
+    public void setWorldController(LoopManiaWorldController worldController) {
+        this.worldController = worldController;
+    }
+
     public LoopManiaWorld getWorld() {
         return this.world;
     }
@@ -124,7 +129,6 @@ public class ShopMenuController {
     private boolean purchase(String string) {
         Item item = null;
         Pair<Integer, Integer> slotPos = world.getFirstAvailableSlotForItem();
-        boolean canBuy = false;
         
         if (slotPos == null) {
             return false;
@@ -174,7 +178,7 @@ public class ShopMenuController {
         } else {
             return false;
         }
-        
+        worldController.loadItem(item);
         return true;
     }
     

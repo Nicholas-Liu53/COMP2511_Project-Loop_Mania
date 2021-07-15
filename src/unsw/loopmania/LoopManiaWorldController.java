@@ -531,7 +531,7 @@ public class LoopManiaWorldController {
      * 
      * @param item
      */
-    private void loadItem(Item item) {
+    public void loadItem(Item item) {
         onLoad(item, false);
     }
 
