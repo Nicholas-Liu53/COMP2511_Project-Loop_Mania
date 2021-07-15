@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -390,7 +389,6 @@ public class LoopManiaWorld {
         }
 
         Item item = null;
-        System.out.println(firstAvailableSlot);
         switch (itemType) {
             case "Helmet":
                 item = new Helmet(firstAvailableSlot);
