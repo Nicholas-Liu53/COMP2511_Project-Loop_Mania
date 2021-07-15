@@ -41,7 +41,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Pane layoutX="41.0" layoutY="129.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
+                        <Pane layoutX="41.0" layoutY="129.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -64,7 +64,7 @@
                               <Label fx:id="sellStaffNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="41.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
+                        <Pane layoutX="41.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -92,7 +92,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Pane layoutX="41.0" layoutY="57.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
+                        <Pane layoutX="41.0" layoutY="57.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: gold;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
