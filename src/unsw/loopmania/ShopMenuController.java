@@ -187,6 +187,36 @@ public class ShopMenuController {
         return purchase("Sword");
     }
 
+    @FXML
+    private boolean purchaseStake() {
+        return purchase("Stake");
+    }
+
+    @FXML
+    private boolean purchaseStaff() {
+        return purchase("Staff");
+    }
+    
+    @FXML
+    private boolean purchaseBodyArmour() {
+        return purchase("BodyArmour");
+    }
+
+    @FXML
+    private boolean purchaseShield() {
+        return purchase("Shield");
+    }
+
+    @FXML
+    private boolean purchaseHelmet() {
+        return purchase("Helmet");
+    }
+
+    @FXML
+    private boolean purchaseHealthPotion() {
+        return purchase("HealthPotion");
+    }
+
     // General Sell function
     private boolean sell(String itemName) {
         /* 

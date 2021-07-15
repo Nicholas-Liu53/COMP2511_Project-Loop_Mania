@@ -58,7 +58,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseStaff" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
@@ -81,7 +81,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseStake" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
@@ -109,7 +109,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseSword" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
@@ -132,7 +132,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseBodyArmour" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
@@ -155,7 +155,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseShield" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
@@ -178,7 +178,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseHelmet" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
@@ -206,7 +206,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseHealthPotion" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
