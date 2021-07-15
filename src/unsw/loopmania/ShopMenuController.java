@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -87,6 +88,14 @@ public class ShopMenuController {
     @FXML
     public void initialize() {
         world.goldProperty().bindBidirectional(shopGoldNum.textProperty());
+        // HashMap<String, Integer> itemDict = new HashMap<String, Integer>();
+        // for (Item item: world.getUnequippedItems()) {
+        //     try {
+        //         itemDict.put(item.getClass().getSimpleName(), itemDict.get(item.getClass().getSimpleName()) + 1);
+        //     } catch (Exception e) {
+        //         itemDict.put(item.getClass().getSimpleName(), 1);
+        //     }
+        // }
     }
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
@@ -110,10 +119,7 @@ public class ShopMenuController {
         return this.world;
     }
 
-    // private boolean purchaseSword() {
-    //     purchase("Sword");
-    // }
-
+    
     // General purchase function
     private boolean purchase(String string) {
         Item item = null;
@@ -165,9 +171,32 @@ public class ShopMenuController {
             } 
             item = new HealthPotion(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
             world.deductGold(HealthPotion.getPurchasePrice());
+        } else {
+            return false;
         }
+        
+        return true;
+    }
+    
+    @FXML
+    private boolean purchaseSword() {
+        return purchase("Sword");
+    }
 
-
+    // General Sell function
+    private boolean sell(String itemName) {
+        /* 
+            Pseudocode to sell
+            if no item to sell:
+                return false
+            for item in unequippedInventoryItems:
+                if item.getClass().getSimpleName().equals(itemName):
+                    delete item from inventory
+                    give money back
+                    break
+                end if
+            end for
+        */
         return true;
     }
 
