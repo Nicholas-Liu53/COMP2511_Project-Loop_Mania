@@ -25,9 +25,9 @@ public class WeaponTest {
 
         mainChar.equipItem(weapon);
         // Testing against slug
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(10, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(0, enemy.getHealth());
     }
 
@@ -39,25 +39,25 @@ public class WeaponTest {
 
         mainChar.equipItem(weapon);
         // Testing against slug
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(15, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(5, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(0, enemy.getHealth());
 
         // Testing against vampire
         enemy = new VampireEnemy(null);
 
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(59, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(43, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(27, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(11, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(0, enemy.getHealth());
     }
 
@@ -69,13 +69,13 @@ public class WeaponTest {
 
         mainChar.equipItem(weapon);
         // Testing against slug
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(17, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(9, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(1, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(0, enemy.getHealth());
     }
 }
