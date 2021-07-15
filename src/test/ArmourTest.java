@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Testing the equippable armour items
  */
 public class ArmourTest {
-    
+
     /**
      * Testing body armour reduces damage to character
      */
@@ -73,9 +73,9 @@ public class ArmourTest {
 
         // Testing attack reduction
         SlugEnemy enemy = new SlugEnemy(null);
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(22, enemy.getHealth());
-        mainChar.launchAttack(enemy);
+        mainChar.launchAttack(enemy, false);
         assertEquals(19, enemy.getHealth());
     }
 }

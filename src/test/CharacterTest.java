@@ -55,15 +55,15 @@ public class CharacterTest {
         SlugEnemy slug = new SlugEnemy(null);
         VampireEnemy vampire = new VampireEnemy(null);
 
-        character.launchAttack(vampire);
+        character.launchAttack(vampire, false);
         assertEquals(71, vampire.getHealth());
-        character.launchAttack(vampire);
+        character.launchAttack(vampire, false);
         assertEquals(67, vampire.getHealth());
-        character.launchAttack(slug);
+        character.launchAttack(slug, false);
         assertEquals(20, slug.getHealth());
-        character.launchAttack(vampire);
+        character.launchAttack(vampire, false);
         assertEquals(63, vampire.getHealth());
-        character.launchAttack(slug);
+        character.launchAttack(slug, false);
         assertEquals(15, slug.getHealth());
     }
 
