@@ -492,6 +492,8 @@ public class LoopManiaWorld {
         WeaponStrategy oldWeapon = character.getWeapon();
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         this.unequippedInventoryItems.remove(item);
+        decreaseUnequippedInventoryItemCount((Item) item);
+        updateItemProperty((Item) item);
         character.equipItem((WeaponStrategy) item);
 
         if (oldWeapon instanceof Melee) {
@@ -526,6 +528,8 @@ public class LoopManiaWorld {
         }
 
         this.unequippedInventoryItems.remove(item);
+        decreaseUnequippedInventoryItemCount((Item) item);
+        updateItemProperty((Item) item);
 
         if (oldItem instanceof Melee) {
             // Melee shouldn't be placed in the inventory
@@ -682,6 +686,7 @@ public class LoopManiaWorld {
             default:
                 break;
         }
+        // System.out.println("Yikes");
     }
 
     public void updateItemProperty(Item item) {
