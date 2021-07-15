@@ -30,7 +30,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import unsw.loopmania.items.Item;
+import org.javatuples.Pair;
+import unsw.loopmania.items.*;
 
 /**
  * controller for the shop menu.
@@ -107,6 +108,39 @@ public class ShopMenuController {
 
     public LoopManiaWorld getWorld() {
         return this.world;
+    }
+
+    // private boolean purchaseSword() {
+    //     purchase("Sword");
+    // }
+
+    // General purchase function
+    private boolean purchase(String string) {
+        Item item = null;
+        Pair<Integer, Integer> slotPos = world.getFirstAvailableSlotForItem();
+        if (slotPos == null) {
+            return false;
+        } 
+        if (string.equals("Sword")) {
+            if (!canAfford(Sword.getPurchasePrice())) {
+                return false;
+            } 
+            item = new Sword(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+        } else if (string.equals("Stake")) {
+            if (!canAfford(Stake.getPurchasePrice())) {
+                return false;
+            } 
+            item = new Sword(new SimpleIntegerProperty(slotPos.getValue0()), new SimpleIntegerProperty(slotPos.getValue1()));
+        }
+
+
+    }
+
+    private boolean canAfford(int purchasePrice) {
+        if (world.getGold() < purchasePrice) {
+            return false;
+        }
+        return true;
     }
 
     // Helper functions

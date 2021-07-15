@@ -5,15 +5,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Shield extends Armour implements ShieldStrategy {
     public Shield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-        purchasePrice = 300;
-        sellPrice = 240;
         damageReductionFactor = 0.7;
     }
 
     public Shield() {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
-        purchasePrice = 300;
-        sellPrice = 240;
         damageReductionFactor = 0.7;
     }
 
@@ -23,4 +19,11 @@ public class Shield extends Armour implements ShieldStrategy {
         return recvDamage;
     }
 
+    public static int getPurchasePrice() {
+        return 300;
+    }
+
+    public static int getSellPrice() {
+        return 240;
+    }
 }
