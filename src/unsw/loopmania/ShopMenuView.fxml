@@ -61,7 +61,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseStaff" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellStaffNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane layoutX="41.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
@@ -84,7 +84,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseStake" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellStakeNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                         <Label alignment="CENTER" layoutX="24.0" layoutY="284.0" text="Armour">
@@ -112,7 +112,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseSword" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellSwordNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane layoutX="41.0" layoutY="384.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
@@ -135,7 +135,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseBodyArmour" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellBodyArmourNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane layoutX="41.0" layoutY="453.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
@@ -158,7 +158,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseShield" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellShieldNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                         <Pane layoutX="41.0" layoutY="314.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
@@ -181,7 +181,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseHelmet" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellHelmetNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                         <Label alignment="CENTER" layoutX="24.0" layoutY="531.0" text="Additional Items">
@@ -209,7 +209,7 @@
                               <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseHealthPotion" prefHeight="37.0" prefWidth="51.0" text="Buy" />
                               <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
-                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellHealthPotionNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
                      </children>
