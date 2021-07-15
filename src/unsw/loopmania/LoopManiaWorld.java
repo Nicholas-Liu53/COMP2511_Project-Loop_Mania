@@ -556,7 +556,7 @@ public class LoopManiaWorld {
      * 
      * @return x,y coordinate pair
      */
-    private Pair<Integer, Integer> getFirstAvailableSlotForItem() {
+    public Pair<Integer, Integer> getFirstAvailableSlotForItem() {
         // first available slot for an item...
         // IMPORTANT - have to check by y then x, since trying to find first available
         // slot defined by looking row by row
@@ -1008,9 +1008,13 @@ public class LoopManiaWorld {
         return charXP;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Buildings Helper Functions
-    // *-------------------------------------------------------------------------
+    public int getGold() {
+        return character.getGold();
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                     Buildings Helper Functions
+    //*-------------------------------------------------------------------------
     private void restoreHealthIfInVillage() {
         if (inVillage())
             character.restoreHealthPoints();

@@ -5,15 +5,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class BodyArmour extends Armour implements BodyArmourStrategy {
     public BodyArmour(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-        purchasePrice = 500;
-        sellPrice = 400;
         damageReductionFactor = 0.5;
     }
 
     public BodyArmour() {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
-        purchasePrice = 500;
-        sellPrice = 400;
         damageReductionFactor = 0.5;
     }
 
@@ -21,5 +17,13 @@ public class BodyArmour extends Armour implements BodyArmourStrategy {
         // BodyArmour provides 5 defence
         int recvDamage = (int)(damage * 0.5);
         return recvDamage;
+    }
+
+    public static int getPurchasePrice() {
+        return 500;
+    }
+
+    public static int getSellPrice() {
+        return 400;
     }
 }

@@ -32,55 +32,196 @@
                   <Image url="@../../images/gold_pile.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="118.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/gold_pile.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="48.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/gold_pile.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="118.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/gold_pile.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="48.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/gold_pile.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="118.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/gold_pile.png" />
-               </image>
-            </ImageView>
-            <ScrollPane layoutX="216.0" layoutY="153.0" prefHeight="146.0" prefWidth="153.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="351.0" prefWidth="283.0">
+            <ScrollPane layoutX="14.0" layoutY="65.0" prefHeight="419.0" prefWidth="472.0">
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="657.0" prefWidth="425.0">
                      <children>
-                        <ImageView fitHeight="31.0" fitWidth="64.0" layoutX="55.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/gold_pile.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="39.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/gold_pile.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="41.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/gold_pile.png" />
-                           </image>
-                        </ImageView>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="23.0" text="Weapons">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="41.0" layoutY="129.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/staff.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Staff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 300">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/stake.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Stake">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 150">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="284.0" text="Armour">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="41.0" layoutY="57.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: tomato;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/basic_sword.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Sword">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 200">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="384.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/armour.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Body Armour">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 500">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="453.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/shield.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Shield">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 300">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="314.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/helmet.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Helmet">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 200">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="531.0" text="Additional Items">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="41.0" layoutY="562.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: SpringGreen;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/brilliant_blue_new.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Health Potion">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 125">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="1" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
             </ScrollPane>
          </children>
       </Pane>
+      <Label alignment="CENTER" layoutX="139.0" layoutY="497.0" prefHeight="30.0" prefWidth="215.0" text="Item Purchased" textAlignment="CENTER" textFill="#00ff6d" wrapText="true">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

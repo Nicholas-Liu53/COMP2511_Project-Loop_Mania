@@ -5,15 +5,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Helmet extends Armour implements HelmetStrategy {
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-        purchasePrice = 200;
-        sellPrice = 160;
         damageReductionFactor = 0.8;
     }
 
     public Helmet() {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
-        purchasePrice = 200;
-        sellPrice = 160;
         damageReductionFactor = 0.8;
     }
 
@@ -25,5 +21,13 @@ public class Helmet extends Armour implements HelmetStrategy {
 
     public int launchAttack() {
         return 2;
+    }
+
+    public static int getPurchasePrice() {
+        return 200;
+    }
+
+    public static int getSellPrice() {
+        return 160;
     }
 }

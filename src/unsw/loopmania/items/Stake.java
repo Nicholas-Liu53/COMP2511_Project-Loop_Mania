@@ -11,14 +11,10 @@ public class Stake extends Item implements WeaponStrategy {
 
     public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y, "Weapon");
-        purchasePrice = 150;
-        sellPrice = 120;
     }
 
     public Stake() {
         super(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2), "Weapon");
-        purchasePrice = 150;
-        sellPrice = 120;
     }
 
     public void launchAttack(Enemy enemy, int baseDamage) {
@@ -28,5 +24,13 @@ public class Stake extends Item implements WeaponStrategy {
         } else {
             enemy.receiveAttack(baseDamage + 5);
         }
+    }
+    
+    public static int getPurchasePrice() {
+        return 150;
+    }
+
+    public static int getSellPrice() {
+        return 120;
     }
 }
