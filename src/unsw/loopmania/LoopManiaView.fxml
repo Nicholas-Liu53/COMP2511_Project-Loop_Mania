@@ -170,7 +170,7 @@
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="healthNum211" layoutX="45.0" layoutY="106.0" text="cycles." wrapText="true">
+                  <Label fx:id="cycleOrCycles" layoutX="48.0" layoutY="106.0" text="cycle." wrapText="true">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>

@@ -87,6 +87,7 @@ public class LoopManiaWorld {
     private StringProperty cyclesTillShopProperty;
 
     private StringProperty gamemodeProperty;
+    private StringProperty cycleOrCyclesProperty;
 
     private String gamemode = "Standard";
     /**
@@ -146,6 +147,7 @@ public class LoopManiaWorld {
         this.cyclesTillShopProperty = new SimpleStringProperty();
 
         this.gamemodeProperty = new SimpleStringProperty();
+        this.cycleOrCyclesProperty = new SimpleStringProperty();
 
         this.numSword = 0;
         this.numStake = 0;
@@ -964,6 +966,7 @@ public class LoopManiaWorld {
         getNumCyclesProperty();
         getCyclesTillShopProperty();
         getGamemodeProperty();
+        getCycleOrCyclesProperty();
 
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
@@ -1173,6 +1176,14 @@ public class LoopManiaWorld {
     public StringProperty getGamemodeProperty() {
         this.gamemodeProperty.set(gamemode);
         return this.gamemodeProperty;
+    }
+
+    public StringProperty getCycleOrCyclesProperty() {
+        if (this.numCyclesToOpenShop - this.numCycles == 1)
+            this.cycleOrCyclesProperty.set("cycle.");
+        else
+            this.cycleOrCyclesProperty.set("cycles.");
+        return this.cycleOrCyclesProperty;
     }
 
     //*-------------------------------------------------------------------------
