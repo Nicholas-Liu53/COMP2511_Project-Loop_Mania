@@ -1170,6 +1170,7 @@ public class LoopManiaWorldController {
         pause();
         // addItemsInInventory(unequippedInventory);
         shopMenuController.initialiseNumColours();
+        shopMenuController.resetResponseText();
         shopMenuSwitcher.switchMenu();
     }
 

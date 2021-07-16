@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -80,6 +81,9 @@ public class ShopMenuController {
     private Label sellShieldNum;
     @FXML
     private Label sellHealthPotionNum;
+
+    @FXML
+    private Label shopResponseLabel;
 
 
     // Item Images
@@ -159,46 +163,54 @@ public class ShopMenuController {
         Pair<Integer, Integer> slotPos = world.getFirstAvailableSlotForItem();
         
         if (slotPos == null) {
+            actionNotSuccessfulText("Inventory is full");
             return false;
         } 
         if (string.equals("Sword")) {
             if (!canAfford(Sword.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Sword(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Sword.getPurchasePrice());
         } else if (string.equals("Stake")) {
             if (!canAfford(Stake.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Stake(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Stake.getPurchasePrice());
         } else if (string.equals("Staff")) {
             if (!canAfford(Staff.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Staff(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Staff.getPurchasePrice());
         } else if (string.equals("BodyArmour")) {
             if (!canAfford(BodyArmour.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new BodyArmour(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(BodyArmour.getPurchasePrice());
         } else if (string.equals("Shield")) {
             if (!canAfford(Shield.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Shield(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Shield.getPurchasePrice());
         } else if (string.equals("Helmet")) {
             if (!canAfford(Helmet.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Helmet(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Helmet.getPurchasePrice());
         } else if (string.equals("HealthPotion")) {
             if (!canAfford(HealthPotion.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new HealthPotion(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
@@ -212,6 +224,7 @@ public class ShopMenuController {
         world.goldProperty();
         worldController.loadItem(item);
         checkIfHitsZero(item);
+        actionSuccessfulText(string + " bought");
         return true;
     }
     
@@ -296,9 +309,11 @@ public class ShopMenuController {
                 }
                 world.goldProperty();
                 checkIfHitsZero(item);
+                actionSuccessfulText(itemName + " Sold");
                 return true;
             }
         }
+        actionNotSuccessfulText("No " + itemName + "s left to sell");
         return false;
     }
 
@@ -459,5 +474,21 @@ public class ShopMenuController {
         for (String item: itemsList) {
             checkIfHitsZero(item);
         }
+    }
+
+    public void actionSuccessfulText(String s) {
+        shopResponseLabel.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 20));
+        shopResponseLabel.setTextFill(Color.web("#00ff6d"));
+        shopResponseLabel.setText(s);
+    }
+
+    public void actionNotSuccessfulText(String s) {
+        shopResponseLabel.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 20));
+        shopResponseLabel.setTextFill(Color.web("#FF0000"));
+        shopResponseLabel.setText(s);
+    }
+
+    public void resetResponseText() {
+        shopResponseLabel.setText("");
     }
 }
