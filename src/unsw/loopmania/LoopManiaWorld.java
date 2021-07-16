@@ -417,6 +417,7 @@ public class LoopManiaWorld {
             // beginning of items
             // giving some cash/experience rewards for the discarding of the oldest item
             giveRandomRewards("onlyGoldXP");
+            updateItemProperty(this.unequippedInventoryItems.get(0));
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
