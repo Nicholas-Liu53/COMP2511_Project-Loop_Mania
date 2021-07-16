@@ -602,7 +602,12 @@ public class LoopManiaWorld {
                 // fight...
                 character.addBattle(e);
                 character.launchAttack(e, inCampfireRadius(e));
-                e.launchAttack(character);
+                boolean specialAttack = e.launchAttack(character);
+
+                if (specialAttack && (e instanceof ZombieEnemy)) {
+                    this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
+                }
+
                 attackEnemyInTowerRadiusDuringBattle(e);
 
                 if (e.getHealth() == 0) {
@@ -799,6 +804,7 @@ public class LoopManiaWorld {
         healthProperty();
         goldProperty();
         xpProperty();
+        alliesProperty();
         restoreHealthIfInVillage();
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();

@@ -48,18 +48,22 @@ public class ZombieEnemy extends Enemy {
     }
 
     @Override
-    public void launchAttack(Character mainChar) {
+    public boolean launchAttack(Character mainChar) {
         if (this.doAction()) {
             super.launchAttack(mainChar);
 
             // Citical bite implementation
-            int criticalCheck = new Random(10).nextInt();
-            
-            if (criticalCheck == 5 && mainChar.getAllies().size() > 0) {
+            int criticalCheck = (new Random()).nextInt(10);
+            System.err.println(criticalCheck);
+            System.err.println(mainChar.getNumAllies());
+            if (criticalCheck == 5 && (mainChar.getNumAllies() > 0)) {
                 // Remove ally and spawn new zombie
                 mainChar.removeAlly();
-                
+                // Notifies caller that zombie must be spawned
+                return true;
             }
         }
+
+        return false;
     }
 }
