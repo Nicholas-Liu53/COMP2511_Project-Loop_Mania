@@ -19,15 +19,16 @@ public class AllyTest {
         // One Ally
         SlugEnemy enemy = new SlugEnemy(null);
         mainChar.launchAttack(enemy, false);
-        assertEquals(15, enemy.getHealth());
+        assertEquals(20, enemy.getHealth());
 
         // Multiple allies
         Ally allyTwo = new Ally();
         mainChar.addAlly(allyTwo);
         mainChar.launchAttack(enemy, false);
-        assertEquals(0, enemy.getHealth());
+        assertEquals(15, enemy.getHealth());
     }
 
+    @Test
     public void AllyDefendTest() {
         // Testing that allies take appropriate damage
         Character mainChar = new Character(null);
@@ -42,7 +43,7 @@ public class AllyTest {
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
-        assertEquals(99, mainChar.getHealth());
+        assertEquals(0, mainChar.getNumAllies());
 
         // Multiple allies taking damage
         allyOne = new Ally();
@@ -55,6 +56,7 @@ public class AllyTest {
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
-        assertEquals(9, allyTwo.getHealth());
+        enemy.launchAttack(mainChar);
+        assertEquals(7, allyTwo.getHealth());
     }
 }
