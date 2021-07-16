@@ -4,14 +4,16 @@ import java.util.Random;
 
 import unsw.loopmania.MovingEntity;
 import unsw.loopmania.Character;
+import unsw.loopmania.Ally;
 import unsw.loopmania.path.PathPosition;
 
-public abstract class Enemy extends MovingEntity {
+public abstract class Enemy extends MovingEntity implements Ally {
     // Attribute
     int health;
     int supportRadius;
     int attackRadius;
     int damage;
+    int tranceCountdown;
     float defenceFactor;
     boolean inBattle;
 
@@ -26,6 +28,7 @@ public abstract class Enemy extends MovingEntity {
         this.supportRadius = supportRadius;
         this.attackRadius = attackRadius;
         this.damage = damage;
+        this.tranceCountdown = 0;
         this.defenceFactor = 1 - ((float) defence / 100);
         this.inBattle = false;
     }
@@ -73,6 +76,23 @@ public abstract class Enemy extends MovingEntity {
     }
 
     /**
+     * @return Number of trance ticks left for enemy
+     */
+    public int getTranceCount() {
+        this.tranceCountdown -= 1;
+        return this.tranceCountdown;
+    }
+
+    /**
+     * Sets length of time that enemy is entranced
+     * 
+     * @param tranceCount
+     */
+    public void setTranceCount(int tranceCount) {
+        this.tranceCountdown = tranceCount;
+    }
+
+    /**
      * Sets whether an enemy is currently in battle, preventing it from moving
      * 
      * @param inBattle
@@ -93,6 +113,10 @@ public abstract class Enemy extends MovingEntity {
         return false;
     }
 
+    public void launchAttack(Enemy enemy) {
+        enemy.receiveAttack(this.damage);
+    }
+ 
     /**
      * Allows enemy to receive an attack, takes in the amount of damage to be done
      * and subtracts the relavent amount from health after defence is factored in
