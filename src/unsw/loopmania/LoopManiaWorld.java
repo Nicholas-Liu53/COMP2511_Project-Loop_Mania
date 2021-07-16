@@ -86,6 +86,7 @@ public class LoopManiaWorld {
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
 
+    private String gamemode;
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
      * them
@@ -1272,8 +1273,21 @@ public class LoopManiaWorld {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Observer
+    //*-------------------------------------------------------------------------
     public void addObserver(LoopManiaWorldController wc) {
         this.observers.add(wc);
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Game Mode
+    //*-------------------------------------------------------------------------
+    public void setGamemode(String gamemode) {
+        this.gamemode = gamemode;
+    }
+
+    public String getGamemode() {
+        return this.gamemode;
+    }
 }

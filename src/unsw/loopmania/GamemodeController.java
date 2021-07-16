@@ -85,22 +85,24 @@ public class GamemodeController {
         
     }
 
-
     @FXML
     private void setGamemodeToStandard() throws IOException {
         world.setGamemode("Standard");
-        switchToGame();
+        worldController.startTimer();
+        gameSwitcher.switchMenu();
     }
 
     @FXML
     private void setGamemodeToSurvival() throws IOException {
         world.setGamemode("Survival");
-        switchToGame();
+        worldController.startTimer();
+        gameSwitcher.switchMenu();
     }
 
     @FXML
     private void setGamemodeToBerserker() throws IOException {
         world.setGamemode("Berserker");
-        switchToGame();
+        worldController.startTimer();
+        gameSwitcher.switchMenu();
     }
 }

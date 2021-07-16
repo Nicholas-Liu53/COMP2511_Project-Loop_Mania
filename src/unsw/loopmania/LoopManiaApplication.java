@@ -49,7 +49,6 @@ public class LoopManiaApplication extends Application {
         FXMLLoader gamemodeLoader = new FXMLLoader(getClass().getResource("GamemodeView.fxml"));
         gamemodeLoader.setController(gamemodeController);
         Parent gamemodeRoot = gamemodeLoader.load();
-        
 
         // Load the shop menu
         ShopMenuController shopMenuController = new ShopMenuController();
@@ -68,11 +67,10 @@ public class LoopManiaApplication extends Application {
         mainGameController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
         mainGameController.setShopMenuSwitcher(() -> {
             switchToRoot(scene, shopMenuRoot, primaryStage);
-            // shopMenuController.addItemsInInventory(mainGameController.getUnequippedItems());
         });
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
-            mainGameController.startTimer();
+            // mainGameController.startTimer();
         });
         mainMenuController.setGamemodeSwitcher(() -> {
             switchToRoot(scene, gamemodeRoot, primaryStage);
@@ -82,12 +80,10 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
-        
         gamemodeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
-            mainGameController.startTimer();
+            // mainGameController.startTimer();
         });
-        
         
         // Deploy the main onto the stage
         gameRoot.requestFocus();

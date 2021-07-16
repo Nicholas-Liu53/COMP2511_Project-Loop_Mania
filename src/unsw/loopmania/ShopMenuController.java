@@ -97,6 +97,9 @@ public class ShopMenuController {
     private Image goldPileImage;
     private Image theOneRingImage;
 
+    private int numHealthPotionsBought = 0;
+    private int numArmourBought = 0;
+
     /**
      * anchorPaneRoot is the "background". It is useful since anchorPaneRoot
      * stretches over the entire game world, so we can detect dragging of
@@ -189,33 +192,37 @@ public class ShopMenuController {
             item = new Staff(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Staff.getPurchasePrice());
         } else if (string.equals("BodyArmour")) {
-            if (!canAfford(BodyArmour.getPurchasePrice())) {
+            if (!canAfford(BodyArmour.getPurchasePrice()) || (world.getGamemode().equals("Berserker") && this.numArmourBought > 0)) {
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new BodyArmour(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(BodyArmour.getPurchasePrice());
+            numArmourBought++;
         } else if (string.equals("Shield")) {
-            if (!canAfford(Shield.getPurchasePrice())) {
+            if (!canAfford(Shield.getPurchasePrice()) || (world.getGamemode().equals("Berserker") && this.numArmourBought > 0)) {
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Shield(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Shield.getPurchasePrice());
+            numArmourBought++;
         } else if (string.equals("Helmet")) {
-            if (!canAfford(Helmet.getPurchasePrice())) {
+            if (!canAfford(Helmet.getPurchasePrice()) || (world.getGamemode().equals("Berserker") && this.numArmourBought > 0)) {
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new Helmet(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(Helmet.getPurchasePrice());
+            numArmourBought++;
         } else if (string.equals("HealthPotion")) {
-            if (!canAfford(HealthPotion.getPurchasePrice())) {
+            if (!canAfford(HealthPotion.getPurchasePrice()) || (world.getGamemode().equals("Survival") && this.numHealthPotionsBought > 0)) {
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
             item = new HealthPotion(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
             world.deductGold(HealthPotion.getPurchasePrice());
+            numHealthPotionsBought++;
         } else {
             return false;
         }
@@ -491,5 +498,10 @@ public class ShopMenuController {
 
     public void resetResponseText() {
         shopResponseLabel.setText("");
+    }
+
+    public void setCountersToZero() {
+        this.numHealthPotionsBought = 0;
+        this.numArmourBought = 0;
     }
 }
