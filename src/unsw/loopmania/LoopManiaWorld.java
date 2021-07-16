@@ -56,7 +56,7 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> locationOfPlacedBuildings;
     private int numCycles;
     private int cycleShopLinear;
-    private int cycleShopTotal;
+    private int numCyclesToOpenShop;
     private boolean showShop;
     private List<Item> pathItems;
     private int numGoldPileSpawned;
@@ -115,7 +115,7 @@ public class LoopManiaWorld {
         this.locationOfPlacedBuildings = new ArrayList<>();
         this.numCycles = 0;
         this.cycleShopLinear = 1;
-        this.cycleShopTotal = 1;
+        this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
         this.numGoldPileSpawned = 0;
@@ -952,19 +952,15 @@ public class LoopManiaWorld {
 
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
-        }
-
-        if (this.numCycles == this.cycleShopTotal) {
-            this.cycleShopLinear++;
-            this.cycleShopTotal += this.cycleShopLinear;
-            showShop = true;
         } else {
             showShop = false;
         }
+
+        
     }
 
     public boolean getShowShop() {
-        return showShop;
+        return this.showShop;
     }
 
     /**
@@ -972,11 +968,21 @@ public class LoopManiaWorld {
      */
     private void updateCharacterCycles() {
         this.numCycles++;
+        System.out.println("================= numCycles = " + this.numCycles + "=================");
+        System.out.println("================= numCyclesToOpenShop = " + this.numCyclesToOpenShop + "=================");
+        if (this.numCycles == this.numCyclesToOpenShop) {
+            this.cycleShopLinear++;
+            this.numCyclesToOpenShop += this.cycleShopLinear;
+            showShop = true;
+            System.out.println("================= OPEN SHOP =================");
+        } 
 
         // Notifying world state observers of new cycle
         for (WorldStateObserver observer : this.observers) {
+            // Loop mania world notifies its observers
             observer.notify(this);
         }
+        showShop = false;
     }
 
     /**
@@ -1245,6 +1251,10 @@ public class LoopManiaWorld {
                 }
             }
         }
+    }
+
+    public void addObserver(LoopManiaWorldController wc) {
+        this.observers.add(wc);
     }
 
 }

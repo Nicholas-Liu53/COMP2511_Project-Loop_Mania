@@ -141,6 +141,7 @@ public class ShopMenuController {
     @FXML
     private void switchToGame() throws IOException {
         world.goldProperty();
+        worldController.startTimer();
         gameSwitcher.switchMenu();
     }
 

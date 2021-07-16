@@ -97,7 +97,7 @@ enum DRAGGABLE_TYPE {
  * https://openjfx.io/javadoc/11/javafx.graphics/javafx/application/Platform.html#runLater(java.lang.Runnable)
  * This is run on the JavaFX application thread when it has enough time.
  */
-public class LoopManiaWorldController {
+public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * squares gridpane includes path images, enemies, character, empty grass,
      * buildings
@@ -259,6 +259,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        world.addObserver(this);
         spawnCycle = 0;
         entityImages = new ArrayList<>(initialEntities);
         // BuildingCards
@@ -1182,6 +1183,14 @@ public class LoopManiaWorldController {
         shopMenuSwitcher.switchMenu();
     }
 
+    private void switchToShopMenu2() throws IOException {
+        pause();
+        // addItemsInInventory(unequippedInventory);
+        shopMenuController.initialiseNumColours();
+        shopMenuController.resetResponseText();
+        shopMenuSwitcher.switchMenu();
+    }
+
     public LoopManiaWorld getWorld() {
         return this.world;
     }
@@ -1286,5 +1295,22 @@ public class LoopManiaWorldController {
         System.out.println("current method = " + currentMethodLabel);
         System.out.println("In application thread? = " + Platform.isFxApplicationThread());
         System.out.println("Current system time = " + java.time.LocalDateTime.now().toString().replace('T', ' '));
+    }
+
+    @Override
+    public void notify(LoopManiaWorld world) {
+        // Open the show
+        if (world.getShowShop() == true) {
+            pause();
+        } else {
+            return;
+        }
+
+        try {
+            switchToShopMenu2();
+        } catch (Exception e) {
+            System.out.println("Error: Shop Cannot be Opened");
+            return;
+        }
     }
 }
