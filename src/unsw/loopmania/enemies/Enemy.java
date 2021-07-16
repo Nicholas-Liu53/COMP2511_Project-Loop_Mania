@@ -86,9 +86,11 @@ public abstract class Enemy extends MovingEntity {
      * possibly using a special attack
      * 
      * @param mainChar
+     * @return whether the enemy has used a special attack that needs to be handled
      */
-    public void launchAttack(Character mainChar) {
+    public boolean launchAttack(Character mainChar) {
         mainChar.receiveAttack(this.damage);
+        return false;
     }
 
     /**
