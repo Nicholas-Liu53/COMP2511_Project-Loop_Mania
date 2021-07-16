@@ -689,7 +689,6 @@ public class LoopManiaWorld {
             default:
                 break;
         }
-        // System.out.println("Yikes");
     }
 
     public void updateItemProperty(Item item) {
@@ -950,16 +949,11 @@ public class LoopManiaWorld {
         goldProperty();
         xpProperty();
         restoreHealthIfInVillage();
+
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
         }
-    }
 
-    /**
-     * Update number of cycles character has completed in the loop
-     */
-    private void updateCharacterCycles() {
-        this.numCycles++;
         if (this.numCycles == this.cycleShopTotal) {
             this.cycleShopLinear++;
             this.cycleShopTotal += this.cycleShopLinear;
@@ -967,16 +961,22 @@ public class LoopManiaWorld {
         } else {
             showShop = false;
         }
+    }
+
+    public boolean getShowShop() {
+        return showShop;
+    }
+
+    /**
+     * Update number of cycles character has completed in the loop
+     */
+    private void updateCharacterCycles() {
+        this.numCycles++;
 
         // Notifying world state observers of new cycle
         for (WorldStateObserver observer : this.observers) {
             observer.notify(this);
         }
-
-        // TODO Observer pattern
-        // if (showShop) {
-        // //! shopMenu.showMenu();
-        // }
     }
 
     /**

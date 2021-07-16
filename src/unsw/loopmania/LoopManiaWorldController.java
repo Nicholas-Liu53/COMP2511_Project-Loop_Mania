@@ -411,6 +411,14 @@ public class LoopManiaWorldController {
 
             printThreadingNotes("HANDLED TIMER");
         }));
+
+        // if (world.getShowShop()) {
+        //     pause();
+        //     // Change shop label + make button available
+        // } else {
+
+        // }
+
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
