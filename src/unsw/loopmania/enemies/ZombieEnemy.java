@@ -1,5 +1,7 @@
 package unsw.loopmania.enemies;
 
+import java.util.Random;
+
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.Character;
 
@@ -50,7 +52,14 @@ public class ZombieEnemy extends Enemy {
         if (this.doAction()) {
             super.launchAttack(mainChar);
 
-            // TODO Critical bite stuff
+            // Citical bite implementation
+            int criticalCheck = new Random(10).nextInt();
+            
+            if (criticalCheck == 5 && mainChar.getAllies().size() > 0) {
+                // Remove ally and spawn new zombie
+                mainChar.removeAlly();
+                
+            }
         }
     }
 }
