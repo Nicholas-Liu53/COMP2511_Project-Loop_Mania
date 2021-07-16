@@ -140,6 +140,9 @@ public class LoopManiaWorldController {
     @FXML
     private Label xpNum;
 
+    @FXML
+    private Label alliesNum;
+
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -356,6 +359,7 @@ public class LoopManiaWorldController {
         world.healthProperty().bindBidirectional(healthNum.textProperty());
         world.goldProperty().bindBidirectional(goldNum.textProperty());
         world.xpProperty().bindBidirectional(xpNum.textProperty());
+        world.alliesProperty().bindBidirectional(alliesNum.textProperty());
     }
 
     /**
