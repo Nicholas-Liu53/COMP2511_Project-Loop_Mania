@@ -3,7 +3,9 @@ package unsw.loopmania;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -11,11 +13,16 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -30,7 +37,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import unsw.loopmania.items.Item;
+import org.javatuples.Pair;
+import unsw.loopmania.items.*;
 
 /**
  * controller for the shop menu.
@@ -42,17 +50,41 @@ public class ShopMenuController {
      */
     private MenuSwitcher gameSwitcher;
 
-    @FXML
-    private GridPane equippedItems;
-
-    @FXML
-    private GridPane unequippedInventory;
-
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
 
     private LoopManiaWorld world;
+    private LoopManiaWorldController worldController;
+
+    // Item list
+    private ArrayList<String> itemsList = new ArrayList<String>(
+        Arrays.asList(
+            "Sword", "Stake", "Staff", "BodyArmour", "Helmet", "Shield", "HealthPotion"
+        )
+    );
+    
+    @FXML
+    private Label shopGoldNum;
+
+    @FXML
+    private Label sellSwordNum;
+    @FXML
+    private Label sellStaffNum;
+    @FXML
+    private Label sellStakeNum;
+    @FXML
+    private Label sellHelmetNum;
+    @FXML
+    private Label sellBodyArmourNum;
+    @FXML
+    private Label sellShieldNum;
+    @FXML
+    private Label sellHealthPotionNum;
+
+    @FXML
+    private Label shopResponseLabel;
+
 
     // Item Images
     private Image bodyArmourImage;
@@ -66,20 +98,6 @@ public class ShopMenuController {
     private Image theOneRingImage;
 
     /**
-     * the image currently being dragged, if there is one, otherwise null. Holding
-     * the ImageView being dragged allows us to spawn it again in the drop location
-     * if appropriate.
-     */
-    // TODO = it would be a good idea for you to instead replace this with the
-    // building/item which should be dropped
-    private ImageView currentlyDraggedImage;
-
-    /**
-     * null if nothing being dragged, or the type of item being dragged
-     */
-    private DRAGGABLE_TYPE currentlyDraggedType;
-
-    /**
      * anchorPaneRoot is the "background". It is useful since anchorPaneRoot
      * stretches over the entire game world, so we can detect dragging of
      * cards/items over this and accordingly update DragIcon coordinates
@@ -87,44 +105,7 @@ public class ShopMenuController {
     @FXML
     private AnchorPane anchorPaneRoot;
     
-    /**
-     * when we drag a card/item, the picture for whatever we're dragging is set here
-     * and we actually drag this node
-     */
-    private DragIcon draggedEntity;
-
-    /**
-     * mapping from draggable type enum CARD/TYPE to the event handler triggered
-     * when the draggable type is dropped over its appropriate gridpane
-     */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneSetOnDragDropped;
-    /**
-     * mapping from draggable type enum CARD/TYPE to the event handler triggered
-     * when the draggable type is dragged over the background
-     */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> anchorPaneRootSetOnDragOver;
-    /**
-     * mapping from draggable type enum CARD/TYPE to the event handler triggered
-     * when the draggable type is dropped in the background
-     */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> anchorPaneRootSetOnDragDropped;
-    /**
-     * mapping from draggable type enum CARD/TYPE to the event handler triggered
-     * when the draggable type is dragged into the boundaries of its appropriate
-     * gridpane
-     */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragEntered;
-    /**
-     * mapping from draggable type enum CARD/TYPE to the event handler triggered
-     * when the draggable type is dragged outside of the boundaries of its
-     * appropriate gridpane
-     */
-    private EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>> gridPaneNodeSetOnDragExited;
-
     public ShopMenuController() {
-        // this.world = world;
-        // entityImages = new ArrayList<>(initialEntities);
-
         // Items
         bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
@@ -135,37 +116,20 @@ public class ShopMenuController {
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
-        currentlyDraggedImage = null;
-        currentlyDraggedType = null;
-
-        // Initialize them all...
-        gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        anchorPaneRootSetOnDragOver = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        anchorPaneRootSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        gridPaneNodeSetOnDragEntered = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
-        gridPaneNodeSetOnDragExited = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
     }
 
     @FXML
     public void initialize() {
-        Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-        Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
-        
-        // Add the empty slot images for the unequipped inventory
-        for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
-            for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
-                ImageView emptySlotView = new ImageView(inventorySlotImage);
-                unequippedInventory.add(emptySlotView, x, y);
-            }
-        }
-
-        // // Create the draggable icon
-        // draggedEntity = new DragIcon();
-        // draggedEntity.setVisible(false);
-        // draggedEntity.setOpacity(0.7);
-        // anchorPaneRoot.getChildren().add(draggedEntity);
+        world.goldProperty().bindBidirectional(shopGoldNum.textProperty());
+        world.getSwordProperty().bindBidirectional(sellSwordNum.textProperty());
+        world.getStaffProperty().bindBidirectional(sellStaffNum.textProperty());
+        world.getStakeProperty().bindBidirectional(sellStakeNum.textProperty());
+        world.getBodyArmourProperty().bindBidirectional(sellBodyArmourNum.textProperty());
+        world.getHelmetProperty().bindBidirectional(sellHelmetNum.textProperty());
+        world.getShieldProperty().bindBidirectional(sellShieldNum.textProperty());
+        world.getHealthPotionProperty().bindBidirectional(sellHealthPotionNum.textProperty());
     }
-    //
+
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
     }
@@ -176,6 +140,8 @@ public class ShopMenuController {
      */
     @FXML
     private void switchToGame() throws IOException {
+        world.goldProperty();
+        worldController.startTimer();
         gameSwitcher.switchMenu();
     }
 
@@ -183,20 +149,215 @@ public class ShopMenuController {
         this.world = world;
     }
 
+    public void setWorldController(LoopManiaWorldController worldController) {
+        this.worldController = worldController;
+    }
+
     public LoopManiaWorld getWorld() {
         return this.world;
     }
 
-    public void addItemsInInventory(List<Item> unequippedInventoryItems) {
-        // int i = 0, j = 0;
-        for (Item unequippedInventoryItem : unequippedInventoryItems) {
-            unequippedInventory.getChildren().add(new ImageView(getImageForItem(unequippedInventoryItem)));
-            // i++;
-            // if (i % 4 == 0) {
-            //     i = 0;
-            //     j++;
-            // }
+    
+    // General purchase function
+    private boolean purchase(String string) {
+        Item item = null;
+        Pair<Integer, Integer> slotPos = world.getFirstAvailableSlotForItem();
+        
+        if (slotPos == null) {
+            actionNotSuccessfulText("Inventory is full");
+            return false;
+        } 
+        if (string.equals("Sword")) {
+            if (!canAfford(Sword.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new Sword(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(Sword.getPurchasePrice());
+        } else if (string.equals("Stake")) {
+            if (!canAfford(Stake.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new Stake(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(Stake.getPurchasePrice());
+        } else if (string.equals("Staff")) {
+            if (!canAfford(Staff.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new Staff(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(Staff.getPurchasePrice());
+        } else if (string.equals("BodyArmour")) {
+            if (!canAfford(BodyArmour.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new BodyArmour(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(BodyArmour.getPurchasePrice());
+        } else if (string.equals("Shield")) {
+            if (!canAfford(Shield.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new Shield(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(Shield.getPurchasePrice());
+        } else if (string.equals("Helmet")) {
+            if (!canAfford(Helmet.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new Helmet(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(Helmet.getPurchasePrice());
+        } else if (string.equals("HealthPotion")) {
+            if (!canAfford(HealthPotion.getPurchasePrice())) {
+                actionNotSuccessfulText("Insufficient Gold");
+                return false;
+            } 
+            item = new HealthPotion(new Pair<Integer, Integer>(slotPos.getValue0(), slotPos.getValue1()));
+            world.deductGold(HealthPotion.getPurchasePrice());
+        } else {
+            return false;
         }
+        world.addToUnequippedInventory(item);
+        world.increaseUnequippedInventoryItemCount(item);
+        world.updateItemProperty(item);
+        world.goldProperty();
+        worldController.loadItem(item);
+        checkIfHitsZero(item);
+        actionSuccessfulText(string + " bought");
+        return true;
+    }
+    
+    @FXML
+    private boolean purchaseSword() {
+        return purchase("Sword");
+    }
+
+    @FXML
+    private boolean purchaseStake() {
+        return purchase("Stake");
+    }
+
+    @FXML
+    private boolean purchaseStaff() {
+        return purchase("Staff");
+    }
+    
+    @FXML
+    private boolean purchaseBodyArmour() {
+        return purchase("BodyArmour");
+    }
+
+    @FXML
+    private boolean purchaseShield() {
+        return purchase("Shield");
+    }
+
+    @FXML
+    private boolean purchaseHelmet() {
+        return purchase("Helmet");
+    }
+
+    @FXML
+    private boolean purchaseHealthPotion() {
+        return purchase("HealthPotion");
+    }
+
+    // General Sell function
+    private boolean sell(String itemName) {
+        /* 
+            Pseudocode to sell
+            if no item to sell:
+                return false
+            for item in unequippedInventoryItems:
+                if item.getClass().getSimpleName().equals(itemName):
+                    delete item from inventory
+                    give money back
+                    break
+                end if
+            end for
+        */
+        for (Item item: world.getUnequippedItems()) {
+            if (item.getClass().getSimpleName().equals(itemName)) {
+                // world.decreaseUnequippedInventoryItemCount(item);
+                world.removeUnequippedInventoryItem(item);
+                world.updateItemProperty(item);
+                switch (item.getClass().getSimpleName()) {
+                    case "Sword":
+                        world.giveGold(Sword.getSellPrice());
+                        break;
+                    case "Stake":
+                        world.giveGold(Stake.getSellPrice());
+                        break;
+                    case "Staff":
+                        world.giveGold(Staff.getSellPrice());
+                        break;
+                    case "BodyArmour":
+                        world.giveGold(BodyArmour.getSellPrice());
+                        break;
+                    case "Helmet":
+                        world.giveGold(Helmet.getSellPrice());
+                        break;
+                    case "Shield":
+                        world.giveGold(Shield.getSellPrice());
+                        break;
+                    case "HealthPotion":
+                        world.giveGold(HealthPotion.getSellPrice());
+                        break;
+                    default:
+                        break;
+                }
+                world.goldProperty();
+                checkIfHitsZero(item);
+                actionSuccessfulText(itemName + " Sold");
+                return true;
+            }
+        }
+        actionNotSuccessfulText("No " + itemName + "s left to sell");
+        return false;
+    }
+
+    @FXML
+    private boolean sellSword() {
+        return sell("Sword");
+    }
+
+    @FXML
+    private boolean sellStake() {
+        return sell("Stake");
+    }
+
+    @FXML
+    private boolean sellStaff() {
+        return sell("Staff");
+    }
+    
+    @FXML
+    private boolean sellBodyArmour() {
+        return sell("BodyArmour");
+    }
+
+    @FXML
+    private boolean sellShield() {
+        return sell("Shield");
+    }
+
+    @FXML
+    private boolean sellHelmet() {
+        return sell("Helmet");
+    }
+
+    @FXML
+    private boolean sellHealthPotion() {
+        return sell("HealthPotion");
+    }
+
+    private boolean canAfford(int purchasePrice) {
+        if (world.getGold() < purchasePrice) {
+            return false;
+        }
+        return true;
     }
 
     // Helper functions
@@ -208,7 +369,127 @@ public class ShopMenuController {
         else if (item.getClass().getSimpleName().equals("Staff")) return staffImage;
         else if (item.getClass().getSimpleName().equals("Stake")) return stakeImage;
         else if (item.getClass().getSimpleName().equals("Sword")) return swordImage;
-        // if (item.getClass().getSimpleName().equals("GoldPile")) return goldPileImage;
         else return theOneRingImage;
+    }
+
+    private void turnRed(Label l) {
+        l.setTextFill(Color.web("#B22222", 0.8));
+        l.setFont(Font.font("System", FontWeight.EXTRA_BOLD, 12));
+    }
+
+    private void turnBlack(Label l) {
+        l.setTextFill(Color.web("#000000"));
+        l.setFont(Font.font("System", FontWeight.NORMAL, 12));
+
+    }
+
+    public void checkIfHitsZero(Item i) {
+        StringProperty p = null;
+        Label l = null;
+        switch (i.getClass().getSimpleName()) {
+            case "Sword":
+                p = world.getSwordProperty();
+                l = sellSwordNum;
+                break;
+            case "Stake":
+                p = world.getStakeProperty();
+                l = sellStakeNum;
+                break;
+            case "Staff":
+                p = world.getStaffProperty();
+                l = sellStaffNum;
+                break;
+            case "BodyArmour":
+                p = world.getBodyArmourProperty();   
+                l = sellBodyArmourNum;
+                break;
+            case "Helmet":
+                p = world.getHelmetProperty();
+                l = sellHelmetNum;
+                break;
+            case "Shield":
+                p = world.getShieldProperty();
+                l = sellShieldNum;
+                break;
+            case "HealthPotion":
+                p = world.getHealthPotionProperty();
+                l = sellHealthPotionNum;
+                break;
+            default:
+                break;
+        }
+        if (p.toString().equals("StringProperty [value: 0]")) {
+            turnRed(l);
+            // System.out.println(p.toString());
+        } else {
+            turnBlack(l);
+            // System.out.println(p.toString());
+        }
+    }
+
+    public void checkIfHitsZero(String i) {
+        StringProperty p = null;
+        Label l = null;
+        switch (i) {
+            case "Sword":
+                p = world.getSwordProperty();
+                l = sellSwordNum;
+                break;
+            case "Stake":
+                p = world.getStakeProperty();
+                l = sellStakeNum;
+                break;
+            case "Staff":
+                p = world.getStaffProperty();
+                l = sellStaffNum;
+                break;
+            case "BodyArmour":
+                p = world.getBodyArmourProperty();   
+                l = sellBodyArmourNum;
+                break;
+            case "Helmet":
+                p = world.getHelmetProperty();
+                l = sellHelmetNum;
+                break;
+            case "Shield":
+                p = world.getShieldProperty();
+                l = sellShieldNum;
+                break;
+            case "HealthPotion":
+                p = world.getHealthPotionProperty();
+                l = sellHealthPotionNum;
+                break;
+            default:
+                break;
+        }
+        if (p.toString().equals("StringProperty [value: 0]")) {
+            turnRed(l);
+            // System.out.println(p.toString());
+        } else {
+            turnBlack(l);
+            // System.out.println(p.toString());
+        }
+    }
+
+    public void initialiseNumColours(){
+        for (String item: itemsList) {
+            checkIfHitsZero(item);
+        }
+    }
+
+    public void actionSuccessfulText(String s) {
+        shopResponseLabel.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 20));
+        shopResponseLabel.setTextFill(Color.web("#00ff6d"));
+        shopResponseLabel.setText(s);
+    }
+
+    public void actionNotSuccessfulText(String s) {
+        shopResponseLabel.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.ITALIC, 20));
+        shopResponseLabel.setTextFill(Color.web("#FF0000"));
+        shopResponseLabel.setText(s);
+    }
+
+    public void resetResponseText() {
+        shopResponseLabel.setText("");
     }
 }

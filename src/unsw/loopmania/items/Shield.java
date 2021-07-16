@@ -5,15 +5,11 @@ import org.javatuples.Pair;
 public class Shield extends Armour implements ShieldStrategy {
     public Shield(Pair<Integer, Integer> position) {
         super(position);
-        this.purchasePrice = 300;
-        this.sellPrice = 240;
         this.damageReductionFactor = 0.7;
     }
 
     public Shield() {
         super(new Pair<Integer, Integer>(1, 2));
-        this.purchasePrice = 300;
-        this.sellPrice = 240;
         this.damageReductionFactor = 0.7;
     }
 
@@ -23,4 +19,11 @@ public class Shield extends Armour implements ShieldStrategy {
         return recvDamage;
     }
 
+    public static int getPurchasePrice() {
+        return 300;
+    }
+
+    public static int getSellPrice() {
+        return 240;
+    }
 }

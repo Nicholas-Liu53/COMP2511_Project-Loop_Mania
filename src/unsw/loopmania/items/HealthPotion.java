@@ -9,26 +9,25 @@ public class HealthPotion extends Item {
 
     public HealthPotion(Pair<Integer, Integer> position) {
         super(position);
-        this.purchasePrice = 125;
-        this.sellPrice = 100;
-        this.restoreHealthPoints = 100;
     }
 
     public HealthPotion(PathPosition position) {
         super(position);
-        this.purchasePrice = 125;
-        this.sellPrice = 100;
-        this.restoreHealthPoints = 100;
     }
 
     public HealthPotion() {
         super(new Pair<Integer, Integer>(1, 2));
-        this.purchasePrice = 125;
-        this.sellPrice = 100;
-        this.restoreHealthPoints = 100;
     }
 
     public int getRestoreHealthPoints() {
         return this.restoreHealthPoints;
+    }
+
+    public static int getPurchasePrice() {
+        return 125;
+    }
+
+    public static int getSellPrice() {
+        return 100;
     }
 }
