@@ -18,7 +18,7 @@
       <Pane prefHeight="435.0" prefWidth="342.0">
          <children>
             <!-- clicking button should start/resume the game -->
-            <Button fx:id="startGameButton" layoutX="92.0" layoutY="226.0" onAction="#switchToGamemode" prefHeight="78.0" prefWidth="123.0" text="Start New Game">
+            <Button fx:id="startGameButton" layoutX="316.0" layoutY="226.0" onAction="#initialiseNewGame" prefHeight="78.0" prefWidth="123.0" text="Set Gamemode">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Bloom />
                </effect>
             </Label>
-            <Button fx:id="resumeGameButtton" cancelButton="true" layoutX="298.0" layoutY="226.0" onAction="#switchToGame" prefHeight="78.0" prefWidth="123.0" text="Resume Game">
+            <Button fx:id="startGameButton1" cancelButton="true" layoutX="84.0" layoutY="226.0" onAction="#switchToGame" prefHeight="78.0" prefWidth="123.0" text="Start Game">
                <font>
                   <Font size="14.0" />
                </font>
