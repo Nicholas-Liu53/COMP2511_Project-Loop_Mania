@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 /**
  * controller for the main menu.
@@ -14,6 +15,9 @@ public class MainMenuController {
     private MenuSwitcher gameSwitcher;
     private MenuSwitcher gamemodeSwitcher;
 
+    @FXML
+    private Button startGameButton;
+
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
     }
@@ -24,6 +28,7 @@ public class MainMenuController {
      */
     @FXML
     private void switchToGame() throws IOException {
+        startGameButton.setText("Resume Game");
         gameSwitcher.switchMenu();
     }
 
@@ -37,6 +42,7 @@ public class MainMenuController {
      */
     @FXML
     private void switchToGamemode() throws IOException {
+        startGameButton.setText("Resume Game");
         gamemodeSwitcher.switchMenu();
     }
 }

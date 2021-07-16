@@ -153,7 +153,7 @@
                   <Button layoutX="3.0" layoutY="2.0" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="127.0" text="Exit to Main Menu" />
                </children>
             </Pane>
-            <Pane prefHeight="142.0" prefWidth="133.0">
+            <Pane prefHeight="184.0" prefWidth="133.0">
                <children>
                   <Label fx:id="currCycleNum" layoutX="86.0" layoutY="15.0" prefHeight="32.0" prefWidth="41.0" text="1">
                      <font>
@@ -178,6 +178,16 @@
                   <Label fx:id="cyclesTillShop" alignment="CENTER" layoutX="35.0" layoutY="76.0" prefHeight="32.0" prefWidth="62.0" text="1" textAlignment="CENTER">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="25.0" layoutY="130.0" text="Gamemode: ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="gamemodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="150.0" prefHeight="20.0" prefWidth="102.0" text=" ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
