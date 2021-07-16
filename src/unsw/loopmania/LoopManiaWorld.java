@@ -801,6 +801,11 @@ public class LoopManiaWorld {
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
         }
+
+        // Notifying world state observers of new tick
+        for (WorldStateObserver observer : this.observers) {
+            observer.notifyTick(this.character);
+        }
     }
 
     /**
@@ -818,7 +823,7 @@ public class LoopManiaWorld {
 
         // Notifying world state observers of new cycle
         for (WorldStateObserver observer : this.observers) {
-            observer.notify(this);
+            observer.notifyCycle(this);
         }
 
         // TODO Observer pattern
