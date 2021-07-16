@@ -88,6 +88,13 @@ public class Character extends MovingEntity {
         return this.gold;
     }
 
+    /**
+     * @return List of character's current allies
+     */
+    public ArrayList<Ally> getAllies() {
+        return this.allies;
+    }
+
     public WeaponStrategy getWeapon() {
         return this.weaponStrat;
     }
