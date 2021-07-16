@@ -11,11 +11,13 @@ public class Ally extends StaticEntity {
     public Ally(Pair<Integer, Integer> position) {
         super(position);
         this.damage = 5;
+        this.health = 10;
     }
 
     public Ally(){
         super(new Pair<Integer, Integer>(1, 2));
         this.damage = 5;
+        this.health = 10;
     }
 
     public int getHealth() {
@@ -37,7 +39,7 @@ public class Ally extends StaticEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-        this.health = this.health - this.damage;
+        this.health = this.health - damage;
         
         if (this.health < 0) {
             this.health = 0;
