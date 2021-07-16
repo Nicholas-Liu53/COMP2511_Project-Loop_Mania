@@ -68,6 +68,7 @@ public class LoopManiaWorld {
     // private Double charHealth;
     private StringProperty charGold;
     private StringProperty charXP;
+    private StringProperty charAllies;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
@@ -113,6 +114,7 @@ public class LoopManiaWorld {
         // this.charHealth = 0.0;
         this.charGold = new SimpleStringProperty();
         this.charXP = new SimpleStringProperty();
+        this.charAllies = new SimpleStringProperty();
     }
 
     // --------------------------------------------------------------------------
@@ -945,8 +947,13 @@ public class LoopManiaWorld {
     // * UIS
     // *-------------------------------------------------------------------------
     public StringProperty healthProperty() {
-        this.charHealth.set(String.valueOf(character.getHealth()));
+        this.charHealth.set(String.valueOf(character.getNumAllies()));
         return this.charHealth;
+    }
+
+    public StringProperty alliesProperty() {
+        this.charAllies.set(String.valueOf(character.getNumAllies()));
+        return this.charAllies;
     }
 
     // public Double healthProperty() {

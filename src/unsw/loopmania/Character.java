@@ -95,6 +95,10 @@ public class Character extends MovingEntity {
         return this.allies;
     }
 
+    public int getNumAllies() {
+        return this.allies.size();
+    }
+
     public WeaponStrategy getWeapon() {
         return this.weaponStrat;
     }
@@ -133,6 +137,19 @@ public class Character extends MovingEntity {
             this.enemiesCurrentlyBattling.remove(enemy);
     }
 
+    public void removeAlly() {
+        this.allies.remove(this.allies.get(0));
+    }
+
+    /**
+     * Checks first ally and removes them if they have run
+     * out of health
+     */
+    private void updateAllies() {
+        if (this.allies.get(0).getHealth() == 0)
+            this.allies.remove(this.allies.get(0));
+    }
+
     /**
      * Allows the Character to launch an attack against an enemy, resulting in
      * damage and possibly using a special attack using inventory items
@@ -142,9 +159,10 @@ public class Character extends MovingEntity {
     public void launchAttack(Enemy enemy, boolean inCampfireRadius) {
         int giveDamage = this.damage;
 
-        // Running through allies to launch attacks
-        for (Ally ally : this.allies) {
-            ally.launchAttack(enemy);
+        // Checking if an ally can launch attack first
+        if (this.allies.size() != 0) {
+            this.allies.get(0).launchAttack(enemy);
+            return;
         }
         
         if (inCampfireRadius)
@@ -178,6 +196,8 @@ public class Character extends MovingEntity {
             if (this.health < 0)
                 this.health = 0;
         }
+
+        this.updateAllies();
     }
 
     /**
