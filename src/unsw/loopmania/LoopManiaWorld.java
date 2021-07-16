@@ -398,6 +398,7 @@ public class LoopManiaWorld {
             // Eject the oldest unequipped item and replace it... oldest item is that at
             // beginning of items
             giveRandomRewards("onlyGoldXP");
+            decreaseUnequippedInventoryItemCount(this.unequippedInventoryItems.get(0));
             updateItemProperty(this.unequippedInventoryItems.get(0));
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
