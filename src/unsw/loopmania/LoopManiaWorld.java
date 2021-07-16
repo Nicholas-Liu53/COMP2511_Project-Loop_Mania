@@ -947,7 +947,7 @@ public class LoopManiaWorld {
     // * UIS
     // *-------------------------------------------------------------------------
     public StringProperty healthProperty() {
-        this.charHealth.set(String.valueOf(character.getNumAllies()));
+        this.charHealth.set(String.valueOf(character.getHealth()));
         return this.charHealth;
     }
 

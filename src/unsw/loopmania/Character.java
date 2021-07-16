@@ -183,6 +183,7 @@ public class Character extends MovingEntity {
         if (this.allies.size() > 0) {
             Ally currAlly = this.allies.get(0);
             currAlly.receiveAttack(damage);
+            this.updateAllies();
         } else {
             // Subtracting armour defence
             int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
@@ -197,7 +198,6 @@ public class Character extends MovingEntity {
                 this.health = 0;
         }
 
-        this.updateAllies();
     }
 
     /**
