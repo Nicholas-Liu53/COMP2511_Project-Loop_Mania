@@ -91,6 +91,8 @@ public class BuildingsTests {
         */
         
         // Testing Requirement 1:
+
+        // Testing Requirement 2:
         List<Pair<Integer, Integer>> orderedPath = null;
 
         try {

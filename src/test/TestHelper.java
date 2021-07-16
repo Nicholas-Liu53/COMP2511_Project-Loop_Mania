@@ -27,7 +27,6 @@ public class TestHelper {
      * @throws FileNotFoundException
      */
     public static PathPosition generatePathPosition(String fileName) throws FileNotFoundException {
-        // This doesn't work, and I don't know why :(
         JSONObject json = new JSONObject(new JSONTokener(new FileReader(fileName)));
 
         int width = json.getInt("width");
@@ -36,6 +35,21 @@ public class TestHelper {
         List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
 
         return (new PathPosition(0, orderedPath));
+    }
+
+    /**
+     * Takes in a file path and returns
+     * 
+     * @param fileName
+     * @return ordered path
+     */
+    public static List<Pair<Integer, Integer>> generatePathTiles(String fileName) throws FileNotFoundException {
+        JSONObject json = new JSONObject(new JSONTokener(new FileReader(fileName)));
+
+        int width = json.getInt("width");
+        int height = json.getInt("height");
+
+        return loadPathTiles(json.getJSONObject("path"), width, height);
     }
 
     /**
