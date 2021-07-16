@@ -146,6 +146,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
     @FXML
     private Label cyclesTillShop;
 
+    @FXML
+    private Label gamemodeLabel;
+
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -371,6 +374,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
         world.getNumCyclesProperty().bindBidirectional(currCycleNum.textProperty());
         world.getCyclesTillShopProperty().bindBidirectional(cyclesTillShop.textProperty());
+        world.getGamemodeProperty().bindBidirectional(gamemodeLabel.textProperty());
     }
 
     /**
@@ -1186,17 +1190,17 @@ public class LoopManiaWorldController implements WorldStateObserver {
     @FXML
     private void switchToShopMenu() throws IOException {
         pause();
-        // addItemsInInventory(unequippedInventory);
         shopMenuController.initialiseNumColours();
         shopMenuController.resetResponseText();
+        shopMenuController.setCountersToZero();
         shopMenuSwitcher.switchMenu();
     }
 
     private void switchToShopMenu2() throws IOException {
         pause();
-        // addItemsInInventory(unequippedInventory);
         shopMenuController.initialiseNumColours();
         shopMenuController.resetResponseText();
+        shopMenuController.setCountersToZero();
         shopMenuSwitcher.switchMenu();
     }
 

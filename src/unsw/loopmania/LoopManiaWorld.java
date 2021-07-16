@@ -86,6 +86,9 @@ public class LoopManiaWorld {
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
 
+    private StringProperty gamemodeProperty;
+
+    private String gamemode = "Standard";
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
      * them
@@ -142,6 +145,8 @@ public class LoopManiaWorld {
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
 
+        this.gamemodeProperty = new SimpleStringProperty();
+
         this.numSword = 0;
         this.numStake = 0;
         this.numStaff = 0;
@@ -149,6 +154,7 @@ public class LoopManiaWorld {
         this.numHelmet = 0;
         this.numShield = 0;
         this.numHealthPotion = 0;
+        
 
     }
 
@@ -958,6 +964,7 @@ public class LoopManiaWorld {
         restoreHealthIfInVillage();
         getNumCyclesProperty();
         getCyclesTillShopProperty();
+        getGamemodeProperty();
 
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
@@ -1164,6 +1171,11 @@ public class LoopManiaWorld {
         return this.cyclesTillShopProperty;
     }
 
+    public StringProperty getGamemodeProperty() {
+        this.gamemodeProperty.set(gamemode);
+        return this.gamemodeProperty;
+    }
+
     //*-------------------------------------------------------------------------
     //*                     Buildings Helper Functions
     //*-------------------------------------------------------------------------
@@ -1272,8 +1284,21 @@ public class LoopManiaWorld {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Observer
+    //*-------------------------------------------------------------------------
     public void addObserver(LoopManiaWorldController wc) {
         this.observers.add(wc);
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Game Mode
+    //*-------------------------------------------------------------------------
+    public void setGamemode(String gamemode) {
+        this.gamemode = gamemode;
+    }
+
+    public String getGamemode() {
+        return this.gamemode;
+    }
 }

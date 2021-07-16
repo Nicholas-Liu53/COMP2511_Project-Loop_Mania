@@ -18,7 +18,7 @@
       <Pane prefHeight="435.0" prefWidth="342.0">
          <children>
             <!-- clicking button should start/resume the game -->
-            <Button fx:id="setGamemodeButton" layoutX="316.0" layoutY="226.0" onAction="#switchToGamemode" prefHeight="78.0" prefWidth="123.0" text="Set Gamemode">
+            <Button fx:id="standardGamemodeFX" layoutX="51.0" layoutY="239.0" onAction="#setGamemodeToStandard" prefHeight="78.0" prefWidth="123.0" text="Standard">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,7 +43,20 @@
                   <Bloom />
                </effect>
             </Label>
-            <Button fx:id="startGameButton" cancelButton="true" layoutX="84.0" layoutY="226.0" onAction="#switchToGame" prefHeight="78.0" prefWidth="123.0" text="Start Game">
+            <Button fx:id="survivalGamemodeFX" layoutX="203.0" layoutY="239.0" onAction="#setGamemodeToSurvival" prefHeight="78.0" prefWidth="123.0" text="Survival">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="128.0" layoutY="162.0" prefHeight="37.0" prefWidth="273.0" text="Choose a gamemode:">
+               <font>
+                  <Font name="System Italic" size="26.0" />
+               </font>
+               <effect>
+                  <Bloom />
+               </effect>
+            </Label>
+            <Button fx:id="berserkerGamemodeFX" layoutX="353.0" layoutY="239.0" onAction="#setGamemodeToBerserker" prefHeight="78.0" prefWidth="123.0" text="Berserker">
                <font>
                   <Font size="14.0" />
                </font>
