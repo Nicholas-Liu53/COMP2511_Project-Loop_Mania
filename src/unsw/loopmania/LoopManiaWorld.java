@@ -83,6 +83,9 @@ public class LoopManiaWorld {
     private StringProperty numShieldProperty;
     private StringProperty numHealthPotionProperty;
 
+    private StringProperty currCycleNumProperty;
+    private StringProperty cyclesTillShopProperty;
+
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
      * them
@@ -135,6 +138,9 @@ public class LoopManiaWorld {
         this.numHelmetProperty = new SimpleStringProperty();
         this.numShieldProperty = new SimpleStringProperty();
         this.numHealthPotionProperty = new SimpleStringProperty();
+
+        this.currCycleNumProperty = new SimpleStringProperty();
+        this.cyclesTillShopProperty = new SimpleStringProperty();
 
         this.numSword = 0;
         this.numStake = 0;
@@ -949,6 +955,8 @@ public class LoopManiaWorld {
         goldProperty();
         xpProperty();
         restoreHealthIfInVillage();
+        getNumCyclesProperty();
+        getCyclesTillShopProperty();
 
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
@@ -968,13 +976,13 @@ public class LoopManiaWorld {
      */
     private void updateCharacterCycles() {
         this.numCycles++;
-        System.out.println("================= numCycles = " + this.numCycles + "=================");
-        System.out.println("================= numCyclesToOpenShop = " + this.numCyclesToOpenShop + "=================");
+        // System.out.println("================= numCycles = " + this.numCycles + "=================");
+        // System.out.println("================= numCyclesToOpenShop = " + this.numCyclesToOpenShop + "=================");
         if (this.numCycles == this.numCyclesToOpenShop) {
             this.cycleShopLinear++;
             this.numCyclesToOpenShop += this.cycleShopLinear;
             showShop = true;
-            System.out.println("================= OPEN SHOP =================");
+            // System.out.println("================= OPEN SHOP =================");
         } 
 
         // Notifying world state observers of new cycle
@@ -1143,6 +1151,16 @@ public class LoopManiaWorld {
 
     public StringProperty getHealthPotionProperty() {
         return this.numHealthPotionProperty;
+    }
+
+    public StringProperty getNumCyclesProperty() {
+        this.currCycleNumProperty.set(String.valueOf(this.numCycles + 1));
+        return this.currCycleNumProperty;
+    }
+
+    public StringProperty getCyclesTillShopProperty() {
+        this.cyclesTillShopProperty.set(String.valueOf(this.numCyclesToOpenShop - this.numCycles));
+        return this.cyclesTillShopProperty;
     }
 
     //*-------------------------------------------------------------------------

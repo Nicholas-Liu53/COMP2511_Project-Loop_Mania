@@ -153,17 +153,35 @@
                   <Button layoutX="3.0" layoutY="2.0" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="127.0" text="Exit to Main Menu" />
                </children>
             </Pane>
-            <Pane prefHeight="117.0" prefWidth="133.0">
+            <Pane prefHeight="142.0" prefWidth="133.0">
                <children>
-                  <Label fx:id="shopText" alignment="CENTER" layoutX="15.0" layoutY="14.0" prefHeight="50.0" prefWidth="103.0" text="Shop Unavailable" textAlignment="CENTER" textFill="#0099ff" wrapText="true">
+                  <Label fx:id="currCycleNum" layoutX="86.0" layoutY="15.0" prefHeight="32.0" prefWidth="41.0" text="1">
                      <font>
-                        <Font name="Calibri Bold" size="16.0" />
+                        <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="shopButton" layoutX="30.0" layoutY="78.0" onAction="#switchToShopMenu" text="Enter Shop" />
+                  <Label fx:id="healthNum2" layoutX="14.0" layoutY="15.0" prefHeight="32.0" prefWidth="72.0" text="Cycle:">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="healthNum21" layoutX="26.0" layoutY="59.0" text="Shop opens in" wrapText="true">
+                     <font>
+                        <Font name="Calibri Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="healthNum211" layoutX="45.0" layoutY="106.0" text="cycles." wrapText="true">
+                     <font>
+                        <Font name="Calibri Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cyclesTillShop" alignment="CENTER" layoutX="35.0" layoutY="76.0" prefHeight="32.0" prefWidth="62.0" text="1" textAlignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
-            <Label fx:id="shopPressText" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="140.0" text="Cannot press button to enter" textAlignment="CENTER" textFill="#0094ff" wrapText="true" />
          </children>
       </VBox>
    </HBox>
