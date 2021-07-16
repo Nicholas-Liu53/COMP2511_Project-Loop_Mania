@@ -2,6 +2,7 @@ package unsw.loopmania.items;
 
 import org.javatuples.Pair;
 
+import unsw.loopmania.Character;
 import unsw.loopmania.enemies.Enemy;
 
 /**
@@ -20,7 +21,7 @@ public class Sword extends Item implements WeaponStrategy {
         this.sellPrice = 160;
     }
 
-    public void launchAttack(Enemy enemy, int baseDamage) {
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
         // Simply adds 10 extra damage
         enemy.receiveAttack(baseDamage + 10);
     }

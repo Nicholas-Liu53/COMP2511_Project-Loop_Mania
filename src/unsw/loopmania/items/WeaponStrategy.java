@@ -1,5 +1,6 @@
 package unsw.loopmania.items;
 
+import unsw.loopmania.Character;
 import unsw.loopmania.enemies.Enemy;
 
 /**
@@ -14,5 +15,5 @@ public interface WeaponStrategy {
      * @param enemy
      * @param baseDamage
      */
-    public void launchAttack(Enemy enemy, int baseDamage);
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar);
 }
