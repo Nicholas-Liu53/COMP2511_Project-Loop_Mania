@@ -3,60 +3,60 @@ package test;
 import org.junit.Test;
 
 import unsw.loopmania.Character;
-import unsw.loopmania.Ally;
+import unsw.loopmania.Soldier;
 import unsw.loopmania.enemies.SlugEnemy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AllyTest {
+public class SoldierTest {
     @Test
-    public void AllyAttackTest() {
+    public void SoldierAttackTest() {
         // Testing that allies do approrpiate damage
         Character mainChar = new Character(null);
-        Ally allyOne = new Ally();
-        mainChar.addAlly(allyOne);
+        Soldier soldierOne = new Soldier();
+        mainChar.addAlly(soldierOne);
 
-        // One Ally
+        // One Soldier
         SlugEnemy enemy = new SlugEnemy(null);
         mainChar.launchAttack(enemy, false);
         assertEquals(20, enemy.getHealth());
 
         // Multiple allies
-        Ally allyTwo = new Ally();
-        mainChar.addAlly(allyTwo);
+        Soldier soldierTwo = new Soldier();
+        mainChar.addAlly(soldierTwo);
         mainChar.launchAttack(enemy, false);
         assertEquals(15, enemy.getHealth());
     }
 
     @Test
-    public void AllyDefendTest() {
+    public void SoldierDefendTest() {
         // Testing that allies take appropriate damage
         Character mainChar = new Character(null);
-        Ally allyOne = new Ally();
-        mainChar.addAlly(allyOne);
+        Soldier soldierOne = new Soldier();
+        mainChar.addAlly(soldierOne);
 
-        // One ally taking damage
+        // One soldier taking damage
         SlugEnemy enemy = new SlugEnemy(null);
         enemy.launchAttack(mainChar);
         assertEquals(100, mainChar.getHealth());
-        assertEquals(7, allyOne.getHealth());
+        assertEquals(7, soldierOne.getHealth());
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
         assertEquals(0, mainChar.getNumAllies());
 
         // Multiple allies taking damage
-        allyOne = new Ally();
-        Ally allyTwo = new Ally();
-        mainChar.addAlly(allyOne);
-        mainChar.addAlly(allyTwo);
+        soldierOne = new Soldier();
+        Soldier soldierTwo = new Soldier();
+        mainChar.addAlly(soldierOne);
+        mainChar.addAlly(soldierTwo);
         enemy.launchAttack(mainChar);
-        assertEquals(7, allyOne.getHealth());
-        assertEquals(10, allyTwo.getHealth());
-        enemy.launchAttack(mainChar);
-        enemy.launchAttack(mainChar);
+        assertEquals(7, soldierOne.getHealth());
+        assertEquals(10, soldierTwo.getHealth());
         enemy.launchAttack(mainChar);
         enemy.launchAttack(mainChar);
-        assertEquals(7, allyTwo.getHealth());
+        enemy.launchAttack(mainChar);
+        enemy.launchAttack(mainChar);
+        assertEquals(7, soldierTwo.getHealth());
     }
 }

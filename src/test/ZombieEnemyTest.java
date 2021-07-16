@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.Ally;
 import unsw.loopmania.Character;
+import unsw.loopmania.Soldier;
 import unsw.loopmania.enemies.ZombieEnemy;
 import unsw.loopmania.path.PathPosition;
 
@@ -110,8 +111,8 @@ public class ZombieEnemyTest {
 
         for (int i = 0; i < 100; i++) {
             Character newChar = new Character(null);
-            newChar.addAlly(new Ally());
-            newChar.addAlly(new Ally());
+            newChar.addAlly(new Soldier());
+            newChar.addAlly(new Soldier());
             ZombieEnemy newZombie = new ZombieEnemy(null);
 
             newZombie.launchAttack(newChar);

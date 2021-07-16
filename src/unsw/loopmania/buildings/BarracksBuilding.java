@@ -4,6 +4,7 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.Ally;
 import unsw.loopmania.Character;
+import unsw.loopmania.Soldier;
 
 /**
  * represents a barracks building in the backend game world
@@ -17,8 +18,8 @@ public class BarracksBuilding extends Building {
     public void notifyTick(Character mainChar) {
         // Adding an ally everytime character passes through and isn't in battle
         if (this.getX() == mainChar.getX() && this.getY() == mainChar.getY() && !mainChar.getInBattle()) {
-            Ally newAlly = new Ally();
-            mainChar.addAlly(newAlly);
+            Soldier newSoldier = new Soldier();
+            mainChar.addAlly(newSoldier);
         }
     }
 }
