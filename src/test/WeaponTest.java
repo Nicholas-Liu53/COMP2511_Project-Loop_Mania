@@ -64,18 +64,22 @@ public class WeaponTest {
     @Test
     public void staffTest() {
         WeaponStrategy weapon = new Staff();
-        Character mainChar = new Character(null);
-        Enemy enemy = new SlugEnemy(null);
 
-        mainChar.equipItem(weapon);
-        // Testing against slug
-        mainChar.launchAttack(enemy, false);
-        assertEquals(17, enemy.getHealth());
-        mainChar.launchAttack(enemy, false);
-        assertEquals(9, enemy.getHealth());
-        mainChar.launchAttack(enemy, false);
-        assertEquals(1, enemy.getHealth());
-        mainChar.launchAttack(enemy, false);
-        assertEquals(0, enemy.getHealth());
+        // Testing special attack
+        boolean criticalCheck = false;
+        for (int i = 0; i < 100; i++) {
+            Character mainChar = new Character(null);
+            Enemy enemy = new SlugEnemy(null);
+            mainChar.equipItem(weapon);
+
+            mainChar.launchAttack(enemy, false);
+
+            assertEquals(17, enemy.getHealth());
+
+            if (mainChar.getNumAllies() == 1)
+                criticalCheck = true;
+        }
+
+        assertEquals(true, criticalCheck);
     }
 }
