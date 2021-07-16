@@ -18,7 +18,7 @@
       <Pane prefHeight="435.0" prefWidth="342.0">
          <children>
             <!-- clicking button should start/resume the game -->
-            <Button fx:id="standardGamemodeFX" layoutX="51.0" layoutY="239.0" prefHeight="78.0" prefWidth="123.0" text="Standard">
+            <Button fx:id="standardGamemodeFX" layoutX="51.0" layoutY="239.0" onAction="#setGamemodeToStandard" prefHeight="78.0" prefWidth="123.0" text="Standard">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Bloom />
                </effect>
             </Label>
-            <Button fx:id="survivalGamemodeFX" layoutX="203.0" layoutY="239.0" prefHeight="78.0" prefWidth="123.0" text="Survival">
+            <Button fx:id="survivalGamemodeFX" layoutX="203.0" layoutY="239.0" onAction="#setGamemodeToSurvival" prefHeight="78.0" prefWidth="123.0" text="Survival">
                <font>
                   <Font size="14.0" />
                </font>
@@ -56,7 +56,7 @@
                   <Bloom />
                </effect>
             </Label>
-            <Button fx:id="berserkerGamemodeFX" layoutX="353.0" layoutY="239.0" prefHeight="78.0" prefWidth="123.0" text="Berserker">
+            <Button fx:id="berserkerGamemodeFX" layoutX="353.0" layoutY="239.0" onAction="#setGamemodeToBerserker" prefHeight="78.0" prefWidth="123.0" text="Berserker">
                <font>
                   <Font size="14.0" />
                </font>
