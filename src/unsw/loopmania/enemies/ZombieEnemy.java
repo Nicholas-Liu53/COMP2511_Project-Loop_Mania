@@ -54,8 +54,6 @@ public class ZombieEnemy extends Enemy {
 
             // Citical bite implementation
             int criticalCheck = (new Random()).nextInt(10);
-            System.err.println(criticalCheck);
-            System.err.println(mainChar.getNumAllies());
             if (criticalCheck == 5 && (mainChar.getNumAllies() > 0)) {
                 // Remove ally and spawn new zombie
                 mainChar.removeAlly();
