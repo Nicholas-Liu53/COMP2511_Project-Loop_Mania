@@ -87,6 +87,7 @@ public class LoopManiaWorld {
     private StringProperty cyclesTillShopProperty;
 
     private StringProperty gamemodeProperty;
+    private StringProperty cycleOrCyclesProperty;
 
     private String gamemode = "Standard";
     /**
@@ -146,6 +147,7 @@ public class LoopManiaWorld {
         this.cyclesTillShopProperty = new SimpleStringProperty();
 
         this.gamemodeProperty = new SimpleStringProperty();
+        this.cycleOrCyclesProperty = new SimpleStringProperty();
 
         this.numSword = 0;
         this.numStake = 0;
@@ -398,7 +400,6 @@ public class LoopManiaWorld {
             // Eject the oldest unequipped item and replace it... oldest item is that at
             // beginning of items
             giveRandomRewards("onlyGoldXP");
-            updateItemProperty(this.unequippedInventoryItems.get(0));
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
@@ -430,7 +431,6 @@ public class LoopManiaWorld {
             // beginning of items
             // giving some cash/experience rewards for the discarding of the oldest item
             giveRandomRewards("onlyGoldXP");
-            updateItemProperty(this.unequippedInventoryItems.get(0));
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
@@ -562,6 +562,7 @@ public class LoopManiaWorld {
     private void removeItemByPositionInUnequippedInventoryItems(int index) {
         Item item = this.unequippedInventoryItems.get(index);
         decreaseUnequippedInventoryItemCount(item);
+        updateItemProperty(this.unequippedInventoryItems.get(0));
         item.destroy();
         this.unequippedInventoryItems.remove(index);
     }
@@ -965,6 +966,7 @@ public class LoopManiaWorld {
         getNumCyclesProperty();
         getCyclesTillShopProperty();
         getGamemodeProperty();
+        getCycleOrCyclesProperty();
 
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
@@ -1174,6 +1176,14 @@ public class LoopManiaWorld {
     public StringProperty getGamemodeProperty() {
         this.gamemodeProperty.set(gamemode);
         return this.gamemodeProperty;
+    }
+
+    public StringProperty getCycleOrCyclesProperty() {
+        if (this.numCyclesToOpenShop - this.numCycles == 1)
+            this.cycleOrCyclesProperty.set("cycle.");
+        else
+            this.cycleOrCyclesProperty.set("cycles.");
+        return this.cycleOrCyclesProperty;
     }
 
     //*-------------------------------------------------------------------------
