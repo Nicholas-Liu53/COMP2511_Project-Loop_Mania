@@ -598,7 +598,7 @@ public class LoopManiaWorld {
 
             // Currently the character attacks every enemy and vice versa
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
-                    .pow(e.getAttackRadius(), 2)) {
+                    .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
                 // fight...
                 character.addBattle(e);
                 character.launchAttack(e, inCampfireRadius(e));

@@ -115,6 +115,10 @@ public class Character extends MovingEntity {
         return this.helmetStrat;
     }
 
+    public void removeAlly() {
+        this.allies.remove(this.allies.get(0));
+    }
+
     /**
      * Adds enemy to list of enemies that the character is currently battling, only
      * adds enemy if it is not already on the list
@@ -137,10 +141,6 @@ public class Character extends MovingEntity {
             this.enemiesCurrentlyBattling.remove(enemy);
     }
 
-    public void removeAlly() {
-        this.allies.remove(this.allies.get(0));
-    }
-
     /**
      * Checks first ally and removes them if they have run
      * out of health
@@ -148,6 +148,32 @@ public class Character extends MovingEntity {
     private void updateAllies() {
         if (this.allies.get(0).getHealth() == 0)
             this.allies.remove(this.allies.get(0));
+
+        // Ally is a tranced enemy
+        if (this.allies.get(0) instanceof Enemy) {
+
+            Enemy enemy = (Enemy) this.allies.get(0);
+
+            if (enemy.getTranceCount() == 0)
+                this.allies.remove(this.allies.get(0));
+
+            if (!this.getInBattle()) {
+                this.allies.remove(this.allies.get(0));
+                enemy.setTranceCount(0);
+                this.allies.get(0).receiveAttack(1000);
+            }
+
+        }
+    }
+
+    /**
+     * Adds enemy as ally at index 0 in allies list
+     * 
+     * @param enemy
+     */
+    public void addTrancedEnemy(Enemy enemy) {
+        enemy.setTranceCount(5);
+        this.allies.add(0, enemy);
     }
 
     /**
@@ -168,7 +194,7 @@ public class Character extends MovingEntity {
         if (inCampfireRadius)
             giveDamage *= 2;
 
-        this.weaponStrat.launchAttack(enemy, (giveDamage - this.helmetStrat.launchAttack()));
+        this.weaponStrat.launchAttack(enemy, (giveDamage - this.helmetStrat.launchAttack()), this);
     }
 
     /**
