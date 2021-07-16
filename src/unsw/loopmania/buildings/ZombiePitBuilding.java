@@ -14,7 +14,7 @@ public class ZombiePitBuilding extends Building {
     }
 
     @Override
-    public void notify(LoopManiaWorld worldState) {
+    public void notifyCycle(LoopManiaWorld worldState) {
         // Spawns zombie from bulding every cycle at adjacent path position
         worldState.addNewEnemy(new ZombieEnemy(this.getAdjacentPathTile(worldState.getPath())));
     }

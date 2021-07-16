@@ -14,7 +14,7 @@ public class VampireCastleBuilding extends Building {
     }
 
     @Override
-    public void notify(LoopManiaWorld worldState) {
+    public void notifyCycle(LoopManiaWorld worldState) {
         // Spawns vampire from building every 5 cycles
         if (worldState.getCurrCycle() % 5 == 0) {
             // Generates new enemy at adjacent path position
