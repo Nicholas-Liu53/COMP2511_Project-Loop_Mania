@@ -189,6 +189,10 @@ public class LoopManiaWorld {
         return this.character.getY();
     }
 
+    public int getCharacterXp() {
+        return this.character.getExperience();
+    }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity
      * out of the file
