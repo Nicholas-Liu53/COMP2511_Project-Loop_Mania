@@ -13,6 +13,7 @@ public class CyclesBaseGoal implements ComplexGoalComponent {
         this.achievementThreshold = achievementThreshold;
     }
 
+    @Override
     public boolean achieved(LoopManiaWorld world) {
         if (world.getCurrCycle() >= this.achievementThreshold)
             return true;

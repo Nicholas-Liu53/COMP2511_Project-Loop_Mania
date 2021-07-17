@@ -12,6 +12,7 @@ public class XpBaseGoal implements ComplexGoalComponent {
         this.achievementThreshold = achievementThreshold;
     }
 
+    @Override
     public boolean achieved(LoopManiaWorld world) {
         if (world.getCharacterXp() >= this.achievementThreshold)
             return true;

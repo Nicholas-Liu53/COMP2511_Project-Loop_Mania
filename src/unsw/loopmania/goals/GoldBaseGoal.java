@@ -12,6 +12,7 @@ public class GoldBaseGoal implements ComplexGoalComponent {
         this.achievementThreshold = achievementThreshold;
     }
 
+    @Override
     public boolean achieved(LoopManiaWorld world) {
         if (world.getGold() >= this.achievementThreshold)
             return true;
