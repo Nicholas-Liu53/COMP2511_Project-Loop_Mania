@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -25,17 +26,6 @@ public class BuildingsTests {
     
     @Test
     public void herosCastleTest() {
-        /* 
-            Requirements to test:
-             1. UI TEST 1: Character gotta start there --> assert that position of hero's castle image is at the beginning of the path ✅
-             3. UI TEST 2: There is only one hero's castle and it's there
-             2. UI TEST 3: Shop Menu is opened when hero arrives at castle (game is paused)
-        */
-        
-        // Testing Requirement 1:
-        // Testing Requirement 2:
-        // Testing Requirement 3:
-
         List<Pair<Integer, Integer>> orderedPath = null;
 
         try {
@@ -100,6 +90,26 @@ public class BuildingsTests {
         */
         
         // Testing Requirement 1:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        VampireCastleBuilding vampireCastle = new VampireCastleBuilding(orderedPath.get(2));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        boolean vampireCastleFound = false;
+        for (Building b: world.getBuildingsList()) 
+            if (b.equals(vampireCastle)) vampireCastleFound = true;
+        assertFalse(vampireCastleFound);
     }
     
     @Test
@@ -113,6 +123,26 @@ public class BuildingsTests {
         */
         
         // Testing Requirement 1:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        ZombiePitBuilding zombiePit = new ZombiePitBuilding(orderedPath.get(2));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        boolean zombiePitFound = false;
+        for (Building b: world.getBuildingsList()) 
+            if (b.equals(zombiePit)) zombiePitFound = true;
+        assertFalse(zombiePitFound);
     } 
 
     @Test
@@ -124,6 +154,26 @@ public class BuildingsTests {
         */
         
         // Testing Requirement 1:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        TowerBuilding tower = new TowerBuilding(orderedPath.get(2));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        boolean towerFound = false;
+        for (Building b: world.getBuildingsList()) 
+            if (b.equals(tower)) towerFound = true;
+        assertFalse(towerFound);
     } 
 
     @Test
@@ -134,7 +184,33 @@ public class BuildingsTests {
              2. Restores all of characters health points when character walks onto it
         */
         
-        // Testing Requirement 1:
+        // Testing Requirement 2:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        VillageBuilding village = new VillageBuilding(orderedPath.get(2));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        mainChar.receiveAttack(50);
+        while (!(village.getX() == mainChar.getX()) && village.getY() == mainChar.getY()) {
+            village.notifyTick(mainChar, world);
+            assertEquals(mainChar.getHealth(), 50);
+            world.runTickMoves();
+        }
+        village.notifyTick(mainChar, world);
+        world.runTickMoves();
+        assertEquals(mainChar.getHealth(), 100);
+
     }
     
     @Test
@@ -227,8 +303,47 @@ public class BuildingsTests {
             Requirements to test:
              1. Can only be placed on non-path tiles
              2. Character does double damage when within a radius of 4 tiles from campfire
+             3. Vampire runs away from campfire
         */
         
         // Testing Requirement 1:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        CampfireBuilding campfire = new CampfireBuilding(orderedPath.get(2));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        boolean campfireFound = false;
+        campfire.notifyTick(mainChar, world);
+        for (Building b: world.getBuildingsList()) 
+            if (b.equals(campfire)) campfireFound = true;
+        assertFalse(campfireFound);
+
+        // // Testing Requirement 2:
+        // campfire = new CampfireBuilding(new Pair<Integer,Integer>(3, 1));
+        // campfire.notifyTick(mainChar, world);
+        // // world.locationOfPlacedBuildings.add(campfire);
+        // for (Building b: world.getBuildingsList()) 
+        //     if (b.equals(campfire)) campfireFound = true;
+        // // assertTrue(campfireFound);
+
+        // VampireEnemy vampire = new VampireEnemy(new PathPosition(2, orderedPath));
+        // world.addNewEnemy(vampire);
+
+        // for (int i = 0; i < 150; i++) {
+        //     world.runTickMoves();
+        //     System.out.println("[" + mainChar.getHealth() + ", " + vampire.getHealth() + "]");
+        // }
+        // assertEquals(vampire.getHealth(), 65);
     } 
 }

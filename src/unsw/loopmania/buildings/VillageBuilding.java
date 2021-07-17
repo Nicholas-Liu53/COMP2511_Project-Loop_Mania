@@ -19,11 +19,7 @@ public class VillageBuilding extends Building {
     }
 
     private void restoreHealthIfInVillage(LoopManiaWorld world, Character mainChar) {
-        for (Building b : world.getBuildingEntities()) {
-            if (b instanceof VillageBuilding) {
-                if (b.getX() == (mainChar.getX()) && b.getY() == (mainChar.getY()))
-                    mainChar.restoreHealthPoints();
-            }
-        }
+        if (getX() == (mainChar.getX()) && getY() == (mainChar.getY()))
+            mainChar.restoreHealthPoints();
     }
 }

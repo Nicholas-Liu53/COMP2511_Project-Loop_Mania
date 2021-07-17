@@ -1233,27 +1233,6 @@ public class LoopManiaWorld {
     //*-------------------------------------------------------------------------
     //*                     Buildings Helper Functions
     //*-------------------------------------------------------------------------
-    
-
-    private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
-        for (Building b : this.buildingEntities) {
-            if (b instanceof TrapBuilding) {
-                if (b.getX() == (enemy.getX()) && b.getY() == (enemy.getY())) {
-                    enemy.receiveAttack(30);
-                    this.buildingEntities.remove(b);
-                    Pair<Integer, Integer> temp = new Pair<Integer, Integer>(b.getX(), b.getY());
-                    this.locationOfPlacedBuildings.remove(temp);
-                    b.destroy();
-                    break;
-                }
-            }
-        }
-
-        if (enemy.getHealth() == 0)
-            return true;
-
-        return false;
-    }
 
     public boolean inCampfireRadius(MovingEntity me) {
         for (Building b : this.buildingEntities) {
