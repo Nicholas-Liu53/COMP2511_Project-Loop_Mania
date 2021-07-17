@@ -29,6 +29,7 @@ public class goalloader {
 
     public void loadAllGoals() {
         ComplexGoalComposite x = loadComplexGoal(null, this.json.getJSONObject("goal-condition"));
+        System.out.println(x);
         System.out.println(x.getChildren());
     }
 
@@ -47,6 +48,17 @@ public class goalloader {
                 cg = new ComplexGoalComposite("NONE");
                 loadComplexGoal(cg, goalCondition);
                 return cg;
+            }
+        } else if (!cg.getOperation().equals("NONE") && goalCondition.has("subgoals")) {
+            ComplexGoalComposite cg1 = null;
+            if (goalCondition.getString("goal").equals("AND")) {
+                cg1 = new ComplexGoalComposite(cg, "AND");
+                cg.add(cg1);
+                loadSubGoals(cg1, goalCondition.getJSONArray("subgoals"));
+            } else if (goalCondition.getString("goal").equals("OR")) {
+                cg1 = new ComplexGoalComposite(cg, "OR");
+                cg.add(cg1);
+                loadSubGoals(cg1, goalCondition.getJSONArray("subgoals"));
             }
         } else {
             if (goalCondition.getString("goal").equals("cycles")) {
