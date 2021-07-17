@@ -80,6 +80,10 @@ public abstract class Enemy extends MovingEntity implements Ally {
      */
     public int getTranceCount() {
         this.tranceCountdown -= 1;
+
+        if (this.tranceCountdown < 0)
+            this.tranceCountdown = 0;
+
         return this.tranceCountdown;
     }
 

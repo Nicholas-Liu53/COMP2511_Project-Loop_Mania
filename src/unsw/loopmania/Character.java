@@ -146,12 +146,10 @@ public class Character extends MovingEntity {
      * out of health
      */
     private void updateAllies() {
-        if (this.allies.get(0).getHealth() == 0)
+        if (this.allies.get(0).getHealth() == 0) {
             this.allies.remove(this.allies.get(0));
-
-        // Ally is a tranced enemy
-        if (this.allies.get(0) instanceof Enemy) {
-
+        } else if (this.allies.get(0) instanceof Enemy) {
+            // Ally is a tranced enemy
             Enemy enemy = (Enemy) this.allies.get(0);
 
             if (enemy.getTranceCount() == 0)
@@ -172,8 +170,11 @@ public class Character extends MovingEntity {
      * @param enemy
      */
     public void addTrancedEnemy(Enemy enemy) {
-        enemy.setTranceCount(5);
-        this.allies.add(0, enemy);
+        if (this.enemiesCurrentlyBattling.size() > 1) {
+            enemy.setTranceCount(5);
+            this.removeEnemyFromBattle(enemy);
+            this.allies.add(0, enemy);
+        }
     }
 
     /**
