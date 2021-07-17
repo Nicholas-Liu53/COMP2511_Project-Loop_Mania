@@ -12,6 +12,8 @@ import javafx.beans.property.StringProperty;
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
+import unsw.loopmania.goals.ComplexGoalComponent;
+import unsw.loopmania.goals.ComplexGoalComposite;
 import unsw.loopmania.items.*;
 import unsw.loopmania.path.*;
 
@@ -51,6 +53,9 @@ public class LoopManiaWorld {
 
     private List<Item> unequippedInventoryItems;
     // private List<Item> equippedInventoryItems;
+
+    // The goal for this world
+    private ComplexGoalComponent goal;
 
     private List<Building> buildingEntities;
     private List<Pair<Integer, Integer>> locationOfPlacedBuildings;
@@ -1331,4 +1336,11 @@ public class LoopManiaWorld {
     public String getGamemode() {
         return this.gamemode;
     }
-}
+
+    //*-------------------------------------------------------------------------
+    //*                                Goals
+    //*-------------------------------------------------------------------------
+    public boolean goalsAchieved() {
+        return this.goal.achieved(this);
+    }
+}   

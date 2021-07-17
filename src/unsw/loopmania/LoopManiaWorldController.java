@@ -432,6 +432,11 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 spawnCycle++;
             }
 
+            // Check if goals have been achieved
+            if (world.goalsAchieved() == true) {
+                System.err.println("Placeholder!");
+            }
+
             printThreadingNotes("HANDLED TIMER");
         }));
 
