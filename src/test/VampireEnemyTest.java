@@ -100,8 +100,13 @@ public class VampireEnemyTest {
         try {
             position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
         } catch (FileNotFoundException e) {
-            // Failed to generate PathPostion
-            assertTrue(false);
+            // Using gradle, different path is needed
+            try {
+                position = TestHelper.generatePathPosition("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                // Failed to generate PathPostion
+                assertTrue(false);
+            }
         }
 
         VampireEnemy newVampire = new VampireEnemy(position);
