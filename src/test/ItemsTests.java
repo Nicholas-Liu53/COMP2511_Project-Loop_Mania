@@ -2,9 +2,16 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
+import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
+import unsw.loopmania.*;
+import unsw.loopmania.Character;
 import unsw.loopmania.items.*;
+import unsw.loopmania.path.PathPosition;
 
 public class ItemsTests {
 
@@ -109,5 +116,27 @@ public class ItemsTests {
         assertEquals("Stake", s.getClass().getSimpleName());
         assertEquals(150, Stake.getPurchasePrice());
         assertEquals(120, Stake.getSellPrice());
+    }
+
+    @Test
+    public void freeRun() {
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException e) {
+                assertEquals(true, false);
+            }
+        }
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+
+        for (int i = 0; i < 500; i++)
+            world.runTickMoves();
     }
 }
