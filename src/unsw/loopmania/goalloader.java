@@ -78,6 +78,10 @@ public class goalloader {
     private void loadSubGoals(ComplexGoalComposite cg, JSONArray subgoals) {
         for (int i = 0; i < subgoals.length(); i++) {
             loadComplexGoal(cg, subgoals.getJSONObject(i));
+            System.out.println("take " + i + "    in subgoals method: \n" + subgoals.getJSONObject(i).toString(4));
+            System.out.println(cg);
+            System.out.println(cg.getChildren());
+            System.out.println("\n \n");
         }
     }
 
