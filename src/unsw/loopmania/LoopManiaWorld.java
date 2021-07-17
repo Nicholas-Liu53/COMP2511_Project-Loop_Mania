@@ -8,7 +8,7 @@ import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+// import jdk.jfr.internal.StringPool;
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
@@ -50,25 +50,47 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     private List<Item> unequippedInventoryItems;
-    private List<Item> equippedInventoryItems;
+    // private List<Item> equippedInventoryItems;
 
     private List<Building> buildingEntities;
-    private List<Pair<Integer, Integer>> loactionOfPlacedBuildings;
+    private List<Pair<Integer, Integer>> locationOfPlacedBuildings;
     private int numCycles;
     private int cycleShopLinear;
-    private int cycleShopTotal;
+    private int numCyclesToOpenShop;
     private boolean showShop;
     private List<Item> pathItems;
     private int numGoldPileSpawned;
     private int numHealthPotionSpawned;
-    private int numGold;
+    // private int numGold;
     private ArrayList<Enemy> newEnemies;
     private ArrayList<WorldStateObserver> observers;
-    private StringProperty charHealth;
-    // private Double charHealth;
-    private StringProperty charGold;
-    private StringProperty charXP;
+    private StringProperty charHealthProperty;
+    // private Double charHealthProperty;
+    private StringProperty charGoldProperty;
+    private StringProperty charXPProperty;
+    private StringProperty charAlliesProperty;
+    private int numSword;
+    private int numStake;
+    private int numStaff;
+    private int numBodyArmour;
+    private int numHelmet;
+    private int numShield;
+    private int numHealthPotion;
+    private StringProperty numSwordProperty;
+    private StringProperty numStakeProperty;
+    private StringProperty numStaffProperty;
+    private StringProperty numBodyArmourProperty;
+    private StringProperty numHelmetProperty;
+    private StringProperty numShieldProperty;
+    private StringProperty numHealthPotionProperty;
 
+    private StringProperty currCycleNumProperty;
+    private StringProperty cyclesTillShopProperty;
+
+    private StringProperty gamemodeProperty;
+    private StringProperty cycleOrCyclesProperty;
+
+    private String gamemode = "Standard";
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
      * them
@@ -76,9 +98,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    // --------------------------------------------------------------------------
-    // Constructor
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                              Constructor
+    //--------------------------------------------------------------------------
     /**
      * create the world (constructor)
      * 
@@ -98,26 +120,51 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         this.startingPoint = orderedPath.get(0);
         this.buildingEntities = new ArrayList<>();
-        this.loactionOfPlacedBuildings = new ArrayList<>();
+        this.locationOfPlacedBuildings = new ArrayList<>();
         this.numCycles = 0;
         this.cycleShopLinear = 1;
-        this.cycleShopTotal = 1;
+        this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
         this.numGoldPileSpawned = 0;
         this.numHealthPotionSpawned = 0;
-        this.numGold = 0;
+        // this.numGold = 0;
         this.newEnemies = new ArrayList<>();
         this.observers = new ArrayList<>();
-        this.charHealth = new SimpleStringProperty();
-        // this.charHealth = 0.0;
-        this.charGold = new SimpleStringProperty();
-        this.charXP = new SimpleStringProperty();
+        this.charHealthProperty = new SimpleStringProperty();
+        // this.charHealthProperty = 0.0;
+        this.charGoldProperty = new SimpleStringProperty();
+        this.charXPProperty = new SimpleStringProperty();
+        this.charAlliesProperty = new SimpleStringProperty();
+
+        this.numSwordProperty = new SimpleStringProperty();
+        this.numStakeProperty = new SimpleStringProperty();
+        this.numStaffProperty = new SimpleStringProperty();
+        this.numBodyArmourProperty = new SimpleStringProperty();
+        this.numHelmetProperty = new SimpleStringProperty();
+        this.numShieldProperty = new SimpleStringProperty();
+        this.numHealthPotionProperty = new SimpleStringProperty();
+
+        this.currCycleNumProperty = new SimpleStringProperty();
+        this.cyclesTillShopProperty = new SimpleStringProperty();
+
+        this.gamemodeProperty = new SimpleStringProperty();
+        this.cycleOrCyclesProperty = new SimpleStringProperty();
+
+        this.numSword = 0;
+        this.numStake = 0;
+        this.numStaff = 0;
+        this.numBodyArmour = 0;
+        this.numHelmet = 0;
+        this.numShield = 0;
+        this.numHealthPotion = 0;
+        
+
     }
 
-    // --------------------------------------------------------------------------
-    // General Methods
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                              General Methods
+    //--------------------------------------------------------------------------
     public int getWidth() {
         return this.width;
     }
@@ -178,9 +225,9 @@ public class LoopManiaWorld {
         return this.startingPoint;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Spawn
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 Spawn
+    //*-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * 
@@ -310,9 +357,9 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Items/Inventory
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Items/Inventory
+    //*-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
         return Math.pow((getCharacterX() - item.getX()), 2) + Math.pow((getCharacterY() - item.getY()), 2) == 0;
     }
@@ -344,7 +391,7 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawn a item in the world and return the item entity
+     * Spawn a health potion into inventory (after picking up from path)
      * 
      * @param itemToAdd
      * @return a item to be spawned in the controller as a JavaFX node
@@ -363,6 +410,8 @@ public class LoopManiaWorld {
         if (itemToAdd instanceof HealthPotion) {
             HealthPotion healthPotion = new HealthPotion(firstAvailableSlot);
             this.unequippedInventoryItems.add(healthPotion);
+            increaseUnequippedInventoryItemCount(healthPotion);
+            updateItemProperty(healthPotion);
             return healthPotion;
         } else {
             character.giveGold(100);
@@ -415,8 +464,11 @@ public class LoopManiaWorld {
                 break;
         }
 
-        if (item != null)
+        if (item != null) {
             this.unequippedInventoryItems.add(item);
+            increaseUnequippedInventoryItemCount(item);
+            updateItemProperty(item);
+        }
 
         return item;
     }
@@ -426,7 +478,10 @@ public class LoopManiaWorld {
      * 
      * @param item item to be removed
      */
-    private void removeUnequippedInventoryItem(Entity item) {
+    public void removeUnequippedInventoryItem(Entity item) {
+        Item temp = (Item) item;
+        decreaseUnequippedInventoryItemCount(temp);
+        updateItemProperty(temp);
         item.destroy();
         this.unequippedInventoryItems.remove(item);
     }
@@ -453,6 +508,8 @@ public class LoopManiaWorld {
         WeaponStrategy oldWeapon = character.getWeapon();
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         this.unequippedInventoryItems.remove(item);
+        decreaseUnequippedInventoryItemCount((Item) item);
+        updateItemProperty((Item) item);
         character.equipItem((WeaponStrategy) item);
 
         if (oldWeapon instanceof Melee) {
@@ -487,6 +544,8 @@ public class LoopManiaWorld {
         }
 
         this.unequippedInventoryItems.remove(item);
+        decreaseUnequippedInventoryItemCount((Item) item);
+        updateItemProperty((Item) item);
 
         if (oldItem instanceof Melee) {
             // Melee shouldn't be placed in the inventory
@@ -503,7 +562,10 @@ public class LoopManiaWorld {
      * @param index index from 0 to length-1
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index) {
-        this.unequippedInventoryItems.get(index).destroy();
+        Item item = this.unequippedInventoryItems.get(index);
+        decreaseUnequippedInventoryItemCount(item);
+        updateItemProperty(this.unequippedInventoryItems.get(0));
+        item.destroy();
         this.unequippedInventoryItems.remove(index);
     }
 
@@ -531,7 +593,7 @@ public class LoopManiaWorld {
      * 
      * @return x,y coordinate pair
      */
-    private Pair<Integer, Integer> getFirstAvailableSlotForItem() {
+    public Pair<Integer, Integer> getFirstAvailableSlotForItem() {
         // first available slot for an item...
         // IMPORTANT - have to check by y then x, since trying to find first available
         // slot defined by looking row by row
@@ -571,9 +633,114 @@ public class LoopManiaWorld {
         return this.unequippedInventoryItems;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Battles
-    // *-------------------------------------------------------------------------
+    public int getGold() {
+        return character.getGold();
+    }
+
+    public void deductGold(int num) {
+        character.removeGold(num);
+    }
+
+    public void giveGold(int num) {
+        character.giveGold(num);
+    }
+
+    public void addToUnequippedInventory(Item item) {
+        unequippedInventoryItems.add(item);
+    }
+
+    public void increaseUnequippedInventoryItemCount(Item item) {
+        String itemType = item.getClass().getSimpleName();
+        switch (itemType) {
+            case "Sword":
+                numSword++;
+                break;
+            case "Stake":
+                numStake++;
+                break;
+            case "Staff":
+                numStaff++;
+                break;
+            case "BodyArmour":
+                numBodyArmour++;
+                break;
+            case "Helmet":
+                numHelmet++;
+                break;
+            case "Shield":
+                numShield++;
+                break;
+            case "HealthPotion":
+                numHealthPotion++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void decreaseUnequippedInventoryItemCount(Item item) {
+        String itemType = item.getClass().getSimpleName();
+        switch (itemType) {
+            case "Sword":
+                numSword--;
+                break;
+            case "Stake":
+                numStake--;
+                break;
+            case "Staff":
+                numStaff--;
+                break;
+            case "BodyArmour":
+                numBodyArmour--;
+                break;
+            case "Helmet":
+                numHelmet--;
+                break;
+            case "Shield":
+                numShield--;
+                break;
+            case "HealthPotion":
+                numHealthPotion--;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void updateItemProperty(Item item) {
+        String itemType = item.getClass().getSimpleName();
+        switch (itemType) {
+            case "Sword":
+                this.numSwordProperty.set(String.valueOf(numSword));
+                break;
+            case "Stake":
+                this.numStakeProperty.set(String.valueOf(numStake));
+                break;
+            case "Staff":
+                this.numStaffProperty.set(String.valueOf(numStaff));
+                break;
+            case "BodyArmour":
+                this.numBodyArmourProperty.set(String.valueOf(numBodyArmour));
+                break;
+            case "Helmet":
+                this.numHelmetProperty.set(String.valueOf(numHelmet));
+                break;
+            case "Shield":
+                this.numShieldProperty.set(String.valueOf(numShield));
+                break;
+            case "HealthPotion":
+                this.numHealthPotionProperty.set(String.valueOf(numHealthPotion));
+                break;
+            default:
+                break;
+        }
+    }
+
+    
+
+    //*-------------------------------------------------------------------------
+    //*                             Battles
+    //*-------------------------------------------------------------------------
     /**
      * kill an enemy
      * 
@@ -596,11 +763,16 @@ public class LoopManiaWorld {
 
             // Currently the character attacks every enemy and vice versa
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
-                    .pow(e.getAttackRadius(), 2)) {
+                    .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
                 // fight...
                 character.addBattle(e);
                 character.launchAttack(e, inCampfireRadius(e));
-                e.launchAttack(character);
+                boolean specialAttack = e.launchAttack(character);
+
+                if (specialAttack && (e instanceof ZombieEnemy)) {
+                    this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
+                }
+
                 attackEnemyInTowerRadiusDuringBattle(e);
 
                 if (e.getHealth() == 0) {
@@ -634,9 +806,9 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Building Cards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Building Cards
+    //*-------------------------------------------------------------------------
     /**
      * checks if card pile if full i.e. has attained it max width, if so, then
      * removes card the oldest card of cards (as per position in gridpane of
@@ -745,7 +917,7 @@ public class LoopManiaWorld {
         if (newBuilding != null) {
             this.observers.add(newBuilding);
             this.buildingEntities.add(newBuilding);
-            this.loactionOfPlacedBuildings.add(newLocation);
+            this.locationOfPlacedBuildings.add(newLocation);
 
             // Destroy the card
             card.destroy();
@@ -784,9 +956,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Movement
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Movement
+    //*-------------------------------------------------------------------------
     /**
      * Run moves which occur with every tick without needing to spawn anything
      * immediately
@@ -797,10 +969,28 @@ public class LoopManiaWorld {
         healthProperty();
         goldProperty();
         xpProperty();
+        alliesProperty();
         restoreHealthIfInVillage();
+        getNumCyclesProperty();
+        getCyclesTillShopProperty();
+        getGamemodeProperty();
+        getCycleOrCyclesProperty();
+
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
+        } else {
+            showShop = false;
         }
+
+        // Notifying world state observers of new tick
+        for (WorldStateObserver observer : this.observers) {
+            observer.notifyTick(this.character);
+        }
+        
+    }
+
+    public boolean getShowShop() {
+        return this.showShop;
     }
 
     /**
@@ -808,23 +998,20 @@ public class LoopManiaWorld {
      */
     private void updateCharacterCycles() {
         this.numCycles++;
-        if (this.numCycles == this.cycleShopTotal) {
+        // System.out.println("================= numCycles = " + this.numCycles + "=================");
+        // System.out.println("================= numCyclesToOpenShop = " + this.numCyclesToOpenShop + "=================");
+        if (this.numCycles == this.numCyclesToOpenShop) {
             this.cycleShopLinear++;
-            this.cycleShopTotal += this.cycleShopLinear;
+            this.numCyclesToOpenShop += this.cycleShopLinear;
             showShop = true;
-        } else {
-            showShop = false;
-        }
+            // System.out.println("================= OPEN SHOP =================");
+        } 
 
         // Notifying world state observers of new cycle
         for (WorldStateObserver observer : this.observers) {
-            observer.notify(this);
+            observer.notifyCycle(this);
         }
-
-        // TODO Observer pattern
-        // if (showShop) {
-        // //! shopMenu.showMenu();
-        // }
+        showShop = false;
     }
 
     /**
@@ -854,7 +1041,7 @@ public class LoopManiaWorld {
      * @return true if card can be placed on newLocation
      */
     public boolean canPlaceCard(Pair<Integer, Integer> newLocation, Card card) {
-        if (this.loactionOfPlacedBuildings.contains(newLocation))
+        if (this.locationOfPlacedBuildings.contains(newLocation))
             return false;
 
         if ((card instanceof VillageCard) || (card instanceof BarracksCard) || (card instanceof TrapCard)) {
@@ -873,9 +1060,9 @@ public class LoopManiaWorld {
         return true;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Rewards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 Rewards
+    //*-------------------------------------------------------------------------
     /**
      * Gives various rewards on type on mode selected Various modes are withCard,
      * noCard, and OnlyGoldXP
@@ -936,32 +1123,88 @@ public class LoopManiaWorld {
         return rewarded;
     }
 
-    // *-------------------------------------------------------------------------
-    // * UIS
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 UIS
+    //*-------------------------------------------------------------------------
     public StringProperty healthProperty() {
-        this.charHealth.set(String.valueOf(character.getHealth()));
-        return this.charHealth;
+        this.charHealthProperty.set(String.valueOf(character.getHealth()));
+        return this.charHealthProperty;
+    }
+
+    public StringProperty alliesProperty() {
+        this.charAlliesProperty.set(String.valueOf(character.getNumAllies()));
+        return this.charAlliesProperty;
     }
 
     // public Double healthProperty() {
-    // charHealth = character.getHealth() / 100.0;
-    // return charHealth;
+    // charHealthProperty = character.getHealth() / 100.0;
+    // return charHealthProperty;
     // }
 
     public StringProperty goldProperty() {
-        this.charGold.set(String.valueOf(character.getGold()));
-        return this.charGold;
+        this.charGoldProperty.set(String.valueOf(character.getGold()));
+        return this.charGoldProperty;
     }
 
     public StringProperty xpProperty() {
-        this.charXP.set(String.valueOf(character.getExperience()));
-        return this.charXP;
+        this.charXPProperty.set(String.valueOf(character.getExperience()));
+        return this.charXPProperty;
+    }
+    
+    public StringProperty getSwordProperty() {
+        return this.numSwordProperty;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Buildings Helper Functions
-    // *-------------------------------------------------------------------------
+    public StringProperty getStaffProperty() {
+        return this.numStaffProperty;
+    }
+
+    public StringProperty getStakeProperty() {
+        return this.numStakeProperty;
+    }
+
+    public StringProperty getBodyArmourProperty() {
+        return this.numBodyArmourProperty;
+    }
+
+    public StringProperty getHelmetProperty() {
+        return this.numHelmetProperty;
+    }
+
+    public StringProperty getShieldProperty() {
+        return this.numShieldProperty;
+    }
+
+    public StringProperty getHealthPotionProperty() {
+        return this.numHealthPotionProperty;
+    }
+
+    public StringProperty getNumCyclesProperty() {
+        this.currCycleNumProperty.set(String.valueOf(this.numCycles + 1));
+        return this.currCycleNumProperty;
+    }
+
+    public StringProperty getCyclesTillShopProperty() {
+        this.cyclesTillShopProperty.set(String.valueOf(this.numCyclesToOpenShop - this.numCycles));
+        return this.cyclesTillShopProperty;
+    }
+
+    public StringProperty getGamemodeProperty() {
+        this.gamemodeProperty.set(gamemode);
+        return this.gamemodeProperty;
+    }
+
+    public StringProperty getCycleOrCyclesProperty() {
+        if (this.numCyclesToOpenShop - this.numCycles == 1)
+            this.cycleOrCyclesProperty.set("cycle.");
+        else
+            this.cycleOrCyclesProperty.set("cycles.");
+        return this.cycleOrCyclesProperty;
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                     Buildings Helper Functions
+    //*-------------------------------------------------------------------------
     private void restoreHealthIfInVillage() {
         for (Building b : this.buildingEntities) {
             if (b instanceof VillageBuilding) {
@@ -977,6 +1220,8 @@ public class LoopManiaWorld {
                 if (b.getX() == (enemy.getX()) && b.getY() == (enemy.getY())) {
                     enemy.receiveAttack(30);
                     this.buildingEntities.remove(b);
+                    Pair<Integer, Integer> temp = new Pair<Integer, Integer>(b.getX(), b.getY());
+                    this.locationOfPlacedBuildings.remove(temp);
                     b.destroy();
                     break;
                 }
@@ -1046,8 +1291,7 @@ public class LoopManiaWorld {
     }
 
     private void attackEnemyInTowerRadiusDuringBattle(Enemy e) {
-        // During a battle within its shooting radius, enemies will be attacked by the
-        // tower
+        // During a battle within its shooting radius, enemies will be attacked by the tower
         // i.e.
         // if the battle is occuring within the shooting radius of tower,
         // enemies will recieve damage of 10 evry 3 secs
@@ -1066,4 +1310,21 @@ public class LoopManiaWorld {
         }
     }
 
+    //*-------------------------------------------------------------------------
+    //*                             Observer
+    //*-------------------------------------------------------------------------
+    public void addObserver(LoopManiaWorldController wc) {
+        this.observers.add(wc);
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                             Game Mode
+    //*-------------------------------------------------------------------------
+    public void setGamemode(String gamemode) {
+        this.gamemode = gamemode;
+    }
+
+    public String getGamemode() {
+        return this.gamemode;
+    }
 }

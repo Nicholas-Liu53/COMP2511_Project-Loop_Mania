@@ -1,7 +1,10 @@
 package unsw.loopmania.enemies;
 
+import java.util.Random;
+
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.Character;
+import unsw.loopmania.Soldier;
 
 /**
  * Zombie enemy type
@@ -46,11 +49,22 @@ public class ZombieEnemy extends Enemy {
     }
 
     @Override
-    public void launchAttack(Character mainChar) {
+    public boolean launchAttack(Character mainChar) {
         if (this.doAction()) {
             super.launchAttack(mainChar);
 
-            // TODO Critical bite stuff
+            // Citical bite implementation
+            int criticalCheck = (new Random()).nextInt(10);
+            if (criticalCheck == 5 && (mainChar.getNumAllies() > 0)) {
+                // Remove soldier and spawn new zombie, only works on soldiers
+                if (mainChar.getAllies().get(0) instanceof Soldier) {
+                    mainChar.removeAlly();
+                    // Notifying caller that zombie must be spawned
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 }

@@ -41,6 +41,7 @@ import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.items.*;
+import unsw.loopmania.Character;
 
 import java.util.EnumMap;
 
@@ -97,7 +98,7 @@ enum DRAGGABLE_TYPE {
  * https://openjfx.io/javadoc/11/javafx.graphics/javafx/application/Platform.html#runLater(java.lang.Runnable)
  * This is run on the JavaFX application thread when it has enough time.
  */
-public class LoopManiaWorldController {
+public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * squares gridpane includes path images, enemies, character, empty grass,
      * buildings
@@ -139,6 +140,21 @@ public class LoopManiaWorldController {
 
     @FXML
     private Label xpNum;
+
+    @FXML
+    private Label alliesNum;
+
+    @FXML
+    private Label currCycleNum;
+
+    @FXML
+    private Label cyclesTillShop;
+
+    @FXML
+    private Label gamemodeLabel;
+
+    @FXML
+    private Label cycleOrCycles;
 
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
@@ -246,6 +262,11 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
     private MenuSwitcher shopMenuSwitcher;
+    private ShopMenuController shopMenuController;
+
+    public void setShopController(ShopMenuController shopMenuController) {
+        this.shopMenuController = shopMenuController;
+    }
 
     /**
      * @param world           world object loaded from file
@@ -254,6 +275,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        world.addObserver(this);
         spawnCycle = 0;
         entityImages = new ArrayList<>(initialEntities);
         // BuildingCards
@@ -356,6 +378,12 @@ public class LoopManiaWorldController {
         world.healthProperty().bindBidirectional(healthNum.textProperty());
         world.goldProperty().bindBidirectional(goldNum.textProperty());
         world.xpProperty().bindBidirectional(xpNum.textProperty());
+        world.alliesProperty().bindBidirectional(alliesNum.textProperty());
+
+        world.getNumCyclesProperty().bindBidirectional(currCycleNum.textProperty());
+        world.getCyclesTillShopProperty().bindBidirectional(cyclesTillShop.textProperty());
+        world.getGamemodeProperty().bindBidirectional(gamemodeLabel.textProperty());
+        world.getCycleOrCyclesProperty().bindBidirectional(cycleOrCycles.textProperty());
     }
 
     /**
@@ -406,6 +434,14 @@ public class LoopManiaWorldController {
 
             printThreadingNotes("HANDLED TIMER");
         }));
+
+        // if (world.getShowShop()) {
+        //     pause();
+        //     // Change shop label + make button available
+        // } else {
+
+        // }
+
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
@@ -531,7 +567,7 @@ public class LoopManiaWorldController {
      * 
      * @param item
      */
-    private void loadItem(Item item) {
+    public void loadItem(Item item) {
         onLoad(item, false);
     }
 
@@ -795,8 +831,17 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a
                                 // building will help, it is very similar
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
+                                 // Return item to original spot if human player tries to drag onto invalid tile
+                                 if (currentlyDraggedType == draggableType) {
+                                    if (node != anchorPaneRoot && db.hasImage()) {
+                                        currentlyDraggedImage.setVisible(true);
+                                        draggedEntity.setVisible(false);
+                                        draggedEntity.setMouseTransparent(false);
+                                        removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                        currentlyDraggedImage = null;
+                                        currentlyDraggedType = null;
+                                    }
+                                }
                                 break;
                             case WEAPON:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
@@ -1163,7 +1208,17 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToShopMenu() throws IOException {
         pause();
-        // addItemsInInventory(unequippedInventory);
+        shopMenuController.initialiseNumColours();
+        shopMenuController.resetResponseText();
+        shopMenuController.setCountersToZero();
+        shopMenuSwitcher.switchMenu();
+    }
+
+    private void switchToShopMenu2() throws IOException {
+        pause();
+        shopMenuController.initialiseNumColours();
+        shopMenuController.resetResponseText();
+        shopMenuController.setCountersToZero();
         shopMenuSwitcher.switchMenu();
     }
 
@@ -1271,5 +1326,25 @@ public class LoopManiaWorldController {
         System.out.println("current method = " + currentMethodLabel);
         System.out.println("In application thread? = " + Platform.isFxApplicationThread());
         System.out.println("Current system time = " + java.time.LocalDateTime.now().toString().replace('T', ' '));
+    }
+
+    public void notifyCycle(LoopManiaWorld world) {
+        // Open the show
+        if (world.getShowShop() == true) {
+            pause();
+        } else {
+            return;
+        }
+
+        try {
+            switchToShopMenu2();
+        } catch (Exception e) {
+            System.out.println("Error: Shop Cannot be Opened");
+            return;
+        }
+    }
+
+    public void notifyTick(Character mainChar) {
+        return;
     }
 }

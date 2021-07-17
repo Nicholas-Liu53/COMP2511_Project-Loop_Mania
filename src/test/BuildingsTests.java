@@ -2,12 +2,16 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
-import unsw.loopmania.*;
+import unsw.loopmania.Character;
 import unsw.loopmania.buildings.*;
+import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.buildingcards.*;
 
 
@@ -87,6 +91,32 @@ public class BuildingsTests {
         */
         
         // Testing Requirement 1:
+
+        // Testing Requirement 2:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        
+
+        BarracksBuilding barracks = new BarracksBuilding(orderedPath.get(1));
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+
+        barracks.notifyTick(mainChar);
+        assertEquals(0, mainChar.getAllies().size());
+
+        mainChar.moveDownPath();
+
+        barracks.notifyTick(mainChar);
+        assertEquals(1, mainChar.getAllies().size());
     } 
 
     @Test

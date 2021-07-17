@@ -11,7 +11,7 @@ import unsw.loopmania.items.WeaponStrategy;
  * equipped at the beginning of the game
  */
 public class Melee implements WeaponStrategy, BodyArmourStrategy, ShieldStrategy, HelmetStrategy {
-    public void launchAttack(Enemy enemy, int baseDamage) {
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
         enemy.receiveAttack(baseDamage);
     }
 

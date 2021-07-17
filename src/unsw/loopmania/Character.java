@@ -22,6 +22,7 @@ public class Character extends MovingEntity {
     private ShieldStrategy shieldStrat;
     private HelmetStrategy helmetStrat;
     private ArrayList<Item> equippedItems;
+    private ArrayList<Ally> allies;
     private int experience;
     private int gold;
 
@@ -40,6 +41,7 @@ public class Character extends MovingEntity {
         this.shieldStrat = new Melee();
         this.helmetStrat = new Melee();
         this.equippedItems = new ArrayList<>();
+        this.allies = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
     }
@@ -86,6 +88,17 @@ public class Character extends MovingEntity {
         return this.gold;
     }
 
+    /**
+     * @return List of character's current allies
+     */
+    public ArrayList<Ally> getAllies() {
+        return this.allies;
+    }
+
+    public int getNumAllies() {
+        return this.allies.size();
+    }
+
     public WeaponStrategy getWeapon() {
         return this.weaponStrat;
     }
@@ -100,6 +113,10 @@ public class Character extends MovingEntity {
 
     public HelmetStrategy getHelmet() {
         return this.helmetStrat;
+    }
+
+    public void removeAlly() {
+        this.allies.remove(this.allies.get(0));
     }
 
     /**
@@ -125,6 +142,42 @@ public class Character extends MovingEntity {
     }
 
     /**
+     * Checks first ally and removes them if they have run
+     * out of health
+     */
+    private void updateAllies() {
+        if (this.allies.get(0).getHealth() == 0) {
+            this.allies.remove(this.allies.get(0));
+        } else if (this.allies.get(0) instanceof Enemy) {
+            // Ally is a tranced enemy
+            Enemy enemy = (Enemy) this.allies.get(0);
+
+            if (enemy.getTranceCount() == 0)
+                this.allies.remove(this.allies.get(0));
+
+            if (!this.getInBattle()) {
+                this.allies.remove(this.allies.get(0));
+                enemy.setTranceCount(0);
+                this.allies.get(0).receiveAttack(1000);
+            }
+
+        }
+    }
+
+    /**
+     * Adds enemy as ally at index 0 in allies list
+     * 
+     * @param enemy
+     */
+    public void addTrancedEnemy(Enemy enemy) {
+        if (this.enemiesCurrentlyBattling.size() > 1) {
+            enemy.setTranceCount(5);
+            this.removeEnemyFromBattle(enemy);
+            this.allies.add(0, enemy);
+        }
+    }
+
+    /**
      * Allows the Character to launch an attack against an enemy, resulting in
      * damage and possibly using a special attack using inventory items
      * 
@@ -133,10 +186,16 @@ public class Character extends MovingEntity {
     public void launchAttack(Enemy enemy, boolean inCampfireRadius) {
         int giveDamage = this.damage;
 
+        // Checking if an ally can launch attack first
+        if (this.allies.size() != 0) {
+            this.allies.get(0).launchAttack(enemy);
+            return;
+        }
+        
         if (inCampfireRadius)
             giveDamage *= 2;
 
-        this.weaponStrat.launchAttack(enemy, (giveDamage - this.helmetStrat.launchAttack()));
+        this.weaponStrat.launchAttack(enemy, (giveDamage - this.helmetStrat.launchAttack()), this);
     }
 
     /**
@@ -147,17 +206,25 @@ public class Character extends MovingEntity {
      * @param damage
      */
     public void receiveAttack(int damage) {
-        // Subtracting armour defence
-        int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
-        actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
-        actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
+        // Allies receive damage first
+        if (this.allies.size() > 0) {
+            Ally currAlly = this.allies.get(0);
+            currAlly.receiveAttack(damage);
+            this.updateAllies();
+        } else {
+            // Subtracting armour defence
+            int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
+            actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
+            actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
 
-        if (actualDamage < 0)
-            actualDamage = 0;
+            if (actualDamage < 0)
+                actualDamage = 0;
 
-        this.health -= actualDamage;
-        if (this.health < 0)
-            this.health = 0;
+            this.health -= actualDamage;
+            if (this.health < 0)
+                this.health = 0;
+        }
+
     }
 
     /**
@@ -217,6 +284,21 @@ public class Character extends MovingEntity {
      */
     public void giveGold(int gold) {
         this.gold += gold; // max gold?
+    }
+
+    public void removeGold(int gold) {
+        this.gold -= gold;
+    }
+
+    /**
+     * Adds a new ally to the character, given there is space
+     * 
+     * @param newAlly
+     */
+    public void addAlly(Ally newAlly) {
+        if (this.allies.size() < 4) {
+            this.allies.add(newAlly);
+        }
     }
 
     /**

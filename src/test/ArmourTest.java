@@ -67,9 +67,9 @@ public class ArmourTest {
         mainChar.equipItem(helmet);
         // Testing only helmet
         mainChar.receiveAttack(10);
-        assertEquals(94, mainChar.getHealth());
+        assertEquals(92, mainChar.getHealth());
         mainChar.receiveAttack(20);
-        assertEquals(79, mainChar.getHealth());
+        assertEquals(74, mainChar.getHealth());
 
         // Testing attack reduction
         SlugEnemy enemy = new SlugEnemy(null);

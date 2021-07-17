@@ -55,4 +55,8 @@ public abstract class MovingEntity extends Entity {
     public int getPathIndex() {
         return position.getCurrentPosition();
     }
+
+    public PathPosition getPathPosition() {
+        return this.position;
+    }
 }

@@ -2,9 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<!-- progress bar stuff here
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.effect.Glow?> -->
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,6 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<!-- progress bar stuff here
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.effect.Glow?> -->
 <!-- TODO = modify and expand the GUI? -->
 <!-- anchorPaneRoot is the background of the main game -->
 
@@ -111,14 +111,14 @@
                   
                </children>
             </GridPane>
-            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="145.0">
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="145.0">
                <children>
-                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="4.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="4.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/heart.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="healthNum" layoutX="41.0" layoutY="51.0" prefHeight="32.0" prefWidth="41.0" text="100" textFill="RED">
+                  <Label fx:id="healthNum" layoutX="40.0" layoutY="35.0" prefHeight="32.0" prefWidth="41.0" text="100" textFill="RED">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
@@ -128,22 +128,27 @@
                         <Glow />
                      </effect>
                   </ProgressBar> -->
-                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="4.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="5.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/gold_pile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="goldNum" layoutX="41.0" layoutY="94.0" prefHeight="31.0" prefWidth="87.0" text="1000000" textFill="#38b85d">
+                  <Label fx:id="goldNum" layoutX="39.0" layoutY="68.0" prefHeight="31.0" prefWidth="87.0" text="1000000" textFill="#38b85d">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="healthNum1" layoutX="4.0" layoutY="136.0" prefHeight="31.0" prefWidth="31.0" text="XP" textFill="#ab55a7">
+                  <Label fx:id="healthNum1" layoutX="6.0" layoutY="98.0" prefHeight="31.0" prefWidth="31.0" text="XP" textFill="#ab55a7">
                      <font>
                         <Font name="Calibri Bold" size="26.0" />
                      </font>
                   </Label>
-                  <Label fx:id="xpNum" layoutX="41.0" layoutY="136.0" prefHeight="31.0" prefWidth="87.0" text="0" textFill="#ab55a7">
+                  <Label layoutX="40.0" layoutY="98.0" prefHeight="31.0" prefWidth="87.0" text="0" textFill="#ab55a7" fx:id="xpNum">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="alliesNum" layoutX="40.0" layoutY="124.0" prefHeight="28.0" prefWidth="81.0" text="0" textFill="#087500">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
@@ -151,17 +156,50 @@
          
                                              <!-- clicking this button returns the human player to the main menu -->
                   <Button layoutX="3.0" layoutY="2.0" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="127.0" text="Exit to Main Menu" />
+                  <ImageView fitHeight="32.0" fitWidth="25.0" layoutX="8.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/deep_elf_master_archer.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
-            <Pane prefHeight="117.0" prefWidth="133.0">
+            <Pane prefHeight="184.0" prefWidth="133.0">
                <children>
-                  <Label fx:id="shopText" alignment="CENTER" layoutX="15.0" layoutY="-2.0" prefHeight="32.0" prefWidth="103.0" text="Shop Unavailable" textFill="#8600ff" wrapText="true">
+                  <Label fx:id="currCycleNum" layoutX="86.0" layoutY="15.0" prefHeight="32.0" prefWidth="41.0" text="1">
                      <font>
-                        <Font name="Calibri Bold" size="13.0" />
+                        <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="shopPressText" alignment="CENTER" layoutX="4.0" layoutY="75.0" prefHeight="39.0" prefWidth="140.0" text="Cannot press button to enter" textFill="#8600ff" wrapText="true" />
-                  <Button fx:id="shopButton" layoutX="30.0" layoutY="32.0" onAction="#switchToShopMenu" text="Enter Shop" />
+                  <Label fx:id="healthNum2" layoutX="14.0" layoutY="15.0" prefHeight="32.0" prefWidth="72.0" text="Cycle:">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="healthNum21" layoutX="26.0" layoutY="59.0" text="Shop opens in" wrapText="true">
+                     <font>
+                        <Font name="Calibri Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cycleOrCycles" layoutX="48.0" layoutY="106.0" text="cycle." wrapText="true">
+                     <font>
+                        <Font name="Calibri Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cyclesTillShop" alignment="CENTER" layoutX="35.0" layoutY="76.0" prefHeight="32.0" prefWidth="62.0" text="1" textAlignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="25.0" layoutY="130.0" text="Gamemode: ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="gamemodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="150.0" prefHeight="20.0" prefWidth="102.0" text=" ">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>

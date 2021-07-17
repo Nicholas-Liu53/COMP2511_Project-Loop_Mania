@@ -2,6 +2,7 @@ package unsw.loopmania.items;
 
 import org.javatuples.Pair;
 
+import unsw.loopmania.Character;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.enemies.VampireEnemy;
 
@@ -11,22 +12,26 @@ import unsw.loopmania.enemies.VampireEnemy;
 public class Stake extends Item implements WeaponStrategy {
     public Stake(Pair<Integer, Integer> position) {
         super(position);
-        this.purchasePrice = 150;
-        this.sellPrice = 120;
     }
 
     public Stake() {
         super(new Pair<Integer, Integer>(1, 2));
-        this.purchasePrice = 150;
-        this.sellPrice = 120;
     }
 
-    public void launchAttack(Enemy enemy, int baseDamage) {
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
         if (enemy instanceof VampireEnemy) {
             // Greater damage to vampires
             enemy.receiveAttack(baseDamage + 15);
         } else {
             enemy.receiveAttack(baseDamage + 5);
         }
+    }
+    
+    public static int getPurchasePrice() {
+        return 150;
+    }
+
+    public static int getSellPrice() {
+        return 120;
     }
 }
