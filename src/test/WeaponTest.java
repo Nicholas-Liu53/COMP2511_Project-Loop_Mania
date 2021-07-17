@@ -70,8 +70,11 @@ public class WeaponTest {
         for (int i = 0; i < 100; i++) {
             Character mainChar = new Character(null);
             Enemy enemy = new SlugEnemy(null);
+            Enemy enemy2 = new SlugEnemy(null);
             mainChar.equipItem(weapon);
 
+            mainChar.addBattle(enemy);
+            mainChar.addBattle(enemy2);
             mainChar.launchAttack(enemy, false);
 
             assertEquals(17, enemy.getHealth());
