@@ -140,12 +140,12 @@ public class ItemsTests {
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
 
-        SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
+        // SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
         ZombieEnemy zombie1 = new ZombieEnemy(new PathPosition(4, orderedPath));
         VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
-        world.setEnemy(slug1);
-        world.setEnemy(zombie1);
-        world.setEnemy(vampire1);
+        // world.setEnemy(slug1);
+        // world.setEnemy(zombie1);
+        // world.setEnemy(vampire1);
 
         // SlugEnemy slug2 = new SlugEnemy(new PathPosition(2, orderedPath));
         // ZombieEnemy zombie2 = new ZombieEnemy(new PathPosition(4, orderedPath));
@@ -157,21 +157,27 @@ public class ItemsTests {
 
         for (int i = 0; i < 5000; i++) {
             if (world.getEnemiesList().size() == 0) {
-                slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
+                // slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
-                world.setEnemy(slug1);
+                // world.setEnemy(slug1);
+                world.possiblySpawnEnemies();
                 world.setEnemy(zombie1);
                 world.setEnemy(vampire1);
-                world.possiblySpawnEnemies();
                 world.spawnGoldPile();
                 world.spawnHealthPotion();
                 world.loadItem("Sword");
-                // world.loadItem("")
+                world.loadItem("Stake");
+                world.loadItem("Staff");
+                world.loadItem("BodyArmour");
+                world.loadItem("Helmet");
+                world.loadItem("Shield");
+                world.loadItem("HealthPotion");
             }
             world.runTickMoves();
             world.runBattles();
             world.attemptToPickUpItems();
+            world.drinkHealthPotion();
         }
     }
 }
