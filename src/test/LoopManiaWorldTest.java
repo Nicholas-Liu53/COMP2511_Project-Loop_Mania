@@ -113,6 +113,7 @@ public class LoopManiaWorldTest {
                 world.loadItem("Helmet");
                 world.loadItem("Shield");
                 world.loadItem("HealthPotion");
+                //! assertEquals(world.totalItems(), 7);
                 world.loadCard("BarracksCard");
                 world.loadCard("CampfireCard");
                 world.loadCard("TowerCard");
@@ -120,6 +121,7 @@ public class LoopManiaWorldTest {
                 world.loadCard("VillageCard");
                 world.loadCard("ZombiePitCard");
                 world.loadCard("VampireCastleCard");
+                //! assertEquals(world.totalCardNum(), 7);
                 world.convertCardToBuildingByCoordinates(card1.getX(), card1.getY(), bb.getX(), bb.getY());
                 world.convertCardToBuildingByCoordinates(card2.getX(), card2.getY(), cb.getX(), cb.getY());
                 world.convertCardToBuildingByCoordinates(card3.getX(), card3.getY(), tb.getX(), tb.getY());
@@ -134,10 +136,12 @@ public class LoopManiaWorldTest {
                 world.addBuilding(bb);
                 world.addBuilding(tp);
                 world.addBuilding(cb);
+                //! assertEquals(world.totalBuildings(), 7);
                 world.getGold();
                 world.getUnequippedItems();
                 world.deductGold(5);
                 world.giveGold(5);
+                //! assertEquals(world.numGold(), 7);
                 world.cardEntityIsFull();
             }
             world.runTickMoves();
