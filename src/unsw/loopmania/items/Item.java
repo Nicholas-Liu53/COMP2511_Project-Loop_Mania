@@ -10,8 +10,6 @@ import unsw.loopmania.StaticEntity;
  */
 public abstract class Item extends StaticEntity {
     private String itemType; // Armour or weapon or potion
-    // protected int purchasePrice;
-    // protected int sellPrice;
 
     public Item(Pair<Integer, Integer> position) {
         super(position);
@@ -20,14 +18,6 @@ public abstract class Item extends StaticEntity {
     public Item(PathPosition position) {
         super(position);
     }
-
-    // public int getPurchasePrice() {
-    //     return purchasePrice;
-    // }
-
-    // public int getSellPrice() {
-    //     return sellPrice;
-    // }
 
     @Override
     public String getStaticEntityType() {
