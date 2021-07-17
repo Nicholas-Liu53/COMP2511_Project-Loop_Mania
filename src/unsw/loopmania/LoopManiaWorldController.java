@@ -1344,7 +1344,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    public void notifyTick(Character mainChar) {
+    public void notifyTick(Character mainChar, LoopManiaWorld world) {
         return;
     }
 }

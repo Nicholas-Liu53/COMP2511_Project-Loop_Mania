@@ -162,13 +162,14 @@ public class BuildingsTests {
 
         BarracksBuilding barracks = new BarracksBuilding(orderedPath.get(1));
         Character mainChar = new Character(new PathPosition(0, orderedPath));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
 
-        barracks.notifyTick(mainChar);
+        barracks.notifyTick(mainChar, world);
         assertEquals(0, mainChar.getAllies().size());
 
         mainChar.moveDownPath();
 
-        barracks.notifyTick(mainChar);
+        barracks.notifyTick(mainChar, world);
         assertEquals(1, mainChar.getAllies().size());
     } 
 
@@ -182,6 +183,29 @@ public class BuildingsTests {
         */
         
         // Testing Requirement 1:
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+        
+
+        // TrapBuilding trap = new TrapBuilding(orderedPath.get(1));
+        
+        // Character mainChar = new Character(new PathPosition(0, orderedPath));
+
+        // trap.notifyTick(mainChar);
+        // assertEquals(0, mainChar.getAllies().size());
+        // mainChar.moveDownPath();
+        // trap.notifyTick(mainChar);
+        // assertEquals(1, mainChar.getAllies().size());
     } 
 
     @Test

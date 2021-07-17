@@ -18,5 +18,5 @@ public interface WorldStateObserver {
      * 
      * @param mainChar
      */
-    public void notifyTick(Character mainChar);
+    public void notifyTick(Character mainChar, LoopManiaWorld world);
 }

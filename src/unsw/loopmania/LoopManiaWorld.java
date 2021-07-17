@@ -22,9 +22,9 @@ import unsw.loopmania.path.*;
  * can occupy the same square.
  */
 public class LoopManiaWorld {
-    // *-------------------------------------------------------------------------
-    // * Variables
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Variables
+    //*-------------------------------------------------------------------------
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
 
@@ -984,7 +984,7 @@ public class LoopManiaWorld {
 
         // Notifying world state observers of new tick
         for (WorldStateObserver observer : this.observers) {
-            observer.notifyTick(this.character);
+            observer.notifyTick(this.character, this);
         }
         
     }
