@@ -6,10 +6,19 @@ import unsw.loopmania.LoopManiaWorld;
 
 public class ComplexGoalComposite implements ComplexGoalComponent {
     
+    private boolean operation;
     private ArrayList<ComplexGoalComponent> children;
 
-    public ComplexGoalComposite() {
+    /**
+     * Takes two complex goal compenents along with a comparator for them
+     * 
+     * @param component1
+     * @param component2
+     * @param operation true for AND, false for OR
+     */
+    public ComplexGoalComposite(boolean operation) {
         this.children = new ArrayList<>();
+        this.operation = operation;
     }
 
     /**
@@ -40,7 +49,30 @@ public class ComplexGoalComposite implements ComplexGoalComponent {
     /**
      * @return true is goals have been met, else false
      */
+    @Override
     public boolean achieved(LoopManiaWorld world) {
-        return false;
+        boolean achieved = false;
+        
+        if (this.operation) {
+            // AND, both component goals must be achieved
+            achieved = true;
+
+            for (ComplexGoalComponent child : children) {
+                if (!child.achieved(world)) {
+                    achieved = false;
+                    break;
+                } 
+            }
+        } else {
+            // OR, only one component goal must be achieved
+            for (ComplexGoalComponent child : children) {
+                if (child.achieved(world)) {
+                    achieved = true;
+                    break;
+                }
+            }
+        }
+        
+        return achieved;
     }
 }
