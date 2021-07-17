@@ -98,7 +98,12 @@ public class BuildingsTests {
         try {
             orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
         } catch (FileNotFoundException e) {
-            System.err.println("File not found");
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
         }
         
 
