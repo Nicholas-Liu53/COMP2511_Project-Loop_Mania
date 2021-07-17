@@ -1,70 +1,227 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <!-- TODO = modify and expand the range of menus available from the menu menu, and develop game modes you can select when starting a new game -->
 <!-- vertically stacked label and button -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER" layoutY="-1.0" prefHeight="378.0" prefWidth="168.0" spacing="20.0">
+      <Pane prefHeight="586.0" prefWidth="497.0">
          <children>
-            <Label text="Shop Menu" />
-            <GridPane fx:id="equippedItems">
-               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                  <RowConstraints />
-               </rowConstraints>
-               <children>
-                  <ImageView id="swordCell" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../../images/sword_unequipped.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView id="blankCell" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../../images/image_just_black_tiny.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../../images/shield_unequipped.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView id="helmetCell" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../../images/helmet_slot.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="unequippedInventory" minHeight="-Infinity" minWidth="-Infinity" prefHeight="124.0" prefWidth="120.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <Button fx:id="startGameButton" onAction="#switchToGame" text="Return to Game" />
+            <Label alignment="CENTER" layoutX="26.0" layoutY="14.0" text="Shop Menu" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="startGameButton" layoutX="199.0" layoutY="547.0" onAction="#switchToGame" text="Return to Game" />
+            <Label fx:id="shopGoldNum" layoutX="249.0" layoutY="14.0" prefHeight="31.0" prefWidth="87.0" text="1000000" textFill="#38b85d">
+               <font>
+                  <Font name="Calibri Bold" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="184.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/gold_pile.png" />
+               </image>
+            </ImageView>
+            <ScrollPane layoutX="14.0" layoutY="65.0" prefHeight="419.0" prefWidth="472.0">
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="657.0" prefWidth="425.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="23.0" text="Weapons">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="41.0" layoutY="129.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/staff.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Staff">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 300">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseStaff" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellStaff" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellStaffNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/stake.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Stake">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 150">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseStake" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellStake" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellStakeNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="284.0" text="Armour">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="41.0" layoutY="57.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: gold;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/basic_sword.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Sword">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 200">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseSword" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellSword" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="156.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellSwordNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="384.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/armour.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Body Armour">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 500">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseBodyArmour" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellBodyArmour" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellBodyArmourNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="453.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/shield.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Shield">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 300">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseShield" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellShield" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellShieldNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="41.0" layoutY="314.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/helmet.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Helmet">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 200">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseHelmet" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellHelmet" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellHelmetNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="531.0" text="Additional Items">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="41.0" layoutY="562.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: SpringGreen;">
+                           <children>
+                              <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/brilliant_blue_new.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="9.0" text="Health Potion">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 125">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="248.0" layoutY="11.0" mnemonicParsing="false" onAction="#purchaseHealthPotion" prefHeight="37.0" prefWidth="51.0" text="Buy" />
+                              <Button layoutX="306.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellHealthPotion" prefHeight="37.0" prefWidth="51.0" text="Sell" />
+                              <Label alignment="CENTER" layoutX="158.0" layoutY="9.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
+                              <Label fx:id="sellHealthPotionNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
+      </Pane>
+      <Label fx:id="shopResponseLabel" alignment="CENTER" layoutX="45.0" layoutY="497.0" prefHeight="30.0" prefWidth="409.0" textAlignment="CENTER" textFill="#00ff6d" wrapText="true">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

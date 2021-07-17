@@ -286,6 +286,10 @@ public class Character extends MovingEntity {
         this.gold += gold; // max gold?
     }
 
+    public void removeGold(int gold) {
+        this.gold -= gold;
+    }
+
     /**
      * Adds a new ally to the character, given there is space
      * 
