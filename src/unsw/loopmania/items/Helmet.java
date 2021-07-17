@@ -19,7 +19,7 @@ public class Helmet extends Armour implements HelmetStrategy {
 
     public int receiveAttack(int damage) {
         // Helmet provides 1 defence
-        int recvDamage = (int) (damage * 0.1) + 3;
+        int recvDamage = 2;
         return recvDamage;
     }
 
