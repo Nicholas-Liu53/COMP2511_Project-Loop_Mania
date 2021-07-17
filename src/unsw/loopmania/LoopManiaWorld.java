@@ -91,6 +91,7 @@ public class LoopManiaWorld {
     private StringProperty cycleOrCyclesProperty;
 
     private String gamemode = "Standard";
+    private ArrayList<WorldStateObserver> deadObservers;
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse
      * them
@@ -131,6 +132,7 @@ public class LoopManiaWorld {
         // this.numGold = 0;
         this.newEnemies = new ArrayList<>();
         this.observers = new ArrayList<>();
+        this.deadObservers = new ArrayList<>();
         this.charHealthProperty = new SimpleStringProperty();
         // this.charHealthProperty = 0.0;
         this.charGoldProperty = new SimpleStringProperty();
@@ -199,6 +201,7 @@ public class LoopManiaWorld {
 
     public void removeBuilding(Building b) {
         this.buildingEntities.remove(b);
+        this.deadObservers.add(b);
         Pair<Integer, Integer> temp = new Pair<Integer, Integer>(b.getX(), b.getY());
         this.locationOfPlacedBuildings.remove(temp);
         b.destroy();
@@ -206,6 +209,13 @@ public class LoopManiaWorld {
 
     public void setEnemy(Enemy e) {
         this.enemies.add(e);
+    }
+
+    public void removeDeadObservers() {
+        for (WorldStateObserver wso : this.deadObservers) {
+            this.observers.remove(wso);
+        }
+        this.deadObservers.clear();
     }
 
     /**
@@ -1003,6 +1013,7 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : this.observers) {
             observer.notifyTick(this.character, this);
         }
+        removeDeadObservers();
         
     }
 
@@ -1042,12 +1053,12 @@ public class LoopManiaWorld {
                 continue;
             }
             e.move();
-            if (checkIfEnemyStepOnTrapAndDies(e))
-                deadEnemies.add(e);
+            // if (checkIfEnemyStepOnTrapAndDies(e))
+            //     deadEnemies.add(e);
         }
-        for (Enemy e : deadEnemies) {
-            killEnemy(e);
-        }
+        // for (Enemy e : deadEnemies) {
+        //     killEnemy(e);
+        // }
     }
 
     /**

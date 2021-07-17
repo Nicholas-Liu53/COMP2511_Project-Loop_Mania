@@ -207,6 +207,18 @@ public class BuildingsTests {
 
         trap.notifyTick(mainChar, world);
         assertEquals(0, world.getEnemiesList().size());
+
+        TrapBuilding trap2 = new TrapBuilding(orderedPath.get(1));
+        ZombieEnemy zombie = new ZombieEnemy(new PathPosition(1, orderedPath));
+        world.setEnemy(zombie);
+        trap2.notifyTick(mainChar, world);
+        assertEquals(23, zombie.getHealth());
+
+        TrapBuilding trap3 = new TrapBuilding(orderedPath.get(1));
+        VampireEnemy vampire = new VampireEnemy(new PathPosition(1, orderedPath));
+        world.setEnemy(vampire);
+        trap3.notifyTick(mainChar, world);
+        assertEquals(75, vampire.getHealth());
     } 
 
     @Test
