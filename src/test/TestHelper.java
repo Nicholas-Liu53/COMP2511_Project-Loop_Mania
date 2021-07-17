@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.path.*;
 
 import java.util.List;
@@ -114,5 +115,27 @@ public class TestHelper {
         }
 
         return orderedPath;
+    }
+
+    /**
+     * Generates a sample LoopManiaWorld for testing
+     * 
+     * @return the generated world
+     */
+    public static LoopManiaWorld generateWorld() {
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                System.err.println("Unable to find testing resource");
+            }
+        }
+
+        return new LoopManiaWorld(1, 2, orderedPath);
     }
 }
