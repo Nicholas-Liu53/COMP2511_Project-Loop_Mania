@@ -20,12 +20,31 @@ public class ComplexGoalComposite implements ComplexGoalComponent {
     }
 
     /**
+     * Takes two complex goal compenents along with a comparator for them
+     * 
+     * @param operation true for AND, false for OR
+     */
+    public ComplexGoalComposite(ComplexGoalComposite c, String operation) {
+        this.children = new ArrayList<>(List.of(c));
+        this.operation = operation;
+    }
+
+    /**
      * Adds a component to the compex goal
      * 
      * @param component
      */
     public void add(ComplexGoalComponent component) {
         this.children.add(component);
+    }
+
+    /**
+     * Adds a component to the compex goal
+     * 
+     * @param component
+     */
+    public void add(ComplexGoalComposite composite) {
+        this.children.add(composite);
     }
 
     /**
@@ -79,7 +98,11 @@ public class ComplexGoalComposite implements ComplexGoalComponent {
         return achieved;
     }
 
-    public int achievementThreshold() {
+    public int getAchievementThreshold() {
         return 0;
+    }
+
+    public String getOperation() {
+        return this.operation;
     }
 }
