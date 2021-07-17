@@ -147,14 +147,32 @@ public class ItemsTests {
 
         Random rand = new Random();
         VampireCastleBuilding vcb = new VampireCastleBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        
+        world.addBuilding(vcb);
+        // ZombiePitBuilding zpb = new ZombiePitBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // world.addBuilding(zpb);
+        // TowerBuilding tb = new TowerBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // world.addBuilding(tb);
+        // VillageBuilding vb = new VillageBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // world.addBuilding(vb);
+        // BarracksBuilding bb = new BarracksBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // world.addBuilding(bb);
+        // TrapBuilding tp = new TrapBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // world.addBuilding(tp);
+        // CampfireBuilding cb = new CampfireBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // world.addBuilding(cb);
 
         for (int i = 0; i < 5000; i++) {
             if (world.getEnemiesList().size() == 0) {
                 // slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
-                // world.setEnemy(slug1);
+                vcb = new VampireCastleBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // zpb = new ZombiePitBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // tb = new TowerBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // vb = new VillageBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // bb = new BarracksBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // tp = new TrapBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // cb = new CampfireBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
                 world.possiblySpawnEnemies();
                 world.setEnemy(zombie1);
                 world.setEnemy(vampire1);
@@ -167,7 +185,13 @@ public class ItemsTests {
                 world.loadItem("Helmet");
                 world.loadItem("Shield");
                 world.loadItem("HealthPotion");
-                world.addBuilding(b);
+                world.addBuilding(vcb);
+                // world.addBuilding(zpb);
+                // world.addBuilding(tb);
+                // world.addBuilding(vb);
+                // world.addBuilding(bb);
+                // world.addBuilding(tp);
+                // world.addBuilding(cb);
             }
             world.runTickMoves();
             world.runBattles();
