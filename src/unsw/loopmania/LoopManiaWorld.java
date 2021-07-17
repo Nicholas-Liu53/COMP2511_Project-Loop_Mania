@@ -189,6 +189,25 @@ public class LoopManiaWorld {
         return this.character.getY();
     }
 
+    public List<Building> getBuildingsList() {
+        return this.buildingEntities;
+    }
+
+    public List<Enemy> getEnemiesList() {
+        return this.enemies;
+    }
+
+    public void removeBuilding(Building b) {
+        this.buildingEntities.remove(b);
+        Pair<Integer, Integer> temp = new Pair<Integer, Integer>(b.getX(), b.getY());
+        this.locationOfPlacedBuildings.remove(temp);
+        b.destroy();
+    }
+
+    public void setEnemy(Enemy e) {
+        this.enemies.add(e);
+    }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity
      * out of the file
@@ -736,8 +755,6 @@ public class LoopManiaWorld {
         }
     }
 
-    
-
     //*-------------------------------------------------------------------------
     //*                             Battles
     //*-------------------------------------------------------------------------
@@ -746,7 +763,7 @@ public class LoopManiaWorld {
      * 
      * @param enemy enemy to be killed
      */
-    private void killEnemy(Enemy enemy) {
+    public void killEnemy(Enemy enemy) {
         enemy.destroy();
         this.enemies.remove(enemy);
     }

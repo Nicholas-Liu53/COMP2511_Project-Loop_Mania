@@ -15,6 +15,8 @@ import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.buildingcards.*;
+import unsw.loopmania.*;
+import unsw.loopmania.enemies.*;
 
 
 public class BuildingsTests {
@@ -197,15 +199,14 @@ public class BuildingsTests {
         }
         
 
-        // TrapBuilding trap = new TrapBuilding(orderedPath.get(1));
-        
-        // Character mainChar = new Character(new PathPosition(0, orderedPath));
+        TrapBuilding trap = new TrapBuilding(orderedPath.get(1));
+        SlugEnemy slug = new SlugEnemy(new PathPosition(1, orderedPath));
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setEnemy(slug);
 
-        // trap.notifyTick(mainChar);
-        // assertEquals(0, mainChar.getAllies().size());
-        // mainChar.moveDownPath();
-        // trap.notifyTick(mainChar);
-        // assertEquals(1, mainChar.getAllies().size());
+        trap.notifyTick(mainChar, world);
+        assertEquals(0, world.getEnemiesList().size());
     } 
 
     @Test
