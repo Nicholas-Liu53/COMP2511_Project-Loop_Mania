@@ -54,35 +54,35 @@ public class BuildingsTests {
         // Test shop appears at the end of cycle 1
         while (world.getCurrCycle() < 1) {
             world.runTickMoves();
-            System.out.println(world.getShowShop());
+            // System.out.println(world.getShowShop());
         }
         assertTrue(world.getShowShop());
         
         // Test shop appears at the end of cycle 3
         while (world.getCurrCycle() < 3) {
             world.runTickMoves();
-            System.out.println(world.getShowShop());
+            // System.out.println(world.getShowShop());
         }
         assertTrue(world.getShowShop());
 
         // Test shop appears at the end of cycle 6
         while (world.getCurrCycle() < 6) {
             world.runTickMoves();
-            System.out.println(world.getShowShop());
+            // System.out.println(world.getShowShop());
         }
         assertTrue(world.getShowShop());
 
         // Test shop appears at the end of cycle 10
         while (world.getCurrCycle() < 10) {
             world.runTickMoves();
-            System.out.println(world.getShowShop());
+            // System.out.println(world.getShowShop());
         }
         assertTrue(world.getShowShop());
 
         // Test shop appears at the end of cycle 15
         while (world.getCurrCycle() < 15) {
             world.runTickMoves();
-            System.out.println(world.getShowShop());
+            // System.out.println(world.getShowShop());
         }
         assertTrue(world.getShowShop());
     } 

@@ -970,7 +970,7 @@ public class LoopManiaWorld {
         goldProperty();
         xpProperty();
         alliesProperty();
-        restoreHealthIfInVillage();
+        // restoreHealthIfInVillage();
         getNumCyclesProperty();
         getCyclesTillShopProperty();
         getGamemodeProperty();
@@ -1205,14 +1205,7 @@ public class LoopManiaWorld {
     //*-------------------------------------------------------------------------
     //*                     Buildings Helper Functions
     //*-------------------------------------------------------------------------
-    private void restoreHealthIfInVillage() {
-        for (Building b : this.buildingEntities) {
-            if (b instanceof VillageBuilding) {
-                if (b.getX() == (getCharacterX()) && b.getY() == (getCharacterY()))
-                    character.restoreHealthPoints();
-            }
-        }
-    }
+    
 
     private boolean checkIfEnemyStepOnTrapAndDies(Enemy enemy) {
         for (Building b : this.buildingEntities) {
@@ -1308,6 +1301,10 @@ public class LoopManiaWorld {
                 }
             }
         }
+    }
+
+    public List<Building> getBuildingEntities() {
+        return this.buildingEntities;
     }
 
     //*-------------------------------------------------------------------------
