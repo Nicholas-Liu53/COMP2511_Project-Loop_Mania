@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-// import org.json.JSONTokener;
 
 import unsw.loopmania.goals.*;
 
@@ -31,7 +29,6 @@ public class goalloader {
 
     public void loadAllGoals() {
         ComplexGoalComposite x = loadComplexGoal(null, this.json.getJSONObject("goal-condition"));
-        System.out.println(x);
         System.out.println(x.getChildren());
     }
 
@@ -46,8 +43,12 @@ public class goalloader {
             } else if (goalCondition.getString("goal").equals("OR")) {
                 cg = new ComplexGoalComposite("OR");
                 loadSubGoals(cg, goalCondition.getJSONArray("subgoals"));
+            } else {
+                cg = new ComplexGoalComposite("NONE");
+                loadComplexGoal(cg, goalCondition);
+                return cg;
             }
-            
+        } else {
             if (goalCondition.getString("goal").equals("cycles")) {
                 cg.add(new CyclesBaseGoal(goalCondition.getInt("quantity")));
             } else if (goalCondition.getString("goal").equals("experience")) {
@@ -57,6 +58,7 @@ public class goalloader {
             } else {
                 throw new RuntimeException("Goal object requires either a basic goal or an operator for subgoal.");
             }
+        }
 
         return cg;
     }
