@@ -160,7 +160,7 @@ public class GoalsTest {
         testWorld.setCharacter(mainChar);
 
         // Constructing complex goal
-        ComplexGoalComposite complexGoal = new ComplexGoalComposite(true);
+        ComplexGoalComposite complexGoal = new ComplexGoalComposite("AND");
         complexGoal.add(xpGoal);
         complexGoal.add(goldGoal);
 
@@ -204,7 +204,7 @@ public class GoalsTest {
         testWorld.setCharacter(mainChar);
 
         // Constructing complex goal
-        ComplexGoalComposite complexGoal = new ComplexGoalComposite(false);
+        ComplexGoalComposite complexGoal = new ComplexGoalComposite("OR");
         complexGoal.add(xpGoal);
         complexGoal.add(goldGoal);
 
