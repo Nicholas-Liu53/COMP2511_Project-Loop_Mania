@@ -173,6 +173,10 @@ public class GoalsTest {
         // Give gold and test
         testWorld.giveGold(100);
         assertEquals(true, complexGoal.achieved(testWorld));
+
+        // Remove goal and test
+        complexGoal.remove(goldGoal);
+        assertEquals(true, complexGoal.achieved(testWorld));
     }
 
     @Test
@@ -212,6 +216,10 @@ public class GoalsTest {
 
         // Give gold and test
         testWorld.giveGold(100);
+        assertEquals(true, complexGoal.achieved(testWorld));
+
+        // Remove goal and test
+        complexGoal.remove(goldGoal);
         assertEquals(true, complexGoal.achieved(testWorld));
     }
 }
