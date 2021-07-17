@@ -1,6 +1,9 @@
 package unsw.loopmania.items;
 
+import java.util.Random;
 import org.javatuples.Pair;
+
+import unsw.loopmania.Character;
 import unsw.loopmania.enemies.Enemy;
 
 /**
@@ -15,8 +18,14 @@ public class Staff extends Item implements WeaponStrategy {
         super(new Pair<Integer, Integer>(1, 2));
     }
 
-    public void launchAttack(Enemy enemy, int baseDamage) {
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
         enemy.receiveAttack(baseDamage + 3);
+
+        // Staff performs critical attack, putting enemy in trance
+        int criticalCheck = (new Random()).nextInt(4);
+        if (criticalCheck == 1) {
+            mainChar.addTrancedEnemy(enemy);
+        }
     }
 
     public static int getPurchasePrice() {

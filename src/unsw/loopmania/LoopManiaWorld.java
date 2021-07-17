@@ -68,6 +68,7 @@ public class LoopManiaWorld {
     // private Double charHealthProperty;
     private StringProperty charGoldProperty;
     private StringProperty charXPProperty;
+    private StringProperty charAlliesProperty;
     private int numSword;
     private int numStake;
     private int numStaff;
@@ -134,6 +135,7 @@ public class LoopManiaWorld {
         // this.charHealthProperty = 0.0;
         this.charGoldProperty = new SimpleStringProperty();
         this.charXPProperty = new SimpleStringProperty();
+        this.charAlliesProperty = new SimpleStringProperty();
 
         this.numSwordProperty = new SimpleStringProperty();
         this.numStakeProperty = new SimpleStringProperty();
@@ -761,11 +763,16 @@ public class LoopManiaWorld {
 
             // Currently the character attacks every enemy and vice versa
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
-                    .pow(e.getAttackRadius(), 2)) {
+                    .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
                 // fight...
                 character.addBattle(e);
                 character.launchAttack(e, inCampfireRadius(e));
-                e.launchAttack(character);
+                boolean specialAttack = e.launchAttack(character);
+
+                if (specialAttack && (e instanceof ZombieEnemy)) {
+                    this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
+                }
+
                 attackEnemyInTowerRadiusDuringBattle(e);
 
                 if (e.getHealth() == 0) {
@@ -962,6 +969,7 @@ public class LoopManiaWorld {
         healthProperty();
         goldProperty();
         xpProperty();
+        alliesProperty();
         restoreHealthIfInVillage();
         getNumCyclesProperty();
         getCyclesTillShopProperty();
@@ -974,6 +982,10 @@ public class LoopManiaWorld {
             showShop = false;
         }
 
+        // Notifying world state observers of new tick
+        for (WorldStateObserver observer : this.observers) {
+            observer.notifyTick(this.character);
+        }
         
     }
 
@@ -997,8 +1009,7 @@ public class LoopManiaWorld {
 
         // Notifying world state observers of new cycle
         for (WorldStateObserver observer : this.observers) {
-            // Loop mania world notifies its observers
-            observer.notify(this);
+            observer.notifyCycle(this);
         }
         showShop = false;
     }
@@ -1118,6 +1129,11 @@ public class LoopManiaWorld {
     public StringProperty healthProperty() {
         this.charHealthProperty.set(String.valueOf(character.getHealth()));
         return this.charHealthProperty;
+    }
+
+    public StringProperty alliesProperty() {
+        this.charAlliesProperty.set(String.valueOf(character.getNumAllies()));
+        return this.charAlliesProperty;
     }
 
     // public Double healthProperty() {

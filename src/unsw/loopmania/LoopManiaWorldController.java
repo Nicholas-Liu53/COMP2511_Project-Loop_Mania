@@ -41,6 +41,7 @@ import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.items.*;
+import unsw.loopmania.Character;
 
 import java.util.EnumMap;
 
@@ -139,6 +140,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
     @FXML
     private Label xpNum;
+
+    @FXML
+    private Label alliesNum;
 
     @FXML
     private Label currCycleNum;
@@ -374,6 +378,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         world.healthProperty().bindBidirectional(healthNum.textProperty());
         world.goldProperty().bindBidirectional(goldNum.textProperty());
         world.xpProperty().bindBidirectional(xpNum.textProperty());
+        world.alliesProperty().bindBidirectional(alliesNum.textProperty());
 
         world.getNumCyclesProperty().bindBidirectional(currCycleNum.textProperty());
         world.getCyclesTillShopProperty().bindBidirectional(cyclesTillShop.textProperty());
@@ -826,8 +831,17 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a
                                 // building will help, it is very similar
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
+                                 // Return item to original spot if human player tries to drag onto invalid tile
+                                 if (currentlyDraggedType == draggableType) {
+                                    if (node != anchorPaneRoot && db.hasImage()) {
+                                        currentlyDraggedImage.setVisible(true);
+                                        draggedEntity.setVisible(false);
+                                        draggedEntity.setMouseTransparent(false);
+                                        removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                        currentlyDraggedImage = null;
+                                        currentlyDraggedType = null;
+                                    }
+                                }
                                 break;
                             case WEAPON:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
@@ -1314,8 +1328,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         System.out.println("Current system time = " + java.time.LocalDateTime.now().toString().replace('T', ' '));
     }
 
-    @Override
-    public void notify(LoopManiaWorld world) {
+    public void notifyCycle(LoopManiaWorld world) {
         // Open the show
         if (world.getShowShop() == true) {
             pause();
@@ -1329,5 +1342,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             System.out.println("Error: Shop Cannot be Opened");
             return;
         }
+    }
+
+    public void notifyTick(Character mainChar) {
+        return;
     }
 }

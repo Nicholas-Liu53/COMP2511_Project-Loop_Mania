@@ -111,14 +111,14 @@
                   
                </children>
             </GridPane>
-            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="145.0">
+            <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="145.0">
                <children>
-                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="4.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="4.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/heart.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="healthNum" layoutX="41.0" layoutY="51.0" prefHeight="32.0" prefWidth="41.0" text="100" textFill="RED">
+                  <Label fx:id="healthNum" layoutX="40.0" layoutY="35.0" prefHeight="32.0" prefWidth="41.0" text="100" textFill="RED">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
@@ -128,22 +128,27 @@
                         <Glow />
                      </effect>
                   </ProgressBar> -->
-                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="4.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="5.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/gold_pile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="goldNum" layoutX="41.0" layoutY="94.0" prefHeight="31.0" prefWidth="87.0" text="1000000" textFill="#38b85d">
+                  <Label fx:id="goldNum" layoutX="39.0" layoutY="68.0" prefHeight="31.0" prefWidth="87.0" text="1000000" textFill="#38b85d">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="healthNum1" layoutX="4.0" layoutY="136.0" prefHeight="31.0" prefWidth="31.0" text="XP" textFill="#ab55a7">
+                  <Label fx:id="healthNum1" layoutX="6.0" layoutY="98.0" prefHeight="31.0" prefWidth="31.0" text="XP" textFill="#ab55a7">
                      <font>
                         <Font name="Calibri Bold" size="26.0" />
                      </font>
                   </Label>
-                  <Label layoutX="41.0" layoutY="136.0" prefHeight="31.0" prefWidth="87.0" text="0" textFill="#ab55a7" fx:id="xpNum">
+                  <Label layoutX="40.0" layoutY="98.0" prefHeight="31.0" prefWidth="87.0" text="0" textFill="#ab55a7" fx:id="xpNum">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="alliesNum" layoutX="40.0" layoutY="124.0" prefHeight="28.0" prefWidth="81.0" text="0" textFill="#087500">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
@@ -151,6 +156,11 @@
          
                                              <!-- clicking this button returns the human player to the main menu -->
                   <Button layoutX="3.0" layoutY="2.0" onAction="#switchToMainMenu" prefHeight="25.0" prefWidth="127.0" text="Exit to Main Menu" />
+                  <ImageView fitHeight="32.0" fitWidth="25.0" layoutX="8.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/deep_elf_master_archer.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <Pane prefHeight="184.0" prefWidth="133.0">

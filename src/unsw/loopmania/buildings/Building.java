@@ -4,6 +4,7 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.Character;
 import unsw.loopmania.StaticEntity;
 import unsw.loopmania.WorldStateObserver;
 import unsw.loopmania.path.PathPosition;
@@ -30,7 +31,11 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
      * Implementing WorldStateObserver, by default a building does nothing when
      * notified
      */
-    public void notify(LoopManiaWorld worldState) {
+    public void notifyCycle(LoopManiaWorld worldState) {
+        return;
+    }
+
+    public void notifyTick(Character mainChar) {
         return;
     }
 

@@ -31,7 +31,7 @@ public class VampireEnemy extends Enemy {
      * 'critical bite' behaviour that vampires must use
      */
     @Override
-    public void launchAttack(Character mainChar) {
+    public boolean launchAttack(Character mainChar) {
         // Perform basic attack first
         super.launchAttack(mainChar);
 
@@ -63,5 +63,7 @@ public class VampireEnemy extends Enemy {
                 this.criticalAttackDmg = (new Random()).nextInt(6) + 5;
             }
         }
+
+        return false;
     }
 }

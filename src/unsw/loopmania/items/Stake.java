@@ -2,6 +2,7 @@ package unsw.loopmania.items;
 
 import org.javatuples.Pair;
 
+import unsw.loopmania.Character;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.enemies.VampireEnemy;
 
@@ -17,7 +18,7 @@ public class Stake extends Item implements WeaponStrategy {
         super(new Pair<Integer, Integer>(1, 2));
     }
 
-    public void launchAttack(Enemy enemy, int baseDamage) {
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
         if (enemy instanceof VampireEnemy) {
             // Greater damage to vampires
             enemy.receiveAttack(baseDamage + 15);
