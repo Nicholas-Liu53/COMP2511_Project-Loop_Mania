@@ -11,6 +11,7 @@ import java.util.List;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.image.ImageView;
 import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.buildings.*;
@@ -329,21 +330,16 @@ public class BuildingsTests {
             if (b.equals(campfire)) campfireFound = true;
         assertFalse(campfireFound);
 
-        // // Testing Requirement 2:
-        // campfire = new CampfireBuilding(new Pair<Integer,Integer>(3, 1));
-        // campfire.notifyTick(mainChar, world);
-        // // world.locationOfPlacedBuildings.add(campfire);
-        // for (Building b: world.getBuildingsList()) 
-        //     if (b.equals(campfire)) campfireFound = true;
-        // // assertTrue(campfireFound);
+        // Testing Requirement 2:
+        campfire = new CampfireBuilding(new Pair<Integer,Integer>(3, 1));
+        campfire.notifyTick(mainChar, world);
 
-        // VampireEnemy vampire = new VampireEnemy(new PathPosition(2, orderedPath));
-        // world.addNewEnemy(vampire);
+        VampireEnemy vampire = new VampireEnemy(new PathPosition(0, orderedPath));
+        world.setEnemy(vampire);
 
-        // for (int i = 0; i < 150; i++) {
-        //     world.runTickMoves();
-        //     System.out.println("[" + mainChar.getHealth() + ", " + vampire.getHealth() + "]");
-        // }
-        // assertEquals(vampire.getHealth(), 65);
+        world.runTickMoves();
+        world.runBattles();
+        // System.out.println("[" + mainChar.getHealth() + ", " + vampire.getHealth() + "]");
+        assertEquals(vampire.getHealth(), 71);
     } 
 }
