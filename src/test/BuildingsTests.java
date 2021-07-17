@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.Character;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.buildingcards.*;
@@ -31,7 +33,58 @@ public class BuildingsTests {
         // Testing Requirement 1:
         // Testing Requirement 2:
         // Testing Requirement 3:
+
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
         
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+
+        // Test shop appears at the end of cycle 1
+        while (world.getCurrCycle() < 1) {
+            world.runTickMoves();
+            System.out.println(world.getShowShop());
+        }
+        assertTrue(world.getShowShop());
+        
+        // Test shop appears at the end of cycle 3
+        while (world.getCurrCycle() < 3) {
+            world.runTickMoves();
+            System.out.println(world.getShowShop());
+        }
+        assertTrue(world.getShowShop());
+
+        // Test shop appears at the end of cycle 6
+        while (world.getCurrCycle() < 6) {
+            world.runTickMoves();
+            System.out.println(world.getShowShop());
+        }
+        assertTrue(world.getShowShop());
+
+        // Test shop appears at the end of cycle 10
+        while (world.getCurrCycle() < 10) {
+            world.runTickMoves();
+            System.out.println(world.getShowShop());
+        }
+        assertTrue(world.getShowShop());
+
+        // Test shop appears at the end of cycle 15
+        while (world.getCurrCycle() < 15) {
+            world.runTickMoves();
+            System.out.println(world.getShowShop());
+        }
+        assertTrue(world.getShowShop());
     } 
 
     @Test

@@ -1011,7 +1011,7 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : this.observers) {
             observer.notifyCycle(this);
         }
-        showShop = false;
+        // showShop = false;
     }
 
     /**
