@@ -194,6 +194,10 @@ public class LoopManiaWorld {
         return this.character.getY();
     }
 
+    public int getCharacterHealth() {
+        return this.character.getHealth();
+    }
+
     public int getCharacterXp() {
         return this.character.getExperience();
     }
