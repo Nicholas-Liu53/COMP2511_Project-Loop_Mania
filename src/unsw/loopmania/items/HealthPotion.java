@@ -5,8 +5,6 @@ import org.javatuples.Pair;
 import unsw.loopmania.path.PathPosition;
 
 public class HealthPotion extends Item {
-    private int restoreHealthPoints;
-
     public HealthPotion(Pair<Integer, Integer> position) {
         super(position);
     }
@@ -19,8 +17,8 @@ public class HealthPotion extends Item {
         super(new Pair<Integer, Integer>(1, 2));
     }
 
-    public int getRestoreHealthPoints() {
-        return this.restoreHealthPoints;
+    public static int getRestoreHealthPoints() {
+        return 100;
     }
 
     public static int getPurchasePrice() {

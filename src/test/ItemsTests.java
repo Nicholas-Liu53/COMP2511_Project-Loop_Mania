@@ -19,9 +19,9 @@ public class ItemsTests {
         // Testing Requirement 3 & 4:
         HealthPotion hp = new HealthPotion();
         assertEquals(hp.getClass().getSimpleName(), "HealthPotion");
-        assertEquals(hp.getRestoreHealthPoints(), 100);
-        assertEquals(hp.getPurchasePrice(), 125);
-        assertEquals(hp.getSellPrice(), 100);
+        assertEquals(100, HealthPotion.getRestoreHealthPoints());
+        assertEquals(125, HealthPotion.getPurchasePrice());
+        assertEquals(100, HealthPotion.getSellPrice());
     }
 
     @Test
@@ -34,9 +34,9 @@ public class ItemsTests {
         // Testing Requirement 2 & 3:
         BodyArmour ba = new BodyArmour();
         assertEquals(ba.getClass().getSimpleName(), "BodyArmour");
-        assertEquals(ba.getDamageReductionFactor(), 0.5);
-        assertEquals(ba.getPurchasePrice(), 500);
-        assertEquals(ba.getSellPrice(), 400);
+        assertEquals(0.5, ba.getDamageReductionFactor());
+        assertEquals(500, BodyArmour.getPurchasePrice());
+        assertEquals(400, BodyArmour.getSellPrice());
     }
 
     @Test
@@ -48,10 +48,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Helmet h = new Helmet();
-        assertEquals(h.getClass().getSimpleName(), "Helmet");
+        assertEquals("Helmet", h.getClass().getSimpleName());
         assertEquals(h.getDamageReductionFactor(), 0.8);
-        assertEquals(h.getPurchasePrice(), 200);
-        assertEquals(h.getSellPrice(), 160);
+        assertEquals(200, Helmet.getPurchasePrice());
+        assertEquals(160, Helmet.getSellPrice());
     }
 
     @Test
@@ -63,10 +63,10 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Shield s = new Shield();
-        assertEquals(s.getClass().getSimpleName(), "Shield");
-        assertEquals(s.getDamageReductionFactor(), 0.7);
-        assertEquals(s.getPurchasePrice(), 300);
-        assertEquals(s.getSellPrice(), 240);
+        assertEquals("Shield", s.getClass().getSimpleName());
+        assertEquals(0.7, s.getDamageReductionFactor());
+        assertEquals(300, Shield.getPurchasePrice());
+        assertEquals(240, Shield.getSellPrice());
     }
 
     @Test
@@ -78,9 +78,9 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Sword s = new Sword();
-        assertEquals(s.getClass().getSimpleName(), "Sword");
-        assertEquals(s.getPurchasePrice(), 200);
-        assertEquals(s.getSellPrice(), 160);
+        assertEquals("Sword", s.getClass().getSimpleName());
+        assertEquals(200, Sword.getPurchasePrice());
+        assertEquals(160, Sword.getSellPrice());
     }
 
     @Test
@@ -92,9 +92,9 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Staff s = new Staff();
-        assertEquals(s.getClass().getSimpleName(), "Staff");
-        assertEquals(s.getPurchasePrice(), 300);
-        assertEquals(s.getSellPrice(), 240);
+        assertEquals("Staff", s.getClass().getSimpleName());
+        assertEquals(300, Staff.getPurchasePrice());
+        assertEquals(240, Staff.getSellPrice());
     }
 
     @Test
@@ -106,8 +106,8 @@ public class ItemsTests {
 
         // Testing Requirement 2 & 3:
         Stake s = new Stake();
-        assertEquals(s.getClass().getSimpleName(), "Stake");
-        assertEquals(s.getPurchasePrice(), 150);
-        assertEquals(s.getSellPrice(), 120);
+        assertEquals("Stake", s.getClass().getSimpleName());
+        assertEquals(150, Stake.getPurchasePrice());
+        assertEquals(120, Stake.getSellPrice());
     }
 }
