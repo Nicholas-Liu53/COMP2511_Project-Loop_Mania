@@ -58,7 +58,6 @@ public class ZombieEnemy extends Enemy {
             if (criticalCheck == 5 && (mainChar.getNumAllies() > 0)) {
                 // Remove soldier and spawn new zombie, only works on soldiers
                 if (mainChar.getAllies().get(0) instanceof Soldier) {
-                    System.err.println("Critical!");
                     mainChar.removeAlly();
                     // Notifying caller that zombie must be spawned
                     return true;
