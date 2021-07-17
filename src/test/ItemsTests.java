@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Random;
 
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import unsw.loopmania.*;
 import unsw.loopmania.Character;
 import unsw.loopmania.items.*;
 import unsw.loopmania.path.PathPosition;
+import unsw.loopmania.enemies.*;
 
 public class ItemsTests {
 
@@ -128,15 +130,48 @@ public class ItemsTests {
             // Using Gradle rather than VSCode, requires different path
             try {
                 orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException ee) {
                 assertEquals(true, false);
             }
         }
+
         Character mainChar = new Character(new PathPosition(0, orderedPath));
+
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
 
-        for (int i = 0; i < 500; i++)
+        SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
+        ZombieEnemy zombie1 = new ZombieEnemy(new PathPosition(4, orderedPath));
+        VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
+        world.setEnemy(slug1);
+        world.setEnemy(zombie1);
+        world.setEnemy(vampire1);
+
+        // SlugEnemy slug2 = new SlugEnemy(new PathPosition(2, orderedPath));
+        // ZombieEnemy zombie2 = new ZombieEnemy(new PathPosition(4, orderedPath));
+        // VampireEnemy vampire2 = new VampireEnemy(new PathPosition(6, orderedPath));
+        // world.setEnemy(slug2);
+        // world.setEnemy(zombie2);
+        // world.setEnemy(vampire2);
+        Random rand = new Random();
+
+        for (int i = 0; i < 5000; i++) {
+            if (world.getEnemiesList().size() == 0) {
+                slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
+                zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
+                vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
+                world.setEnemy(slug1);
+                world.setEnemy(zombie1);
+                world.setEnemy(vampire1);
+                world.possiblySpawnEnemies();
+                world.spawnGoldPile();
+                world.spawnHealthPotion();
+                world.loadItem("Sword");
+                // world.loadItem("")
+            }
             world.runTickMoves();
+            world.runBattles();
+            world.attemptToPickUpItems();
+        }
     }
 }

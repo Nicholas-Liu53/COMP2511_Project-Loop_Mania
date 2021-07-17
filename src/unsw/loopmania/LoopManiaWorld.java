@@ -1026,13 +1026,10 @@ public class LoopManiaWorld {
      */
     private void updateCharacterCycles() {
         this.numCycles++;
-        // System.out.println("================= numCycles = " + this.numCycles + "=================");
-        // System.out.println("================= numCyclesToOpenShop = " + this.numCyclesToOpenShop + "=================");
         if (this.numCycles == this.numCyclesToOpenShop) {
             this.cycleShopLinear++;
             this.numCyclesToOpenShop += this.cycleShopLinear;
             showShop = true;
-            // System.out.println("================= OPEN SHOP =================");
         } 
 
         // Notifying world state observers of new cycle
@@ -1053,12 +1050,7 @@ public class LoopManiaWorld {
                 continue;
             }
             e.move();
-            // if (checkIfEnemyStepOnTrapAndDies(e))
-            //     deadEnemies.add(e);
         }
-        // for (Enemy e : deadEnemies) {
-        //     killEnemy(e);
-        // }
     }
 
     /**
