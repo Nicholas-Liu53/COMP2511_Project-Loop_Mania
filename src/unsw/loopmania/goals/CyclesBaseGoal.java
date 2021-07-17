@@ -3,8 +3,7 @@ package unsw.loopmania.goals;
 import unsw.loopmania.LoopManiaWorld;
 
 /**
- * Goal checking whether a character has completed a certain number
- * of cycles
+ * Goal checking whether a character has completed a certain number of cycles
  */
 public class CyclesBaseGoal implements ComplexGoalComponent {
     private int achievementThreshold;
@@ -19,5 +18,10 @@ public class CyclesBaseGoal implements ComplexGoalComponent {
             return true;
         else
             return false;
+    }
+
+    @Override
+    public int getAchievementThreshold() {
+        return this.achievementThreshold;
     }
 }

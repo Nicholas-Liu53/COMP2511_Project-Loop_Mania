@@ -12,5 +12,5 @@ public interface ComplexGoalComponent {
      */
     public boolean achieved(LoopManiaWorld world);
 
-    public int achievementThreshold();
+    public int getAchievementThreshold();
 }

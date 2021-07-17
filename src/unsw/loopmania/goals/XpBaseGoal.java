@@ -19,4 +19,9 @@ public class XpBaseGoal implements ComplexGoalComponent {
         else
             return false;
     }
+
+    @Override
+    public int getAchievementThreshold() {
+        return this.achievementThreshold;
+    }
 }
