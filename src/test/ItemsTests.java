@@ -14,6 +14,7 @@ import unsw.loopmania.Character;
 import unsw.loopmania.items.*;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.*;
+import unsw.loopmania.buildings.*;
 
 public class ItemsTests {
 
@@ -143,17 +144,10 @@ public class ItemsTests {
         // SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
         ZombieEnemy zombie1 = new ZombieEnemy(new PathPosition(4, orderedPath));
         VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
-        // world.setEnemy(slug1);
-        // world.setEnemy(zombie1);
-        // world.setEnemy(vampire1);
 
-        // SlugEnemy slug2 = new SlugEnemy(new PathPosition(2, orderedPath));
-        // ZombieEnemy zombie2 = new ZombieEnemy(new PathPosition(4, orderedPath));
-        // VampireEnemy vampire2 = new VampireEnemy(new PathPosition(6, orderedPath));
-        // world.setEnemy(slug2);
-        // world.setEnemy(zombie2);
-        // world.setEnemy(vampire2);
         Random rand = new Random();
+        VampireCastleBuilding vcb = new VampireCastleBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        
 
         for (int i = 0; i < 5000; i++) {
             if (world.getEnemiesList().size() == 0) {
@@ -173,6 +167,7 @@ public class ItemsTests {
                 world.loadItem("Helmet");
                 world.loadItem("Shield");
                 world.loadItem("HealthPotion");
+                world.addBuilding(b);
             }
             world.runTickMoves();
             world.runBattles();

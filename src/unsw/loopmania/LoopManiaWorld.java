@@ -199,6 +199,12 @@ public class LoopManiaWorld {
         return this.enemies;
     }
 
+    public void addBuilding(Building b) {
+        this.buildingEntities.add(b);
+        this.locationOfPlacedBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
+        this.observers.add(b);
+    }
+
     public void removeBuilding(Building b) {
         this.buildingEntities.remove(b);
         this.deadObservers.add(b);
