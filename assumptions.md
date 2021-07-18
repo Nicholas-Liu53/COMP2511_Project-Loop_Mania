@@ -1,150 +1,127 @@
-# Assumptions
+## Assumptions ##
 
 ## Character
 - The main character starts with 100 health points
 - The character initially starts with 0 gold, 0 equipment and can only attack with their hands
-- Defense points act as additional HP to the playable character and NPCs
+- Character class stores health, gold  and attack damage
+- Character’s inventory is stored in loopmaniaworld
 
-**Experience XP**
-- Character gets a random amount of XP between 100-200 for each battle won
+## Experience XP
+- Character gets a random amount of XP between 50-500 for each battle won
 
-**Damage**
-- For every 500XP, their base damage increases 1
+## Melee
+- Initial Damage = 5
 
-**Health**
-- For every 500XP, their base health increases by 5
-
-**UI**
-- Only one enemy per tile
-
-**Shop**
-- No limit on stocks
+## Shop
+- Cannot sell equipped items
 
 ## Items
-- Price = 80% x Purchase Price
-- Defense points act as additional HP to the playable character and NPCs
+- Selling Price = 80% x Purchase Price
+- All items are non-perishable (last forever until replaced by new item)
+- Defense points reduce enemy’s attack damage by certain %
 
-**Melee**
-- Damage = 5
-
-**Sword**
+## Sword
 - Purchase = 200
 - Selling = 160
 - Max battles = 5
 - Increase damage by 10 points
 
-**Stake** 
+## Stake 
 - Purchase = 150
 - Selling = 120
 - Max battles = 3
 - Increase damage by 5 points
 - Vampire critical was 15 points
 
-**Staff**
+## Staff
 - Purchase = 300
 - Selling = 240
 - Max battle = 10
 - Increase damage by 3 points
 - When used in battle, on each attack the staff should have a ¼ chance of inflicting a trance, which transforms an attacked enemy into an allied soldier for 5 seconds
 
-
-**Armour**
-- Adds 50 extra defense points
-- Defense reduces for each enemy attack
-- Potions cannot replenish armour HP
-- Damage to armour is irreversible
+## Body Armour
+- Reduces enemy attacks by 50%
 - Purchase = 500
-- Selling = 400 (Can only sell at full armour DP)
+- Selling = 400 
 
-**Shield**
-- Adds 30 extra defense points
-- Defense reduces for each enemy attack
-- Potions cannot replenish shield HP
-- Damage to shield is irreversible
+## Shield
+- Reduces enemy attacks by 30%
 - Purchase = 300
-- Selling = 240 (Can only sell at full shield DP)
+- Selling = 240 
 
-**Helmet**
-- Adds 20 extra defense points
-- Defense reduces for each enemy attack
-- Potions cannot replenish helmet HP
-- Damage to helmet is irreversible
+## Helmet
+- Reduces enemy attacks by 20%
 - Purchase = 200
-- Selling = 160 (Can only sell at full helmet DP)
+- Selling = 160
 
-**Armour Order**
-- Shield, Helmet, Armour
+## Gold
+- Character gets random amount of gold 50-500 after defeating enemies
+- Character starts with 0 amount 
 
-**Gold**
-- Character gets random amount of gold 50-100 after defeating enemies
-- Character starts with ? amount 
-- Can change later
-
-**Potion**
-- Use key ‘p’ to use potion
-- Restores only 100 health points of character
+## Potion
+- Use key ‘P’ to use potion
+- Restores all health points of character
 - Purchase = 125 gold
-- Potion does not restore health of equipment (e.g. sword 
-
+- Sell = 100 gold
+- One Ring
+- Activates on its own when character dies
 
 ## Enemies
+- All enemies, move randomly along the path unless specific behavior conditions (e.g. vampire runs away from campfires)
+- All enemy attacks are in damagePoints/sec
+- No limits for number of enemies
 
-**Slug**
+## Slug
 - Health point = 25
-- Damage = 3
-- Defence = 0
-- Speed = 1 attack/sec
+- Damage given = 3
+- Defence = 0% (reduces Character/Allies attack by certain percentage)
+- Speed = 1 attack per tick
 - Battle Radius = Support Radius = 1 tile length
 
-**Vampire**
+## Vampire
 - Health point = 75
-- Damage = 15
-- Defence = 20
-- Speed = 1 attack/sec
+- Damage given by vampire = 15
+- Defence = 20% (reduce Character’s attack damage 20%)
+- Speed = 1 attack per third tick
 - Battle Radius = 2 tile length
 - Support Radius = 3 tile length
 
-**Zombie**
+## Zombie
 - Health point = 50
 - Damage = 10
 - Defence = 5
-- Speed = 0.5 attack/sec
+- Speed = 1 attack per tick
 - Battle Radius = 2 tile length
 - Support Radius = 2 tile length
 
-Not assuming any limits for enemies
-
-
 ## Buildings
-
-**Vampire Castle Building**
+## Vampire Castle Building
 - For every 5 cycles of the path completed by the Character, an extra vampire spawns
 - The number of vampires spawned by the Vampire Castle = number of cycles completed by character % 5
 
-**Zombie Pit Building**
+## Zombie Pit Building
 - For every 2 cycles of the path completed by the Character, an extra vampire spawns
 
-**Tower**
+## Tower
 - Shooting radius = 2
 - Damage = 10 every 3 seconds
-- Perishable?
 
-**Village** 
+## Village 
 - Full health regeneration
 
-**Barracks**
+## Barracks
 - For every 5 cycles of the path completed by the Character, an extra soldier spawns
 
-**Soldier**
-- Health point = 100
-- Damage = 10
-- Defence = 20
-- Speed = 1 attack/sec
+## Soldier
+- Health point = 10
+- Damage = 5
 
-**Trap** 
+## Trap 
 - Damage = 30
 
-**Campfire Building**
+## Campfire Building
 - Radius = 4 tiles
+
 
 
