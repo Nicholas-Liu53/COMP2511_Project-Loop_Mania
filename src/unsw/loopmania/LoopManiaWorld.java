@@ -212,6 +212,10 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+    public void setGoals(ComplexGoalComponent goals) {
+        this.goal = goals;
+    }
+
     /**
      * add a generic entity (without it's own dedicated method for adding to the
      * world)
