@@ -123,4 +123,14 @@ public class ItemsTests {
         assertEquals(100, HealthPotion.getRestoreHealthPoints());
     }
 
+    @Test
+    public void goldPileTest() {
+        /**
+         * Requirements to test: 1. Contains 100 gold
+         */
+
+         // Testing requirement 1
+         GoldPile pile = new GoldPile();
+         assertEquals(100, pile.getGoldAmount());
+    }
 }

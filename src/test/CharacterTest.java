@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.items.*;
 import unsw.loopmania.character.Character;
+import unsw.loopmania.character.Melee;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.path.PathPosition;
 
@@ -26,6 +27,16 @@ public class CharacterTest {
         assertEquals(character.getInBattle(), false);
         assertEquals(character.getExperience(), 0);
         assertEquals(character.getGold(), 0);
+        assertEquals(character.getEquippedItems().size(), 0);
+
+        boolean correctStrategy = true;
+        if (!(character.getBodyArmour() instanceof Melee) || !(character.getHelmet() instanceof Melee) || !(character.getShield() instanceof Melee) ||
+            !(character.getWeapon() instanceof Melee)) {
+            
+            correctStrategy = false;
+        }
+
+        assertTrue(correctStrategy);
     }
 
     @Test
