@@ -13,6 +13,7 @@ import unsw.loopmania.*;
 import unsw.loopmania.Character;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.*;
+import unsw.loopmania.goals.XpBaseGoal;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.buildingcards.*;
 
@@ -56,6 +57,7 @@ public class LoopManiaWorldTest {
 
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
 
         // SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
         ZombieEnemy zombie1 = new ZombieEnemy(new PathPosition(4, orderedPath));

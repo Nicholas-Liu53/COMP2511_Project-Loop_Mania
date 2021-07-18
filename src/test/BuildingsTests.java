@@ -15,6 +15,7 @@ import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.*;
+import unsw.loopmania.goals.XpBaseGoal;
 
 public class BuildingsTests {
 
@@ -38,6 +39,7 @@ public class BuildingsTests {
         Character mainChar = new Character(new PathPosition(0, orderedPath));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
 
         // Test shop appears at the end of cycle 1
         while (world.getCurrCycle() < 1) {
@@ -195,6 +197,7 @@ public class BuildingsTests {
         VillageBuilding village = new VillageBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
         mainChar.receiveAttack(50);
         while (!(village.getX() == mainChar.getX()) && village.getY() == mainChar.getY()) {
             village.notifyTick(mainChar, world);
@@ -312,6 +315,7 @@ public class BuildingsTests {
         CampfireBuilding campfire = new CampfireBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
         boolean campfireFound = false;
         campfire.notifyTick(mainChar, world);
         for (Building b : world.getBuildingsList())
