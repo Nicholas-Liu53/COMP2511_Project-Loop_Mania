@@ -665,6 +665,30 @@ public class LoopManiaWorld {
         healthProperty();
     }
 
+    // Activates one ring
+    public Item activateOneRing() {
+        Item activatedOneRing = null;
+        if ((getCharacterHealth() > 0) || (getNumOneRing() == 0))
+            return activatedOneRing;
+
+        boolean oneRingAvailable = false;
+        for (Item item : this.unequippedInventoryItems) {
+            if (item instanceof OneRing) {
+                activatedOneRing = item;
+                removeUnequippedInventoryItem(activatedOneRing);
+                oneRingAvailable = true;
+                break;
+            }
+        }
+
+        if (oneRingAvailable)
+            character.restoreHealthPoints();
+
+        healthProperty();
+
+        return activatedOneRing;
+    }
+
     // Get list of unequipped items in inventory
     public List<Item> getUnequippedItems() {
         return this.unequippedInventoryItems;
