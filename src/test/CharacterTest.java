@@ -69,7 +69,7 @@ public class CharacterTest {
 
     @Test
     public void clockwiseMovementTest() {
-        // Tests that the character moves around the map in anticlockwise direction
+        // Tests that the character moves around the map in clockwise direction
         PathPosition position = null;
 
         try {
