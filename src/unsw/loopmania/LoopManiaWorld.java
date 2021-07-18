@@ -1157,7 +1157,7 @@ public class LoopManiaWorld {
         // i.e. rewardSetting is "withCard"
         if (rewardSetting.equals("withCard")) {
             if (this.rareItemNames.contains("the_one_ring"))
-                if (rand.nextInt(100) == 21)
+                if (rand.nextInt(500) == 21)
                     return loadItem("OneRing");
         }
 
