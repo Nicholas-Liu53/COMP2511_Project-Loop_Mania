@@ -443,7 +443,13 @@ public class LoopManiaWorldController implements WorldStateObserver {
             // Check if character is dead
             if (world.getCharacterHealth() == 0) {
                 pause();
-                gameoverSwitcher.switchMenu();
+                if (world.getNumOneRing() > 0) {
+                    Item activatedOneRing = world.activateOneRing();
+                    world.decreaseUnequippedInventoryItemCount(activatedOneRing);
+                    startTimer();
+                } else {
+                    gameoverSwitcher.switchMenu();
+                }
             }
 
             // Check if goals have been achieved
@@ -456,8 +462,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }));
 
         // if (world.getShowShop()) {
-        //     pause();
-        //     // Change shop label + make button available
+        // pause();
+        // // Change shop label + make button available
         // } else {
 
         // }
@@ -671,6 +677,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             } else if (item instanceof HealthPotion) {
                 view = new ImageView(healthPotionImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            } else if (item instanceof OneRing) {
+                view = new ImageView(theOneRingImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             }
 
             if (view != null) {
@@ -851,8 +860,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a
                                 // building will help, it is very similar
-                                 // Return item to original spot if human player tries to drag onto invalid tile
-                                 if (currentlyDraggedType == draggableType) {
+                                // Return item to original spot if human player tries to drag onto invalid tile
+                                if (currentlyDraggedType == draggableType) {
                                     if (node != anchorPaneRoot && db.hasImage()) {
                                         currentlyDraggedImage.setVisible(true);
                                         draggedEntity.setVisible(false);
@@ -1038,6 +1047,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                             draggedEntity.setImage(swordImage);
                         else if (item instanceof HealthPotion)
                             draggedEntity.setImage(healthPotionImage);
+                        else if (item instanceof OneRing)
+                            draggedEntity.setImage(theOneRingImage);
                         break;
                     default:
                         break;
@@ -1182,18 +1193,14 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     public void handleKeyPress(KeyEvent event) {
-        // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
-            // Pause game
-            case SPACE:
-                if (isPaused) {
+            case SPACE: // pause game
+                if (isPaused)
                     startTimer();
-                } else {
+                else
                     pause();
-                }
                 break;
-            // Equip health potion
-            case P:
+            case P: // Equip health potion
                 world.drinkHealthPotion();
                 break;
             default:
@@ -1237,7 +1244,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         mainMenuSwitcher.switchMenu();
     }
 
-    @FXML 
+    @FXML
     void switchToGoalMenu() throws IOException {
         pause();
         goalsMenuSwitcher.switchMenu();
