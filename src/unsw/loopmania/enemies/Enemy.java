@@ -3,8 +3,8 @@ package unsw.loopmania.enemies;
 import java.util.Random;
 
 import unsw.loopmania.MovingEntity;
-import unsw.loopmania.Character;
-import unsw.loopmania.Ally;
+import unsw.loopmania.character.Ally;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.path.PathPosition;
 
 public abstract class Enemy extends MovingEntity implements Ally {

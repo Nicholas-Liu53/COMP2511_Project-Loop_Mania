@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.items.*;
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.path.PathPosition;
 

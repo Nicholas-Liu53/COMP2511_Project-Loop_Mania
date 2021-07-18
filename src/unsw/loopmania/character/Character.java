@@ -1,7 +1,8 @@
-package unsw.loopmania;
+package unsw.loopmania.character;
 
 import java.util.ArrayList;
 
+import unsw.loopmania.MovingEntity;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.BodyArmourStrategy;
 import unsw.loopmania.items.HelmetStrategy;

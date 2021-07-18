@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
+import unsw.loopmania.character.Character;
+import unsw.loopmania.character.Melee;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.goals.ComplexGoalComponent;
 // import unsw.loopmania.goals.ComplexGoalComposite;

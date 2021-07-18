@@ -34,6 +34,7 @@ import javafx.util.Duration;
 
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.items.*;
 

@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import unsw.loopmania.character.Character;
+
 /**
  * Interface for observers of the loop mania world state
  * Notified everytime a cycle is completed

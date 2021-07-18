@@ -2,10 +2,9 @@ package unsw.loopmania.buildings;
 
 import org.javatuples.Pair;
 
-// import unsw.loopmania.Ally;
-import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Soldier;
+import unsw.loopmania.character.Character;
+import unsw.loopmania.character.Soldier;
 
 /**
  * represents a barracks building in the backend game world

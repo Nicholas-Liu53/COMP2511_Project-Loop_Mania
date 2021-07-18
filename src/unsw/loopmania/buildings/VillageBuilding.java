@@ -3,7 +3,7 @@ package unsw.loopmania.buildings;
 import org.javatuples.Pair;
 
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 
 /**
  * represents a village building in the backend game world

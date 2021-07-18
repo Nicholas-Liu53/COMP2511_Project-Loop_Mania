@@ -2,8 +2,8 @@ package test;
 
 import org.junit.Test;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Soldier;
+import unsw.loopmania.character.Character;
+import unsw.loopmania.character.Soldier;
 import unsw.loopmania.enemies.SlugEnemy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

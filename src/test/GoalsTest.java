@@ -10,8 +10,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.junit.Test;
 
-import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.goals.ComplexGoalComponent;
 import unsw.loopmania.goals.ComplexGoalComposite;
 import unsw.loopmania.goals.CyclesBaseGoal;

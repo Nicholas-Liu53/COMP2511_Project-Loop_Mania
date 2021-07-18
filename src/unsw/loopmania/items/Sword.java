@@ -2,7 +2,7 @@ package unsw.loopmania.items;
 
 import org.javatuples.Pair;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.Enemy;
 
 /**

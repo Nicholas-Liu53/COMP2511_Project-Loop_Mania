@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.path.*;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.goals.*;
 
 import java.util.List;

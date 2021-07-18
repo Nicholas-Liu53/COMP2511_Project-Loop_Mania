@@ -7,7 +7,7 @@ import unsw.loopmania.items.Staff;
 import unsw.loopmania.items.Stake;
 import unsw.loopmania.items.Sword;
 import unsw.loopmania.items.WeaponStrategy;
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.enemies.VampireEnemy;

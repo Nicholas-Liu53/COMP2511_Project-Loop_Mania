@@ -10,9 +10,9 @@ import java.util.List;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
-import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.buildings.*;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.goals.XpBaseGoal;

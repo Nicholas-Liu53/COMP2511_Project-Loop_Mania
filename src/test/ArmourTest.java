@@ -2,7 +2,7 @@ package test;
 
 import org.junit.Test;
 
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.items.BodyArmour;
