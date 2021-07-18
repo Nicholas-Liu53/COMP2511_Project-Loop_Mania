@@ -11,12 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.*;
 import unsw.loopmania.Character;
-import unsw.loopmania.items.*;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.buildingcards.*;
-
 
 public class LoopManiaWorldTest {
     @Test
@@ -64,43 +62,67 @@ public class LoopManiaWorldTest {
         VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
 
         Random rand = new Random();
-        // VampireCastleBuilding vcb = new VampireCastleBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // VampireCastleBuilding vcb = new VampireCastleBuilding(new Pair<Integer,
+        // Integer>(rand.nextInt(orderedPath.size()),
+        // rand.nextInt(orderedPath.size())));
         // world.addBuilding(vcb);
-        // ZombiePitBuilding zpb = new ZombiePitBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        // ZombiePitBuilding zpb = new ZombiePitBuilding(new Pair<Integer,
+        // Integer>(rand.nextInt(orderedPath.size()),
+        // rand.nextInt(orderedPath.size())));
         // world.addBuilding(zpb);
-        TowerBuilding tb = new TowerBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TowerBuilding tb = new TowerBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(tb);
-        VillageBuilding vb = new VillageBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        VillageBuilding vb = new VillageBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(vb);
-        BarracksBuilding bb = new BarracksBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        BarracksBuilding bb = new BarracksBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(bb);
-        TrapBuilding tp = new TrapBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TrapBuilding tp = new TrapBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(tp);
-        CampfireBuilding cb = new CampfireBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        CampfireBuilding cb = new CampfireBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(cb);
 
-
-        BarracksCard card1 = new BarracksCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        CampfireCard card2 = new CampfireCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        TowerCard card3 = new TowerCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        TrapCard card4 = new TrapCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        VillageCard card5 = new VillageCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        ZombiePitCard card6 = new ZombiePitCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        VampireCastleCard card7 = new VampireCastleCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-
+        BarracksCard card1 = new BarracksCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        CampfireCard card2 = new CampfireCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TowerCard card3 = new TowerCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TrapCard card4 = new TrapCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        VillageCard card5 = new VillageCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        ZombiePitCard card6 = new ZombiePitCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        VampireCastleCard card7 = new VampireCastleCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
 
         for (int i = 0; i < 5000; i++) {
             if (world.getEnemiesList().size() == 0) {
-                // slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
+                // slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()),
+                // orderedPath));
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
-                // vcb = new VampireCastleBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                // zpb = new ZombiePitBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                tb = new TowerBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                vb = new VillageBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                bb = new BarracksBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                tp = new TrapBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                cb = new CampfireBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // vcb = new VampireCastleBuilding(new Pair<Integer,
+                // Integer>(rand.nextInt(orderedPath.size()),
+                // rand.nextInt(orderedPath.size())));
+                // zpb = new ZombiePitBuilding(new Pair<Integer,
+                // Integer>(rand.nextInt(orderedPath.size()),
+                // rand.nextInt(orderedPath.size())));
+                tb = new TowerBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                vb = new VillageBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                bb = new BarracksBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                tp = new TrapBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                cb = new CampfireBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
                 world.possiblySpawnEnemies();
                 world.setEnemy(zombie1);
                 world.setEnemy(vampire1);
@@ -113,7 +135,7 @@ public class LoopManiaWorldTest {
                 world.loadItem("Helmet");
                 world.loadItem("Shield");
                 world.loadItem("HealthPotion");
-                //! assertEquals(world.totalItems(), 7);
+                // ! assertEquals(world.totalItems(), 7);
                 world.loadCard("BarracksCard");
                 world.loadCard("CampfireCard");
                 world.loadCard("TowerCard");
@@ -121,14 +143,16 @@ public class LoopManiaWorldTest {
                 world.loadCard("VillageCard");
                 world.loadCard("ZombiePitCard");
                 world.loadCard("VampireCastleCard");
-                //! assertEquals(world.totalCardNum(), 7);
+                // ! assertEquals(world.totalCardNum(), 7);
                 world.convertCardToBuildingByCoordinates(card1.getX(), card1.getY(), bb.getX(), bb.getY());
                 world.convertCardToBuildingByCoordinates(card2.getX(), card2.getY(), cb.getX(), cb.getY());
                 world.convertCardToBuildingByCoordinates(card3.getX(), card3.getY(), tb.getX(), tb.getY());
                 world.convertCardToBuildingByCoordinates(card4.getX(), card4.getY(), tp.getX(), tp.getY());
                 world.convertCardToBuildingByCoordinates(card5.getX(), card5.getY(), vb.getX(), vb.getY());
-                world.convertCardToBuildingByCoordinates(card6.getX(), card6.getY(), rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size()));
-                world.convertCardToBuildingByCoordinates(card7.getX(), card7.getY(), rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size()));
+                world.convertCardToBuildingByCoordinates(card6.getX(), card6.getY(), rand.nextInt(orderedPath.size()),
+                        rand.nextInt(orderedPath.size()));
+                world.convertCardToBuildingByCoordinates(card7.getX(), card7.getY(), rand.nextInt(orderedPath.size()),
+                        rand.nextInt(orderedPath.size()));
                 // world.addBuilding(vcb);
                 // world.addBuilding(zpb);
                 world.addBuilding(tb);
@@ -136,12 +160,12 @@ public class LoopManiaWorldTest {
                 world.addBuilding(bb);
                 world.addBuilding(tp);
                 world.addBuilding(cb);
-                //! assertEquals(world.totalBuildings(), 7);
+                // ! assertEquals(world.totalBuildings(), 7);
                 world.getGold();
                 world.getUnequippedItems();
                 world.deductGold(5);
                 world.giveGold(5);
-                //! assertEquals(world.numGold(), 7);
+                // ! assertEquals(world.numGold(), 7);
                 world.cardEntityIsFull();
             }
             world.runTickMoves();

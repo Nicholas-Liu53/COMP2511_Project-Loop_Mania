@@ -1,21 +1,9 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.Random;
-
-import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
-import unsw.loopmania.*;
-import unsw.loopmania.Character;
 import unsw.loopmania.items.*;
-import unsw.loopmania.path.PathPosition;
-import unsw.loopmania.enemies.*;
-import unsw.loopmania.buildings.*;
-import unsw.loopmania.buildingcards.*;
 
 public class ItemsTests {
 
