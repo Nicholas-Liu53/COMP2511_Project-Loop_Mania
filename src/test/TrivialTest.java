@@ -23,21 +23,8 @@ public class TrivialTest {
     }
 
     @Test
-    public void blahTest2() {
-        List<Pair<Integer, Integer>> orderedPath = null;
-
-        try {
-            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
-        } catch (FileNotFoundException e) {
-            // Using Gradle rather than VSCode, requires different path
-            try {
-                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
-            } catch (FileNotFoundException ee) {
-                assertEquals(true, false);
-            }
-        }
-
-        LoopManiaWorld d = new LoopManiaWorld(1, 2, orderedPath);
+    public void blahTest2(){
+        LoopManiaWorld d = TestHelper.generateWorld();
         assertEquals(d.getWidth(), 1);
     }
 }

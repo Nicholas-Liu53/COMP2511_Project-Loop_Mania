@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.path.*;
+import unsw.loopmania.goals.*;
 
 import java.util.List;
 
@@ -42,6 +43,8 @@ public abstract class LoopManiaWorldLoader {
         List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
 
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
+
+        world.setGoals(loadGoals(json.getJSONObject("goal-condition")));
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -143,6 +146,40 @@ public abstract class LoopManiaWorldLoader {
         }
         onLoad(starting, connections.get(connections.size() - 1), connections.get(0));
         return orderedPath;
+    }
+
+    /**
+     * Takes in the JSON goal condition and recursively generates a ComplexGoalComponent
+     * that models the goals specified by the JSON file
+     * 
+     * @param goalCondition
+     * @return ComplexGoalCompsite modelling the goals
+     */
+    public ComplexGoalComponent loadGoals(JSONObject goalCondition) {
+        if (goalCondition.getString("goal").equals("AND") || goalCondition.getString("goal").equals("OR")) {
+            // Constructing a new complex goal out of the sub goals
+            ComplexGoalComposite newComponent = new ComplexGoalComposite(goalCondition.getString("goal"));
+            JSONArray subGoals = goalCondition.getJSONArray("subgoals");
+
+            for (int i = 0; i < subGoals.length(); i++) {
+                // Recursively add goals
+                newComponent.add(loadGoals(subGoals.getJSONObject(i)));
+            }
+
+            return newComponent;
+        } else {
+            // Return a base goal
+            if (goalCondition.getString("goal").equals("experience")) {
+                return new XpBaseGoal(goalCondition.getInt("quantity"));
+            } else if (goalCondition.getString("goal").equals("gold")) {
+                return new GoldBaseGoal(goalCondition.getInt("quantity"));
+            } else if (goalCondition.getString("goal").equals("cycles")) {
+                return new CyclesBaseGoal(goalCondition.getInt("quantity"));
+            }
+        }
+
+        // Execution shouldn't reach here
+        return null;
     }
 
     public abstract void onLoad(Character character);

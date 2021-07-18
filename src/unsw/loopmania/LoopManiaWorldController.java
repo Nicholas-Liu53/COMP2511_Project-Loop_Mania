@@ -256,10 +256,18 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     private MenuSwitcher mainMenuSwitcher;
     private MenuSwitcher shopMenuSwitcher;
+    private MenuSwitcher gameoverSwitcher;
+    private MenuSwitcher gamewonSwitcher;
+    private MenuSwitcher goalsMenuSwitcher;
+    private GoalsMenuController goalsMenuController;
     private ShopMenuController shopMenuController;
 
     public void setShopController(ShopMenuController shopMenuController) {
         this.shopMenuController = shopMenuController;
+    }
+
+    public void setGoalsMenuController(GoalsMenuController goalsMenuController) {
+        this.goalsMenuController = goalsMenuController;
     }
 
     /**
@@ -423,6 +431,18 @@ public class LoopManiaWorldController implements WorldStateObserver {
                     onLoad((Item) newGP, true);
                 }
                 spawnCycle++;
+            }
+
+            // Check if character is dead
+            if (world.getCharacterHealth() == 0) {
+                pause();
+                gameoverSwitcher.switchMenu();
+            }
+
+            // Check if goals have been achieved
+            if (world.goalsAchieved() == true) {
+                pause();
+                gamewonSwitcher.switchMenu();
             }
 
             printThreadingNotes("HANDLED TIMER");
@@ -1148,6 +1168,18 @@ public class LoopManiaWorldController implements WorldStateObserver {
         this.shopMenuSwitcher = shopMenuSwitcher;
     }
 
+    public void setGoalsMenuSwitcher(MenuSwitcher goalsMenuSwitcher) {
+        this.goalsMenuSwitcher = goalsMenuSwitcher;
+    }
+
+    public void setGameoverSwitcher(MenuSwitcher gameoverSwitcher) {
+        this.gameoverSwitcher = gameoverSwitcher;
+    }
+
+    public void setGamewonSwitcher(MenuSwitcher gamewonSwitcher) {
+        this.gamewonSwitcher = gamewonSwitcher;
+    }
+
     /**
      * this method is triggered when click button to go to main menu in FXML
      * 
@@ -1158,6 +1190,12 @@ public class LoopManiaWorldController implements WorldStateObserver {
         // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
+    }
+
+    @FXML 
+    void switchToGoalMenu() throws IOException {
+        pause();
+        goalsMenuSwitcher.switchMenu();
     }
 
     @FXML
