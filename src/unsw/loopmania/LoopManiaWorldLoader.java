@@ -18,12 +18,12 @@ import java.util.List;
 /**
  * Loads a world from a .json file.
  * 
- * By extending this class, a subclass can hook into entity creation.
- * This is useful for creating UI elements with corresponding entities.
+ * By extending this class, a subclass can hook into entity creation. This is
+ * useful for creating UI elements with corresponding entities.
  * 
- * this class is used to load the world.
- * it loads non-spawning entities from the configuration files.
- * spawning of enemies/cards must be handled by the controller.
+ * this class is used to load the world. it loads non-spawning entities from the
+ * configuration files. spawning of enemies/cards must be handled by the
+ * controller.
  */
 public abstract class LoopManiaWorldLoader {
     private JSONObject json;
@@ -45,6 +45,12 @@ public abstract class LoopManiaWorldLoader {
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
 
         world.setGoals(loadGoals(json.getJSONObject("goal-condition")));
+        JSONArray jsonRareItems = json.getJSONArray("rare_items");
+        if (jsonRareItems != null) {
+            for (int i = 0; i < jsonRareItems.length(); i++) {
+                world.availableRareItems(jsonRareItems.get(i).toString());
+            }
+        }
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -58,9 +64,11 @@ public abstract class LoopManiaWorldLoader {
 
     /**
      * load an entity into the world
-     * @param world backend world object
-     * @param json a JSON object to parse (different from the )
-     * @param orderedPath list of pairs of x, y cell coordinates representing game path
+     * 
+     * @param world       backend world object
+     * @param json        a JSON object to parse (different from the )
+     * @param orderedPath list of pairs of x, y cell coordinates representing game
+     *                    path
      */
     private void loadEntity(LoopManiaWorld world, JSONObject currentJson, List<Pair<Integer, Integer>> orderedPath) {
         String type = currentJson.getString("type");
@@ -72,23 +80,24 @@ public abstract class LoopManiaWorldLoader {
         Entity entity = null;
         // TODO = load more entity types from the file
         switch (type) {
-        case "hero_castle":
-            Character character = new Character(new PathPosition(indexInPath, orderedPath));
-            world.setCharacter(character);
-            onLoad(character);
-            entity = character;
-            break;
-        case "path_tile":
-            throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
-        // TODO Handle other possible entities
+            case "hero_castle":
+                Character character = new Character(new PathPosition(indexInPath, orderedPath));
+                world.setCharacter(character);
+                onLoad(character);
+                entity = character;
+                break;
+            case "path_tile":
+                throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
+            // TODO Handle other possible entities
         }
         world.addEntity(entity);
     }
 
     /**
      * load path tiles
-     * @param path json data loaded from file containing path information
-     * @param width width in number of cells
+     * 
+     * @param path   json data loaded from file containing path information
+     * @param width  width in number of cells
      * @param height height in number of cells
      * @return list of x, y cell coordinate pairs representing game path
      */
@@ -98,19 +107,20 @@ public abstract class LoopManiaWorldLoader {
             throw new RuntimeException(
                     "Path object requires path_tile type.  No other path types supported at this moment.");
         }
-        PathTile starting = new PathTile(new SimpleIntegerProperty(path.getInt("x")), new SimpleIntegerProperty(path.getInt("y")));
+        PathTile starting = new PathTile(new SimpleIntegerProperty(path.getInt("x")),
+                new SimpleIntegerProperty(path.getInt("y")));
         if (starting.getY() >= height || starting.getY() < 0 || starting.getX() >= width || starting.getX() < 0) {
             throw new IllegalArgumentException("Starting point of path is out of bounds");
         }
         // load connected path tiles
         List<PathTile.Direction> connections = new ArrayList<>();
-        for (Object dir: path.getJSONArray("path").toList()){
+        for (Object dir : path.getJSONArray("path").toList()) {
             connections.add(Enum.valueOf(PathTile.Direction.class, dir.toString()));
         }
 
         if (connections.size() == 0) {
             throw new IllegalArgumentException(
-                "This path just consists of a single tile, it needs to consist of multiple to form a loop.");
+                    "This path just consists of a single tile, it needs to consist of multiple to form a loop.");
         }
 
         // load the first position into the orderedPath
@@ -124,11 +134,12 @@ public abstract class LoopManiaWorldLoader {
         // add all coordinates of the path into the orderedPath
         for (int i = 1; i < connections.size(); i++) {
             orderedPath.add(Pair.with(x, y));
-            
+
             if (y >= height || y < 0 || x >= width || x < 0) {
-                throw new IllegalArgumentException("Path goes out of bounds at direction index " + (i - 1) + " (" + connections.get(i - 1) + ")");
+                throw new IllegalArgumentException(
+                        "Path goes out of bounds at direction index " + (i - 1) + " (" + connections.get(i - 1) + ")");
             }
-            
+
             PathTile.Direction dir = connections.get(i);
             PathTile tile = new PathTile(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
             x += dir.getXOffset();
@@ -149,8 +160,8 @@ public abstract class LoopManiaWorldLoader {
     }
 
     /**
-     * Takes in the JSON goal condition and recursively generates a ComplexGoalComponent
-     * that models the goals specified by the JSON file
+     * Takes in the JSON goal condition and recursively generates a
+     * ComplexGoalComponent that models the goals specified by the JSON file
      * 
      * @param goalCondition
      * @return ComplexGoalCompsite modelling the goals
@@ -183,6 +194,7 @@ public abstract class LoopManiaWorldLoader {
     }
 
     public abstract void onLoad(Character character);
+
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
 
     // TODO Create additional abstract methods for the other entities

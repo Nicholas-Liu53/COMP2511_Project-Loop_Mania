@@ -4,7 +4,7 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.path.PathPosition;
 
-public class HealthPotion extends Item {
+public class HealthPotion extends Item implements RevivalItemStrategy {
     public HealthPotion(Pair<Integer, Integer> position) {
         super(position);
     }

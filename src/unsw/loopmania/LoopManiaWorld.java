@@ -50,7 +50,11 @@ public class LoopManiaWorld {
 
     private List<Card> cardEntities;
 
+    // Rare items specific to the world
+    private List<String> rareItemNames;
+
     private List<Item> unequippedInventoryItems;
+
     // private List<Item> equippedInventoryItems;
 
     // The goal for this world
@@ -79,6 +83,7 @@ public class LoopManiaWorld {
     private int numHelmet;
     private int numShield;
     private int numHealthPotion;
+    private int numOneRing;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
     private StringProperty numStaffProperty;
@@ -86,6 +91,7 @@ public class LoopManiaWorld {
     private StringProperty numHelmetProperty;
     private StringProperty numShieldProperty;
     private StringProperty numHealthPotionProperty;
+    private StringProperty numOneRingProperty;
 
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
@@ -120,6 +126,7 @@ public class LoopManiaWorld {
         this.character = null;
         this.enemies = new ArrayList<>();
         this.cardEntities = new ArrayList<>();
+        this.rareItemNames = new ArrayList<>();
         this.unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         this.startingPoint = orderedPath.get(0);
@@ -148,6 +155,7 @@ public class LoopManiaWorld {
         this.numHelmetProperty = new SimpleStringProperty();
         this.numShieldProperty = new SimpleStringProperty();
         this.numHealthPotionProperty = new SimpleStringProperty();
+        this.numOneRingProperty = new SimpleStringProperty();
 
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
@@ -162,7 +170,7 @@ public class LoopManiaWorld {
         this.numHelmet = 0;
         this.numShield = 0;
         this.numHealthPotion = 0;
-
+        this.numOneRing = 0;
     }
 
     // --------------------------------------------------------------------------
@@ -245,6 +253,14 @@ public class LoopManiaWorld {
 
     public void setGoals(ComplexGoalComponent goals) {
         this.goal = goals;
+    }
+
+    public void availableRareItems(String rareItemType) {
+        this.rareItemNames.add(rareItemType);
+    }
+
+    public int getNumOneRing() {
+        return this.numOneRing;
     }
 
     /**
@@ -508,6 +524,9 @@ public class LoopManiaWorld {
             case "HealthPotion":
                 item = new HealthPotion(firstAvailableSlot);
                 break;
+            case "OneRing":
+                item = new OneRing(firstAvailableSlot);
+                break;
             default:
                 break;
         }
@@ -676,6 +695,30 @@ public class LoopManiaWorld {
         healthProperty();
     }
 
+    // Activates one ring
+    public Item activateOneRing() {
+        Item activatedOneRing = null;
+        if ((getCharacterHealth() > 0) || (getNumOneRing() == 0))
+            return activatedOneRing;
+
+        boolean oneRingAvailable = false;
+        for (Item item : this.unequippedInventoryItems) {
+            if (item instanceof OneRing) {
+                activatedOneRing = item;
+                removeUnequippedInventoryItem(activatedOneRing);
+                oneRingAvailable = true;
+                break;
+            }
+        }
+
+        if (oneRingAvailable)
+            character.restoreHealthPoints();
+
+        healthProperty();
+
+        return activatedOneRing;
+    }
+
     // Get list of unequipped items in inventory
     public List<Item> getUnequippedItems() {
         return this.unequippedInventoryItems;
@@ -721,6 +764,9 @@ public class LoopManiaWorld {
             case "HealthPotion":
                 numHealthPotion++;
                 break;
+            case "OneRing":
+                numOneRing++;
+                break;
             default:
                 break;
         }
@@ -750,6 +796,9 @@ public class LoopManiaWorld {
             case "HealthPotion":
                 numHealthPotion--;
                 break;
+            case "OneRing":
+                numOneRing--;
+                break;
             default:
                 break;
         }
@@ -778,6 +827,9 @@ public class LoopManiaWorld {
                 break;
             case "HealthPotion":
                 this.numHealthPotionProperty.set(String.valueOf(numHealthPotion));
+                break;
+            case "OneRing":
+                this.numOneRingProperty.set(String.valueOf(numOneRing));
                 break;
             default:
                 break;
@@ -1122,10 +1174,11 @@ public class LoopManiaWorld {
 
         // small chance to get a oneRing when a battle is won
         // i.e. rewardSetting is "withCard"
-        // if (rewardSetting.equals("withCard")) {
-        // if (rand.nextInt(100) == 21)
-        // return loadItem("oneRing");
-        // }
+        if (rewardSetting.equals("withCard")) {
+            if (this.rareItemNames.contains("the_one_ring"))
+                if (rand.nextInt(500) == 21)
+                    return loadItem("OneRing");
+        }
 
         switch (rewardSetting) {
             case "withCard":
@@ -1220,6 +1273,10 @@ public class LoopManiaWorld {
 
     public StringProperty getHealthPotionProperty() {
         return this.numHealthPotionProperty;
+    }
+
+    public StringProperty getOneRingProperty() {
+        return this.numOneRingProperty;
     }
 
     public StringProperty getNumCyclesProperty() {
@@ -1348,10 +1405,10 @@ public class LoopManiaWorld {
         return this.gamemode;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                                Goals
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Goals
+    // *-------------------------------------------------------------------------
     public boolean goalsAchieved() {
         return this.goal.achieved(this);
     }
-}   
+}

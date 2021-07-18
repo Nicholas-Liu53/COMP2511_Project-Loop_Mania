@@ -9,8 +9,6 @@ import unsw.loopmania.StaticEntity;
  * a Item in the world which doesn't move
  */
 public abstract class Item extends StaticEntity {
-    private String itemType; // Armour or weapon or potion
-
     public Item(Pair<Integer, Integer> position) {
         super(position);
     }

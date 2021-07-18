@@ -109,4 +109,18 @@ public class ItemsTests {
         assertEquals(150, Stake.getPurchasePrice());
         assertEquals(120, Stake.getSellPrice());
     }
+
+    @Test
+    public void oneRingTest() {
+        /*
+         * Requirements to test: 1. Obtainable through purchase in the shop 2.
+         * Purchasing price is 500 gold 3. Selling price is 400 gold
+         */
+
+        // Testing Requirement 2 & 3:
+        OneRing ba = new OneRing();
+        assertEquals(ba.getClass().getSimpleName(), "OneRing");
+        assertEquals(100, HealthPotion.getRestoreHealthPoints());
+    }
+
 }
