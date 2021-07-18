@@ -79,8 +79,13 @@ public class WeaponTest {
 
             assertEquals(17, enemy.getHealth());
 
-            if (mainChar.getNumAllies() == 1)
+            if (mainChar.getNumAllies() == 1) {
                 criticalCheck = true;
+                int beforeHealth = mainChar.getHealth();
+                // Simulate enemy ally use in battles
+                mainChar.receiveAttack(5);
+                assertEquals(beforeHealth, mainChar.getHealth());
+            }
         }
 
         assertEquals(true, criticalCheck);

@@ -8,6 +8,8 @@ import unsw.loopmania.enemies.SlugEnemy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.javatuples.Pair;
+
 public class SoldierTest {
     @Test
     public void SoldierAttackTest() {
@@ -15,6 +17,7 @@ public class SoldierTest {
         Character mainChar = new Character(null);
         Soldier soldierOne = new Soldier();
         mainChar.addAlly(soldierOne);
+        Pair<Integer, Integer> location = Pair.with(1,2);
 
         // One Soldier
         SlugEnemy enemy = new SlugEnemy(null);
@@ -22,7 +25,7 @@ public class SoldierTest {
         assertEquals(20, enemy.getHealth());
 
         // Multiple allies
-        Soldier soldierTwo = new Soldier();
+        Soldier soldierTwo = new Soldier(location);
         mainChar.addAlly(soldierTwo);
         mainChar.launchAttack(enemy, false);
         assertEquals(15, enemy.getHealth());
