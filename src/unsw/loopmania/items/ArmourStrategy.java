@@ -3,10 +3,10 @@ package unsw.loopmania.items;
 /**
  * Interface used for implementing armour items
  */
-public interface ArmourStrategy {
+public interface ArmourStrategy extends BasicItemStrategy {
     /**
-     * Receive attack method for the armour, takes in damage received and
-     * returns damage received after armour defence is factored in
+     * Receive attack method for the armour, takes in damage received and returns
+     * damage received after armour defence is factored in
      * 
      * @param damage
      * @return
