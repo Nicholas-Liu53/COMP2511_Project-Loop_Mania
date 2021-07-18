@@ -11,10 +11,10 @@ import unsw.loopmania.items.Shield;
  */
 public class VampireEnemy extends Enemy {
     // Attributes
-    boolean criticalAttack;
-    int criticalAttackDmg;
-    int criticalAttackUses;
-    int criticalAttackUsesMax;
+    private boolean criticalAttack;
+    private int criticalAttackDmg;
+    private int criticalAttackUses;
+    private int criticalAttackUsesMax;
     
     // Basic constructor
     public VampireEnemy(PathPosition position) {
