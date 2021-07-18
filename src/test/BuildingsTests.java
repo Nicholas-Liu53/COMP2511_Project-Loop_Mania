@@ -101,12 +101,30 @@ public class BuildingsTests {
         Character mainChar = new Character(new PathPosition(0, orderedPath));
         VampireCastleBuilding vampireCastle = new VampireCastleBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.addBuilding(vampireCastle);
         world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
         boolean vampireCastleFound = false;
         for (Building b : world.getBuildingsList())
             if (b.equals(vampireCastle))
                 vampireCastleFound = true;
-        assertFalse(vampireCastleFound);
+        assertTrue(vampireCastleFound);
+
+        // Testing vampire spawning
+        boolean vampireSpawned = false;
+
+        for (int i = 0; i < 1000; i++) {
+            world.runTickMoves();
+            List<Enemy> enemies = world.getNewEnemiesList();
+            
+            for (Enemy enemy : enemies) {
+                if (enemy instanceof VampireEnemy) {
+                    vampireSpawned = true;
+                }
+            }
+        }
+
+        assertTrue(vampireSpawned);
     }
 
     @Test
@@ -133,12 +151,30 @@ public class BuildingsTests {
         Character mainChar = new Character(new PathPosition(0, orderedPath));
         ZombiePitBuilding zombiePit = new ZombiePitBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.addBuilding(zombiePit);
         world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
         boolean zombiePitFound = false;
         for (Building b : world.getBuildingsList())
             if (b.equals(zombiePit))
                 zombiePitFound = true;
-        assertFalse(zombiePitFound);
+        assertTrue(zombiePitFound);
+
+        // Testing zombie spawning
+        boolean zombieSpawned = false;
+
+        for (int i = 0; i < 1000; i++) {
+            world.runTickMoves();
+            List<Enemy> enemies = world.getNewEnemiesList();
+            
+            for (Enemy enemy : enemies) {
+                if (enemy instanceof ZombieEnemy) {
+                    zombieSpawned = true;
+                }
+            }
+        }
+
+        assertTrue(zombieSpawned);
     }
 
     @Test
@@ -166,11 +202,12 @@ public class BuildingsTests {
         TowerBuilding tower = new TowerBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
+        world.addBuilding(tower);
         boolean towerFound = false;
         for (Building b : world.getBuildingsList())
             if (b.equals(tower))
                 towerFound = true;
-        assertFalse(towerFound);
+        assertTrue(towerFound);
     }
 
     @Test
@@ -315,13 +352,14 @@ public class BuildingsTests {
         CampfireBuilding campfire = new CampfireBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
+        world.addBuilding(campfire);
         world.setGoals(new XpBaseGoal(1000000));
         boolean campfireFound = false;
         campfire.notifyTick(mainChar, world);
         for (Building b : world.getBuildingsList())
             if (b.equals(campfire))
                 campfireFound = true;
-        assertFalse(campfireFound);
+        assertTrue(campfireFound);
 
         // Testing Requirement 2:
         campfire = new CampfireBuilding(new Pair<Integer, Integer>(3, 1));
@@ -334,6 +372,6 @@ public class BuildingsTests {
         world.runBattles();
         // System.out.println("[" + mainChar.getHealth() + ", " + vampire.getHealth() +
         // "]");
-        assertEquals(vampire.getHealth(), 71);
+        assertEquals(vampire.getHealth(), 67);
     }
 }
