@@ -43,10 +43,12 @@ public class LoopManiaApplication extends Application {
         Parent mainMenuRoot = menuLoader.load();
 
         // Load the game over screen
-        GameoverController gameoverController = new GameoverController();
         FXMLLoader gameoverLoader = new FXMLLoader(getClass().getResource("GameOverView.fxml"));
-        gameoverLoader.setController(gameoverController);
         Parent gameoverRoot = gameoverLoader.load();
+
+        // Load the game won screen
+        FXMLLoader gamewonLoader = new FXMLLoader(getClass().getResource("GameWonView.fxml"));
+        Parent gamewonRoot = gamewonLoader.load();
 
         // Load the gamemode menu
         GamemodeController gamemodeController = new GamemodeController();
@@ -76,6 +78,9 @@ public class LoopManiaApplication extends Application {
         });
         mainGameController.setGameoverSwitcher(() -> {
             switchToRoot(scene, gameoverRoot, primaryStage);
+        });
+        mainGameController.setGamewonSwitcher(() -> {
+            switchToRoot(scene, gamewonRoot, primaryStage);
         });
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
