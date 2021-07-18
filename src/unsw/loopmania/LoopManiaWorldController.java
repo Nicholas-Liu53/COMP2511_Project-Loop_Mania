@@ -264,10 +264,16 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private MenuSwitcher shopMenuSwitcher;
     private MenuSwitcher gameoverSwitcher;
     private MenuSwitcher gamewonSwitcher;
+    private MenuSwitcher goalsMenuSwitcher;
+    private GoalsMenuController goalsMenuController;
     private ShopMenuController shopMenuController;
 
     public void setShopController(ShopMenuController shopMenuController) {
         this.shopMenuController = shopMenuController;
+    }
+
+    public void setGoalsMenuController(GoalsMenuController goalsMenuController) {
+        this.goalsMenuController = goalsMenuController;
     }
 
     /**
@@ -434,6 +440,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 spawnCycle++;
             }
 
+            // Check if character is dead
             if (world.getCharacterHealth() == 0) {
                 pause();
                 gameoverSwitcher.switchMenu();
@@ -1206,6 +1213,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
         this.shopMenuSwitcher = shopMenuSwitcher;
     }
 
+    public void setGoalsMenuSwitcher(MenuSwitcher goalsMenuSwitcher) {
+        this.goalsMenuSwitcher = goalsMenuSwitcher;
+    }
+
     public void setGameoverSwitcher(MenuSwitcher gameoverSwitcher) {
         this.gameoverSwitcher = gameoverSwitcher;
     }
@@ -1224,6 +1235,12 @@ public class LoopManiaWorldController implements WorldStateObserver {
         // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
+    }
+
+    @FXML 
+    void switchToGoalMenu() throws IOException {
+        pause();
+        goalsMenuSwitcher.switchMenu();
     }
 
     @FXML
