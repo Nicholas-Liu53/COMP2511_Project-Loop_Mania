@@ -9,8 +9,4 @@ public class TowerCard extends Card {
     public TowerCard(Pair<Integer, Integer> position) {
         super(position);
     }
-
-    public TowerCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
 }

@@ -9,8 +9,4 @@ public class VillageCard extends Card {
     public VillageCard(Pair<Integer, Integer> position) {
         super(position);
     }
-
-    public VillageCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
 }

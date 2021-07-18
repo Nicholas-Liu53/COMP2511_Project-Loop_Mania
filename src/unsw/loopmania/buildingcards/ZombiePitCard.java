@@ -9,8 +9,4 @@ public class ZombiePitCard extends Card {
     public ZombiePitCard(Pair<Integer, Integer> position) {
         super(position);
     }
-
-    public ZombiePitCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
 }

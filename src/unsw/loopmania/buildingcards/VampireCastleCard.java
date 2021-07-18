@@ -9,8 +9,4 @@ public class VampireCastleCard extends Card {
     public VampireCastleCard(Pair<Integer, Integer> position) {
         super(position);
     }
-
-    public VampireCastleCard() {
-        super(new Pair<Integer, Integer>(1, 0));
-    }
 }

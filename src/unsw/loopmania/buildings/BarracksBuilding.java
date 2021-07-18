@@ -4,6 +4,7 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.Ally;
 import unsw.loopmania.Character;
+import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Soldier;
 
 /**
@@ -15,7 +16,7 @@ public class BarracksBuilding extends Building {
     }
 
     @Override
-    public void notifyTick(Character mainChar) {
+    public void notifyTick(Character mainChar, LoopManiaWorld world) {
         // Adding an ally everytime character passes through and isn't in battle
         if (this.getX() == mainChar.getX() && this.getY() == mainChar.getY() && !mainChar.getInBattle()) {
             Soldier newSoldier = new Soldier();

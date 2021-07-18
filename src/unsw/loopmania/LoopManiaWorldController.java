@@ -2,10 +2,6 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.lang.model.util.ElementScanner6;
-import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
-
 import org.javatuples.Pair;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
@@ -15,7 +11,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -41,7 +36,6 @@ import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.items.*;
-import unsw.loopmania.Character;
 
 import java.util.EnumMap;
 
@@ -228,7 +222,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * null if nothing being dragged, or the type of item being dragged
      */
     private DRAGGABLE_TYPE currentlyDraggedType;
-
+    //
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
      * when the draggable type is dropped over its appropriate gridpane
@@ -398,7 +392,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * Create and run the timer
      */
     public void startTimer() {
-        // TODO = handle more aspects of the behaviour required by the specification
         System.out.println("starting timer");
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target
@@ -454,13 +447,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
             printThreadingNotes("HANDLED TIMER");
         }));
-
-        // if (world.getShowShop()) {
-        //     pause();
-        //     // Change shop label + make button available
-        // } else {
-
-        // }
 
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -796,8 +782,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
         gridPaneSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                // TODO = for being more selective about where something can be dropped,
-                // consider applying additional if-statement logic
                 /*
                  * You might want to design the application so dropping at an invalid location
                  * drops at the most recent valid location hovered over, or simply allow the
@@ -849,10 +833,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a
+                                // spawn an item in the new location. The above code for spawning a
                                 // building will help, it is very similar
-                                 // Return item to original spot if human player tries to drag onto invalid tile
-                                 if (currentlyDraggedType == draggableType) {
+                                // Return item to original spot if human player tries to drag onto invalid tile
+                                if (currentlyDraggedType == draggableType) {
                                     if (node != anchorPaneRoot && db.hasImage()) {
                                         currentlyDraggedImage.setVisible(true);
                                         draggedEntity.setVisible(false);
@@ -1101,38 +1085,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
                         }
                     });
                     gridPaneNodeSetOnDragExited.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = since being more selective about whether highlighting changes, you
+                        // since being more selective about whether highlighting changes, you
                         // could program the game so if the new highlight location is invalid the
                         // highlighting doesn't change, or leave this as-is
                         public void handle(DragEvent event) {
-                            // switch(draggableType) {
-                            // case CARD:
-                            // //The drag-and-drop gesture entered the target
-                            // //show the user that it is an actual gesture target
-                            // Card card = (Card) staticEntity;
-                            // Node node = event.getPickResult().getIntersectedNode();
-                            // Integer cIndex = GridPane.getColumnIndex(node);
-                            // Integer rIndex = GridPane.getRowIndex(node);
-                            // int x = cIndex == null ? 0 : cIndex;
-                            // int y = rIndex == null ? 0 : rIndex;
-                            // System.out.println(x + " " + y);
-                            // if (world.canPlaceCard(new Pair<Integer,Integer>(x, y), card)) {
-
-                            // }
-                            // if(event.getGestureSource() != n && event.getDragboard().hasImage()){
-                            // n.setOpacity(1);
-                            // }
-                            // break;
-                            // case ITEM:
-                            // //The drag-and-drop gesture entered the target
-                            // //show the user that it is an actual gesture target
-                            // if(event.getGestureSource() != n && event.getDragboard().hasImage()){
-                            // n.setOpacity(1);
-                            // }
-                            // break;
-                            // default:
-                            // break;
-                            // }
                             if (currentlyDraggedType == draggableType) {
                                 n.setOpacity(1);
                             }
@@ -1182,7 +1138,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     public void handleKeyPress(KeyEvent event) {
-        // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
             // Pause game
             case SPACE:
@@ -1382,7 +1337,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    public void notifyTick(Character mainChar) {
+    public void notifyTick(Character mainChar, LoopManiaWorld world) {
         return;
     }
 }

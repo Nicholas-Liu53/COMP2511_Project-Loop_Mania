@@ -42,6 +42,7 @@ public class GoalsTest {
 
         Character mainChar = new Character(position);
         testWorld.setCharacter(mainChar);
+        testWorld.setGoals(cycleGoal);
 
         boolean goalAchieved = cycleGoal.achieved(testWorld);
         assertEquals(false, goalAchieved);
