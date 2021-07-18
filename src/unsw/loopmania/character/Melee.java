@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.character;
 
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.BodyArmourStrategy;

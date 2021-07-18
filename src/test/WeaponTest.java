@@ -7,7 +7,7 @@ import unsw.loopmania.items.Staff;
 import unsw.loopmania.items.Stake;
 import unsw.loopmania.items.Sword;
 import unsw.loopmania.items.WeaponStrategy;
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.enemies.VampireEnemy;
@@ -79,8 +79,13 @@ public class WeaponTest {
 
             assertEquals(17, enemy.getHealth());
 
-            if (mainChar.getNumAllies() == 1)
+            if (mainChar.getNumAllies() == 1) {
                 criticalCheck = true;
+                int beforeHealth = mainChar.getHealth();
+                // Simulate enemy ally use in battles
+                mainChar.receiveAttack(5);
+                assertEquals(beforeHealth, mainChar.getHealth());
+            }
         }
 
         assertEquals(true, criticalCheck);

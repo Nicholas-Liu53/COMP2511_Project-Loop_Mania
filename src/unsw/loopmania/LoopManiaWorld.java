@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
+import unsw.loopmania.character.Character;
+import unsw.loopmania.character.Melee;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.goals.ComplexGoalComponent;
 // import unsw.loopmania.goals.ComplexGoalComposite;
@@ -206,6 +208,10 @@ public class LoopManiaWorld {
 
     public List<Enemy> getEnemiesList() {
         return this.enemies;
+    }
+
+    public List<Enemy> getNewEnemiesList() {
+        return this.newEnemies;
     }
 
     public void addBuilding(Building b) {

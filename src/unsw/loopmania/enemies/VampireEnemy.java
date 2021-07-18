@@ -3,7 +3,7 @@ package unsw.loopmania.enemies;
 import java.util.Random;
 
 import unsw.loopmania.path.PathPosition;
-import unsw.loopmania.Character;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.items.Shield;
 
 /**

@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 
 import org.junit.jupiter.api.Test;
 
-import unsw.loopmania.Character;
-import unsw.loopmania.Soldier;
+import unsw.loopmania.character.Character;
+import unsw.loopmania.character.Soldier;
 import unsw.loopmania.enemies.ZombieEnemy;
 import unsw.loopmania.path.PathPosition;
 

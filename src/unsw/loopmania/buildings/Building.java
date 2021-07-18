@@ -4,9 +4,9 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Character;
 import unsw.loopmania.StaticEntity;
 import unsw.loopmania.WorldStateObserver;
+import unsw.loopmania.character.Character;
 import unsw.loopmania.path.PathPosition;
 
 /**

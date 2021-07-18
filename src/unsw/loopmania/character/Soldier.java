@@ -1,7 +1,8 @@
-package unsw.loopmania;
+package unsw.loopmania.character;
 
 import org.javatuples.Pair;
 
+import unsw.loopmania.StaticEntity;
 import unsw.loopmania.enemies.Enemy;
 
 public class Soldier extends StaticEntity implements Ally {

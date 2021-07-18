@@ -7,9 +7,9 @@ import java.io.FileNotFoundException;
 
 import org.junit.jupiter.api.Test;
 
+import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.path.PathPosition;
-import unsw.loopmania.Character;
 
 
 /**
