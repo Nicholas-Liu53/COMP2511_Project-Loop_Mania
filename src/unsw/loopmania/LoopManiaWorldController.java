@@ -263,6 +263,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private MenuSwitcher mainMenuSwitcher;
     private MenuSwitcher shopMenuSwitcher;
     private MenuSwitcher gameoverSwitcher;
+    private MenuSwitcher gamewonSwitcher;
     private ShopMenuController shopMenuController;
 
     public void setShopController(ShopMenuController shopMenuController) {
@@ -439,11 +440,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
             }
 
             // Check if goals have been achieved
-            /*
             if (world.goalsAchieved() == true) {
-                System.err.println("Placeholder!");
+                pause();
+                gamewonSwitcher.switchMenu();
             }
-            */
 
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -1208,6 +1208,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
     public void setGameoverSwitcher(MenuSwitcher gameoverSwitcher) {
         this.gameoverSwitcher = gameoverSwitcher;
+    }
+
+    public void setGamewonSwitcher(MenuSwitcher gamewonSwitcher) {
+        this.gamewonSwitcher = gamewonSwitcher;
     }
 
     /**
