@@ -2,7 +2,7 @@ package unsw.loopmania.buildings;
 
 import org.javatuples.Pair;
 
-import unsw.loopmania.Ally;
+// import unsw.loopmania.Ally;
 import unsw.loopmania.Character;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.Soldier;

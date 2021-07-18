@@ -12,7 +12,7 @@ import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.goals.ComplexGoalComponent;
-import unsw.loopmania.goals.ComplexGoalComposite;
+// import unsw.loopmania.goals.ComplexGoalComposite;
 import unsw.loopmania.items.*;
 import unsw.loopmania.path.*;
 

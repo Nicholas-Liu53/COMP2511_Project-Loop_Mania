@@ -757,9 +757,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
      * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
      */
-    private void removeItemByCoordinates(int nodeX, int nodeY) {
-        world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
-    }
+    // private void removeItemByCoordinates(int nodeX, int nodeY) {
+    //     world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    // }
 
     // *-------------------------------------------------------------------------
     // * Drag EventHandlers
