@@ -6,7 +6,7 @@
         "goal": "OR",
         "subgoals": [
             {
-                "goal": "cycles",
+                "goal": "gold",
                 "quantity": 100
             },
             {

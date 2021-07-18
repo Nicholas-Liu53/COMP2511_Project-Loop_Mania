@@ -7,7 +7,7 @@
         "subgoals": [
             {
                 "goal": "cycles",
-                "quantity": 100
+                "quantity": 2
             },
             {
                 "goal": "OR",
