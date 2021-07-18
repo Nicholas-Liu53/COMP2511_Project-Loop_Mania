@@ -12,5 +12,10 @@ public interface ComplexGoalComponent {
      */
     public boolean achieved(LoopManiaWorld world);
 
-    public int getAchievementThreshold();
+    /**
+     * Generates user readable string describing goals
+     * 
+     * @return string describing goals
+     */
+    public String getGoalString();
 }

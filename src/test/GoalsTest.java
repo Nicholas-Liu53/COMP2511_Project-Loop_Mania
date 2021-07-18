@@ -57,6 +57,8 @@ public class GoalsTest {
         }
 
         assertEquals(true, goalAchieved);
+
+        assertEquals("2 Cycles", cycleGoal.getGoalString());
     }
 
     @Test
@@ -97,6 +99,8 @@ public class GoalsTest {
         testWorld.giveGold(50);
         goalAchieved = goldGoal.achieved(testWorld);
         assertEquals(true, goalAchieved);
+
+        assertEquals("100 Gold", goldGoal.getGoalString());
     }
 
     @Test
@@ -137,6 +141,8 @@ public class GoalsTest {
         mainChar.giveExperiencePoints(50);
         goalAchieved = xpGoal.achieved(testWorld);
         assertEquals(true, goalAchieved);
+
+        assertEquals("100 XP", xpGoal.getGoalString());
     }
 
     @Test
@@ -177,6 +183,8 @@ public class GoalsTest {
         // Give gold and test
         testWorld.giveGold(100);
         assertEquals(true, complexGoal.achieved(testWorld));
+
+        assertEquals("( 100 XP AND 100 Gold )", complexGoal.getGoalString());
 
         // Remove goal and test
         complexGoal.remove(goldGoal);
@@ -221,6 +229,8 @@ public class GoalsTest {
         // Give gold and test
         testWorld.giveGold(100);
         assertEquals(true, complexGoal.achieved(testWorld));
+
+        assertEquals("( 100 XP OR 100 Gold )", complexGoal.getGoalString());
 
         // Remove goal and test
         complexGoal.remove(goldGoal);
@@ -279,6 +289,8 @@ public class GoalsTest {
 
         mainChar.giveExperiencePoints(1234567);
         assertEquals(true, complexGoal.achieved(testWorld));
+
+        assertEquals("( 100 Gold OR 123456 XP )", complexGoal.getGoalString());
     }
 
     @Test
@@ -336,5 +348,7 @@ public class GoalsTest {
             testWorld.runTickMoves();
         }
         assertEquals(true, complexGoal.achieved(testWorld));
+
+        assertEquals("( 2 Cycles AND ( 123456 XP OR 900000 Gold ) )", complexGoal.getGoalString());
     }
 }

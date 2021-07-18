@@ -79,8 +79,24 @@ public class ComplexGoalComposite implements ComplexGoalComponent {
         return achieved;
     }
 
-    public int getAchievementThreshold() {
-        return 0;
+    @Override
+    public String getGoalString() {
+        String goalsString = "( ";
+        int i = 0;
+
+        for (ComplexGoalComponent goal : this.children) {
+            goalsString = goalsString + goal.getGoalString() + " ";
+
+            // Print condition
+            if (i != (this.children.size() - 1))
+                goalsString = goalsString + this.operation + " ";
+
+            i++;
+        }
+
+        goalsString = goalsString + ")";
+
+        return goalsString;
     }
 
     public String getOperation() {

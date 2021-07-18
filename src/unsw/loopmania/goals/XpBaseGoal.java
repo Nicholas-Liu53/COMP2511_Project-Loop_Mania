@@ -21,7 +21,7 @@ public class XpBaseGoal implements ComplexGoalComponent {
     }
 
     @Override
-    public int getAchievementThreshold() {
-        return this.achievementThreshold;
+    public String getGoalString() {
+        return (String.valueOf(this.achievementThreshold) + " XP");
     }
 }
