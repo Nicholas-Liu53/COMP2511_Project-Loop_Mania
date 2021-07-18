@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="171.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Goals">
+         <font>
+            <Font name="Calibri Bold" size="48.0" />
+         </font>
+      </Text>
+      <Text fx:id="goalsText" layoutX="17.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Goals" textAlignment="CENTER" wrappingWidth="582.734375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="returnButton" layoutX="262.0" layoutY="296.0" mnemonicParsing="false" onAction="#returnGame" text="Back To Game" />
+   </children>
+</Pane>
