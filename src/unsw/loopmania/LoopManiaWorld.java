@@ -12,6 +12,8 @@ import javafx.beans.property.StringProperty;
 import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.enemies.*;
+import unsw.loopmania.goals.ComplexGoalComponent;
+import unsw.loopmania.goals.ComplexGoalComposite;
 import unsw.loopmania.items.*;
 import unsw.loopmania.path.*;
 
@@ -52,6 +54,9 @@ public class LoopManiaWorld {
     private List<Item> unequippedInventoryItems;
     // private List<Item> equippedInventoryItems;
 
+    // The goal for this world
+    private ComplexGoalComponent goal;
+
     private List<Building> buildingEntities;
     private List<Pair<Integer, Integer>> locationOfPlacedBuildings;
     private int numCycles;
@@ -69,6 +74,7 @@ public class LoopManiaWorld {
     private StringProperty charGoldProperty;
     private StringProperty charXPProperty;
     private StringProperty charAlliesProperty;
+    private StringProperty charGoalsProperty;
     private int numSword;
     private int numStake;
     private int numStaff;
@@ -136,6 +142,7 @@ public class LoopManiaWorld {
         this.charGoldProperty = new SimpleStringProperty();
         this.charXPProperty = new SimpleStringProperty();
         this.charAlliesProperty = new SimpleStringProperty();
+        this.charGoalsProperty = new SimpleStringProperty();
 
         this.numSwordProperty = new SimpleStringProperty();
         this.numStakeProperty = new SimpleStringProperty();
@@ -189,6 +196,14 @@ public class LoopManiaWorld {
         return this.character.getY();
     }
 
+    public int getCharacterHealth() {
+        return this.character.getHealth();
+    }
+
+    public int getCharacterXp() {
+        return this.character.getExperience();
+    }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity
      * out of the file
@@ -197,6 +212,10 @@ public class LoopManiaWorld {
      */
     public void setCharacter(Character character) {
         this.character = character;
+    }
+
+    public void setGoals(ComplexGoalComponent goals) {
+        this.goal = goals;
     }
 
     /**
@@ -970,6 +989,7 @@ public class LoopManiaWorld {
         goldProperty();
         xpProperty();
         alliesProperty();
+        goalsProperty();
         restoreHealthIfInVillage();
         getNumCyclesProperty();
         getCyclesTillShopProperty();
@@ -1134,6 +1154,11 @@ public class LoopManiaWorld {
     public StringProperty alliesProperty() {
         this.charAlliesProperty.set(String.valueOf(character.getNumAllies()));
         return this.charAlliesProperty;
+    }
+
+    public StringProperty goalsProperty() {
+        this.charGoalsProperty.set("Get " + this.goal.getGoalString());
+        return this.charGoalsProperty;
     }
 
     // public Double healthProperty() {
@@ -1327,4 +1352,11 @@ public class LoopManiaWorld {
     public String getGamemode() {
         return this.gamemode;
     }
-}
+
+    //*-------------------------------------------------------------------------
+    //*                                Goals
+    //*-------------------------------------------------------------------------
+    public boolean goalsAchieved() {
+        return this.goal.achieved(this);
+    }
+}   

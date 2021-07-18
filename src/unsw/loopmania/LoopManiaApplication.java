@@ -42,6 +42,14 @@ public class LoopManiaApplication extends Application {
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
+        // Load the game over screen
+        FXMLLoader gameoverLoader = new FXMLLoader(getClass().getResource("GameOverView.fxml"));
+        Parent gameoverRoot = gameoverLoader.load();
+
+        // Load the game won screen
+        FXMLLoader gamewonLoader = new FXMLLoader(getClass().getResource("GameWonView.fxml"));
+        Parent gamewonRoot = gamewonLoader.load();
+
         // Load the gamemode menu
         GamemodeController gamemodeController = new GamemodeController();
         gamemodeController.setWorld(mainGameController.getWorld());
@@ -59,14 +67,32 @@ public class LoopManiaApplication extends Application {
         Parent shopMenuRoot = shopMenuLoader.load();
         mainGameController.setShopController(shopMenuController);
 
+        // Load goals menu
+        GoalsMenuController goalsMenuController = new GoalsMenuController();
+        goalsMenuController.setWorld(mainGameController.getWorld());
+        goalsMenuController.setWorldController(mainGameController);
+        FXMLLoader goalsMenuLoader = new FXMLLoader(getClass().getResource("GoalsMenuView.fxml"));
+        goalsMenuLoader.setController(goalsMenuController);
+        Parent goalsMenuRoot = goalsMenuLoader.load();
+        mainGameController.setGoalsMenuController(goalsMenuController);
+
         // Create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
         
         // Set functions which are activated when button click to switch menu is pressed
         // E.g. from main menu to start the game, or from the game to return to main menu
         mainGameController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+        mainGameController.setGoalsMenuSwitcher(() -> {
+            switchToRoot(scene, goalsMenuRoot, primaryStage);
+        });
         mainGameController.setShopMenuSwitcher(() -> {
             switchToRoot(scene, shopMenuRoot, primaryStage);
+        });
+        mainGameController.setGameoverSwitcher(() -> {
+            switchToRoot(scene, gameoverRoot, primaryStage);
+        });
+        mainGameController.setGamewonSwitcher(() -> {
+            switchToRoot(scene, gamewonRoot, primaryStage);
         });
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
@@ -81,6 +107,10 @@ public class LoopManiaApplication extends Application {
             // mainGameController.startTimer();
         });
         gamemodeController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            // mainGameController.startTimer();
+        });
+        goalsMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
