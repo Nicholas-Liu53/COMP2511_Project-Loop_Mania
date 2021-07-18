@@ -6,16 +6,18 @@ import java.util.ArrayList;
 
 import org.javatuples.Pair;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.path.*;
+import unsw.loopmania.goals.*;
 
 import java.util.List;
 
 /**
- * Functions I have taken from the starter code to held with testing
+ * Functions we have taken from the starter code to help with testing
  */
 public class TestHelper {
 
@@ -137,5 +139,39 @@ public class TestHelper {
         }
 
         return new LoopManiaWorld(1, 2, orderedPath);
+    }
+
+    /**
+     * Takes in the JSON goal condition and recursively generates a ComplexGoalComponent
+     * that models the goals specified by the JSON file
+     * 
+     * @param goalCondition
+     * @return ComplexGoalCompsite modelling the goals
+     */
+    public static ComplexGoalComponent loadGoals(JSONObject goalCondition) {
+        if (goalCondition.getString("goal").equals("AND") || goalCondition.getString("goal").equals("OR")) {
+            // Constructing a new complex goal out of the sub goals
+            ComplexGoalComposite newComponent = new ComplexGoalComposite(goalCondition.getString("goal"));
+            JSONArray subGoals = goalCondition.getJSONArray("subgoals");
+
+            for (int i = 0; i < subGoals.length(); i++) {
+                // Recursively add goals
+                newComponent.add(loadGoals(subGoals.getJSONObject(i)));
+            }
+
+            return newComponent;
+        } else {
+            // Return a base goal
+            if (goalCondition.getString("goal").equals("experience")) {
+                return new XpBaseGoal(goalCondition.getInt("quantity"));
+            } else if (goalCondition.getString("goal").equals("gold")) {
+                return new GoldBaseGoal(goalCondition.getInt("quantity"));
+            } else if (goalCondition.getString("goal").equals("cycles")) {
+                return new CyclesBaseGoal(goalCondition.getInt("quantity"));
+            }
+        }
+
+        // Execution shouldn't reach here
+        return null;
     }
 }
