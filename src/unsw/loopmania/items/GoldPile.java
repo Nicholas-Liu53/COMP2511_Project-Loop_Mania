@@ -4,7 +4,7 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.path.PathPosition;
 
-public class GoldPile extends Item implements MonetaryItemStrategy {
+public class GoldPile extends Item {
     private final int goldAmount = 100;
 
     public GoldPile(Pair<Integer, Integer> position) {
