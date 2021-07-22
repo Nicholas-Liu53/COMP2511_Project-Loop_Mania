@@ -126,27 +126,27 @@ public class ItemsTests {
     @Test
     public void goldPileTest() {
         /**
-         * Requirements to test: 1. Contains 100 gold
-         */
+        * Requirements to test: 1. Contains 100 gold
+        */
 
-         // Testing requirement 1
-         GoldPile pile = new GoldPile();
-         assertEquals(100, pile.getGoldAmount());
+        // Testing requirement 1
+        GoldPile pile = new GoldPile();
+        assertEquals(100, pile.getGoldAmount());
     }
 
     @Test
     public void doggieCoinTest() {
         /**
-         * Requirements to test: 1. price randomly fluctuates between
-         * 50 and 1000
-         */
+        * Requirements to test: 1. price randomly fluctuates between
+        * 50 and 1000
+        */
 
-         // Testing requirements
-         DoggieCoin coin = new DoggieCoin();
-         assertEquals(coin.getClass().getSimpleName(), "DoggieCoin");
-         assertEquals(coin.getPurchasePrice(), 0);
+        // Testing requirements
+        DoggieCoin coin = new DoggieCoin();
+        assertEquals(coin.getClass().getSimpleName(), "DoggieCoin");
+        assertEquals(coin.getPurchasePrice(), 0);
 
-         for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             // Repeated tests for sell price
             boolean inRange = false;
 
@@ -154,6 +154,6 @@ public class ItemsTests {
                 inRange = true;
 
             assertEquals(inRange, true);
-         }
+        }
     }
 }
