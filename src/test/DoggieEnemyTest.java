@@ -101,4 +101,3 @@ public class DoggieEnemyTest {
         assertTrue(moved);
     }
 }
-}
