@@ -133,4 +133,27 @@ public class ItemsTests {
          GoldPile pile = new GoldPile();
          assertEquals(100, pile.getGoldAmount());
     }
+
+    @Test
+    public void doggieCoinTest() {
+        /**
+         * Requirements to test: 1. price randomly fluctuates between
+         * 50 and 1000
+         */
+
+         // Testing requirements
+         DoggieCoin coin = new DoggieCoin();
+         assertEquals(coin.getClass().getSimpleName(), "DoggieCoin");
+         assertEquals(coin.getPurchasePrice(), 0);
+
+         for (int i = 0; i < 100; i++) {
+            // Repeated tests for sell price
+            boolean inRange = false;
+
+            if (coin.getSellPrice() >= 50 && coin.getSellPrice() <= 1000)
+                inRange = true;
+
+            assertEquals(inRange, true);
+         }
+    }
 }
