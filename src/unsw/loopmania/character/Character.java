@@ -26,6 +26,7 @@ public class Character extends MovingEntity {
     private ArrayList<Ally> allies;
     private int experience;
     private int gold;
+    private boolean isStunned;
 
     /**
      * Creates a new Character in the game world at specified path position with
@@ -45,6 +46,7 @@ public class Character extends MovingEntity {
         this.allies = new ArrayList<>();
         this.experience = 0;
         this.gold = 0;
+        this.isStunned = false;
     }
 
     /**
@@ -193,6 +195,11 @@ public class Character extends MovingEntity {
             return;
         }
         
+        if (isStunned) {
+            isStunned = false;
+            return;
+        }
+
         if (inCampfireRadius)
             giveDamage *= 2;
 
@@ -225,7 +232,10 @@ public class Character extends MovingEntity {
             if (this.health < 0)
                 this.health = 0;
         }
+    }
 
+    public void receiveStunAttack() {
+        this.isStunned = true;
     }
 
     /**
