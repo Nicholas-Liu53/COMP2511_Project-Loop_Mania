@@ -6,6 +6,9 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.path.PathPosition;
 
+/**
+ * Class representing doggie coin item
+ */
 public class DoggieCoin extends Item {
     public DoggieCoin(Pair<Integer, Integer> position) {
         super(position);
