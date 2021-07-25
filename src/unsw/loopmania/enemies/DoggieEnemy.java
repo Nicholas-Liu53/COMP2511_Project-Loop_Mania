@@ -13,8 +13,8 @@ public class DoggieEnemy extends Enemy {
     }
 
     /**
-     * Uses parent class attack functionality while adding special
-     * 'stun attack'
+     * Uses parent class attack functionality while adding special 'stun attack'
+     * @param mainChair = Main Character
      */
     @Override
     public boolean launchAttack(Character mainChar) {
