@@ -87,6 +87,7 @@ public class LoopManiaWorld {
     private int numShield;
     private int numHealthPotion;
     private int numOneRing;
+    private int numDoggieCoin;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
     private StringProperty numStaffProperty;
@@ -95,6 +96,7 @@ public class LoopManiaWorld {
     private StringProperty numShieldProperty;
     private StringProperty numHealthPotionProperty;
     private StringProperty numOneRingProperty;
+    private StringProperty numDoggieCoinProperty;
 
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
@@ -160,6 +162,7 @@ public class LoopManiaWorld {
         this.numShieldProperty = new SimpleStringProperty();
         this.numHealthPotionProperty = new SimpleStringProperty();
         this.numOneRingProperty = new SimpleStringProperty();
+        this.numDoggieCoinProperty = new SimpleStringProperty();
 
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
@@ -175,6 +178,7 @@ public class LoopManiaWorld {
         this.numShield = 0;
         this.numHealthPotion = 0;
         this.numOneRing = 0;
+        this.numDoggieCoin = 0;
     }
 
     // --------------------------------------------------------------------------
@@ -810,6 +814,9 @@ public class LoopManiaWorld {
             case "OneRing":
                 numOneRing++;
                 break;
+            case "DoggieCoin":
+                numDoggieCoin++;
+                break;
             default:
                 break;
         }
@@ -842,6 +849,9 @@ public class LoopManiaWorld {
             case "OneRing":
                 numOneRing--;
                 break;
+            case "DoggieCoin":
+                numDoggieCoin--;
+                break;
             default:
                 break;
         }
@@ -873,6 +883,9 @@ public class LoopManiaWorld {
                 break;
             case "OneRing":
                 this.numOneRingProperty.set(String.valueOf(numOneRing));
+                break;
+            case "DoggieCoin":
+                this.numDoggieCoinProperty.set(String.valueOf(numDoggieCoin));
                 break;
             default:
                 break;
@@ -1316,6 +1329,10 @@ public class LoopManiaWorld {
 
     public StringProperty getHealthPotionProperty() {
         return this.numHealthPotionProperty;
+    }
+
+    public StringProperty getDoggieCoinProperty() {
+        return this.numDoggieCoinProperty;
     }
 
     public StringProperty getOneRingProperty() {
