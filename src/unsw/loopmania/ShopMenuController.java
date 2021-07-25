@@ -81,6 +81,10 @@ public class ShopMenuController {
     private Label sellShieldNum;
     @FXML
     private Label sellHealthPotionNum;
+    @FXML
+    private Label sellDoggieCoinNum;
+    @FXML
+    private Label doggiePrice;
 
     @FXML
     private Label shopResponseLabel;
@@ -131,6 +135,7 @@ public class ShopMenuController {
         world.getHelmetProperty().bindBidirectional(sellHelmetNum.textProperty());
         world.getShieldProperty().bindBidirectional(sellShieldNum.textProperty());
         world.getHealthPotionProperty().bindBidirectional(sellHealthPotionNum.textProperty());
+        world.getDoggieCoinProperty().bindBidirectional(sellDoggieCoinNum.textProperty());
     }
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
@@ -324,6 +329,8 @@ public class ShopMenuController {
                     case "HealthPotion":
                         world.giveGold(HealthPotion.getSellPrice());
                         break;
+                    case "DoggieCoin":
+                        world.giveGold(DoggieCoin.getSellPrice());
                     default:
                         break;
                 }
@@ -365,6 +372,11 @@ public class ShopMenuController {
     @FXML
     private boolean sellHelmet() {
         return sell("Helmet");
+    }
+
+    @FXML
+    private boolean sellDoggieCoin() {
+        return sell("DoggieCoin");
     }
 
     @FXML
@@ -434,6 +446,10 @@ public class ShopMenuController {
                 p = world.getHealthPotionProperty();
                 l = sellHealthPotionNum;
                 break;
+            case "DoggieCoin":
+                p = world.getDoggieCoinProperty();
+                l = sellDoggieCoinNum;
+                break;
             default:
                 break;
         }
@@ -477,6 +493,10 @@ public class ShopMenuController {
             case "HealthPotion":
                 p = world.getHealthPotionProperty();
                 l = sellHealthPotionNum;
+                break;
+            case "DoggieCoin":
+                p = world.getDoggieCoinProperty();
+                l = sellDoggieCoinNum;
                 break;
             default:
                 break;

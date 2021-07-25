@@ -22,7 +22,7 @@ public class DoggieCoin extends Item {
         super(new Pair<Integer, Integer>(1, 2));
     }
 
-    public int getSellPrice() {
+    public static int getSellPrice() {
         return (50 + new Random().nextInt(950));
     }
 
