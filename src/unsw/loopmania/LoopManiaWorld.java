@@ -88,6 +88,7 @@ public class LoopManiaWorld {
     private int numHealthPotion;
     private int numOneRing;
     private int numDoggieCoin;
+    private int doggieCoinPrice;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
     private StringProperty numStaffProperty;
@@ -97,6 +98,7 @@ public class LoopManiaWorld {
     private StringProperty numHealthPotionProperty;
     private StringProperty numOneRingProperty;
     private StringProperty numDoggieCoinProperty;
+    private StringProperty doggieCoinPriceProperty;
 
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
@@ -163,6 +165,7 @@ public class LoopManiaWorld {
         this.numHealthPotionProperty = new SimpleStringProperty();
         this.numOneRingProperty = new SimpleStringProperty();
         this.numDoggieCoinProperty = new SimpleStringProperty();
+        this.doggieCoinPriceProperty = new SimpleStringProperty();
 
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
@@ -1129,6 +1132,7 @@ public class LoopManiaWorld {
         getCyclesTillShopProperty();
         getGamemodeProperty();
         getCycleOrCyclesProperty();
+        getDoggieCoinPriceProperty();
 
         if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
             updateCharacterCycles();
@@ -1360,6 +1364,12 @@ public class LoopManiaWorld {
         else
             this.cycleOrCyclesProperty.set("cycles.");
         return this.cycleOrCyclesProperty;
+    }
+
+    public StringProperty getDoggieCoinPriceProperty() {
+        this.doggieCoinPrice = DoggieCoin.getSellPrice();
+        this.doggieCoinPriceProperty.set(String.valueOf(this.doggieCoinPrice));
+        return this.doggieCoinPriceProperty;
     }
 
     // *-------------------------------------------------------------------------
