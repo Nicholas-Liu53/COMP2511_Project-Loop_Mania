@@ -518,6 +518,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             case "ZombieEnemy":
                 giveRandomRewardsWithCards(4);
                 break;
+            case "DoggieEnemy":
+                //! give doggieCoin;
+                giveRandomRewardsWithCards(6);
             default:
                 break;
         }
