@@ -331,6 +331,7 @@ public class ShopMenuController {
                         break;
                     case "DoggieCoin":
                         world.giveGold(DoggieCoin.getSellPrice());
+                        break;
                     default:
                         break;
                 }
