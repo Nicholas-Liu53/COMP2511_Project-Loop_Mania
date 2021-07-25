@@ -137,7 +137,7 @@ public class LoopManiaWorld {
         this.locationOfPlacedBuildings = new ArrayList<>();
         this.numCycles = 0;
         this.cycleShopLinear = 1;
-        this.spawnDoggieCycle = 5;
+        this.spawnDoggieCycle = 20;
         this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
