@@ -88,6 +88,7 @@ public class LoopManiaWorld {
     private int numHealthPotion;
     private int numOneRing;
     private int numDoggieCoin;
+    private int numAnduril;
     private int doggieCoinPrice;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
@@ -99,6 +100,7 @@ public class LoopManiaWorld {
     private StringProperty numOneRingProperty;
     private StringProperty numDoggieCoinProperty;
     private StringProperty doggieCoinPriceProperty;
+    private StringProperty numAndurilProperty;
 
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
@@ -166,6 +168,7 @@ public class LoopManiaWorld {
         this.numOneRingProperty = new SimpleStringProperty();
         this.numDoggieCoinProperty = new SimpleStringProperty();
         this.doggieCoinPriceProperty = new SimpleStringProperty();
+        this.numAndurilProperty = new SimpleStringProperty();
 
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
@@ -182,6 +185,7 @@ public class LoopManiaWorld {
         this.numHealthPotion = 0;
         this.numOneRing = 0;
         this.numDoggieCoin = 0;
+        this.numAnduril = 0;
     }
 
     // --------------------------------------------------------------------------
@@ -251,7 +255,7 @@ public class LoopManiaWorld {
         }
         this.deadObservers.clear();
     }
-    
+
     public int getCharacterHealth() {
         return this.character.getHealth();
     }
@@ -1348,6 +1352,10 @@ public class LoopManiaWorld {
 
     public StringProperty getOneRingProperty() {
         return this.numOneRingProperty;
+    }
+
+    public StringProperty getAndurilProperty() {
+        return this.numAndurilProperty;
     }
 
     public StringProperty getNumCyclesProperty() {
