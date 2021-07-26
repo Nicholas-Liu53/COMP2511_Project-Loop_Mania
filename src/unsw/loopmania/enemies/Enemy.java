@@ -10,6 +10,7 @@ import unsw.loopmania.path.PathPosition;
 public abstract class Enemy extends MovingEntity implements Ally {
     // Attribute
     int health;
+    int maxHealth;
     int supportRadius;
     int attackRadius;
     int damage;
@@ -25,6 +26,7 @@ public abstract class Enemy extends MovingEntity implements Ally {
     public Enemy(PathPosition position, int health, int supportRadius, int attackRadius, int damage, int defence) {
         super(position);
         this.health = health;
+        this.maxHealth = health;
         this.supportRadius = supportRadius;
         this.attackRadius = attackRadius;
         this.damage = damage;
@@ -85,6 +87,16 @@ public abstract class Enemy extends MovingEntity implements Ally {
             this.tranceCountdown = 0;
 
         return this.tranceCountdown;
+    }
+
+    /**
+     * Adds health points to the enemy
+     * @param health
+     */
+    public void addHealth(int health) {
+        this.health += health;
+
+        if (this.health > this.maxHealth) this.health = this.maxHealth;
     }
 
     /**
