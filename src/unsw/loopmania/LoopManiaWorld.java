@@ -581,6 +581,9 @@ public class LoopManiaWorld {
             case "OneRing":
                 item = new OneRing(firstAvailableSlot);
                 break;
+            case "DoggieCoin":
+                item = new DoggieCoin(firstAvailableSlot);
+                break;
             default:
                 break;
         }
