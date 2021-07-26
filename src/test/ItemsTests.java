@@ -112,22 +112,22 @@ public class ItemsTests {
 
     @Test
     public void oneRingTest() {
-        /*
-         * Requirements to test: 1. Obtainable through purchase in the shop 2.
-         * Purchasing price is 500 gold 3. Selling price is 400 gold
-         */
-
-        // Testing Requirement 2 & 3:
         OneRing ba = new OneRing();
         assertEquals(ba.getClass().getSimpleName(), "OneRing");
         assertEquals(100, HealthPotion.getRestoreHealthPoints());
     }
 
     @Test
+    public void AndurilTest() {
+        Anduril a = new Anduril();
+        assertEquals("Anduril", a.getClass().getSimpleName());
+    }
+
+    @Test
     public void goldPileTest() {
         /**
-        * Requirements to test: 1. Contains 100 gold
-        */
+         * Requirements to test: 1. Contains 100 gold
+         */
 
         // Testing requirement 1
         GoldPile pile = new GoldPile();
@@ -137,9 +137,8 @@ public class ItemsTests {
     @Test
     public void doggieCoinTest() {
         /**
-        * Requirements to test: 1. price randomly fluctuates between
-        * 50 and 1000
-        */
+         * Requirements to test: 1. price randomly fluctuates between 50 and 1000
+         */
 
         // Testing requirements
         DoggieCoin coin = new DoggieCoin();
