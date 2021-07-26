@@ -223,6 +223,10 @@ public class LoopManiaWorld {
         return this.newEnemies;
     }
 
+    public int getDoggieCoinPrice() {
+        return doggieCoinPrice;
+    }
+
     public void addBuilding(Building b) {
         this.buildingEntities.add(b);
         this.locationOfPlacedBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));

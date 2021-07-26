@@ -32,7 +32,7 @@
                   <Image url="@../../images/gold_pile.png" />
                </image>
             </ImageView>
-            <ScrollPane layoutX="14.0" layoutY="65.0" prefHeight="464.0" prefWidth="472.0">
+            <ScrollPane layoutX="14.0" layoutY="65.0" prefHeight="424.0" prefWidth="472.0">
                <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="721.0" prefWidth="425.0">
                      <children>
@@ -224,7 +224,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="doggiePrice" alignment="CENTER" layoutX="64.0" layoutY="27.0" text="Price: 125">
+                              <Label fx:id="doggiePrice" alignment="CENTER" layoutX="104.0" layoutY="26.0" text="125">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -232,6 +232,11 @@
                               <Button layoutX="304.0" layoutY="11.0" mnemonicParsing="false" onAction="#sellDoggieCoin" prefHeight="37.0" prefWidth="51.0" text="Sell" />
                               <Label alignment="CENTER" layoutX="157.0" layoutY="8.0" prefHeight="42.0" prefWidth="77.0" text="Available to sell:" textAlignment="CENTER" wrapText="true" />
                               <Label fx:id="sellDoggieCoinNum" alignment="CENTER" layoutX="205.0" layoutY="29.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
+                              <Label alignment="CENTER" layoutX="64.0" layoutY="26.0" text="Price:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
                      </children>

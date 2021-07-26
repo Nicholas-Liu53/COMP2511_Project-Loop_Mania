@@ -136,6 +136,7 @@ public class ShopMenuController {
         world.getShieldProperty().bindBidirectional(sellShieldNum.textProperty());
         world.getHealthPotionProperty().bindBidirectional(sellHealthPotionNum.textProperty());
         world.getDoggieCoinProperty().bindBidirectional(sellDoggieCoinNum.textProperty());
+        world.getDoggieCoinPriceProperty().bindBidirectional(doggiePrice.textProperty());
     }
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
@@ -330,7 +331,7 @@ public class ShopMenuController {
                         world.giveGold(HealthPotion.getSellPrice());
                         break;
                     case "DoggieCoin":
-                        world.giveGold(DoggieCoin.getSellPrice());
+                        world.giveGold(world.getDoggieCoinPrice());
                         break;
                     default:
                         break;
