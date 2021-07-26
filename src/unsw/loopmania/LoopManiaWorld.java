@@ -770,29 +770,34 @@ public class LoopManiaWorld {
 
         if (oneRingAvailable)
             character.restoreHealthPoints();
-
-        healthProperty();
-
-        return activatedOneRing;
+            
+            healthProperty();
+            
+            return activatedOneRing;
     }
-
+    
     // Get list of unequipped items in inventory
     public List<Item> getUnequippedItems() {
         return this.unequippedInventoryItems;
     }
-
+    
     public int getGold() {
         return character.getGold();
     }
-
+    
     public void deductGold(int num) {
         character.removeGold(num);
     }
-
+    
     public void giveGold(int num) {
         character.giveGold(num);
     }
-
+    
+    public StaticEntity giveDoggieCoin() {
+        StaticEntity doggieCoin = loadItem("DoggieCoin");
+        return doggieCoin;
+    }
+        
     public void addToUnequippedInventory(Item item) {
         unequippedInventoryItems.add(item);
     }
@@ -901,6 +906,7 @@ public class LoopManiaWorld {
                 break;
         }
     }
+
 
     // *-------------------------------------------------------------------------
     // * Battles

@@ -521,7 +521,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 giveRandomRewardsWithCards(4);
                 break;
             case "DoggieEnemy":
-                //! give doggieCoin;
+                giveDoggieCoin();
                 giveRandomRewardsWithCards(6);
             default:
                 break;
@@ -555,6 +555,16 @@ public class LoopManiaWorldController implements WorldStateObserver {
                     loadItem((Item) reward);
                 }
             }
+        }
+    }
+
+    /**
+     * Reward the player doggiecoins
+     */
+    public void giveDoggieCoin() {
+        StaticEntity doggieCoin = world.giveDoggieCoin();
+        if (doggieCoin != null) {
+            loadItem((Item) doggieCoin);
         }
     }
 
