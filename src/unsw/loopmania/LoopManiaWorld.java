@@ -88,6 +88,7 @@ public class LoopManiaWorld {
     private int numHealthPotion;
     private int numOneRing;
     private int numDoggieCoin;
+    private int numTreeStump;
     private int doggieCoinPrice;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
@@ -99,6 +100,7 @@ public class LoopManiaWorld {
     private StringProperty numOneRingProperty;
     private StringProperty numDoggieCoinProperty;
     private StringProperty doggieCoinPriceProperty;
+    private StringProperty numTreeStumpProperty;
 
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
@@ -166,6 +168,7 @@ public class LoopManiaWorld {
         this.numOneRingProperty = new SimpleStringProperty();
         this.numDoggieCoinProperty = new SimpleStringProperty();
         this.doggieCoinPriceProperty = new SimpleStringProperty();
+        this.numTreeStumpProperty = new SimpleStringProperty();
 
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
@@ -182,6 +185,7 @@ public class LoopManiaWorld {
         this.numHealthPotion = 0;
         this.numOneRing = 0;
         this.numDoggieCoin = 0;
+        this.numTreeStump = 0;
     }
 
     // --------------------------------------------------------------------------
@@ -251,7 +255,7 @@ public class LoopManiaWorld {
         }
         this.deadObservers.clear();
     }
-    
+
     public int getCharacterHealth() {
         return this.character.getHealth();
     }
@@ -589,6 +593,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 item = new DoggieCoin(firstAvailableSlot);
                 break;
+            case "TreeStump":
+                item = new TreeStump(firstAvailableSlot);
+                break;
             default:
                 break;
         }
@@ -847,6 +854,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 numDoggieCoin++;
                 break;
+            case "TreeStump":
+                numTreeStump++;
+                break;
             default:
                 break;
         }
@@ -882,6 +892,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 numDoggieCoin--;
                 break;
+            case "TreeStump":
+                numTreeStump--;
+                break;
             default:
                 break;
         }
@@ -916,6 +929,9 @@ public class LoopManiaWorld {
                 break;
             case "DoggieCoin":
                 this.numDoggieCoinProperty.set(String.valueOf(numDoggieCoin));
+                break;
+            case "TreeStump":
+                this.numTreeStumpProperty.set(String.valueOf(numTreeStump));
                 break;
             default:
                 break;
@@ -1266,6 +1282,9 @@ public class LoopManiaWorld {
             if (this.rareItemNames.contains("the_one_ring"))
                 if (rand.nextInt(500) == 21)
                     return loadItem("OneRing");
+            if (this.rareItemNames.contains("tree_stump"))
+                if (rand.nextInt(500) == 121)
+                    return loadItem("TreeStump");
         }
 
         switch (rewardSetting) {
@@ -1369,6 +1388,10 @@ public class LoopManiaWorld {
 
     public StringProperty getOneRingProperty() {
         return this.numOneRingProperty;
+    }
+
+    public StringProperty getTreeStumpProperty() {
+        return this.numTreeStumpProperty;
     }
 
     public StringProperty getNumCyclesProperty() {
