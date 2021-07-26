@@ -588,6 +588,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 item = new DoggieCoin(firstAvailableSlot);
                 break;
+            case "Anduril":
+                item = new Anduril(firstAvailableSlot);
+                break;
             default:
                 break;
         }
@@ -831,6 +834,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 numDoggieCoin++;
                 break;
+            case "Anduril":
+                numAnduril++;
+                break;
             default:
                 break;
         }
@@ -866,6 +872,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 numDoggieCoin--;
                 break;
+            case "Anduril":
+                numAnduril--;
+                break;
             default:
                 break;
         }
@@ -900,6 +909,9 @@ public class LoopManiaWorld {
                 break;
             case "DoggieCoin":
                 this.numDoggieCoinProperty.set(String.valueOf(numDoggieCoin));
+                break;
+            case "Anduril":
+                this.numAndurilProperty.set(String.valueOf(numAnduril));
                 break;
             default:
                 break;
@@ -1249,6 +1261,9 @@ public class LoopManiaWorld {
             if (this.rareItemNames.contains("the_one_ring"))
                 if (rand.nextInt(500) == 21)
                     return loadItem("OneRing");
+            if (this.rareItemNames.contains("anduril_flame_of_the_west"))
+                if (rand.nextInt(500) == 12)
+                    return loadItem("Anduril");
         }
 
         switch (rewardSetting) {
