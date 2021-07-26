@@ -681,6 +681,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             } else if (item instanceof DoggieCoin) {
                 view = new ImageView(doggieCoinImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            } else if (item instanceof Anduril) {
+                view = new ImageView(andurilImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
             }
 
             if (view != null) {
@@ -883,6 +886,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                     loadItem(world.loadItem("Staff"));
                                 else if (oldWeapon instanceof Stake)
                                     loadItem(world.loadItem("Stake"));
+                                else if (oldWeapon instanceof Anduril)
+                                    loadItem(world.loadItem("Anduril"));
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
@@ -1052,6 +1057,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                             draggedEntity.setImage(theOneRingImage);
                         else if (item instanceof DoggieCoin)
                             draggedEntity.setImage(doggieCoinImage);
+                        else if (item instanceof Anduril)
+                            draggedEntity.setImage(andurilImage);
                         break;
                     default:
                         break;
