@@ -25,7 +25,7 @@ public class ElanMuskeEnemyTest {
     public void constructTest() {
         // Testing construction + basic getters
 
-        ElanMuskeEnemy newElan = new ElanMuskeEnemy();
+        ElanMuskeEnemy newElan = new ElanMuskeEnemy(null);
 
         // Ensure attributes are correct
         assertEquals(150, newElan.getHealth());
