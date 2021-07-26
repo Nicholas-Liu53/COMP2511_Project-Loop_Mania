@@ -97,7 +97,7 @@ public class LoopManiaWorldTest {
                 // orderedPath));
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
-                // vcb = new VampireCastleBuilding(new Pair<Integer,
+                // vcb = new VampireCastleBuilding(new Pair<Integer, //
                 // Integer>(rand.nextInt(orderedPath.size()),
                 // rand.nextInt(orderedPath.size())));
                 // zpb = new ZombiePitBuilding(new Pair<Integer,
