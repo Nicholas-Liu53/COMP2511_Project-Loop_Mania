@@ -150,7 +150,7 @@ public class ItemsTests {
             // Repeated tests for sell price
             boolean inRange = false;
 
-            if (coin.getSellPrice() >= 50 && coin.getSellPrice() <= 1000)
+            if (DoggieCoin.getSellPrice() >= 50 && DoggieCoin.getSellPrice() <= 1000)
                 inRange = true;
 
             assertEquals(inRange, true);
