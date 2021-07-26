@@ -451,6 +451,11 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
+    /**
+     * gets an available path tile coordinate for an item to spawn on the path
+     * 
+     * @return spawnPosition (x, y) coordinates of where the item can spawn on the map
+     */
     private Pair<Integer, Integer> getPathItemSpawnPosition() {
         // has a chance spawning a path item on a tile the character isn't on or
         // immediately before or after (currently space required = 2)...
@@ -732,7 +737,9 @@ public class LoopManiaWorld {
         return null;
     }
 
-    // Drinks health potion
+    /**
+     * Drinks health potions
+     */
     public void drinkHealthPotion() {
         if (character.isFullHealth())
             return;
@@ -752,7 +759,11 @@ public class LoopManiaWorld {
         healthProperty();
     }
 
-    // Activates one ring
+    /** 
+     * Activates one ring
+     * 
+     * @return activatedOneRing 
+     */ 
     public Item activateOneRing() {
         Item activatedOneRing = null;
         if ((getCharacterHealth() > 0) || (getNumOneRing() == 0))
@@ -770,29 +781,38 @@ public class LoopManiaWorld {
 
         if (oneRingAvailable)
             character.restoreHealthPoints();
-
-        healthProperty();
-
-        return activatedOneRing;
+            
+            healthProperty();
+            
+            return activatedOneRing;
     }
-
-    // Get list of unequipped items in inventory
+    
+    /** 
+     * Get list of unequipped items in inventory
+     * 
+     * @return this.unequippedInventoryItems list of unequipped items in inventory
+     */ 
     public List<Item> getUnequippedItems() {
         return this.unequippedInventoryItems;
     }
-
+    
     public int getGold() {
         return character.getGold();
     }
-
+    
     public void deductGold(int num) {
         character.removeGold(num);
     }
-
+    
     public void giveGold(int num) {
         character.giveGold(num);
     }
-
+    
+    public StaticEntity giveDoggieCoin() {
+        StaticEntity doggieCoin = loadItem("DoggieCoin");
+        return doggieCoin;
+    }
+        
     public void addToUnequippedInventory(Item item) {
         unequippedInventoryItems.add(item);
     }
@@ -901,6 +921,7 @@ public class LoopManiaWorld {
                 break;
         }
     }
+
 
     // *-------------------------------------------------------------------------
     // * Battles
