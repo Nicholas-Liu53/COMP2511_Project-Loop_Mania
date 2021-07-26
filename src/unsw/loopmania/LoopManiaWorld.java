@@ -68,6 +68,7 @@ public class LoopManiaWorld {
     private int cycleShopLinear;
     private int numCyclesToOpenShop;
     private int spawnDoggieCycle;
+    private int spawnElanCycle;
     private boolean showShop;
     private List<Item> pathItems;
     private int numGoldPileSpawned;
@@ -142,6 +143,7 @@ public class LoopManiaWorld {
         this.numCycles = 0;
         this.cycleShopLinear = 1;
         this.spawnDoggieCycle = 20;
+        this.spawnElanCycle = 40;
         this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
@@ -347,7 +349,8 @@ public class LoopManiaWorld {
         }
 
         // Spawn elan muske
-        if (this.numCycles >= 40 && this.getCharacterXp() >= 10000) {
+        if (this.numCycles >= this.spawnElanCycle && this.getCharacterXp() >= 10000) {
+            this.spawnElanCycle += 40;
             Pair<Integer, Integer> elanPos = getDoggieEnemySpawnPosition();
             int indexInPath = this.orderedPath.indexOf(elanPos);
             ElanMuskeEnemy elan = new ElanMuskeEnemy(new PathPosition(indexInPath, this.orderedPath));
@@ -1165,6 +1168,13 @@ public class LoopManiaWorld {
             updateCharacterCycles();
         } else {
             showShop = false;
+        }
+
+        // Healing enemies if Elan present
+        if (elanCheck()) {
+            for (Enemy e : this.enemies) {
+                if (!(e instanceof ElanMuskeEnemy)) e.addHealth(2);
+            }
         }
 
         // Notifying world state observers of new tick

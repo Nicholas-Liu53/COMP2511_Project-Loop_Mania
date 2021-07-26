@@ -208,6 +208,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     
     // Bosses
     private Image doggieEnemyImage;
+    private Image elanMuskeEnemyImage;
 
     private int spawnCycle;
 
@@ -310,6 +311,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         vampireEnemyImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieEnemyImage = new Image((new File("src/images/zombie.png")).toURI().toString());
         doggieEnemyImage = new Image((new File("src/images/doggie.png")).toURI().toString());
+        elanMuskeEnemyImage = new Image((new File("src/images/elan.png")).toURI().toString());
 
         // Items
         bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
@@ -714,6 +716,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
             view = new ImageView(zombieEnemyImage);
         } else if (enemy instanceof DoggieEnemy) {
             view = new ImageView(doggieEnemyImage);
+        } else if (enemy instanceof ElanMuskeEnemy) {
+            view = new ImageView(elanMuskeEnemyImage);
         }
 
         if (view != null) {

@@ -13,6 +13,7 @@ import unsw.loopmania.enemies.ElanMuskeEnemy;
 import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.enemies.VampireEnemy;
 import unsw.loopmania.enemies.ZombieEnemy;
+import unsw.loopmania.goals.XpBaseGoal;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.character.Character;
 import unsw.loopmania.path.PathPosition;
@@ -123,12 +124,15 @@ public class ElanMuskeEnemyTest {
 
         // Creating world with enemies
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        Character character = new Character(new PathPosition(30, orderedPath));
         ElanMuskeEnemy newElan = new ElanMuskeEnemy(new PathPosition(0, orderedPath));
         SlugEnemy newSlug = new SlugEnemy(new PathPosition(1, orderedPath));
         VampireEnemy newVampire = new VampireEnemy(new PathPosition(2, orderedPath));
         ZombieEnemy newZombie = new ZombieEnemy(new PathPosition(3, orderedPath));
 
         // Adding enemies to world
+        world.setCharacter(character);
+        world.setGoals(new XpBaseGoal(1000000));
         world.setEnemy(newElan);
         world.setEnemy(newSlug);
         world.setEnemy(newVampire);
@@ -148,8 +152,8 @@ public class ElanMuskeEnemyTest {
         // Checking Doggie Coin price
         int price = world.getDoggieCoinPrice();
 
-        if (price < 1000 || price > 10000) {
-            assert(false);
+        if (price < 9000 || price > 11000) {
+            assertTrue(false);
         }
     }
 }
