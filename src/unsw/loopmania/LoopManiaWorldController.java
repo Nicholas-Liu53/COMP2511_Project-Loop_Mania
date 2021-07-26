@@ -199,6 +199,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private Image swordImage;
     private Image goldPileImage;
     private Image theOneRingImage;
+    private Image doggieCoinImage;
 
     // Enemies
     private Image slugEnemyImage;
@@ -320,6 +321,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
+        doggieCoinImage = new Image((new File("src/images/doggiecoin.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -673,6 +675,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             } else if (item instanceof OneRing) {
                 view = new ImageView(theOneRingImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            } else if (item instanceof DoggieCoin) {
+                view = new ImageView(doggieCoinImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             }
 
@@ -1043,6 +1048,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                             draggedEntity.setImage(healthPotionImage);
                         else if (item instanceof OneRing)
                             draggedEntity.setImage(theOneRingImage);
+                        else if (item instanceof DoggieCoin) 
+                            draggedEntity.setImage(doggieCoinImage);
                         break;
                     default:
                         break;
