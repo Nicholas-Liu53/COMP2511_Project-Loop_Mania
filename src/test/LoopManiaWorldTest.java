@@ -112,8 +112,7 @@ public class LoopManiaWorldTest {
                 world.possiblySpawnEnemies();
                 world.setEnemy(zombie1);
                 world.setEnemy(vampire1);
-                List<Enemy> enemiesList = world.getEnemiesList();
-                assertTrue(enemiesList.size() > 0);
+                assertTrue(world.getEnemiesList().size() > 0);
                 world.spawnGoldPile();
                 world.spawnHealthPotion();
                 world.loadItem("Sword");
@@ -146,8 +145,7 @@ public class LoopManiaWorldTest {
                 world.addBuilding(bb);
                 world.addBuilding(tp);
                 world.addBuilding(cb);
-                List<Building> buildingsList = world.getBuildingsList();
-                assertTrue(buildingsList.size() > 0);
+                assertTrue(world.getBuildingsList().size() > 0);
                 world.getGold();
                 world.getUnequippedItems();
                 world.giveGold(5);
