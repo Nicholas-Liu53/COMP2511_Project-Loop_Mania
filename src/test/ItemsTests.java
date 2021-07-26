@@ -126,8 +126,8 @@ public class ItemsTests {
     @Test
     public void goldPileTest() {
         /**
-        * Requirements to test: 1. Contains 100 gold
-        */
+         * Requirements to test: 1. Contains 100 gold
+         */
 
         // Testing requirement 1
         GoldPile pile = new GoldPile();
@@ -135,11 +135,17 @@ public class ItemsTests {
     }
 
     @Test
+    public void treeStumpTest() {
+        TreeStump ts = new TreeStump();
+        assertEquals("TreeStump", ts.getClass().getSimpleName());
+        assertEquals(0.6, ts.getDamageReductionFactor());
+    }
+
+    @Test
     public void doggieCoinTest() {
         /**
-        * Requirements to test: 1. price randomly fluctuates between
-        * 50 and 1000
-        */
+         * Requirements to test: 1. price randomly fluctuates between 50 and 1000
+         */
 
         // Testing requirements
         DoggieCoin coin = new DoggieCoin();
