@@ -2,7 +2,8 @@
   "width": 8,
   "height": 16,
   "rare_items": [
-    "the_one_ring"
+    "the_one_ring",
+    "tree_stump"
   ],
   "goal-condition": {
     "goal": "experience",
