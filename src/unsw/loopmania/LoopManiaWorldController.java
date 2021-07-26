@@ -681,6 +681,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             } else if (item instanceof DoggieCoin) {
                 view = new ImageView(doggieCoinImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            } else if (item instanceof TreeStump) {
+                view = new ImageView(treeStumpImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
             }
 
             if (view != null) {
@@ -1052,6 +1055,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                             draggedEntity.setImage(theOneRingImage);
                         else if (item instanceof DoggieCoin)
                             draggedEntity.setImage(doggieCoinImage);
+                        else if (item instanceof TreeStump)
+                            draggedEntity.setImage(treeStumpImage);
                         break;
                     default:
                         break;
