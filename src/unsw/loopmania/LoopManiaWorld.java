@@ -1536,4 +1536,12 @@ public class LoopManiaWorld {
     public boolean goalsAchieved() {
         return this.goal.achieved(this);
     }
+
+    public List<Card> getCards() {
+        return this.cardEntities;
+    }
+
+    public List<Item> getUnequippedInventoryItems() {
+        return this.unequippedInventoryItems;
+    }
 }
