@@ -16,4 +16,9 @@ public class Anduril extends Item implements WeaponStrategy {
     public Anduril() {
         super(new Pair<Integer, Integer>(1, 2));
     }
+
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
+        // Causes triple damage against bosses
+        enemy.receiveAttack(baseDamage + 15);
+    }
 }
