@@ -1367,6 +1367,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         // Open the show
         if (world.getShowShop() == true) {
             pause();
+            world.setShowShopToFalse();
         } else {
             return;
         }

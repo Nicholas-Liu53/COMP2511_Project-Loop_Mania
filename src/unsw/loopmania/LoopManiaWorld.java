@@ -1196,6 +1196,10 @@ public class LoopManiaWorld {
         return this.showShop;
     }
 
+    public void setShowShopToFalse() {
+        this.showShop = false;
+    }
+
     /**
      * Update number of cycles character has completed in the loop
      */
@@ -1211,7 +1215,7 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : this.observers) {
             observer.notifyCycle(this);
         }
-        showShop = false;
+        // showShop = false;
     }
 
     /**
