@@ -350,6 +350,15 @@ public class LoopManiaWorld {
             spawningEnemies.add(doggie);
         }
 
+        // Spawn elan muske
+        if (this.numCycles >= 40 && this.getCharacterXp() >= 10000) {
+            Pair<Integer, Integer> elanPos = getDoggieEnemySpawnPosition();
+            int indexInPath = this.orderedPath.indexOf(elanPos);
+            ElanMuskeEnemy elan = new ElanMuskeEnemy(new PathPosition(indexInPath, this.orderedPath));
+            this.enemies.add(elan);
+            spawningEnemies.add(elan);
+        }
+
         return spawningEnemies;
     }
 
@@ -1007,6 +1016,17 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
+    /**
+     * Checks if the elan boss is present on the map
+     * @return true if elan is present, else false
+     */
+    public boolean elanCheck() {
+        for (Enemy e : this.enemies) {
+            if (e instanceof ElanMuskeEnemy) return true;
+        }
+        return false;
+    }
+
     // *-------------------------------------------------------------------------
     // * Building Cards
     // *-------------------------------------------------------------------------
@@ -1419,6 +1439,7 @@ public class LoopManiaWorld {
 
     public StringProperty getDoggieCoinPriceProperty() {
         this.doggieCoinPrice = DoggieCoin.getSellPrice();
+        if (elanCheck()) this.doggieCoinPrice += 9000;
         this.doggieCoinPriceProperty.set(String.valueOf(this.doggieCoinPrice));
         return this.doggieCoinPriceProperty;
     }
