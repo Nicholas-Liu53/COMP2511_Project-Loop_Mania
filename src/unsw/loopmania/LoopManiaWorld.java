@@ -977,21 +977,30 @@ public class LoopManiaWorld {
             // Currently the character attacks every enemy and vice versa
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
-                // fight...
-                character.addBattle(e);
-                character.launchAttack(e, inCampfireRadius(e));
-                boolean specialAttack = e.launchAttack(character);
+                
+                if ((e instanceof ElanMuskeEnemy) && (new Random().nextInt(100) > 20)) {
+                    // Elan jumping implementation
+                    e.moveUpPath();
+                    e.moveUpPath();
+                    e.moveUpPath();
+                    e.moveUpPath();
+                } else {
+                    // fight...
+                    character.addBattle(e);
+                    character.launchAttack(e, inCampfireRadius(e));
+                    boolean specialAttack = e.launchAttack(character);
 
-                if (specialAttack && (e instanceof ZombieEnemy)) {
-                    this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
-                }
+                    if (specialAttack && (e instanceof ZombieEnemy)) {
+                        this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
+                    }
 
-                attackEnemyInTowerRadiusDuringBattle(e);
+                    attackEnemyInTowerRadiusDuringBattle(e);
 
-                if (e.getHealth() == 0) {
-                    // Remove enemy
-                    defeatedEnemies.add(e);
-                    character.removeEnemyFromBattle(e);
+                    if (e.getHealth() == 0) {
+                        // Remove enemy
+                        defeatedEnemies.add(e);
+                        character.removeEnemyFromBattle(e);
+                    }
                 }
 
                 // @TODO: handle character death
