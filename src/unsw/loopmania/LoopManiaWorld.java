@@ -588,6 +588,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 item = new DoggieCoin(firstAvailableSlot);
                 break;
+            case "TreeStump":
+                item = new TreeStump(firstAvailableSlot);
+                break;
             default:
                 break;
         }
@@ -831,6 +834,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 numDoggieCoin++;
                 break;
+            case "TreeStump":
+                numTreeStump++;
+                break;
             default:
                 break;
         }
@@ -866,6 +872,9 @@ public class LoopManiaWorld {
             case "DoggieCoin":
                 numDoggieCoin--;
                 break;
+            case "TreeStump":
+                numTreeStump--;
+                break;
             default:
                 break;
         }
@@ -900,6 +909,9 @@ public class LoopManiaWorld {
                 break;
             case "DoggieCoin":
                 this.numDoggieCoinProperty.set(String.valueOf(numDoggieCoin));
+                break;
+            case "TreeStump":
+                this.numTreeStumpProperty.set(String.valueOf(numTreeStump));
                 break;
             default:
                 break;
@@ -1249,6 +1261,9 @@ public class LoopManiaWorld {
             if (this.rareItemNames.contains("the_one_ring"))
                 if (rand.nextInt(500) == 21)
                     return loadItem("OneRing");
+            if (this.rareItemNames.contains("tree_stump"))
+                if (rand.nextInt(500) == 121)
+                    return loadItem("TreeStump");
         }
 
         switch (rewardSetting) {
@@ -1352,6 +1367,10 @@ public class LoopManiaWorld {
 
     public StringProperty getOneRingProperty() {
         return this.numOneRingProperty;
+    }
+
+    public StringProperty getTreeStumpProperty() {
+        return this.numTreeStumpProperty;
     }
 
     public StringProperty getNumCyclesProperty() {
