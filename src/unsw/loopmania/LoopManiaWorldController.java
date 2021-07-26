@@ -204,6 +204,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private Image slugEnemyImage;
     private Image vampireEnemyImage;
     private Image zombieEnemyImage;
+    
+    // Bosses
+    private Image doggieEnemyImage;
 
     private int spawnCycle;
 
@@ -305,6 +308,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         slugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
         vampireEnemyImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieEnemyImage = new Image((new File("src/images/zombie.png")).toURI().toString());
+        doggieEnemyImage = new Image((new File("src/images/doggie.png")).toURI().toString());
 
         // Items
         bodyArmourImage = new Image((new File("src/images/armour.png")).toURI().toString());
@@ -397,7 +401,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target
         // framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), event -> {
             world.runTickMoves();
 
             // Recieve rewards on defeating enemies
@@ -514,6 +518,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             case "ZombieEnemy":
                 giveRandomRewardsWithCards(4);
                 break;
+            case "DoggieEnemy":
+                //! give doggieCoin;
+                giveRandomRewardsWithCards(6);
             default:
                 break;
         }
@@ -700,6 +707,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
             view = new ImageView(vampireEnemyImage);
         } else if (enemy instanceof ZombieEnemy) {
             view = new ImageView(zombieEnemyImage);
+        } else if (enemy instanceof DoggieEnemy) {
+            view = new ImageView(doggieEnemyImage);
         }
 
         if (view != null) {

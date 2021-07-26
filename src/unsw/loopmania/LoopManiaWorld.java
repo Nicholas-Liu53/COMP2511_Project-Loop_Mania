@@ -67,6 +67,7 @@ public class LoopManiaWorld {
     private int numCycles;
     private int cycleShopLinear;
     private int numCyclesToOpenShop;
+    private int spawnDoggieCycle;
     private boolean showShop;
     private List<Item> pathItems;
     private int numGoldPileSpawned;
@@ -136,6 +137,7 @@ public class LoopManiaWorld {
         this.locationOfPlacedBuildings = new ArrayList<>();
         this.numCycles = 0;
         this.cycleShopLinear = 1;
+        this.spawnDoggieCycle = 20;
         this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
@@ -309,9 +311,9 @@ public class LoopManiaWorld {
         List<Enemy> spawningEnemies = new ArrayList<>();
         if (slugPos != null) {
             int indexInPath = this.orderedPath.indexOf(slugPos);
-            SlugEnemy enemy = new SlugEnemy(new PathPosition(indexInPath, this.orderedPath));
-            this.enemies.add(enemy);
-            spawningEnemies.add(enemy);
+            SlugEnemy slug = new SlugEnemy(new PathPosition(indexInPath, this.orderedPath));
+            this.enemies.add(slug);
+            spawningEnemies.add(slug);
         }
 
         // Adding enemies spawned by world state observers
@@ -322,6 +324,16 @@ public class LoopManiaWorld {
 
         // All newEnemies added, clearing
         this.newEnemies.clear();
+
+        // Spawn doggie enemy
+        if (this.numCycles == spawnDoggieCycle) {
+            spawnDoggieCycle += 15;
+            Pair<Integer, Integer> doggiePos = getDoggieEnemySpawnPosition();
+            int indexInPath2 = this.orderedPath.indexOf(doggiePos);
+            DoggieEnemy doggie = new DoggieEnemy(new PathPosition(indexInPath2, this.orderedPath));
+            this.enemies.add(doggie);
+            spawningEnemies.add(doggie);
+        }
 
         return spawningEnemies;
     }
@@ -375,8 +387,6 @@ public class LoopManiaWorld {
      *         possible, or random coordinate pair if should go ahead
      */
     private Pair<Integer, Integer> possiblyGetSlugEnemySpawnPosition() {
-        // @TODO: modify this
-
         // has a chance spawning a basic enemy on a tile the character isn't on or
         // immediately before or after (currently space required = 2)...
         Random rand = new Random();
@@ -401,6 +411,33 @@ public class LoopManiaWorld {
         }
 
         return null;
+    }
+
+    /**
+     * Spawning doggie enemy
+     */
+    private Pair<Integer, Integer> getDoggieEnemySpawnPosition() {
+        // Has a chance spawning a basic enemy on a tile the character isn't on or
+        // immediately before or after (currently space required = 2)...
+        Random rand = new Random();
+        List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
+        int indexPosition = this.orderedPath.indexOf(new Pair<Integer, Integer>(getCharacterX(), getCharacterY()));
+        // Inclusive start and exclusive end of range of positions not allowed
+        int startNotAllowed = (indexPosition - 2 + this.orderedPath.size()) % this.orderedPath.size();
+        int endNotAllowed = (indexPosition + 3) % this.orderedPath.size();
+        // Note terminating condition has to be != rather than < since wrap around...
+        for (int i = endNotAllowed; i != startNotAllowed; i = (i + 1) % this.orderedPath.size()) {
+            orderedPathSpawnCandidates.add(this.orderedPath.get(i));
+        }
+
+        // Choose random choice
+        Pair<Integer, Integer> origin = new Pair<>(0, 0);
+        Pair<Integer, Integer> spawnPosition = new Pair<>(0, 0);
+        while (spawnPosition.equals(origin)) {
+            spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+        }
+
+        return spawnPosition;
     }
 
     private Pair<Integer, Integer> getPathItemSpawnPosition() {
