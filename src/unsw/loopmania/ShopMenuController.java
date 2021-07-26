@@ -60,7 +60,7 @@ public class ShopMenuController {
     // Item list
     private ArrayList<String> itemsList = new ArrayList<String>(
         Arrays.asList(
-            "Sword", "Stake", "Staff", "BodyArmour", "Helmet", "Shield", "HealthPotion"
+            "Sword", "Stake", "Staff", "BodyArmour", "Helmet", "Shield", "HealthPotion", "DoggieCoin"
         )
     );
     
