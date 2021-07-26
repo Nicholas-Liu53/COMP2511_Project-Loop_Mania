@@ -199,13 +199,14 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private Image swordImage;
     private Image goldPileImage;
     private Image theOneRingImage;
+    private Image treeStumpImage;
     private Image doggieCoinImage;
 
     // Enemies
     private Image slugEnemyImage;
     private Image vampireEnemyImage;
     private Image zombieEnemyImage;
-    
+
     // Bosses
     private Image doggieEnemyImage;
 
@@ -322,6 +323,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
         doggieCoinImage = new Image((new File("src/images/doggiecoin.png")).toURI().toString());
+        treeStumpImage = new Image((new File("src/images/tree_stump.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -521,7 +523,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 giveRandomRewardsWithCards(4);
                 break;
             case "DoggieEnemy":
-                //! give doggieCoin;
+                // ! give doggieCoin;
                 giveRandomRewardsWithCards(6);
             default:
                 break;
@@ -782,7 +784,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
      */
     // private void removeItemByCoordinates(int nodeX, int nodeY) {
-    //     world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    // world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     // }
 
     // *-------------------------------------------------------------------------
@@ -1048,7 +1050,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                             draggedEntity.setImage(healthPotionImage);
                         else if (item instanceof OneRing)
                             draggedEntity.setImage(theOneRingImage);
-                        else if (item instanceof DoggieCoin) 
+                        else if (item instanceof DoggieCoin)
                             draggedEntity.setImage(doggieCoinImage);
                         break;
                     default:
