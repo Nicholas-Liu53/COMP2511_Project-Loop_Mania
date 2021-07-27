@@ -3,6 +3,7 @@
   "height": 16,
   "rare_items": [
     "the_one_ring",
+    "anduril_flame_of_the_west",
     "tree_stump"
   ],
   "goal-condition": {

@@ -201,6 +201,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private Image theOneRingImage;
     private Image treeStumpImage;
     private Image doggieCoinImage;
+    private Image andurilImage;
 
     // Enemies
     private Image slugEnemyImage;
@@ -325,6 +326,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
         doggieCoinImage = new Image((new File("src/images/doggiecoin.png")).toURI().toString());
+        andurilImage = new Image((new File("src/images/anduril.png")).toURI().toString());
         treeStumpImage = new Image((new File("src/images/tree_stump.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -532,8 +534,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    /** 
-     * Check card pile is the correct size 
+    /**
+     * Check card pile is the correct size
      */
     public void checkCardPileHasOneSlot() {
         if (world.cardEntityIsFull()) {
@@ -700,6 +702,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
             } else if (item instanceof DoggieCoin) {
                 view = new ImageView(doggieCoinImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            } else if (item instanceof Anduril) {
+                view = new ImageView(andurilImage);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
             } else if (item instanceof TreeStump) {
                 view = new ImageView(treeStumpImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
@@ -800,6 +805,17 @@ public class LoopManiaWorldController implements WorldStateObserver {
         return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
     }
 
+    /**
+     * Remove an item from the unequipped inventory by its x and y coordinates in
+     * the unequipped inventory gridpane
+     * 
+     * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
+     * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
+     */
+    // private void removeItemByCoordinates(int nodeX, int nodeY) {
+    // world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    // }
+
     // *-------------------------------------------------------------------------
     // * Drag EventHandlers
     // *-------------------------------------------------------------------------
@@ -896,6 +912,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                     loadItem(world.loadItem("Staff"));
                                 else if (oldWeapon instanceof Stake)
                                     loadItem(world.loadItem("Stake"));
+                                else if (oldWeapon instanceof Anduril)
+                                    loadItem(world.loadItem("Anduril"));
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
@@ -1065,6 +1083,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                             draggedEntity.setImage(theOneRingImage);
                         else if (item instanceof DoggieCoin)
                             draggedEntity.setImage(doggieCoinImage);
+                        else if (item instanceof Anduril)
+                            draggedEntity.setImage(andurilImage);
                         else if (item instanceof TreeStump)
                             draggedEntity.setImage(treeStumpImage);
                         break;
@@ -1205,7 +1225,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * Set the menuswitcher for the main menu
      * 
-     * @param mainMenuSwitcher  the menuswitcher for the main menu
+     * @param mainMenuSwitcher the menuswitcher for the main menu
      */
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
         this.mainMenuSwitcher = mainMenuSwitcher;
@@ -1214,7 +1234,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * Set the menuswitcher for the shop menu
      * 
-     * @param shopMenuSwitcher  the menuswitcher for the shop menu
+     * @param shopMenuSwitcher the menuswitcher for the shop menu
      */
     public void setShopMenuSwitcher(MenuSwitcher shopMenuSwitcher) {
         this.shopMenuSwitcher = shopMenuSwitcher;
@@ -1232,7 +1252,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * Set the menuswitcher for the game over menu
      * 
-     * @param gameoverSwitcher  the menuswitcher for the game over menu
+     * @param gameoverSwitcher the menuswitcher for the game over menu
      */
     public void setGameoverSwitcher(MenuSwitcher gameoverSwitcher) {
         this.gameoverSwitcher = gameoverSwitcher;
@@ -1241,7 +1261,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * Set the menuswitcher for the game won menu
      * 
-     * @param gamewonSwitcher   the menuswitcher for the game won menu
+     * @param gamewonSwitcher the menuswitcher for the game won menu
      */
     public void setGamewonSwitcher(MenuSwitcher gamewonSwitcher) {
         this.gamewonSwitcher = gamewonSwitcher;
@@ -1271,8 +1291,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
     }
 
     /**
-     * this method is triggered when the character returns to the hero's castle on a shop cycle
-     * in FXML
+     * this method is triggered when the character returns to the hero's castle on a
+     * shop cycle in FXML
      * 
      * @throws IOException
      */
@@ -1286,8 +1306,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
     }
 
     /**
-     * this method is triggered when the character returns to the hero's castle on a shop cycle
-     * in FXML
+     * this method is triggered when the character returns to the hero's castle on a
+     * shop cycle in FXML
      * 
      * @throws IOException
      */
@@ -1298,11 +1318,11 @@ public class LoopManiaWorldController implements WorldStateObserver {
         shopMenuController.setCountersToZero();
         shopMenuSwitcher.switchMenu();
     }
-    
+
     /**
      * Returns the LoopManiaWorld
      * 
-     * @return world    the LoopManiaWorld this file is observing
+     * @return world the LoopManiaWorld this file is observing
      */
     public LoopManiaWorld getWorld() {
         return this.world;
@@ -1311,7 +1331,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     /**
      * Changes the world this file is observing
      * 
-     * @param newWorld  the world that is to replace the current world being observed
+     * @param newWorld the world that is to replace the current world being observed
      */
     public void replaceWorld(LoopManiaWorld newWorld) {
         this.world = newWorld;
@@ -1421,8 +1441,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
     }
 
     /**
-     * Function is called when the character returns to the hero castle.
-     * It switches the FXML to the shop when it is a shop cycle
+     * Function is called when the character returns to the hero castle. It switches
+     * the FXML to the shop when it is a shop cycle
      */
     public void notifyCycle(LoopManiaWorld world) {
         // Open the show
