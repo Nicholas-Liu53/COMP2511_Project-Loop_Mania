@@ -1485,14 +1485,15 @@ public class LoopManiaWorld {
         // small chance to get a oneRing when a battle is won
         // i.e. rewardSetting is "withCard"
         if (rewardSetting.equals("withCard")) {
+            int rareItemRandom = rand.nextInt(500);
             if (this.rareItemNames.contains("the_one_ring"))
-                if (rand.nextInt(500) == 21)
+                if (rareItemRandom == 112)
                     return loadItem("OneRing");
             if (this.rareItemNames.contains("anduril_flame_of_the_west"))
-                if (rand.nextInt(500) == 12)
+                if (rareItemRandom == 121)
                     return loadItem("Anduril");
             if (this.rareItemNames.contains("tree_stump"))
-                if (rand.nextInt(500) == 121)
+                if (rareItemRandom == 211)
                     return loadItem("TreeStump");
         }
 
