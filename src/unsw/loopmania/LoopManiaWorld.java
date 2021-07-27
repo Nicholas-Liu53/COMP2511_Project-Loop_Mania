@@ -899,9 +899,9 @@ public class LoopManiaWorld {
         if (oneRingAvailable)
             character.restoreHealthPoints();
             
-            healthProperty();
+        healthProperty();
             
-            return activatedOneRing;
+        return activatedOneRing;
     }
     
     /** 
