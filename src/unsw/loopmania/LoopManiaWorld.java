@@ -68,6 +68,7 @@ public class LoopManiaWorld {
     private int cycleShopLinear;
     private int numCyclesToOpenShop;
     private int spawnDoggieCycle;
+    private int spawnElanCycle;
     private boolean showShop;
     private List<Item> pathItems;
     private int numGoldPileSpawned;
@@ -144,6 +145,7 @@ public class LoopManiaWorld {
         this.numCycles = 0;
         this.cycleShopLinear = 1;
         this.spawnDoggieCycle = 20;
+        this.spawnElanCycle = 40;
         this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
@@ -446,6 +448,16 @@ public class LoopManiaWorld {
             DoggieEnemy doggie = new DoggieEnemy(new PathPosition(indexInPath2, this.orderedPath));
             this.enemies.add(doggie);
             spawningEnemies.add(doggie);
+        }
+
+        // Spawn elan muske
+        if (this.numCycles >= this.spawnElanCycle && this.getCharacterXp() >= 10000) {
+            this.spawnElanCycle += 40;
+            Pair<Integer, Integer> elanPos = getDoggieEnemySpawnPosition();
+            int indexInPath = this.orderedPath.indexOf(elanPos);
+            ElanMuskeEnemy elan = new ElanMuskeEnemy(new PathPosition(indexInPath, this.orderedPath));
+            this.enemies.add(elan);
+            spawningEnemies.add(elan);
         }
 
         return spawningEnemies;
@@ -1103,21 +1115,30 @@ public class LoopManiaWorld {
             // Currently the character attacks every enemy and vice versa
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
-                // fight...
-                character.addBattle(e);
-                character.launchAttack(e, inCampfireRadius(e));
-                boolean specialAttack = e.launchAttack(character);
+                
+                if ((e instanceof ElanMuskeEnemy) && (new Random().nextInt(100) > 20)) {
+                    // Elan jumping implementation
+                    e.moveUpPath();
+                    e.moveUpPath();
+                    e.moveUpPath();
+                    e.moveUpPath();
+                } else {
+                    // fight...
+                    character.addBattle(e);
+                    character.launchAttack(e, inCampfireRadius(e));
+                    boolean specialAttack = e.launchAttack(character);
 
-                if (specialAttack && (e instanceof ZombieEnemy)) {
-                    this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
-                }
+                    if (specialAttack && (e instanceof ZombieEnemy)) {
+                        this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
+                    }
 
-                attackEnemyInTowerRadiusDuringBattle(e);
+                    attackEnemyInTowerRadiusDuringBattle(e);
 
-                if (e.getHealth() == 0) {
-                    // Remove enemy
-                    defeatedEnemies.add(e);
-                    character.removeEnemyFromBattle(e);
+                    if (e.getHealth() == 0) {
+                        // Remove enemy
+                        defeatedEnemies.add(e);
+                        character.removeEnemyFromBattle(e);
+                    }
                 }
 
                 // @TODO: handle character death
@@ -1143,6 +1164,17 @@ public class LoopManiaWorld {
         }
 
         return defeatedEnemies;
+    }
+
+    /**
+     * Checks if the elan boss is present on the map
+     * @return true if elan is present, else false
+     */
+    public boolean elanCheck() {
+        for (Enemy e : this.enemies) {
+            if (e instanceof ElanMuskeEnemy) return true;
+        }
+        return false;
     }
 
     // *-------------------------------------------------------------------------
@@ -1320,6 +1352,13 @@ public class LoopManiaWorld {
             updateCharacterCycles();
         } else {
             showShop = false;
+        }
+
+        // Healing enemies if Elan present
+        if (elanCheck()) {
+            for (Enemy e : this.enemies) {
+                if (!(e instanceof ElanMuskeEnemy)) e.addHealth(2);
+            }
         }
 
         // Notifying world state observers of new tick
@@ -1669,6 +1708,7 @@ public class LoopManiaWorld {
      */
     public StringProperty getDoggieCoinPriceProperty() {
         this.doggieCoinPrice = DoggieCoin.getSellPrice();
+        if (elanCheck()) this.doggieCoinPrice += 9000;
         this.doggieCoinPriceProperty.set(String.valueOf(this.doggieCoinPrice));
         return this.doggieCoinPriceProperty;
     }
