@@ -323,7 +323,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         goldPileImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
         doggieCoinImage = new Image((new File("src/images/doggiecoin.png")).toURI().toString());
-        andurilImage = new Image((new File("src/images/anduril_flame_of_the_west.png")).toURI().toString());
+        andurilImage = new Image((new File("src/images/anduril.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
