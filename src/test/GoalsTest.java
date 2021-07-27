@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.character.Character;
+import unsw.loopmania.goals.BossBaseGoal;
 import unsw.loopmania.goals.ComplexGoalComponent;
 import unsw.loopmania.goals.ComplexGoalComposite;
 import unsw.loopmania.goals.CyclesBaseGoal;
@@ -144,6 +145,46 @@ public class GoalsTest {
         assertEquals(true, goalAchieved);
 
         assertEquals("100 XP", xpGoal.getGoalString());
+    }
+
+    @Test
+    public void bossGoalsTest() {
+        // Testing the basic xp goal
+        LoopManiaWorld testWorld = TestHelper.generateWorld();
+        BossBaseGoal bossGoal = new BossBaseGoal();
+
+        PathPosition position = null;
+
+        try {
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using gradle, different path is needed
+            try {
+                position = TestHelper.generatePathPosition("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                // Failed to generate PathPostion
+                assertTrue(false);
+            }
+        }
+
+        Character mainChar = new Character(position);
+        testWorld.setCharacter(mainChar);
+        testWorld.setGoals(bossGoal);
+
+        boolean goalAchieved = bossGoal.achieved(testWorld);
+        assertEquals(false, goalAchieved);
+
+        // Move character up to post 40 cycles and give xp
+        for (int i = 0; i < 5000; i++) {
+            testWorld.runTickMoves();
+        }
+        System.err.println(testWorld.getCurrCycle());
+
+        mainChar.giveExperiencePoints(11000);
+
+        assertEquals(true, bossGoal.achieved(testWorld));
+
+        assertEquals("Defeat Bosses", bossGoal.getGoalString());
     }
 
     @Test

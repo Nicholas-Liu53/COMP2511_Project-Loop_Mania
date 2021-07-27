@@ -187,6 +187,8 @@ public abstract class LoopManiaWorldLoader {
                 return new GoldBaseGoal(goalCondition.getInt("quantity"));
             } else if (goalCondition.getString("goal").equals("cycles")) {
                 return new CyclesBaseGoal(goalCondition.getInt("quantity"));
+            } else if (goalCondition.getString("goal").equals("boss")) {
+                return new BossBaseGoal();
             }
         }
 
@@ -198,6 +200,5 @@ public abstract class LoopManiaWorldLoader {
 
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
 
-    // TODO Create additional abstract methods for the other entities
 
 }
