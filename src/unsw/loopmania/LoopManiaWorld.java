@@ -68,6 +68,7 @@ public class LoopManiaWorld {
     private int cycleShopLinear;
     private int numCyclesToOpenShop;
     private int spawnDoggieCycle;
+    private int spawnElanCycle;
     private boolean showShop;
     private List<Item> pathItems;
     private int numGoldPileSpawned;
@@ -89,6 +90,7 @@ public class LoopManiaWorld {
     private int numOneRing;
     private int numDoggieCoin;
     private int numAnduril;
+    private int numTreeStump;
     private int doggieCoinPrice;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
@@ -101,6 +103,7 @@ public class LoopManiaWorld {
     private StringProperty numDoggieCoinProperty;
     private StringProperty doggieCoinPriceProperty;
     private StringProperty numAndurilProperty;
+    private StringProperty numTreeStumpProperty;
 
     private StringProperty currCycleNumProperty;
     private StringProperty cyclesTillShopProperty;
@@ -144,6 +147,7 @@ public class LoopManiaWorld {
         this.numCycles = 0;
         this.cycleShopLinear = 1;
         this.spawnDoggieCycle = 20;
+        this.spawnElanCycle = 40;
         this.numCyclesToOpenShop = 1;
         this.showShop = false;
         this.pathItems = new ArrayList<>();
@@ -169,6 +173,7 @@ public class LoopManiaWorld {
         this.numDoggieCoinProperty = new SimpleStringProperty();
         this.doggieCoinPriceProperty = new SimpleStringProperty();
         this.numAndurilProperty = new SimpleStringProperty();
+        this.numTreeStumpProperty = new SimpleStringProperty();
 
         this.currCycleNumProperty = new SimpleStringProperty();
         this.cyclesTillShopProperty = new SimpleStringProperty();
@@ -186,57 +191,118 @@ public class LoopManiaWorld {
         this.numOneRing = 0;
         this.numDoggieCoin = 0;
         this.numAnduril = 0;
+        this.numTreeStump = 0;
     }
 
     // --------------------------------------------------------------------------
     // General Methods
     // --------------------------------------------------------------------------
+    /**
+     * Returns the width of the map
+     * 
+     * @return width the width of the map
+     */
     public int getWidth() {
         return this.width;
     }
 
+    /**
+     * Returns the height of the map
+     * 
+     * @return height the height of the map
+     */
     public int getHeight() {
         return this.height;
     }
 
+    /**
+     * Returns the current cycle the character is in (starting from 0)
+     * 
+     * @return numcycles the current cycle the character is in
+     */
     public int getCurrCycle() {
         return this.numCycles;
     }
 
+    /**
+     * Returns the list of coordinates of each tile of the path (in order)
+     * 
+     * @return orderedPath list of coordinates of each tile of the path
+     */
     public List<Pair<Integer, Integer>> getPath() {
         return this.orderedPath;
     }
 
+    /**
+     * Returns the character's current X coordinate
+     * 
+     * @return character's current X coordinate
+     */
     public int getCharacterX() {
         return this.character.getX();
     }
 
+    /**
+     * Returns the character's current Y coordinate
+     * 
+     * @return character's current Y coordinate
+     */
     public int getCharacterY() {
         return this.character.getY();
     }
 
+    /**
+     * Returns a list of buildings that have been placed on the map
+     * 
+     * @return buildingEntities list of buildings on the map
+     */
     public List<Building> getBuildingsList() {
         return this.buildingEntities;
     }
 
+    /**
+     * Returns a list of enemies that are alive on the map
+     * 
+     * @return enemies list of enemies that are alive
+     */
     public List<Enemy> getEnemiesList() {
         return this.enemies;
     }
 
+    /**
+     * Returns a list of new enemies that are to be spawned into the map
+     * 
+     * @return newEnemies list of enemies to be spawned
+     */
     public List<Enemy> getNewEnemiesList() {
         return this.newEnemies;
     }
 
+    /**
+     * Returns the price of the doggie coin (subject to change)
+     * 
+     * @return doggieCoinPrice current price of the doggie coin
+     */
     public int getDoggieCoinPrice() {
         return doggieCoinPrice;
     }
 
+    /**
+     * Adds a building to the map
+     * 
+     * @param b the building to be added
+     */
     public void addBuilding(Building b) {
         this.buildingEntities.add(b);
         this.locationOfPlacedBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
         this.observers.add(b);
     }
 
+    /**
+     * Removes a building off the map
+     * 
+     * @param b the building to be removed
+     */
     public void removeBuilding(Building b) {
         this.buildingEntities.remove(b);
         this.deadObservers.add(b);
@@ -245,10 +311,18 @@ public class LoopManiaWorld {
         b.destroy();
     }
 
+    /**
+     * Spawns an enemy into the game
+     * 
+     * @param e enemy to be spawned
+     */
     public void setEnemy(Enemy e) {
         this.enemies.add(e);
     }
 
+    /**
+     * Removes buildings that have already been removed from the observers list
+     */
     public void removeDeadObservers() {
         for (WorldStateObserver wso : this.deadObservers) {
             this.observers.remove(wso);
@@ -256,10 +330,20 @@ public class LoopManiaWorld {
         this.deadObservers.clear();
     }
 
+    /**
+     * Returns character's health points
+     * 
+     * @return character's current health points
+     */
     public int getCharacterHealth() {
         return this.character.getHealth();
     }
 
+    /**
+     * Returns character's experience points
+     * 
+     * @return character's current experience points
+     */
     public int getCharacterXp() {
         return this.character.getExperience();
     }
@@ -274,14 +358,30 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+    /**
+     * Sets the goal the player must complete to win the game
+     * 
+     * @param goals the goal the player must complete
+     */
     public void setGoals(ComplexGoalComponent goals) {
         this.goal = goals;
     }
 
+    /**
+     * Adds the rare item type that will have a chance of dropping from a slain
+     * enemy
+     * 
+     * @param rareItemType name of the rare item type
+     */
     public void availableRareItems(String rareItemType) {
         this.rareItemNames.add(rareItemType);
     }
 
+    /**
+     * Returns the number of one rings in the inventory
+     * 
+     * @return number of one rings in the inventory
+     */
     public int getNumOneRing() {
         return this.numOneRing;
     }
@@ -308,6 +408,12 @@ public class LoopManiaWorld {
         this.newEnemies.add(newEnemy);
     }
 
+    /**
+     * Returns the (x,y) coordinates of the starting point of the character
+     * 
+     * @return startingPoint (x,y) coordinates of the starting point of the
+     *         character
+     */
     public Pair<Integer, Integer> getStartingPoint() {
         return this.startingPoint;
     }
@@ -348,6 +454,16 @@ public class LoopManiaWorld {
             DoggieEnemy doggie = new DoggieEnemy(new PathPosition(indexInPath2, this.orderedPath));
             this.enemies.add(doggie);
             spawningEnemies.add(doggie);
+        }
+
+        // Spawn elan muske
+        if (this.numCycles >= this.spawnElanCycle && this.getCharacterXp() >= 10000) {
+            this.spawnElanCycle += 40;
+            Pair<Integer, Integer> elanPos = getDoggieEnemySpawnPosition();
+            int indexInPath = this.orderedPath.indexOf(elanPos);
+            ElanMuskeEnemy elan = new ElanMuskeEnemy(new PathPosition(indexInPath, this.orderedPath));
+            this.enemies.add(elan);
+            spawningEnemies.add(elan);
         }
 
         return spawningEnemies;
@@ -455,6 +571,12 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
+    /**
+     * gets an available path tile coordinate for an item to spawn on the path
+     * 
+     * @return spawnPosition (x, y) coordinates of where the item can spawn on the
+     *         map
+     */
     private Pair<Integer, Integer> getPathItemSpawnPosition() {
         // has a chance spawning a path item on a tile the character isn't on or
         // immediately before or after (currently space required = 2)...
@@ -590,6 +712,8 @@ public class LoopManiaWorld {
                 break;
             case "Anduril":
                 item = new Anduril(firstAvailableSlot);
+            case "TreeStump":
+                item = new TreeStump(firstAvailableSlot);
                 break;
             default:
                 break;
@@ -739,7 +863,9 @@ public class LoopManiaWorld {
         return null;
     }
 
-    // Drinks health potion
+    /**
+     * Drinks health potions
+     */
     public void drinkHealthPotion() {
         if (character.isFullHealth())
             return;
@@ -759,7 +885,11 @@ public class LoopManiaWorld {
         healthProperty();
     }
 
-    // Activates one ring
+    /**
+     * Activates one ring
+     * 
+     * @return activatedOneRing
+     */
     public Item activateOneRing() {
         Item activatedOneRing = null;
         if ((getCharacterHealth() > 0) || (getNumOneRing() == 0))
@@ -783,27 +913,66 @@ public class LoopManiaWorld {
         return activatedOneRing;
     }
 
-    // Get list of unequipped items in inventory
+    /**
+     * Get list of unequipped items in inventory
+     * 
+     * @return this.unequippedInventoryItems list of unequipped items in inventory
+     */
     public List<Item> getUnequippedItems() {
         return this.unequippedInventoryItems;
     }
 
+    /**
+     * Returns the amount of gold the character has
+     * 
+     * @return amount of gold the character has
+     */
     public int getGold() {
         return character.getGold();
     }
 
+    /**
+     * Deducting gold from the character's possession
+     * 
+     * @param num the amount of gold to be deducted
+     */
     public void deductGold(int num) {
         character.removeGold(num);
     }
 
+    /**
+     * Give more gold to the character
+     * 
+     * @param num the amount of gold to be added
+     */
     public void giveGold(int num) {
         character.giveGold(num);
     }
 
+    /**
+     * Add a doggie coin into the character's inventory
+     * 
+     * @return doggieCoin The DoggieCoin object to be added to the inventory
+     */
+    public StaticEntity giveDoggieCoin() {
+        StaticEntity doggieCoin = loadItem("DoggieCoin");
+        return doggieCoin;
+    }
+
+    /**
+     * Add the item to list of unequippedInventoryItems
+     * 
+     * @param item item to be added to the unequippedInventoryItems list
+     */
     public void addToUnequippedInventory(Item item) {
         unequippedInventoryItems.add(item);
     }
 
+    /**
+     * Increase the individual item's count by 1
+     * 
+     * @param item item whose counter is to be increased
+     */
     public void increaseUnequippedInventoryItemCount(Item item) {
         String itemType = item.getClass().getSimpleName();
         switch (itemType) {
@@ -836,12 +1005,19 @@ public class LoopManiaWorld {
                 break;
             case "Anduril":
                 numAnduril++;
+            case "TreeStump":
+                numTreeStump++;
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * Decrease the individual item's count by 1
+     * 
+     * @param item item whose counter is to be decreased
+     */
     public void decreaseUnequippedInventoryItemCount(Item item) {
         String itemType = item.getClass().getSimpleName();
         switch (itemType) {
@@ -874,12 +1050,19 @@ public class LoopManiaWorld {
                 break;
             case "Anduril":
                 numAnduril--;
+            case "TreeStump":
+                numTreeStump--;
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * Update the item's string property
+     * 
+     * @param item item whose string property is to be updated
+     */
     public void updateItemProperty(Item item) {
         String itemType = item.getClass().getSimpleName();
         switch (itemType) {
@@ -912,6 +1095,8 @@ public class LoopManiaWorld {
                 break;
             case "Anduril":
                 this.numAndurilProperty.set(String.valueOf(numAnduril));
+            case "TreeStump":
+                this.numTreeStumpProperty.set(String.valueOf(numTreeStump));
                 break;
             default:
                 break;
@@ -944,21 +1129,30 @@ public class LoopManiaWorld {
             // Currently the character attacks every enemy and vice versa
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
-                // fight...
-                character.addBattle(e);
-                character.launchAttack(e, inCampfireRadius(e));
-                boolean specialAttack = e.launchAttack(character);
 
-                if (specialAttack && (e instanceof ZombieEnemy)) {
-                    this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
-                }
+                if ((e instanceof ElanMuskeEnemy) && (new Random().nextInt(100) > 20)) {
+                    // Elan jumping implementation
+                    e.moveUpPath();
+                    e.moveUpPath();
+                    e.moveUpPath();
+                    e.moveUpPath();
+                } else {
+                    // fight...
+                    character.addBattle(e);
+                    character.launchAttack(e, inCampfireRadius(e));
+                    boolean specialAttack = e.launchAttack(character);
 
-                attackEnemyInTowerRadiusDuringBattle(e);
+                    if (specialAttack && (e instanceof ZombieEnemy)) {
+                        this.addNewEnemy(new ZombieEnemy(e.getPathPosition()));
+                    }
 
-                if (e.getHealth() == 0) {
-                    // Remove enemy
-                    defeatedEnemies.add(e);
-                    character.removeEnemyFromBattle(e);
+                    attackEnemyInTowerRadiusDuringBattle(e);
+
+                    if (e.getHealth() == 0) {
+                        // Remove enemy
+                        defeatedEnemies.add(e);
+                        character.removeEnemyFromBattle(e);
+                    }
                 }
 
                 // @TODO: handle character death
@@ -984,6 +1178,19 @@ public class LoopManiaWorld {
         }
 
         return defeatedEnemies;
+    }
+
+    /**
+     * Checks if the elan boss is present on the map
+     * 
+     * @return true if elan is present, else false
+     */
+    public boolean elanCheck() {
+        for (Enemy e : this.enemies) {
+            if (e instanceof ElanMuskeEnemy)
+                return true;
+        }
+        return false;
     }
 
     // *-------------------------------------------------------------------------
@@ -1163,6 +1370,14 @@ public class LoopManiaWorld {
             showShop = false;
         }
 
+        // Healing enemies if Elan present
+        if (elanCheck()) {
+            for (Enemy e : this.enemies) {
+                if (!(e instanceof ElanMuskeEnemy))
+                    e.addHealth(2);
+            }
+        }
+
         // Notifying world state observers of new tick
         for (WorldStateObserver observer : this.observers) {
             observer.notifyTick(this.character, this);
@@ -1171,8 +1386,20 @@ public class LoopManiaWorld {
 
     }
 
+    /**
+     * Returns the showShop boolean value
+     * 
+     * @return showShop showShop boolean value
+     */
     public boolean getShowShop() {
         return this.showShop;
+    }
+
+    /**
+     * Sets the value of showShop boolean to false
+     */
+    public void setShowShopToFalse() {
+        this.showShop = false;
     }
 
     /**
@@ -1190,7 +1417,7 @@ public class LoopManiaWorld {
         for (WorldStateObserver observer : this.observers) {
             observer.notifyCycle(this);
         }
-        showShop = false;
+        // showShop = false;
     }
 
     /**
@@ -1264,6 +1491,9 @@ public class LoopManiaWorld {
             if (this.rareItemNames.contains("anduril_flame_of_the_west"))
                 if (rand.nextInt(500) == 12)
                     return loadItem("Anduril");
+            if (this.rareItemNames.contains("tree_stump"))
+                if (rand.nextInt(500) == 121)
+                    return loadItem("TreeStump");
         }
 
         switch (rewardSetting) {
@@ -1303,16 +1533,31 @@ public class LoopManiaWorld {
     // *-------------------------------------------------------------------------
     // * UIS
     // *-------------------------------------------------------------------------
+    /**
+     * Updates the string property of health points
+     * 
+     * @return charHealthProperty updated string property of character's health
+     */
     public StringProperty healthProperty() {
         this.charHealthProperty.set(String.valueOf(character.getHealth()));
         return this.charHealthProperty;
     }
 
+    /**
+     * Updates the string property of number of allies
+     * 
+     * @return charAlliesProperty updated string property of allies count
+     */
     public StringProperty alliesProperty() {
         this.charAlliesProperty.set(String.valueOf(character.getNumAllies()));
         return this.charAlliesProperty;
     }
 
+    /**
+     * Updates the string property of goals
+     * 
+     * @return charGoalsProperty updated string property of goals
+     */
     public StringProperty goalsProperty() {
         this.charGoalsProperty.set("Get " + this.goal.getGoalString());
         return this.charGoalsProperty;
@@ -1323,71 +1568,174 @@ public class LoopManiaWorld {
     // return charHealthProperty;
     // }
 
+    /**
+     * Updates the string property of gold
+     * 
+     * @return charGoldProperty updated string property of gold amount
+     */
     public StringProperty goldProperty() {
         this.charGoldProperty.set(String.valueOf(character.getGold()));
         return this.charGoldProperty;
     }
 
+    /**
+     * Updates the string property of xp
+     * 
+     * @return charXPProperty updated string property of xp
+     */
     public StringProperty xpProperty() {
         this.charXPProperty.set(String.valueOf(character.getExperience()));
         return this.charXPProperty;
     }
 
+    /**
+     * Updates the string property of sword count in inventory
+     * 
+     * @return numSwordProperty updated string property of number of swords in
+     *         inventory
+     */
     public StringProperty getSwordProperty() {
         return this.numSwordProperty;
     }
 
+    /**
+     * Updates the string property of staff count in inventory
+     * 
+     * @return numStaffProperty updated string property of number of staffs in
+     *         inventory
+     */
     public StringProperty getStaffProperty() {
         return this.numStaffProperty;
     }
 
+    /**
+     * Updates the string property of stake count in inventory
+     * 
+     * @return numStakeProperty updated string property of number of stakes in
+     *         inventory
+     */
     public StringProperty getStakeProperty() {
         return this.numStakeProperty;
     }
 
+    /**
+     * Updates the string property of body armour count in inventory
+     * 
+     * @return numBodyArmourProperty updated string property of number of body
+     *         armours in inventory
+     */
     public StringProperty getBodyArmourProperty() {
         return this.numBodyArmourProperty;
     }
 
+    /**
+     * Updates the string property of helmet count in inventory
+     * 
+     * @return numHelmetProperty updated string property of number of helmets in
+     *         inventory
+     */
     public StringProperty getHelmetProperty() {
         return this.numHelmetProperty;
     }
 
+    /**
+     * Updates the string property of shield count in inventory
+     * 
+     * @return numShieldProperty updated string property of number of shields in
+     *         inventory
+     */
     public StringProperty getShieldProperty() {
         return this.numShieldProperty;
     }
 
+    /**
+     * Updates the string property of health potion count in inventory
+     * 
+     * @return numHealthPotionProperty updated string property of number of health
+     *         potions in inventory
+     */
     public StringProperty getHealthPotionProperty() {
         return this.numHealthPotionProperty;
     }
 
+    /**
+     * Updates the string property of doggie coin count in inventory
+     * 
+     * @return numDoggieCoinProperty updated string property of number of doggie
+     *         coins in inventory
+     */
     public StringProperty getDoggieCoinProperty() {
         return this.numDoggieCoinProperty;
     }
 
+    /**
+     * Updates the string property of one ring count in inventory
+     * 
+     * @return numOneRingProperty updated string property of number of one rings in
+     *         inventory
+     */
     public StringProperty getOneRingProperty() {
         return this.numOneRingProperty;
     }
 
+    /**
+     * Updates the string property of one ring count in inventory
+     * 
+     * @return numAndurilProperty updated string property of number of andruils in
+     *         inventory
+     */
     public StringProperty getAndurilProperty() {
         return this.numAndurilProperty;
     }
 
+    /**
+     * Updates the string property of tree stump count in inventory
+     * 
+     * @return numTreeStumpProperty updated string property of number of tree stumps
+     *         in inventory
+     */
+    public StringProperty getTreeStumpProperty() {
+        return this.numTreeStumpProperty;
+    }
+
+    /**
+     * Updates the string property of cycle number (starting from 1)
+     * 
+     * @return currCycleNumProperty updated string property of cycle number
+     */
     public StringProperty getNumCyclesProperty() {
         this.currCycleNumProperty.set(String.valueOf(this.numCycles + 1));
         return this.currCycleNumProperty;
     }
 
+    /**
+     * Updates the string property of number of cycles until the shop appears
+     * 
+     * @return numBodyArmourProperty updated string property of number of cycles
+     *         until the shop appears
+     */
     public StringProperty getCyclesTillShopProperty() {
         this.cyclesTillShopProperty.set(String.valueOf(this.numCyclesToOpenShop - this.numCycles));
         return this.cyclesTillShopProperty;
     }
 
+    /**
+     * Updates the string property of the gamemode
+     * 
+     * @return gamemodeProperty updated string property of the gamemode
+     */
     public StringProperty getGamemodeProperty() {
         this.gamemodeProperty.set(gamemode);
         return this.gamemodeProperty;
     }
 
+    /**
+     * Updates the string property of the word "cycle." after the number of cycles
+     * till shop
+     * 
+     * @return cycleOrCyclesProperty the updated string property of the word
+     *         "cycle."
+     */
     public StringProperty getCycleOrCyclesProperty() {
         if (this.numCyclesToOpenShop - this.numCycles == 1)
             this.cycleOrCyclesProperty.set("cycle.");
@@ -1396,8 +1744,16 @@ public class LoopManiaWorld {
         return this.cycleOrCyclesProperty;
     }
 
+    /**
+     * Updates the string property of the doggie coin price
+     * 
+     * @return doggieCoinPriceProperty the updated string property of the doggie
+     *         coin price
+     */
     public StringProperty getDoggieCoinPriceProperty() {
         this.doggieCoinPrice = DoggieCoin.getSellPrice();
+        if (elanCheck())
+            this.doggieCoinPrice += 9000;
         this.doggieCoinPriceProperty.set(String.valueOf(this.doggieCoinPrice));
         return this.doggieCoinPriceProperty;
     }
@@ -1406,6 +1762,13 @@ public class LoopManiaWorld {
     // * Buildings Helper Functions
     // *-------------------------------------------------------------------------
 
+    /**
+     * Returns boolean value of whether the moving entity is in the campfire radius
+     * 
+     * @param me the moving entity being checked
+     * 
+     * @return boolean value of whether the moving entity is in the campfire radius
+     */
     public boolean inCampfireRadius(MovingEntity me) {
         for (Building b : this.buildingEntities) {
             if (b instanceof CampfireBuilding) {
@@ -1416,6 +1779,14 @@ public class LoopManiaWorld {
         return false;
     }
 
+    /**
+     * Returns the distance from the nearest campfire from the tile position given
+     * 
+     * @param x the x coordinate of the tile position
+     * @param y the y coordinate of the tile position
+     * 
+     * @return the distance from the nearest campfire
+     */
     private double getShortestRadiusFromCampfire(int x, int y) {
         double shortestRadius = 0;
         boolean first = true;
@@ -1432,6 +1803,13 @@ public class LoopManiaWorld {
         return shortestRadius;
     }
 
+    /**
+     * Returns the coordinates of the next path position of the moving entity
+     * 
+     * @param me the moving entity to be checked
+     * 
+     * @return the coordinates of the next path position
+     */
     private ArrayList<Pair<Integer, Integer>> nextPathTilesCoordinates(MovingEntity me) {
         int pathIndex = me.getPathIndex();
         int beforeIndex = pathIndex - 1;
@@ -1448,6 +1826,12 @@ public class LoopManiaWorld {
         return nextPathCoordinates;
     }
 
+    /**
+     * Determines which way the vampire should move based on where the nearest
+     * campfire is
+     * 
+     * @param v the vampire to be moved
+     */
     private void determineNextVampireMoveAwayFromCampfire(MovingEntity v) {
         ArrayList<Pair<Integer, Integer>> nextPathCoordinates = nextPathTilesCoordinates(v);
         Pair<Integer, Integer> backCoordinates = nextPathCoordinates.get(0);
@@ -1462,6 +1846,12 @@ public class LoopManiaWorld {
             v.moveDownPath();
     }
 
+    /**
+     * Function that executes the tower attacking enemies in battle within its
+     * radius
+     * 
+     * @param e the enemy to be attacked
+     */
     private void attackEnemyInTowerRadiusDuringBattle(Enemy e) {
         // During a battle within its shooting radius, enemies will be attacked by the
         // tower
@@ -1483,6 +1873,11 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Returns the list of building entities in the map
+     * 
+     * @return buildingEntities list of building entities in the map
+     */
     public List<Building> getBuildingEntities() {
         return this.buildingEntities;
     }
@@ -1490,6 +1885,11 @@ public class LoopManiaWorld {
     // *-------------------------------------------------------------------------
     // * Observer
     // *-------------------------------------------------------------------------
+    /**
+     * Adds an observer to connect this backend to a frontend
+     * 
+     * @param wc the LoopManiaWorldController to observe this backend
+     */
     public void addObserver(LoopManiaWorldController wc) {
         this.observers.add(wc);
     }
@@ -1497,10 +1897,20 @@ public class LoopManiaWorld {
     // *-------------------------------------------------------------------------
     // * Game Mode
     // *-------------------------------------------------------------------------
+    /**
+     * Sets the gamemode of the game
+     * 
+     * @param gamemode the gamemode to be set
+     */
     public void setGamemode(String gamemode) {
         this.gamemode = gamemode;
     }
 
+    /**
+     * Returns the gamemode the game is currently in
+     * 
+     * @return gamemode gamemode the game is currently in
+     */
     public String getGamemode() {
         return this.gamemode;
     }
@@ -1508,7 +1918,20 @@ public class LoopManiaWorld {
     // *-------------------------------------------------------------------------
     // * Goals
     // *-------------------------------------------------------------------------
+    /**
+     * Returns boolean of whether the goal has been achieved
+     * 
+     * @return boolean of whether the goal has been achieved
+     */
     public boolean goalsAchieved() {
         return this.goal.achieved(this);
+    }
+
+    public List<Card> getCards() {
+        return this.cardEntities;
+    }
+
+    public List<Item> getUnequippedInventoryItems() {
+        return this.unequippedInventoryItems;
     }
 }
