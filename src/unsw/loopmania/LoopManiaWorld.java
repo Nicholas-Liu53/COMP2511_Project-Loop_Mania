@@ -92,6 +92,7 @@ public class LoopManiaWorld {
     private int numAnduril;
     private int numTreeStump;
     private int doggieCoinPrice;
+    private int confusingGamemodeSeed;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
     private StringProperty numStaffProperty;
@@ -192,6 +193,7 @@ public class LoopManiaWorld {
         this.numDoggieCoin = 0;
         this.numAnduril = 0;
         this.numTreeStump = 0;
+        this.confusingGamemodeSeed = 0;
     }
 
     //--------------------------------------------------------------------------
@@ -706,14 +708,23 @@ public class LoopManiaWorld {
                 break;
             case "OneRing":
                 item = new OneRing(firstAvailableSlot);
+                if (gamemode.equals("Confusing")) {
+                    processConfusingItem(item);
+                }
                 break;
             case "DoggieCoin":
                 item = new DoggieCoin(firstAvailableSlot);
                 break;
             case "Anduril":
                 item = new Anduril(firstAvailableSlot);
+                if (gamemode.equals("Confusing")) {
+                    processConfusingItem(item);
+                }
             case "TreeStump":
                 item = new TreeStump(firstAvailableSlot);
+                if (gamemode.equals("Confusing")) {
+                    processConfusingItem(item);
+                }
                 break;
             default:
                 break;
@@ -1486,15 +1497,21 @@ public class LoopManiaWorld {
         // i.e. rewardSetting is "withCard"
         if (rewardSetting.equals("withCard")) {
             int rareItemRandom = rand.nextInt(500);
-            if (this.rareItemNames.contains("the_one_ring"))
-                if (rareItemRandom == 112)
+            if (this.rareItemNames.contains("the_one_ring")) {
+                if (rareItemRandom == 112) {
                     return loadItem("OneRing");
-            if (this.rareItemNames.contains("anduril_flame_of_the_west"))
-                if (rareItemRandom == 121)
+                }
+            }
+            if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
+                if (rareItemRandom == 121) {
                     return loadItem("Anduril");
-            if (this.rareItemNames.contains("tree_stump"))
-                if (rareItemRandom == 211)
+                }
+            }
+            if (this.rareItemNames.contains("tree_stump")) {
+                if (rareItemRandom == 211) {
                     return loadItem("TreeStump");
+                }
+            }
         }
 
         switch (rewardSetting) {
@@ -1906,7 +1923,7 @@ public class LoopManiaWorld {
     public void setGamemode(String gamemode) {
         this.gamemode = gamemode;
         if (gamemode.equals("Confusing")) {
-            initialiseConfusingGamemode();
+            setConfusingGamemodeSeed();
         }
     }
 
@@ -1919,8 +1936,38 @@ public class LoopManiaWorld {
         return this.gamemode;
     }
 
-    public void initialiseConfusingGamemode() {
-        
+    public void setConfusingGamemodeSeed() {
+        Random rand = new Random();
+        confusingGamemodeSeed = rand.nextInt(100);
+    }
+
+    public void processConfusingItem(Item rareItem) {
+        Item confusingItemToAdd;
+        if (rareItem.getClass().getClass().getSimpleName().equals("OneRing")) {
+            if (confusingGamemodeSeed > 50) {
+                confusingItemToAdd = new Anduril();
+            } else {
+                confusingItemToAdd = new TreeStump();
+            }
+            OneRing tempOneRing = (OneRing) rareItem;
+            tempOneRing.setConfusingProperty(confusingItemToAdd);
+        } else if (rareItem.getClass().getClass().getSimpleName().equals("Anduril")) {
+            if (confusingGamemodeSeed > 50) {
+                confusingItemToAdd = new OneRing();
+            } else {
+                confusingItemToAdd = new TreeStump();
+            }
+            Anduril tempAnduril = (Anduril) rareItem;
+            tempAnduril.setConfusingProperty(confusingItemToAdd);
+        } else if (rareItem.getClass().getClass().getSimpleName().equals("TreeStump")) {
+            if (confusingGamemodeSeed > 50) {
+                confusingItemToAdd = new OneRing();
+            } else {
+                confusingItemToAdd = new Anduril();
+            }
+            TreeStump tempTreeStump = (TreeStump) rareItem;
+            tempTreeStump.setConfusingProperty(confusingItemToAdd);
+        }
     }
 
     //*-------------------------------------------------------------------------
