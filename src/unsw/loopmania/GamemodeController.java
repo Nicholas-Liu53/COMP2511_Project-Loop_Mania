@@ -105,4 +105,11 @@ public class GamemodeController {
         worldController.startTimer();
         gameSwitcher.switchMenu();
     }
+
+    @FXML
+    private void setGamemodeToConfusing() throws IOException {
+        world.setGamemode("Confusing");
+        worldController.startTimer();
+        gameSwitcher.switchMenu();
+    }
 }
