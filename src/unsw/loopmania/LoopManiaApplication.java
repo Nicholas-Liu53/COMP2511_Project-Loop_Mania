@@ -40,6 +40,12 @@ public class LoopManiaApplication extends Application {
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
+        // Load the instructions menu
+        InstructionsController instructionsController = new InstructionsController();
+        FXMLLoader instructionsLoader = new FXMLLoader(getClass().getResource("InstructionsView.fxml"));
+        instructionsLoader.setController(instructionsController);
+        Parent instructionsRoot = instructionsLoader.load();
+
         // Load the game over screen
         FXMLLoader gameoverLoader = new FXMLLoader(getClass().getResource("GameOverView.fxml"));
         Parent gameoverRoot = gameoverLoader.load();
