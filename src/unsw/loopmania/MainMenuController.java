@@ -14,6 +14,7 @@ public class MainMenuController {
      */
     private MenuSwitcher gameSwitcher;
     private MenuSwitcher gamemodeSwitcher;
+    private MenuSwitcher instructionsSwitcher;
 
     @FXML
     private Button startGameButton;
@@ -44,5 +45,14 @@ public class MainMenuController {
     private void switchToGamemode() throws IOException {
         startGameButton.setText("Resume Game");
         gamemodeSwitcher.switchMenu();
+    }
+
+    public void setInstructionsSwitcher(MenuSwitcher instructionsSwitcher){
+        this.instructionsSwitcher = instructionsSwitcher;
+    }
+
+    @FXML
+    private void switchToInstructions() throws IOException {
+        instructionsSwitcher.switchMenu();
     }
 }

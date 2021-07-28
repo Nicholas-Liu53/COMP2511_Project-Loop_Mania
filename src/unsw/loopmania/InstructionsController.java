@@ -48,7 +48,7 @@ public class InstructionsController {
     /**
      * facilitates switching to main game
      */
-    private MenuSwitcher gameSwitcher;
+    private MenuSwitcher mainMenuSwitcher;
     
     public InstructionsController() {
         // Items
@@ -68,8 +68,8 @@ public class InstructionsController {
 
     }
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
-        this.gameSwitcher = gameSwitcher;
+    public void setMainMenuSwitcher(MenuSwitcher menuSwitcher){
+        this.mainMenuSwitcher = menuSwitcher;
     }
 
     /**
@@ -77,8 +77,8 @@ public class InstructionsController {
      * @throws IOException
      */
     @FXML
-    private void switchToGame() throws IOException {
-        gameSwitcher.switchMenu();
+    private void switchToMainMenu() throws IOException {
+        mainMenuSwitcher.switchMenu();
     }
 
 }

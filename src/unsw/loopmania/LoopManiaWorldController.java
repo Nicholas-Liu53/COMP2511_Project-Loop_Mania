@@ -267,6 +267,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private MenuSwitcher gameoverSwitcher;
     private MenuSwitcher gamewonSwitcher;
     private MenuSwitcher goalsMenuSwitcher;
+    private MenuSwitcher instructionsSwitcher;
     private GoalsMenuController goalsMenuController;
     private ShopMenuController shopMenuController;
 
@@ -1274,7 +1275,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
     }
@@ -1326,6 +1326,15 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     public LoopManiaWorld getWorld() {
         return this.world;
+    }
+    
+    public void setInstructionSwitcher(MenuSwitcher instructionsSwitcher){
+        this.instructionsSwitcher = instructionsSwitcher;
+    }
+
+    @FXML
+    private void switchToInstructions() throws IOException {
+        instructionsSwitcher.switchMenu();
     }
 
     /**

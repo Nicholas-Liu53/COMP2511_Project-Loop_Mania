@@ -22,7 +22,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="startGameButton" layoutX="499.0" layoutY="845.0" onAction="#switchToGame" text="Return to Main Menu" />
+            <Button fx:id="startGameButton" layoutX="499.0" layoutY="845.0" onAction="#switchToMainMenu" text="Return to Main Menu" />
             <ScrollPane layoutX="27.0" layoutY="57.0" prefHeight="758.0" prefWidth="1050.0">
                <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3845.0" prefWidth="1022.0">

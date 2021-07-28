@@ -102,6 +102,9 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             mainGameController.startTimer();
         });
+        mainMenuController.setInstructionsSwitcher(() -> {
+            switchToRoot(scene, instructionsRoot, primaryStage);
+        });
         mainMenuController.setGamemodeSwitcher(() -> {
             switchToRoot(scene, gamemodeRoot, primaryStage);
             // mainGameController.startTimer();
@@ -117,6 +120,9 @@ public class LoopManiaApplication extends Application {
         goalsMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
+        });
+        instructionsController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
         });
         
         // Deploy the main onto the stage
