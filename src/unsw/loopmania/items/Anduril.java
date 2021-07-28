@@ -9,6 +9,8 @@ import unsw.loopmania.enemies.Enemy;
  * represents an equipped or unequipped anduril in the backend world
  */
 public class Anduril extends Item implements WeaponStrategy {
+    private Item confusingItem;
+
     public Anduril(Pair<Integer, Integer> position) {
         super(position);
     }
@@ -20,5 +22,13 @@ public class Anduril extends Item implements WeaponStrategy {
     public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
         // Causes triple damage against bosses
         enemy.receiveAttack(baseDamage + 15);
+    }
+
+    public void setConfusingProperty(Item item) {
+        this.confusingItem = item;
+    }
+
+    public String getConfusingProperty() {
+        return confusingItem.getClass().getSimpleName();
     }
 }

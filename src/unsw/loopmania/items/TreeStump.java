@@ -3,6 +3,8 @@ package unsw.loopmania.items;
 import org.javatuples.Pair;
 
 public class TreeStump extends Armour implements ShieldStrategy {
+    private Item confusingItem;
+    
     public TreeStump(Pair<Integer, Integer> position) {
         super(position);
         this.damageReductionFactor = 0.6;
@@ -17,5 +19,13 @@ public class TreeStump extends Armour implements ShieldStrategy {
         // TreeStump provides 3 defence
         int recvDamage = (int) (damage * 0.45);
         return recvDamage;
+    }
+
+    public void setConfusingProperty(Item item) {
+        this.confusingItem = item;
+    }
+
+    public String getConfusingProperty() {
+        return confusingItem.getClass().getSimpleName();
     }
 }
