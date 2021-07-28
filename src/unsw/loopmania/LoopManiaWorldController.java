@@ -49,7 +49,7 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, WEAPON, BODYARMOUR, SHIELD, HELMET,
+    CARD, ITEM, WEAPON, BODYARMOUR, SHIELD, HELMET
 }
 
 /**
@@ -698,7 +698,14 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             } else if (item instanceof OneRing) {
                 view = new ImageView(theOneRingImage);
-                addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+                OneRing tempOneRing = (OneRing) item;
+                if (tempOneRing.getConfusingItem() instanceof Anduril) {
+                    addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+                } else if (tempOneRing.getConfusingItem() instanceof TreeStump)
+                    addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+                } else {
+                    addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+                }
             } else if (item instanceof DoggieCoin) {
                 view = new ImageView(doggieCoinImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
@@ -708,7 +715,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
             } else if (item instanceof TreeStump) {
                 view = new ImageView(treeStumpImage);
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
-            }
+            } 
 
             if (view != null) {
                 addEntity(item, view);
