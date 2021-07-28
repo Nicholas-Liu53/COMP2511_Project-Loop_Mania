@@ -1130,7 +1130,7 @@ public class LoopManiaWorld {
             if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getAttackRadius(), 2) && (e.getTranceCount() == 0)) {
 
-                if ((e instanceof ElanMuskeEnemy) && (new Random().nextInt(100) > 20)) {
+                if ((e instanceof ElanMuskeEnemy) && (new Random().nextInt(100) > 20) && (!e.getInBattle())) {
                     // Elan jumping implementation
                     e.moveUpPath();
                     e.moveUpPath();
