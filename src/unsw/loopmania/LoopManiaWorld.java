@@ -903,21 +903,26 @@ public class LoopManiaWorld {
      */
     public Item activateOneRing() {
         Item activatedOneRing = null;
-        if ((getCharacterHealth() > 0) || (getNumOneRing() == 0))
+        if ((getCharacterHealth() > 0) || (getNumOneRing() == 0)) {
             return activatedOneRing;
+        }
 
         boolean oneRingAvailable = false;
         for (Item item : this.unequippedInventoryItems) {
-            if (item instanceof OneRing) {
-                activatedOneRing = item;
-                removeUnequippedInventoryItem(activatedOneRing);
-                oneRingAvailable = true;
-                break;
+            if (item instanceof RareItem) {
+                RareItem rareItem = (RareItem) item;
+                if (rareItem instanceof OneRing || rareItem.getConfusingItem() instanceof OneRing) {
+                    activatedOneRing = (Item) rareItem;
+                    removeUnequippedInventoryItem(activatedOneRing);
+                    oneRingAvailable = true;
+                    break;
+                } 
             }
         }
 
-        if (oneRingAvailable)
+        if (oneRingAvailable) {
             character.restoreHealthPoints();
+        }
 
         healthProperty();
 
@@ -1954,6 +1959,7 @@ public class LoopManiaWorld {
         } else if (rareItem.getClass().getClass().getSimpleName().equals("Anduril")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new OneRing();
+                numOneRing++;
             } else {
                 confusingItemToAdd = new TreeStump();
             }
@@ -1962,6 +1968,7 @@ public class LoopManiaWorld {
         } else if (rareItem.getClass().getClass().getSimpleName().equals("TreeStump")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new OneRing();
+                numOneRing++;
             } else {
                 confusingItemToAdd = new Anduril();
             }
