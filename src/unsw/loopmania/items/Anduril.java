@@ -4,11 +4,12 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.Enemy;
+import unsw.loopmania.RareItem;
 
 /**
  * represents an equipped or unequipped anduril in the backend world
  */
-public class Anduril extends Item implements WeaponStrategy {
+public class Anduril extends Item implements WeaponStrategy, RareItem {
     private Item confusingItem;
 
     public Anduril(Pair<Integer, Integer> position) {
@@ -24,11 +25,11 @@ public class Anduril extends Item implements WeaponStrategy {
         enemy.receiveAttack(baseDamage + 15);
     }
 
-    public void setConfusingProperty(Item item) {
+    public void setConfusingItem(Item item) {
         this.confusingItem = item;
     }
 
-    public String getConfusingProperty() {
-        return confusingItem.getClass().getSimpleName();
+    public Item getConfusingItem() {
+        return confusingItem;
     }
 }

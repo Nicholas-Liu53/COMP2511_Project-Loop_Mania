@@ -1,8 +1,9 @@
 package unsw.loopmania.items;
 
 import org.javatuples.Pair;
+import unsw.loopmania.RareItem;
 
-public class OneRing extends Item {
+public class OneRing extends Item implements RareItem {
     private Item confusingItem;
 
     public OneRing(Pair<Integer, Integer> position) {
@@ -17,11 +18,11 @@ public class OneRing extends Item {
         return 100;
     }
 
-    public void setConfusingProperty(Item item) {
+    public void setConfusingItem(Item item) {
         this.confusingItem = item;
     }
 
-    public String getConfusingProperty() {
-        return confusingItem.getClass().getSimpleName();
+    public Item getConfusingItem() {
+        return confusingItem;
     }
 }

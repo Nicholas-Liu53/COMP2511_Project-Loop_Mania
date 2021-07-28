@@ -1,8 +1,9 @@
 package unsw.loopmania.items;
 
 import org.javatuples.Pair;
+import unsw.loopmania.RareItem;
 
-public class TreeStump extends Armour implements ShieldStrategy {
+public class TreeStump extends Armour implements ShieldStrategy, RareItem {
     private Item confusingItem;
     
     public TreeStump(Pair<Integer, Integer> position) {
@@ -21,11 +22,11 @@ public class TreeStump extends Armour implements ShieldStrategy {
         return recvDamage;
     }
 
-    public void setConfusingProperty(Item item) {
+    public void setConfusingItem(Item item) {
         this.confusingItem = item;
     }
 
-    public String getConfusingProperty() {
-        return confusingItem.getClass().getSimpleName();
+    public Item getConfusingItem() {
+        return confusingItem;
     }
 }
