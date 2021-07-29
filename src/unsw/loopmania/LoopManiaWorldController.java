@@ -151,6 +151,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
     @FXML
     private Label cycleOrCycles;
 
+    @FXML
+    private Label levelNum;
+
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -394,6 +397,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         world.goldProperty().bindBidirectional(goldNum.textProperty());
         world.xpProperty().bindBidirectional(xpNum.textProperty());
         world.alliesProperty().bindBidirectional(alliesNum.textProperty());
+        world.levelProperty().bindBidirectional(levelNum.textProperty());
 
         world.getNumCyclesProperty().bindBidirectional(currCycleNum.textProperty());
         world.getCyclesTillShopProperty().bindBidirectional(cyclesTillShop.textProperty());

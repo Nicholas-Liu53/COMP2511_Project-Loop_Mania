@@ -69,6 +69,13 @@ public class Character extends MovingEntity {
     }
 
     /**
+     * @return character's current level
+     */
+    public int getLevel() {
+        return this.level;
+    }
+
+    /**
      * @return true if the character is currently battling an enemy, else false
      */
     public boolean getInBattle() {

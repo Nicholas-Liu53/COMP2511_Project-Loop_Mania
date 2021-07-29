@@ -80,6 +80,7 @@ public class LoopManiaWorld {
     private StringProperty charXPProperty;
     private StringProperty charAlliesProperty;
     private StringProperty charGoalsProperty;
+    private StringProperty charLevelProperty;
     private int numSword;
     private int numStake;
     private int numStaff;
@@ -160,6 +161,7 @@ public class LoopManiaWorld {
         this.charGoldProperty = new SimpleStringProperty();
         this.charXPProperty = new SimpleStringProperty();
         this.charAlliesProperty = new SimpleStringProperty();
+        this.charLevelProperty = new SimpleStringProperty();
         this.charGoalsProperty = new SimpleStringProperty();
 
         this.numSwordProperty = new SimpleStringProperty();
@@ -1357,6 +1359,7 @@ public class LoopManiaWorld {
         goldProperty();
         xpProperty();
         alliesProperty();
+        levelProperty();
         goalsProperty();
         getNumCyclesProperty();
         getCyclesTillShopProperty();
@@ -1552,6 +1555,11 @@ public class LoopManiaWorld {
     public StringProperty alliesProperty() {
         this.charAlliesProperty.set(String.valueOf(character.getNumAllies()));
         return this.charAlliesProperty;
+    }
+
+    public StringProperty levelProperty() {
+        this.charLevelProperty.set(String.valueOf(character.getLevel()));
+        return this.charLevelProperty;
     }
 
     /**
