@@ -701,8 +701,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 OneRing tempOneRing = (OneRing) item;
                 if (tempOneRing.getConfusingItem() instanceof Anduril) {
                     addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+                    // System.out.println("DRAGGABLE_TYPE.WEAPON");
                 } else if (tempOneRing.getConfusingItem() instanceof TreeStump) {
                     addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+                    // System.out.println("DRAGGABLE_TYPE.SHIELD");
                 } else {
                     addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
                 }

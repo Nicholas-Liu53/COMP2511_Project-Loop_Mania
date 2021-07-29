@@ -709,7 +709,7 @@ public class LoopManiaWorld {
             case "OneRing":
                 item = new OneRing(firstAvailableSlot);
                 if (gamemode.equals("Confusing")) {
-                    processConfusingItem(item);
+                    item = processConfusingItem(item);
                 }
                 break;
             case "DoggieCoin":
@@ -718,12 +718,13 @@ public class LoopManiaWorld {
             case "Anduril":
                 item = new Anduril(firstAvailableSlot);
                 if (gamemode.equals("Confusing")) {
-                    processConfusingItem(item);
+                    item = processConfusingItem(item);
                 }
+                break;
             case "TreeStump":
                 item = new TreeStump(firstAvailableSlot);
                 if (gamemode.equals("Confusing")) {
-                    processConfusingItem(item);
+                    item = processConfusingItem(item);
                 }
                 break;
             default:
@@ -1503,12 +1504,12 @@ public class LoopManiaWorld {
         if (rewardSetting.equals("withCard")) {
             int rareItemRandom = rand.nextInt(500);
             if (this.rareItemNames.contains("the_one_ring")) {
-                if (rareItemRandom == 112) {
+                if (rareItemRandom == 0) {
                     return loadItem("OneRing");
                 }
             }
             if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
-                if (rareItemRandom == 121) {
+                if (rareItemRandom >= 0) {
                     return loadItem("Anduril");
                 }
             }
@@ -1946,9 +1947,9 @@ public class LoopManiaWorld {
         confusingGamemodeSeed = rand.nextInt(100);
     }
 
-    public void processConfusingItem(Item rareItem) {
+    public Item processConfusingItem(Item rareItem) {
         Item confusingItemToAdd;
-        if (rareItem.getClass().getClass().getSimpleName().equals("OneRing")) {
+        if (rareItem.getClass().getSimpleName().equals("OneRing")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new Anduril();
             } else {
@@ -1956,7 +1957,8 @@ public class LoopManiaWorld {
             }
             OneRing tempOneRing = (OneRing) rareItem;
             tempOneRing.setConfusingItem(confusingItemToAdd);
-        } else if (rareItem.getClass().getClass().getSimpleName().equals("Anduril")) {
+            rareItem = (Item) tempOneRing;
+        } else if (rareItem.getClass().getSimpleName().equals("Anduril")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new OneRing();
                 numOneRing++;
@@ -1964,8 +1966,9 @@ public class LoopManiaWorld {
                 confusingItemToAdd = new TreeStump();
             }
             Anduril tempAnduril = (Anduril) rareItem;
+            rareItem = (Item) tempAnduril;
             tempAnduril.setConfusingItem(confusingItemToAdd);
-        } else if (rareItem.getClass().getClass().getSimpleName().equals("TreeStump")) {
+        } else if (rareItem.getClass().getSimpleName().equals("TreeStump")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new OneRing();
                 numOneRing++;
@@ -1974,7 +1977,9 @@ public class LoopManiaWorld {
             }
             TreeStump tempTreeStump = (TreeStump) rareItem;
             tempTreeStump.setConfusingItem(confusingItemToAdd);
+            rareItem = (Item) tempTreeStump;
         }
+        return rareItem;
     }
 
     //*-------------------------------------------------------------------------
