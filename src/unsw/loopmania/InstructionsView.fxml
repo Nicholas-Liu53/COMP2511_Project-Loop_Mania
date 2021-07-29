@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<!-- TODO = modify and expand the range of menus available from the menu menu, and develop game modes you can select when starting a new game -->
+<!-- vertically stacked label and button -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="902.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="902.0" prefWidth="1121.0">
+         <children>
+            <Label alignment="CENTER" layoutX="409.0" layoutY="20.0" prefHeight="30.0" prefWidth="287.0" text="How to Play Loop Mania">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="startGameButton" layoutX="499.0" layoutY="845.0" onAction="#switchToMainMenu" text="Return to Main Menu" />
+            <ScrollPane layoutX="27.0" layoutY="57.0" prefHeight="758.0" prefWidth="1050.0">
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3845.0" prefWidth="1022.0">
+                     <children>
+                        <TextArea layoutX="9.0" layoutY="5.0" prefHeight="72.0" prefWidth="1021.0" text="Welcome to Loop Mania!&#10;&#10;A world where monsters roam. Defeat these enemies as you go to discover weapons, armour and other rare items to help you be the hero this world needs!" />
+                        <TextArea layoutX="10.0" layoutY="120.0" prefHeight="148.0" prefWidth="1020.0" text="Press Spacebar to Play/Pause the game.&#10;&#10;Your character will automatically walk through the map in a cycle, where it will pick up gold/health potions and battle enemies such as slugs. Upon killing enemies, you pick up a &#10;combination of cards, items, gold and XP.&#10;&#10;Press 'P' on your keyboard to consume Health Potions.&#10;&#10;Picking up cards/items with a full hand/inventory will remove the oldest card/item and compensate the player with gold and XP." />
+                        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="83.0" prefHeight="30.0" prefWidth="155.0" text="Basic Mechanics">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="498.0" prefHeight="30.0" prefWidth="155.0" text="Item Mechanics">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="11.0" layoutY="528.0" prefHeight="231.0" prefWidth="1018.0" text="There are 4 types of items available:&#10; 1. Weapons (Swords, Staff &amp; Stakes)&#10; 2. Armour (Helmets, Body Armour &amp; Shields)&#10; 3. Currency (Gold &amp; Doggie Coin)&#10; 4. Health Potions&#10;&#10;You can equip weapons and armour by dragging it into its respective equip slot. Equipping an already occupied slot will swap the items.&#10;&#10;Gold is the standard currency for the shop to buy/sell items. The price of the Doggie Coin fluctuates according to its market value.&#10;&#10;Press 'P' to consume health potions. It will restore ALL of your health points.&#10;&#10;There are also *Rare Items* out there, so keep your eyes peeled!" />
+                        <Label alignment="TOP_LEFT" layoutX="13.0" layoutY="1930.0" prefHeight="30.0" prefWidth="155.0" text="Card Mechanics">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="10.0" layoutY="1960.0" prefHeight="145.0" prefWidth="1020.0" text="Cards can be placed on the map to create buildings. These buildings have various properties such as spawning special types of enemies, restoring health points, providing additional &#10;damage to the player and giving the character allies -- helpers in battle.&#10;&#10;Some rules to follow for cards:&#10; - Villages, Barracks &amp; Traps can only be placed on path tiles.&#10; - Campfires can be placed on any non-path tile.&#10; - Every other card can only be placed on a non-path tile adjacent to the&#10;    path." />
+                        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="2779.0" prefHeight="30.0" prefWidth="161.0" text="Battle Mechanics">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="11.0" layoutY="2809.0" prefHeight="317.0" prefWidth="1018.0" text="Battles are automatically commenced when the Characters enters within the battle radius of an enemy. If the battle commences within another enemy's support radius, it will join in to help&#10;its fellow enemy in the fight against you. &#10;&#10;The battle radius for enemies are the following:&#10; - Slugs: 1 tile&#10; - Vampires: 2 tiles&#10; - Zombie: 2 tiles&#10; - Doggie: 1 tile&#10; - Elan Muske: 1 tile &#10;&#10;The support radius for enemies are the following:&#10; - Slugs: 1 tile&#10; - Vampires: 3 tiles&#10; - Zombie: 2 tiles&#10; - Doggie: 1 tile&#10; - Elan Muske: 1 tile&#10;&#10;You may pause the game during a battle and change your equipped items while the game is paused." />
+                        <ImageView fitHeight="656.0" fitWidth="924.0" layoutX="70.0" layoutY="2112.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@instructionimages/CardsBuildings.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="TOP_LEFT" layoutX="17.0" layoutY="282.0" prefHeight="30.0" prefWidth="224.0" text="Gamemodes Explained">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextArea layoutX="10.0" layoutY="319.0" prefHeight="167.0" prefWidth="1020.0" text="This game comes in four gamemodes: Survival, Berserker, Standard &amp; Confusing. These gamemodes can be set from the main menu when pressing the &quot;Set Gamemode&quot; button. &#10;Gamemodes can be changed mid-game.&#10;&#10; 1. Survival     -- Player can only purchase 1 Health Potion each time the Character shops at the Hero's Castle.&#10; 2. Berserker  -- Player cannot purchase more than 1 piece of armour each time it shops at the Hero's Castle.&#10; 3. Standard   -- No rules, enjoy the game as you please. :)&#10; 4. Confusing -- Rare items look the same as the original item, but have both their original properties/behaviour, and the added properties/behaviour of another random rare item.&#10;                   E.g. &quot;The One Ring&quot; may allow respawning upon death of the character (the original behaviour), and also enable the player to inflict a higher amount of damage against&#10;                          all enemies and triple damage against bosses (the added behaviour of the sword &quot;Anduril, Flame of the West&quot;)." />
+                        <ImageView fitHeight="914.0" fitWidth="782.0" layoutX="151.0" layoutY="769.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@instructionimages/Items.PNG" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="256.0" fitWidth="772.0" layoutX="151.0" layoutY="1692.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@instructionimages/Rareitems.PNG" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="677.0" fitWidth="930.0" layoutX="73.0" layoutY="3141.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@instructionimages/Enemies.PNG" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

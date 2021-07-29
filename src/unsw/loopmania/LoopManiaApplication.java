@@ -40,6 +40,12 @@ public class LoopManiaApplication extends Application {
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
+        // Load the instructions menu
+        InstructionsController instructionsController = new InstructionsController();
+        FXMLLoader instructionsLoader = new FXMLLoader(getClass().getResource("InstructionsView.fxml"));
+        instructionsLoader.setController(instructionsController);
+        Parent instructionsRoot = instructionsLoader.load();
+
         // Load the game over screen
         FXMLLoader gameoverLoader = new FXMLLoader(getClass().getResource("GameOverView.fxml"));
         Parent gameoverRoot = gameoverLoader.load();
@@ -96,6 +102,9 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             mainGameController.startTimer();
         });
+        mainMenuController.setInstructionsSwitcher(() -> {
+            switchToRoot(scene, instructionsRoot, primaryStage);
+        });
         mainMenuController.setGamemodeSwitcher(() -> {
             switchToRoot(scene, gamemodeRoot, primaryStage);
             // mainGameController.startTimer();
@@ -111,6 +120,9 @@ public class LoopManiaApplication extends Application {
         goalsMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
+        });
+        instructionsController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
         });
         
         // Deploy the main onto the stage

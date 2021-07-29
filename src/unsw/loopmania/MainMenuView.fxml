@@ -48,6 +48,11 @@
                   <Font size="14.0" />
                </font>
             </Button>
+            <Button fx:id="instructionsButton" cancelButton="true" layoutX="203.0" layoutY="337.0" onAction="#switchToInstructions" prefHeight="78.0" prefWidth="123.0" text="How to Play">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
