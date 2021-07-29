@@ -3,7 +3,10 @@ package unsw.loopmania.items;
 import org.javatuples.Pair;
 import unsw.loopmania.RareItem;
 
-public class OneRing extends Item implements RareItem {
+import unsw.loopmania.character.Character;
+import unsw.loopmania.enemies.Enemy;
+
+public class OneRing extends Item implements RareItem, WeaponStrategy {
     private Item confusingItem;
 
     public OneRing(Pair<Integer, Integer> position) {
@@ -24,5 +27,10 @@ public class OneRing extends Item implements RareItem {
 
     public Item getConfusingItem() {
         return confusingItem;
+    }
+
+    public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
+        WeaponStrategy weapon = (WeaponStrategy)confusingItem;
+        weapon.launchAttack(enemy, baseDamage, mainChar);
     }
 }

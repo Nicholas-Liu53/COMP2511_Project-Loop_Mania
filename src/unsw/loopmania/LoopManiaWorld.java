@@ -1504,12 +1504,12 @@ public class LoopManiaWorld {
         if (rewardSetting.equals("withCard")) {
             int rareItemRandom = rand.nextInt(500);
             if (this.rareItemNames.contains("the_one_ring")) {
-                if (rareItemRandom == 0) {
+                if (rareItemRandom >= 0) {
                     return loadItem("OneRing");
                 }
             }
             if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
-                if (rareItemRandom >= 0) {
+                if (rareItemRandom == 121) {
                     return loadItem("Anduril");
                 }
             }

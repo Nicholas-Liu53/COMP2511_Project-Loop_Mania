@@ -923,6 +923,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                     loadItem(world.loadItem("Stake"));
                                 else if (oldWeapon instanceof Anduril)
                                     loadItem(world.loadItem("Anduril"));
+                                else if (oldWeapon instanceof OneRing)
+                                    loadItem(world.loadItem("OneRing"));
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
