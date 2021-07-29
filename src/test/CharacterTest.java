@@ -172,4 +172,34 @@ public class CharacterTest {
         character.giveGold(100);
         assertEquals(1100, character.getGold());
     }
+
+    @Test
+    public void levelsTest() {
+        Character character = new Character(null);
+        SlugEnemy enemy = new SlugEnemy(null);
+        // Give character enough exprience to level up and test health/damage
+        character.giveExperiencePoints(1000);
+        character.launchAttack(enemy, false);
+        character.restoreHealthPoints();
+        assertEquals(19, enemy.getHealth());
+        assertEquals(110, character.getHealth());
+
+        character.giveExperiencePoints(1000);
+        character.launchAttack(enemy, false);
+        character.restoreHealthPoints();
+        assertEquals(12, enemy.getHealth());
+        assertEquals(120, character.getHealth());
+
+        character.giveExperiencePoints(1000);
+        character.launchAttack(enemy, false);
+        character.restoreHealthPoints();
+        assertEquals(4, enemy.getHealth());
+        assertEquals(130, character.getHealth());
+
+        character.giveExperiencePoints(1000);
+        character.launchAttack(enemy, false);
+        character.restoreHealthPoints();
+        assertEquals(0, enemy.getHealth());
+        assertEquals(140, character.getHealth());
+    }
 }
