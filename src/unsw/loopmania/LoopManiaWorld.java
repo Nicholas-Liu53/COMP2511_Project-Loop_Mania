@@ -1228,34 +1228,8 @@ public class LoopManiaWorld {
         // braedon said something about using ItemType instead of string (this is a good
         // design, so yay)
         // simple integer property design is ugly, maybe improve it wait pair ??
-        Card card = null;
         Pair<Integer, Integer> position = new Pair<Integer, Integer>(this.cardEntities.size(), 0);
-
-        switch (cardType) {
-            case "BarracksCard":
-                card = new BarracksCard(position);
-                break;
-            case "CampfireCard":
-                card = new CampfireCard(position);
-                break;
-            case "TowerCard":
-                card = new TowerCard(position);
-                break;
-            case "TrapCard":
-                card = new TrapCard(position);
-                break;
-            case "VillageCard":
-                card = new VillageCard(position);
-                break;
-            case "ZombiePitCard":
-                card = new ZombiePitCard(position);
-                break;
-            case "VampireCastleCard":
-                card = new VampireCastleCard(position);
-                break;
-            default:
-                break;
-        }
+        Card card = BuildingCardFactory.getCard(cardType, position);
 
         if (card != null)
             this.cardEntities.add(card);
@@ -1287,21 +1261,8 @@ public class LoopManiaWorld {
         if (!canPlaceCard(newLocation, card))
             return null;
 
-        Building newBuilding = null;
-        if (card instanceof BarracksCard)
-            newBuilding = new BarracksBuilding(newLocation);
-        else if (card instanceof CampfireCard)
-            newBuilding = new CampfireBuilding(newLocation);
-        else if (card instanceof TowerCard)
-            newBuilding = new TowerBuilding(newLocation);
-        else if (card instanceof TrapCard)
-            newBuilding = new TrapBuilding(newLocation);
-        else if (card instanceof VampireCastleCard)
-            newBuilding = new VampireCastleBuilding(newLocation);
-        else if (card instanceof VillageCard)
-            newBuilding = new VillageBuilding(newLocation);
-        else if (card instanceof ZombiePitCard)
-            newBuilding = new ZombiePitBuilding(newLocation);
+        // Taking advantage of factory pattern
+        Building newBuilding = BuildingFactory.getBuilding(card, newLocation);
 
         if (newBuilding != null) {
             this.observers.add(newBuilding);
