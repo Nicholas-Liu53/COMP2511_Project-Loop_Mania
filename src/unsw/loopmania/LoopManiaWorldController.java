@@ -961,10 +961,12 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                     loadItem(world.loadItem("Staff"));
                                 else if (oldWeapon instanceof Stake)
                                     loadItem(world.loadItem("Stake"));
-                                else if (oldWeapon instanceof Anduril)
+                                    else if (oldWeapon instanceof Anduril)
                                     loadItem(world.loadItem("Anduril"));
                                 else if (oldWeapon instanceof OneRing)
                                     loadItem(world.loadItem("OneRing"));
+                                else if (oldWeapon instanceof TreeStump)
+                                    loadItem(world.loadItem("TreeStump"));
                                 // Placing in sword cell
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
@@ -983,6 +985,12 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 // Place shield back in inventory
                                 if (oldShield instanceof Shield)
                                     loadItem(world.loadItem("Shield"));
+                                else if (oldShield instanceof Anduril)
+                                    loadItem(world.loadItem("Anduril"));
+                                else if (oldShield instanceof OneRing)
+                                    loadItem(world.loadItem("OneRing"));
+                                else if (oldShield instanceof TreeStump)
+                                    loadItem(world.loadItem("TreeStump"));
                                 // Placing in shield cell
                                 targetGridPane.add(image, 2, 1, 1, 1);
                                 break;
