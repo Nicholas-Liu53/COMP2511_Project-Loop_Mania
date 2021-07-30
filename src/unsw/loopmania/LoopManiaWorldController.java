@@ -49,7 +49,7 @@ import java.io.IOException;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, WEAPON, BODYARMOUR, SHIELD, HELMET
+    CARD, ITEM, WEAPON, BODYARMOUR, SHIELD, HELMET, RAREITEM
 }
 
 /**
@@ -222,8 +222,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * the ImageView being dragged allows us to spawn it again in the drop location
      * if appropriate.
      */
-    // TODO = it would be a good idea for you to instead replace this with the
-    // building/item which should be dropped
     private ImageView currentlyDraggedImage;
 
     /**
@@ -711,10 +709,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
                 addDragEventHandlers(item, view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             } else if (item instanceof Anduril) {
                 view = new ImageView(andurilImage);
-                addDragEventHandlers(item, view, DRAGGABLE_TYPE.WEAPON, unequippedInventory, equippedItems);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.RAREITEM, unequippedInventory, equippedItems);
             } else if (item instanceof TreeStump) {
                 view = new ImageView(treeStumpImage);
-                addDragEventHandlers(item, view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+                addDragEventHandlers(item, view, DRAGGABLE_TYPE.RAREITEM, unequippedInventory, equippedItems);
             } 
 
             if (view != null) {
@@ -904,6 +902,52 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                         removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                         currentlyDraggedImage = null;
                                         currentlyDraggedType = null;
+                                    }
+                                }
+                                break;
+                            case RAREITEM: 
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                Entity tempEntity = world.getUnequippedInventoryItemEntityByCoordinates(nodeX, nodeY);
+                                Item tempItem = (Item) tempEntity;
+                                TreeStump tempTreeStump = null;
+                                Anduril tempAnduril = null;
+                                if (x == 0 && y == 1) {
+                                    if (tempItem instanceof TreeStump) {
+                                        tempTreeStump = (TreeStump) tempItem;
+                                    }
+                                    if (tempTreeStump != null || tempItem instanceof Anduril) {
+                                        WeaponStrategy oldWeapon = world.equipWeaponByCoordinates(nodeX, nodeY);
+                                        // Place weapon back in inventory
+                                        if (oldWeapon instanceof Sword)
+                                            loadItem(world.loadItem("Sword"));
+                                        else if (oldWeapon instanceof Staff)
+                                            loadItem(world.loadItem("Staff"));
+                                        else if (oldWeapon instanceof Stake)
+                                            loadItem(world.loadItem("Stake"));
+                                        else if (oldWeapon instanceof Anduril)
+                                            loadItem(world.loadItem("Anduril"));
+                                        else if (oldWeapon instanceof OneRing)
+                                            loadItem(world.loadItem("OneRing"));
+                                        else if (oldWeapon instanceof TreeStump)
+                                            loadItem(world.loadItem("TreeStump"));
+                                        // Placing in sword cell
+                                        targetGridPane.add(image, 0, 1, 1, 1);
+                                    }
+                                } else if (x == 2 && y == 1) {
+                                    if (tempItem instanceof Anduril) {
+                                        tempAnduril = (Anduril) tempItem;
+                                    }
+                                    if (tempAnduril != null || tempItem instanceof TreeStump) {
+                                        ShieldStrategy oldShield = (ShieldStrategy) world.equipArmourByCoordinates(nodeX, nodeY);
+                                        // Place shield back in inventory
+                                        if (oldShield instanceof Anduril)
+                                            loadItem(world.loadItem("Anduril"));
+                                        else if (oldShield instanceof OneRing)
+                                            loadItem(world.loadItem("OneRing"));
+                                        else if (oldShield instanceof TreeStump)
+                                            loadItem(world.loadItem("TreeStump"));
+                                        // Placing in shield cell
+                                        targetGridPane.add(image, 2, 1, 1, 1);
                                     }
                                 }
                                 break;
@@ -1276,7 +1320,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
     }
@@ -1370,7 +1413,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * @param node
      */
     private void trackPosition(Entity entity, Node node) {
-        // TODO = tweak this slightly to remove items from the equipped inventory?
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
 

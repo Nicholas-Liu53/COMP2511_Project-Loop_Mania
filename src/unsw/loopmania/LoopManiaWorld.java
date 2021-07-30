@@ -844,7 +844,7 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+    public Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
         for (Entity e : this.unequippedInventoryItems) {
             if ((e.getX() == x) && (e.getY() == y)) {
                 return e;
@@ -1502,19 +1502,19 @@ public class LoopManiaWorld {
         // small chance to get a oneRing when a battle is won
         // i.e. rewardSetting is "withCard"
         if (rewardSetting.equals("withCard")) {
-            int rareItemRandom = rand.nextInt(500);
+            int rareItemRandom = rand.nextInt(300);
             if (this.rareItemNames.contains("the_one_ring")) {
-                if (rareItemRandom >= 0) {
+                if (rareItemRandom  <= 100) {
                     return loadItem("OneRing");
                 }
             }
             if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
-                if (rareItemRandom == 121) {
+                if (rareItemRandom <= 200) {
                     return loadItem("Anduril");
                 }
             }
             if (this.rareItemNames.contains("tree_stump")) {
-                if (rareItemRandom == 211) {
+                if (rareItemRandom <= 300) {
                     return loadItem("TreeStump");
                 }
             }
@@ -1944,7 +1944,7 @@ public class LoopManiaWorld {
 
     public void setConfusingGamemodeSeed() {
         Random rand = new Random();
-        confusingGamemodeSeed = rand.nextInt(100);
+        confusingGamemodeSeed = rand.nextInt(50);
     }
 
     public Item processConfusingItem(Item rareItem) {
