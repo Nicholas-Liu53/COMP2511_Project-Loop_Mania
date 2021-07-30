@@ -10,6 +10,7 @@ import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.buildingcards.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.character.Character;
 import unsw.loopmania.path.PathPosition;
@@ -372,5 +373,44 @@ public class BuildingsTests {
         // System.out.println("[" + mainChar.getHealth() + ", " + vampire.getHealth() +
         // "]");
         assertEquals(vampire.getHealth(), 67);
+    }
+
+    @Test
+    public void buildingFactoryTest() {
+        /**
+         * Testing our factory pattern, used for generating buildings and building cards
+         */
+
+        Card card = null;
+        Pair<Integer, Integer> location = new Pair<Integer, Integer>(1, 2);
+
+        // Setting up card and then using card to set up a building of the correct type
+        card = BuildingCardFactory.getCard("BarracksCard", location);
+        assertTrue(card instanceof BarracksCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof BarracksBuilding);
+
+        card = BuildingCardFactory.getCard("CampfireCard", location);
+        assertTrue(card instanceof CampfireCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof CampfireBuilding);
+
+        card = BuildingCardFactory.getCard("TowerCard", location);
+        assertTrue(card instanceof TowerCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof TowerBuilding);
+
+        card = BuildingCardFactory.getCard("TrapCard", location);
+        assertTrue(card instanceof TrapCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof TrapBuilding);
+
+        card = BuildingCardFactory.getCard("VampireCastleCard", location);
+        assertTrue(card instanceof VampireCastleCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof VampireCastleBuilding);
+
+        card = BuildingCardFactory.getCard("VillageCard", location);
+        assertTrue(card instanceof VillageCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof VillageBuilding);
+
+        card = BuildingCardFactory.getCard("ZombiePitCard", location);
+        assertTrue(card instanceof ZombiePitCard);
+        assertTrue(BuildingFactory.getBuilding(card, location) instanceof ZombiePitBuilding);
     }
 }
