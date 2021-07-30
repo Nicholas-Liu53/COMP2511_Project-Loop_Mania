@@ -25,9 +25,9 @@ import unsw.loopmania.path.*;
  * can occupy the same square.
  */
 public class LoopManiaWorld {
-    // *-------------------------------------------------------------------------
-    // * Variables
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Variables
+    //*-------------------------------------------------------------------------
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
 
@@ -93,6 +93,7 @@ public class LoopManiaWorld {
     private int numAnduril;
     private int numTreeStump;
     private int doggieCoinPrice;
+    private int confusingGamemodeSeed;
     private StringProperty numSwordProperty;
     private StringProperty numStakeProperty;
     private StringProperty numStaffProperty;
@@ -121,9 +122,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    // --------------------------------------------------------------------------
-    // Constructor
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                              Constructor
+    //--------------------------------------------------------------------------
     /**
      * create the world (constructor)
      * 
@@ -194,11 +195,12 @@ public class LoopManiaWorld {
         this.numDoggieCoin = 0;
         this.numAnduril = 0;
         this.numTreeStump = 0;
+        this.confusingGamemodeSeed = 0;
     }
 
-    // --------------------------------------------------------------------------
-    // General Methods
-    // --------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //                          General Methods
+    //--------------------------------------------------------------------------
     /**
      * Returns the width of the map
      * 
@@ -420,9 +422,9 @@ public class LoopManiaWorld {
         return this.startingPoint;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Spawn
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Spawn
+    //*-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * 
@@ -603,9 +605,9 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Items/Inventory
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Items/Inventory
+    //*-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
         return Math.pow((getCharacterX() - item.getX()), 2) + Math.pow((getCharacterY() - item.getY()), 2) == 0;
     }
@@ -708,14 +710,24 @@ public class LoopManiaWorld {
                 break;
             case "OneRing":
                 item = new OneRing(firstAvailableSlot);
+                if (gamemode.equals("Confusing")) {
+                    item = processConfusingItem(item);
+                }
                 break;
             case "DoggieCoin":
                 item = new DoggieCoin(firstAvailableSlot);
                 break;
             case "Anduril":
                 item = new Anduril(firstAvailableSlot);
+                if (gamemode.equals("Confusing")) {
+                    item = processConfusingItem(item);
+                }
+                break;
             case "TreeStump":
                 item = new TreeStump(firstAvailableSlot);
+                if (gamemode.equals("Confusing")) {
+                    item = processConfusingItem(item);
+                }
                 break;
             default:
                 break;
@@ -834,7 +846,7 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+    public Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
         for (Entity e : this.unequippedInventoryItems) {
             if ((e.getX() == x) && (e.getY() == y)) {
                 return e;
@@ -894,21 +906,26 @@ public class LoopManiaWorld {
      */
     public Item activateOneRing() {
         Item activatedOneRing = null;
-        if ((getCharacterHealth() > 0) || (getNumOneRing() == 0))
+        if ((getCharacterHealth() > 0) || (getNumOneRing() == 0)) {
             return activatedOneRing;
+        }
 
         boolean oneRingAvailable = false;
         for (Item item : this.unequippedInventoryItems) {
-            if (item instanceof OneRing) {
-                activatedOneRing = item;
-                removeUnequippedInventoryItem(activatedOneRing);
-                oneRingAvailable = true;
-                break;
+            if (item instanceof RareItem) {
+                RareItem rareItem = (RareItem) item;
+                if (rareItem instanceof OneRing || rareItem.getConfusingItem() instanceof OneRing) {
+                    activatedOneRing = (Item) rareItem;
+                    removeUnequippedInventoryItem(activatedOneRing);
+                    oneRingAvailable = true;
+                    break;
+                } 
             }
         }
 
-        if (oneRingAvailable)
+        if (oneRingAvailable) {
             character.restoreHealthPoints();
+        }
 
         healthProperty();
 
@@ -1105,9 +1122,9 @@ public class LoopManiaWorld {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Battles
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Battles
+    //*-------------------------------------------------------------------------
     /**
      * kill an enemy
      * 
@@ -1195,9 +1212,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Building Cards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Building Cards
+    //*-------------------------------------------------------------------------
     /**
      * checks if card pile if full i.e. has attained it max width, if so, then
      * removes card the oldest card of cards (as per position in gridpane of
@@ -1345,9 +1362,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Movement
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Movement
+    //*-------------------------------------------------------------------------
     /**
      * Run moves which occur with every tick without needing to spawn anything
      * immediately
@@ -1463,9 +1480,9 @@ public class LoopManiaWorld {
         return true;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Rewards
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Rewards
+    //*-------------------------------------------------------------------------
     /**
      * Gives various rewards on type on mode selected Various modes are withCard,
      * noCard, and OnlyGoldXP
@@ -1488,16 +1505,22 @@ public class LoopManiaWorld {
         // small chance to get a oneRing when a battle is won
         // i.e. rewardSetting is "withCard"
         if (rewardSetting.equals("withCard")) {
-            int rareItemRandom = rand.nextInt(500);
-            if (this.rareItemNames.contains("the_one_ring"))
-                if (rareItemRandom == 112)
+            int rareItemRandom = rand.nextInt(100);
+            if (this.rareItemNames.contains("the_one_ring")) {
+                if (rareItemRandom == 50) {
                     return loadItem("OneRing");
-            if (this.rareItemNames.contains("anduril_flame_of_the_west"))
-                if (rareItemRandom == 121)
+                }
+            }
+            if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
+                if (rareItemRandom == 25) {
                     return loadItem("Anduril");
-            if (this.rareItemNames.contains("tree_stump"))
-                if (rareItemRandom == 211)
+                }
+            }
+            if (this.rareItemNames.contains("tree_stump")) {
+                if (rareItemRandom == 75) {
                     return loadItem("TreeStump");
+                }
+            }
         }
 
         switch (rewardSetting) {
@@ -1534,9 +1557,9 @@ public class LoopManiaWorld {
         return rewarded;
     }
 
-    // *-------------------------------------------------------------------------
-    // * UIS
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                                 UIS
+    //*-------------------------------------------------------------------------
     /**
      * Updates the string property of health points
      * 
@@ -1767,9 +1790,9 @@ public class LoopManiaWorld {
         return this.doggieCoinPriceProperty;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Buildings Helper Functions
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                     Buildings Helper Functions
+    //*-------------------------------------------------------------------------
 
     /**
      * Returns boolean value of whether the moving entity is in the campfire radius
@@ -1891,9 +1914,9 @@ public class LoopManiaWorld {
         return this.buildingEntities;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Observer
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Observer
+    //*-------------------------------------------------------------------------
     /**
      * Adds an observer to connect this backend to a frontend
      * 
@@ -1903,9 +1926,9 @@ public class LoopManiaWorld {
         this.observers.add(wc);
     }
 
-    // *-------------------------------------------------------------------------
-    // * Game Mode
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Game Mode
+    //*-------------------------------------------------------------------------
     /**
      * Sets the gamemode of the game
      * 
@@ -1913,6 +1936,9 @@ public class LoopManiaWorld {
      */
     public void setGamemode(String gamemode) {
         this.gamemode = gamemode;
+        if (gamemode.equals("Confusing")) {
+            setConfusingGamemodeSeed();
+        }
     }
 
     /**
@@ -1924,9 +1950,49 @@ public class LoopManiaWorld {
         return this.gamemode;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Goals
-    // *-------------------------------------------------------------------------
+    public void setConfusingGamemodeSeed() {
+        Random rand = new Random();
+        confusingGamemodeSeed = rand.nextInt(100);
+    }
+
+    public Item processConfusingItem(Item rareItem) {
+        Item confusingItemToAdd;
+        if (rareItem.getClass().getSimpleName().equals("OneRing")) {
+            if (confusingGamemodeSeed > 50) {
+                confusingItemToAdd = new Anduril();
+            } else {
+                confusingItemToAdd = new TreeStump();
+            }
+            OneRing tempOneRing = (OneRing) rareItem;
+            tempOneRing.setConfusingItem(confusingItemToAdd);
+            rareItem = (Item) tempOneRing;
+        } else if (rareItem.getClass().getSimpleName().equals("Anduril")) {
+            if (confusingGamemodeSeed > 50) {
+                confusingItemToAdd = new OneRing();
+                numOneRing++;
+            } else {
+                confusingItemToAdd = new TreeStump();
+            }
+            Anduril tempAnduril = (Anduril) rareItem;
+            rareItem = (Item) tempAnduril;
+            tempAnduril.setConfusingItem(confusingItemToAdd);
+        } else if (rareItem.getClass().getSimpleName().equals("TreeStump")) {
+            if (confusingGamemodeSeed > 50) {
+                confusingItemToAdd = new OneRing();
+                numOneRing++;
+            } else {
+                confusingItemToAdd = new Anduril();
+            }
+            TreeStump tempTreeStump = (TreeStump) rareItem;
+            tempTreeStump.setConfusingItem(confusingItemToAdd);
+            rareItem = (Item) tempTreeStump;
+        }
+        return rareItem;
+    }
+
+    //*-------------------------------------------------------------------------
+    //*                             Goals
+    //*-------------------------------------------------------------------------
     /**
      * Returns boolean of whether the goal has been achieved
      * 
