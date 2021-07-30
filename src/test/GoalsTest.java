@@ -178,7 +178,6 @@ public class GoalsTest {
         for (int i = 0; i < 5000; i++) {
             testWorld.runTickMoves();
         }
-        System.err.println(testWorld.getCurrCycle());
 
         mainChar.giveExperiencePoints(11000);
 
