@@ -1505,19 +1505,19 @@ public class LoopManiaWorld {
         // small chance to get a oneRing when a battle is won
         // i.e. rewardSetting is "withCard"
         if (rewardSetting.equals("withCard")) {
-            int rareItemRandom = rand.nextInt(300);
+            int rareItemRandom = rand.nextInt(100);
             if (this.rareItemNames.contains("the_one_ring")) {
-                if (rareItemRandom  <= 100) {
+                if (rareItemRandom == 50) {
                     return loadItem("OneRing");
                 }
             }
             if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
-                if (rareItemRandom <= 200) {
+                if (rareItemRandom == 25) {
                     return loadItem("Anduril");
                 }
             }
             if (this.rareItemNames.contains("tree_stump")) {
-                if (rareItemRandom <= 300) {
+                if (rareItemRandom == 75) {
                     return loadItem("TreeStump");
                 }
             }
@@ -1952,7 +1952,7 @@ public class LoopManiaWorld {
 
     public void setConfusingGamemodeSeed() {
         Random rand = new Random();
-        confusingGamemodeSeed = rand.nextInt(50);
+        confusingGamemodeSeed = rand.nextInt(100);
     }
 
     public Item processConfusingItem(Item rareItem) {
