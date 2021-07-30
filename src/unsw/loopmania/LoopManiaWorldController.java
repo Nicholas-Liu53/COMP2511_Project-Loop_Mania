@@ -344,8 +344,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
     @FXML
     public void initialize() {
-        // TODO = load more images/entities during initialization
-
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
         Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
@@ -838,9 +836,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * @param targetGridPane the gridpane the human player should be dragging to
      *                       (but we of course cannot guarantee they will do so)
      */
-    private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
-            GridPane targetGridPane) {
-        // TODO = be more selective about where something can be dropped
+    private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane) {
         // for example, in the specification, villages can only be dropped on path,
         // whilst vampire castles cannot go on the path
 
@@ -930,8 +926,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 break;
                             case BODYARMOUR:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                BodyArmourStrategy oldBodyArmour = (BodyArmourStrategy) world
-                                        .equipArmourByCoordinates(nodeX, nodeY);
+                                BodyArmourStrategy oldBodyArmour = (BodyArmourStrategy) world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place armour back in inventory
                                 if (oldBodyArmour instanceof BodyArmour)
                                     loadItem(world.loadItem("BodyArmour"));
@@ -940,8 +935,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 break;
                             case SHIELD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                ShieldStrategy oldShield = (ShieldStrategy) world.equipArmourByCoordinates(nodeX,
-                                        nodeY);
+                                ShieldStrategy oldShield = (ShieldStrategy) world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place shield back in inventory
                                 if (oldShield instanceof Shield)
                                     loadItem(world.loadItem("Shield"));
@@ -950,8 +944,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 break;
                             case HELMET:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                HelmetStrategy oldHelmet = (HelmetStrategy) world.equipArmourByCoordinates(nodeX,
-                                        nodeY);
+                                HelmetStrategy oldHelmet = (HelmetStrategy) world.equipArmourByCoordinates(nodeX, nodeY);
                                 // Place helmet back in inventory
                                 if (oldHelmet instanceof Helmet)
                                     loadItem(world.loadItem("Helmet"));
@@ -1121,8 +1114,6 @@ public class LoopManiaWorldController implements WorldStateObserver {
                     // these do not affect visibility of original image...
                     // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
                     gridPaneNodeSetOnDragEntered.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = be more selective about whether highlighting changes - if it cannot be
-                        // dropped in the location, the location shouldn't be highlighted!
                         public void handle(DragEvent event) {
                             if (currentlyDraggedType == draggableType) {
                                 switch (draggableType) {

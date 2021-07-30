@@ -9,7 +9,7 @@ import unsw.loopmania.RareItem;
 /**
  * represents an equipped or unequipped anduril in the backend world
  */
-public class Anduril extends Item implements WeaponStrategy, RareItem {
+public class Anduril extends Item implements WeaponStrategy, RareItem, ShieldStrategy {
     private Item confusingItem;
 
     public Anduril(Pair<Integer, Integer> position) {
@@ -31,5 +31,11 @@ public class Anduril extends Item implements WeaponStrategy, RareItem {
 
     public Item getConfusingItem() {
         return confusingItem;
+    }
+
+    public int receiveAttack(int damage) {
+        // TreeStump provides 3 defence
+        ShieldStrategy shield = (ShieldStrategy) confusingItem;
+        return shield.receiveAttack(damage);
     }
 }
