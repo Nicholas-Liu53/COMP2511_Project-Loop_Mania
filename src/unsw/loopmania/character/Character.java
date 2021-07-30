@@ -16,7 +16,9 @@ import unsw.loopmania.items.WeaponStrategy;
  */
 public class Character extends MovingEntity {
     private int health;
-    private final int damage = 5;
+    private int maxHealth;
+    private int level;
+    private int damage;
     private ArrayList<Enemy> enemiesCurrentlyBattling;
     private WeaponStrategy weaponStrat;
     private BodyArmourStrategy bodyArmourStrat;
@@ -37,6 +39,9 @@ public class Character extends MovingEntity {
     public Character(PathPosition position) {
         super(position);
         this.health = 100;
+        this.maxHealth = 100;
+        this.level = 0;
+        this.damage = 5;
         this.enemiesCurrentlyBattling = new ArrayList<>();
         this.weaponStrat = new Melee();
         this.bodyArmourStrat = new Melee();
@@ -61,6 +66,13 @@ public class Character extends MovingEntity {
      */
     public int getDamage() {
         return this.damage;
+    }
+
+    /**
+     * @return character's current level
+     */
+    public int getLevel() {
+        return this.level;
     }
 
     /**
@@ -284,8 +296,20 @@ public class Character extends MovingEntity {
         this.helmetStrat = item;
     }
 
+    /**
+     * Gives character XP, and levels them up each time 1000 xp is acquired
+     * 
+     * @param xp
+     */
     public void giveExperiencePoints(int xp) {
-        this.experience += xp; // max xp?
+        this.experience += xp;
+
+        // Leveling up
+        if ((this.experience / 1000) > this.level) {
+            this.level++;
+            this.damage++;
+            this.maxHealth += 10;
+        }
     }
 
     /**
@@ -316,14 +340,14 @@ public class Character extends MovingEntity {
      * Restores Character's health to maximum
      */
     public void restoreHealthPoints() {
-        this.health = 100;
+        this.health = this.maxHealth;
     }
 
     /**
      * @return true if character has full health
      */
     public boolean isFullHealth() {
-        return this.health == 100;
+        return this.health == this.maxHealth;
     }
 
     @Override
