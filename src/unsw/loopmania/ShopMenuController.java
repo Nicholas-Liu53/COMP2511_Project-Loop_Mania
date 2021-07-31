@@ -36,6 +36,8 @@ import javafx.scene.control.Label;
 // import javafx.scene.input.MouseEvent;
 // import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.AudioClip;
+
 // import javafx.util.Duration;
 import org.javatuples.Pair;
 import unsw.loopmania.items.*;
@@ -331,6 +333,8 @@ public class ShopMenuController {
                         world.giveGold(HealthPotion.getSellPrice());
                         break;
                     case "DoggieCoin":
+                        AudioClip doggieCoinSellSound = new AudioClip("file:src/sounds/doggiecoinsell.wav");
+                        doggieCoinSellSound.play();
                         world.giveGold(world.getDoggieCoinPrice());
                         break;
                     default:
@@ -532,6 +536,16 @@ public class ShopMenuController {
 
     public void resetResponseText() {
         shopResponseLabel.setText("");
+    }
+
+    private void sellSound() {
+        AudioClip sellSound = new AudioClip("file:src/sounds/sellsound.wav");
+        sellSound.play();
+    }
+
+    private void buySound() {
+        AudioClip buySound = new AudioClip("file:src/sounds/buysound.wav");
+        buySound.play();
     }
 
     public void setCountersToZero() {
