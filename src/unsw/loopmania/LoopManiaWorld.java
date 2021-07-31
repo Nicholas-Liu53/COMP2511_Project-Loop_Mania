@@ -1,11 +1,14 @@
 package unsw.loopmania;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
 
+import javafx.scene.media.AudioClip;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import unsw.loopmania.buildingcards.*;
@@ -893,8 +896,12 @@ public class LoopManiaWorld {
             }
         }
 
-        if (potionFound)
+        if (potionFound) {
             character.restoreHealthPoints();
+            // String s = "src/sounds/healthpotion.wav";
+            AudioClip drinkHealthPotion = new AudioClip("file:src/sounds/healthpotion.wav");
+            drinkHealthPotion.play();
+        }
 
         healthProperty();
     }
