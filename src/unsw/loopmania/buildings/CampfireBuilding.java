@@ -7,6 +7,6 @@ import org.javatuples.Pair;
  */
 public class CampfireBuilding extends Building {
     public CampfireBuilding(Pair<Integer, Integer> position) {
-        super(position, 5);
+        super(position, 4);
     }
 }

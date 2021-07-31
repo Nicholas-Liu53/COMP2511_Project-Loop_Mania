@@ -15,6 +15,7 @@ import unsw.loopmania.*;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.enemies.*;
 import unsw.loopmania.goals.XpBaseGoal;
+import unsw.loopmania.items.*;
 import unsw.loopmania.buildings.*;
 import unsw.loopmania.character.Character;
 import unsw.loopmania.buildingcards.*;
@@ -149,6 +150,138 @@ public class LoopManiaWorldTest {
             world.runBattles();
             world.attemptToPickUpItems();
             world.drinkHealthPotion();
+        }
+    }
+
+    @Test
+    public void confusingIntegrationTest() {
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
+        world.setGamemode("Confusing");
+        int seedNum = world.setConfusingGamemodeSeed();
+        boolean testedOver50 = false, testedUnder50 = false;
+        while (!testedOver50 || !testedUnder50) {
+            if (seedNum <= 50) {
+                Item item1 = world.loadItem("OneRing");
+                Item item2 = world.loadItem("Anduril");
+                Item item3 = world.loadItem("TreeStump");
+               
+                OneRing oneRing = (OneRing) item1;
+                assertTrue(oneRing.getConfusingItem() instanceof TreeStump);
+    
+                Anduril anduril = (Anduril) item2;
+                assertTrue(anduril.getConfusingItem() instanceof TreeStump);
+    
+                TreeStump treeStump = (TreeStump) item3;
+                assertTrue(treeStump.getConfusingItem() instanceof Anduril);
+                testedUnder50 = true;
+            } else {
+                Item item1 = world.loadItem("OneRing");
+                Item item2 = world.loadItem("Anduril");
+                Item item3 = world.loadItem("TreeStump");
+               
+                OneRing oneRing = (OneRing) item1;
+                assertTrue(oneRing.getConfusingItem() instanceof Anduril);
+    
+                Anduril anduril = (Anduril) item2;
+                assertTrue(anduril.getConfusingItem() instanceof OneRing);
+    
+                TreeStump treeStump = (TreeStump) item3;
+                assertTrue(treeStump.getConfusingItem() instanceof OneRing);
+                testedOver50 = true;
+            }
+            seedNum = world.setConfusingGamemodeSeed();
+        }
+    }
+
+    @Test
+    public void confusingIntegrationTest2() {
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        world.setCharacter(mainChar);
+        world.setGoals(new XpBaseGoal(1000000));
+        world.setGamemode("Confusing");
+        int seedNum = world.setConfusingGamemodeSeed();
+        boolean testedOver50 = false, testedUnder50 = false;
+        while (!testedOver50 || !testedUnder50) {
+            if (seedNum <= 50 && !testedUnder50) {
+                Item item1 = world.loadItem("OneRing");
+                Item item2 = world.loadItem("Anduril");
+                Item item3 = world.loadItem("TreeStump");
+               
+                OneRing oneRing = (OneRing) item1;
+                assertTrue(oneRing.getConfusingItem() instanceof TreeStump);
+    
+                Anduril anduril = (Anduril) item2;
+                assertTrue(anduril.getConfusingItem() instanceof TreeStump);
+    
+                TreeStump treeStump = (TreeStump) item3;
+                assertTrue(treeStump.getConfusingItem() instanceof Anduril);
+                testedUnder50 = true;
+                
+                mainChar.equipItem((ShieldStrategy) item1);
+                mainChar.receiveAttack(10);
+                assertEquals(mainChar.getHealth(), 94);
+                
+                mainChar.equipItem((ShieldStrategy) item2);
+                mainChar.receiveAttack(10);
+                assertEquals(mainChar.getHealth(), 88);
+
+                VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
+                mainChar.equipItem((WeaponStrategy) item3);
+                mainChar.launchAttack(vampire1, false);
+                assertEquals(vampire1.getHealth(), 59);
+
+            } else if (seedNum > 50 && !testedOver50) {
+                Item item1 = world.loadItem("OneRing");
+                Item item2 = world.loadItem("Anduril");
+                Item item3 = world.loadItem("TreeStump");
+               
+                OneRing oneRing = (OneRing) item1;
+                assertTrue(oneRing.getConfusingItem() instanceof Anduril);
+    
+                Anduril anduril = (Anduril) item2;
+                assertTrue(anduril.getConfusingItem() instanceof OneRing);
+    
+                TreeStump treeStump = (TreeStump) item3;
+                assertTrue(treeStump.getConfusingItem() instanceof OneRing);
+                testedOver50 = true;
+
+                VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
+                mainChar.equipItem((WeaponStrategy) item1);
+                mainChar.launchAttack(vampire1, false);
+            }
+            seedNum = world.setConfusingGamemodeSeed();
         }
     }
 }

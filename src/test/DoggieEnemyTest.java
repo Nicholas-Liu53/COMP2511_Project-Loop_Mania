@@ -35,17 +35,17 @@ public class DoggieEnemyTest {
 
         // Testing basic damage
         newDoggie.receiveAttack(10);
-        assertEquals(110, newDoggie.getHealth());
+        assertEquals(102, newDoggie.getHealth());
         newDoggie.receiveAttack(5);
-        assertEquals(100, newDoggie.getHealth());
+        assertEquals(98, newDoggie.getHealth());
         newDoggie.receiveAttack(3);
-        assertEquals(97, newDoggie.getHealth());
+        assertEquals(96, newDoggie.getHealth());
         newDoggie.receiveAttack(0);
-        assertEquals(97, newDoggie.getHealth());
+        assertEquals(96, newDoggie.getHealth());
         newDoggie.receiveAttack(12);
-        assertEquals(85, newDoggie.getHealth());
+        assertEquals(87, newDoggie.getHealth());
         newDoggie.receiveAttack(5);
-        assertEquals(80, newDoggie.getHealth());
+        assertEquals(83, newDoggie.getHealth());
     }
 
     @Test

@@ -17,7 +17,7 @@ public abstract class Building extends StaticEntity implements WorldStateObserve
 
     public Building(Pair<Integer, Integer> position, int radius) {
         super(position);
-        this.buildingRadius = -1;
+        this.buildingRadius = radius;
     }
 
     /**
