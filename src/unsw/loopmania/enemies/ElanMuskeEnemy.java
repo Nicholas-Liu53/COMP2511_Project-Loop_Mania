@@ -1,6 +1,5 @@
 package unsw.loopmania.enemies;
 
-import javafx.fxml.FXML;
 import javafx.scene.media.AudioClip;
 import unsw.loopmania.path.PathPosition;
 

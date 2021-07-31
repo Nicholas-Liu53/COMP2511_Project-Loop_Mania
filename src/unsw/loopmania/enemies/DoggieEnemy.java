@@ -3,7 +3,6 @@ package unsw.loopmania.enemies;
 import unsw.loopmania.path.PathPosition;
 import java.util.Random;
 
-import javafx.fxml.FXML;
 import javafx.scene.media.AudioClip;
 import unsw.loopmania.character.Character;
 

@@ -2,6 +2,7 @@ package unsw.loopmania.enemies;
 
 import java.util.Random;
 
+import javafx.scene.media.AudioClip;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.character.Character;
 import unsw.loopmania.items.Shield;
@@ -24,6 +25,7 @@ public class VampireEnemy extends Enemy {
         this.criticalAttackDmg = 0;
         this.criticalAttackUses = 0;
         this.criticalAttackUsesMax = 0;
+        playVampireSpawnSound();
     }
 
     /**
@@ -34,6 +36,7 @@ public class VampireEnemy extends Enemy {
     public boolean launchAttack(Character mainChar) {
         // Perform basic attack first
         super.launchAttack(mainChar);
+        playVampireSpawnSound();
 
         // Use critical attack logic
         if (this.criticalAttack) {
@@ -65,5 +68,10 @@ public class VampireEnemy extends Enemy {
         }
 
         return false;
+    }
+
+    private void playVampireSpawnSound() {
+        AudioClip vampireSpawned = new AudioClip("file:src/sounds/vampirespawn.wav");
+        vampireSpawned.play();
     }
 }
