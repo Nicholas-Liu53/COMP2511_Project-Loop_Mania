@@ -22,7 +22,7 @@
 
 <AnchorPane fx:id="anchorPaneRoot" onKeyPressed="#handleKeyPress" prefHeight="415.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <!-- HBox is used to stack items horizontally left to right -->
-   <HBox>
+   <HBox id="pane" stylesheets="@style.css">
       <!-- VBox is used to stack items vertically top to bottom -->
       <VBox>
          <children>
@@ -161,12 +161,12 @@
                         <Image url="@../../images/deep_elf_master_archer.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="22.0" layoutY="162.0" text="Level:">
+                  <Label layoutX="22.0" layoutY="162.0" text="Level:" textFill="#66ff00">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="levelNum" layoutX="87.0" layoutY="161.0" prefHeight="32.0" prefWidth="41.0" text="1">
+                  <Label fx:id="levelNum" layoutX="87.0" layoutY="161.0" prefHeight="32.0" prefWidth="41.0" text="1" textFill="#66ff00">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
@@ -175,37 +175,37 @@
             </Pane>
             <Pane prefHeight="150.0" prefWidth="133.0">
                <children>
-                  <Label fx:id="currCycleNum" layoutX="88.0" layoutY="-2.0" prefHeight="32.0" prefWidth="41.0" text="1">
+                  <Label fx:id="currCycleNum" layoutX="88.0" layoutY="-2.0" prefHeight="32.0" prefWidth="41.0" text="1" textFill="#66ff00">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="healthNum2" layoutX="24.0" layoutY="-3.0" prefHeight="32.0" prefWidth="72.0" text="Cycle:">
+                  <Label fx:id="healthNum2" layoutX="24.0" layoutY="-3.0" prefHeight="32.0" prefWidth="72.0" text="Cycle:" textFill="#66ff00">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="healthNum21" layoutX="22.0" layoutY="27.0" text="Shop opens in" wrapText="true">
+                  <Label fx:id="healthNum21" layoutX="22.0" layoutY="27.0" text="Shop opens in" textFill="#66ff00" wrapText="true">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="cycleOrCycles" layoutX="48.0" layoutY="67.0" text="cycle." wrapText="true">
+                  <Label fx:id="cycleOrCycles" layoutX="48.0" layoutY="67.0" text="cycle." textFill="#66ff00" wrapText="true">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="cyclesTillShop" alignment="CENTER" layoutX="32.0" layoutY="38.0" prefHeight="32.0" prefWidth="62.0" text="1" textAlignment="CENTER">
+                  <Label fx:id="cyclesTillShop" alignment="CENTER" layoutX="32.0" layoutY="38.0" prefHeight="32.0" prefWidth="62.0" text="1" textAlignment="CENTER" textFill="#66ff00">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="24.0" layoutY="81.0" text="Gamemode: ">
+                  <Label layoutX="24.0" layoutY="81.0" text="Gamemode: " textFill="#66ff00">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="gamemodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="98.0" prefHeight="20.0" prefWidth="102.0" text=" ">
+                  <Label fx:id="gamemodeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="98.0" prefHeight="20.0" prefWidth="102.0" text=" " textFill="#66ff00">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
