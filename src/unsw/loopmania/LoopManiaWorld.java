@@ -1912,9 +1912,10 @@ public class LoopManiaWorld {
         return this.gamemode;
     }
 
-    public void setConfusingGamemodeSeed() {
+    public int setConfusingGamemodeSeed() {
         Random rand = new Random();
         confusingGamemodeSeed = rand.nextInt(100);
+        return confusingGamemodeSeed;
     }
 
     public Item processConfusingItem(Item rareItem) {
