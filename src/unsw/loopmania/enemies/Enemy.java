@@ -149,4 +149,7 @@ public abstract class Enemy extends MovingEntity implements Ally {
             this.health = 0;
         }
     }
+
+    public void stopSong() {
+    }
 }

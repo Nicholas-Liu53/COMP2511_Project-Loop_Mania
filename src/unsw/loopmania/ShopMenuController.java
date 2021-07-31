@@ -176,11 +176,13 @@ public class ShopMenuController {
         Pair<Integer, Integer> slotPos = world.getFirstAvailableSlotForItem();
         
         if (slotPos == null) {
+            deniedSound();
             actionNotSuccessfulText("Inventory is full");
             return false;
         } 
         if (string.equals("Sword")) {
             if (!canAfford(Sword.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
@@ -188,6 +190,7 @@ public class ShopMenuController {
             world.deductGold(Sword.getPurchasePrice());
         } else if (string.equals("Stake")) {
             if (!canAfford(Stake.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
@@ -195,6 +198,7 @@ public class ShopMenuController {
             world.deductGold(Stake.getPurchasePrice());
         } else if (string.equals("Staff")) {
             if (!canAfford(Staff.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } 
@@ -202,9 +206,11 @@ public class ShopMenuController {
             world.deductGold(Staff.getPurchasePrice());
         } else if (string.equals("BodyArmour")) {
             if (!canAfford(BodyArmour.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } else if (world.getGamemode().equals("Berserker") && this.numArmourBought > 0) {
+                deniedSound();
                 actionNotSuccessfulText("Berserker Mode: Can only buy one armour type");
                 return false;
             }
@@ -213,9 +219,11 @@ public class ShopMenuController {
             numArmourBought++;
         } else if (string.equals("Shield")) {
             if (!canAfford(Shield.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } else if (world.getGamemode().equals("Berserker") && this.numArmourBought > 0) {
+                deniedSound();
                 actionNotSuccessfulText("Berserker Mode: Can only buy one armour type");
                 return false;
             }
@@ -224,9 +232,11 @@ public class ShopMenuController {
             numArmourBought++;
         } else if (string.equals("Helmet")) {
             if (!canAfford(Helmet.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } else if (world.getGamemode().equals("Berserker") && this.numArmourBought > 0) {
+                deniedSound();
                 actionNotSuccessfulText("Berserker Mode: Can only buy one armour type");
                 return false;
             }
@@ -235,9 +245,11 @@ public class ShopMenuController {
             numArmourBought++;
         } else if (string.equals("HealthPotion")) {
             if (!canAfford(HealthPotion.getPurchasePrice())) {
+                deniedSound();
                 actionNotSuccessfulText("Insufficient Gold");
                 return false;
             } else if (world.getGamemode().equals("Survival") && this.numHealthPotionsBought > 0) {
+                deniedSound();
                 actionNotSuccessfulText("Survival Mode: Can only buy one Health Potion");
                 return false;
             }
@@ -245,6 +257,7 @@ public class ShopMenuController {
             world.deductGold(HealthPotion.getPurchasePrice());
             numHealthPotionsBought++;
         } else {
+            deniedSound();
             return false;
         }
         playBuySound();
@@ -342,7 +355,9 @@ public class ShopMenuController {
                 return true;
             }
         }
+        deniedSound();
         actionNotSuccessfulText("No " + itemName + "s left to sell");
+
         return false;
     }
 
@@ -549,9 +564,13 @@ public class ShopMenuController {
         this.numArmourBought = 0;
     }
 
-    @FXML
     private void buttonClickedSound() {
         AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
         buttonPressed.play();
+    }
+
+    private void deniedSound() {
+        AudioClip denied = new AudioClip("file:src/sounds/denied.wav");
+        denied.play();
     }
 }

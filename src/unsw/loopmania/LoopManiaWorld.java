@@ -1208,6 +1208,13 @@ public class LoopManiaWorld {
             // if we killEnemy in prior loop, we get
             // java.util.ConcurrentModificationException
             // due to mutating list we're iterating over
+            if (e instanceof ElanMuskeEnemy) {
+                ElanMuskeEnemy elan = (ElanMuskeEnemy) e;
+                elan.stopElanSong();
+            } else if (e instanceof DoggieEnemy) {
+                DoggieEnemy dog = (DoggieEnemy) e;
+                dog.stopDoggieSong();
+            }
             killEnemy(e);
         }
 

@@ -456,6 +456,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
                     world.decreaseUnequippedInventoryItemCount(activatedOneRing);
                     startTimer();
                 } else {
+                    AudioClip deathSound = new AudioClip("file:src/sounds/characterdeathsound.wav");
+                    deathSound.play();
                     AudioClip gameOverSound = new AudioClip("file:src/sounds/gameoversound.wav");
                     gameOverSound.play();
                     gameoverSwitcher.switchMenu();
