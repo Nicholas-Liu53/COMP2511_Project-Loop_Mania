@@ -19,9 +19,14 @@ public class MainMenuController {
 
     @FXML
     private Button startGameButton;
+    private AudioClip backgroundMusic;
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
+    }
+
+    public void initialize() {
+        playBackgroundMusic();
     }
 
     /**
@@ -32,6 +37,7 @@ public class MainMenuController {
     private void switchToGame() throws IOException {
         startGameButton.setText("Resume Game");
         buttonClickedSound();
+        stopBackgroundMusic();
         gameSwitcher.switchMenu();
     }
 
@@ -61,9 +67,17 @@ public class MainMenuController {
         
     }
 
-    @FXML
     private void buttonClickedSound() {
         AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
         buttonPressed.play();
+    }
+    
+    public void playBackgroundMusic() {
+        backgroundMusic = new AudioClip("file:src/sounds/menusong.wav");
+        backgroundMusic.play();
+    }
+
+    public void stopBackgroundMusic() {
+        backgroundMusic.stop();
     }
 }
