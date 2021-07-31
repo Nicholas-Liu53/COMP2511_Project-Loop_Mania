@@ -16,6 +16,11 @@
    <children>
       <Pane prefHeight="586.0" prefWidth="497.0">
          <children>
+            <ImageView fitHeight="586.0" fitWidth="1054.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/background.png" />
+               </image>
+            </ImageView>
             <Label alignment="CENTER" layoutX="26.0" layoutY="14.0" text="Shop Menu" textFill="RED">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -32,16 +37,16 @@
                   <Image url="@../../images/gold_pile.png" />
                </image>
             </ImageView>
-            <ScrollPane layoutX="14.0" layoutY="65.0" prefHeight="424.0" prefWidth="472.0">
+            <ScrollPane layoutX="27.0" layoutY="65.0" prefHeight="408.0" prefWidth="443.0">
                <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="721.0" prefWidth="425.0">
+                <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="721.0" prefWidth="425.0" stylesheets="@style.css">
                      <children>
-                        <Label alignment="CENTER" layoutX="24.0" layoutY="23.0" text="Weapons">
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="23.0" text="Weapons" textFill="#66ff00">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Pane layoutX="41.0" layoutY="129.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
+                        <Pane layoutX="28.0" layoutY="129.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -64,7 +69,7 @@
                               <Label fx:id="sellStaffNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="41.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
+                        <Pane layoutX="28.0" layoutY="204.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: GOLD;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -87,12 +92,12 @@
                               <Label fx:id="sellStakeNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Label alignment="CENTER" layoutX="24.0" layoutY="284.0" text="Armour">
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="284.0" text="Armour" textFill="#66ff00">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Pane layoutX="41.0" layoutY="57.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: gold;">
+                        <Pane layoutX="28.0" layoutY="57.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: gold;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -115,7 +120,7 @@
                               <Label fx:id="sellSwordNum" alignment="CENTER" layoutX="204.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="41.0" layoutY="384.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                        <Pane layoutX="28.0" layoutY="384.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -138,7 +143,7 @@
                               <Label fx:id="sellBodyArmourNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="41.0" layoutY="453.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                        <Pane layoutX="28.0" layoutY="453.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -161,7 +166,7 @@
                               <Label fx:id="sellShieldNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="41.0" layoutY="314.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
+                        <Pane layoutX="28.0" layoutY="314.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: aqua;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -184,12 +189,12 @@
                               <Label fx:id="sellHelmetNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Label alignment="CENTER" layoutX="24.0" layoutY="531.0" text="Additional Items">
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="531.0" text="Additional Items" textFill="#66ff00">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Pane layoutX="41.0" layoutY="562.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: SpringGreen;">
+                        <Pane layoutX="28.0" layoutY="562.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: SpringGreen;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -212,7 +217,7 @@
                               <Label fx:id="sellHealthPotionNum" alignment="CENTER" layoutX="206.0" layoutY="30.0" prefHeight="12.0" prefWidth="23.0" text="0" textAlignment="CENTER" wrapText="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="41.0" layoutY="633.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: SpringGreen;">
+                        <Pane layoutX="28.0" layoutY="633.0" prefHeight="60.0" prefWidth="369.0" style="-fx-border-color: BLACK; -fx-background-color: SpringGreen;">
                            <children>
                               <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
