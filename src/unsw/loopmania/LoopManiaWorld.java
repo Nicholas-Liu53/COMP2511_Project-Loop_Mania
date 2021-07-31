@@ -898,7 +898,6 @@ public class LoopManiaWorld {
 
         if (potionFound) {
             character.restoreHealthPoints();
-            // String s = "src/sounds/healthpotion.wav";
             AudioClip drinkHealthPotion = new AudioClip("file:src/sounds/healthpotion.wav");
             drinkHealthPotion.play();
         }
