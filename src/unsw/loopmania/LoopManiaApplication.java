@@ -113,7 +113,6 @@ public class LoopManiaApplication extends Application {
             // mainGameController.startTimer();
         });
         shopMenuController.setGameSwitcher(() -> {
-            mainMenuController.stopBackgroundMusic();
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
@@ -123,12 +122,10 @@ public class LoopManiaApplication extends Application {
             // mainGameController.startTimer();
         });
         goalsMenuController.setGameSwitcher(() -> {
-            mainMenuController.stopBackgroundMusic();
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
         instructionsController.setMainMenuSwitcher(() -> {
-            mainMenuController.stopBackgroundMusic();
             switchToRoot(scene, mainMenuRoot, primaryStage);
         });
         
