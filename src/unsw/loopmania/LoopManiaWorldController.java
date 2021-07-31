@@ -1377,6 +1377,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * @throws IOException
      */
     private void switchToShopMenu2() throws IOException {
+        enterShopSound();
         pause();
         shopMenuController.initialiseNumColours();
         shopMenuController.resetResponseText();
@@ -1548,6 +1549,12 @@ public class LoopManiaWorldController implements WorldStateObserver {
     @FXML
     private void buttonClickedSound() {
         AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
+    }
+
+    @FXML
+    private void enterShopSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/openshopsound.wav");
         buttonPressed.play();
     }
 }
