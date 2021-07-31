@@ -596,9 +596,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         return isPaused;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Loaders
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Loaders
+    //*-------------------------------------------------------------------------
     /**
      * Load a card from the world, and pair it with an image in the GUI
      * 
@@ -793,9 +793,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Coordinates
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Coordinates
+    //*-------------------------------------------------------------------------
     /**
      * Remove the card from the world, and spawn and return a building instead where
      * the card was dropped
@@ -826,9 +826,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
     // world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     // }
 
-    // *-------------------------------------------------------------------------
-    // * Drag EventHandlers
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Drag EventHandlers
+    //*-------------------------------------------------------------------------
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the
      * background, dropping over the background. These are not attached to invidual
@@ -1250,9 +1250,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Key Press
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Key Press
+    //*-------------------------------------------------------------------------
 
     /**
      * handle the pressing of keyboard keys. Specifically, we should pause when
@@ -1277,9 +1277,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Menu Switch
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Menu Switch
+    //*-------------------------------------------------------------------------
 
     /**
      * Set the menuswitcher for the main menu
@@ -1413,9 +1413,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         return world.getUnequippedItems();
     }
 
-    // *-------------------------------------------------------------------------
-    // * Track Position
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Track Position
+    //*-------------------------------------------------------------------------
     /**
      * Set a node in a GridPane to have its position track the position of an entity
      * in the world.
@@ -1486,9 +1486,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         });
     }
 
-    // *-------------------------------------------------------------------------
-    // * Threading
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Threading
+    //*-------------------------------------------------------------------------
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application
