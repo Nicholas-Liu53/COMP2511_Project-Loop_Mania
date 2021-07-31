@@ -151,4 +151,9 @@ public class LoopManiaWorldTest {
             world.drinkHealthPotion();
         }
     }
+
+    @Test
+    public void confusingIntegrationTest() {
+
+    }
 }

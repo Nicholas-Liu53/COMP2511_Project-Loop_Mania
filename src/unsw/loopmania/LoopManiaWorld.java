@@ -1158,7 +1158,14 @@ public class LoopManiaWorld {
                 } else {
                     // fight...
                     character.addBattle(e);
-                    character.launchAttack(e, inCampfireRadius(e));
+                    boolean doubleDamage = false;
+                    for (Building b : this.buildingEntities) {
+                        if (b instanceof CampfireBuilding && inBuildingRadius(e, b)) {
+                            doubleDamage = true;
+                            break;
+                        }
+                    }
+                    character.launchAttack(e, doubleDamage);
                     boolean specialAttack = e.launchAttack(character);
 
                     if (specialAttack && (e instanceof ZombieEnemy)) {
@@ -1345,7 +1352,7 @@ public class LoopManiaWorld {
         getCycleOrCyclesProperty();
         getDoggieCoinPriceProperty();
 
-        if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()) {
+        if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1() && !character.getInBattle()) {
             updateCharacterCycles();
         } else {
             showShop = false;
@@ -1406,7 +1413,7 @@ public class LoopManiaWorld {
      */
     private void moveEnemies() {
         for (Enemy e : this.enemies) {
-            if ((e instanceof VampireEnemy) && (!e.getInBattle()) /* && (inCampfireRadius(e)) */) {
+            if ((e instanceof VampireEnemy) && (!e.getInBattle())) {
                 determineNextVampireMoveAwayFromCampfire(e);
                 continue;
             }
@@ -1762,14 +1769,8 @@ public class LoopManiaWorld {
      * 
      * @return boolean value of whether the moving entity is in the campfire radius
      */
-    public boolean inCampfireRadius(MovingEntity me) {
-        for (Building b : this.buildingEntities) {
-            if (b instanceof CampfireBuilding) {
-                if (Math.pow(b.getX() - me.getX(), 2) + Math.pow(b.getY() - me.getY(), 2) < 16)
-                    return true;
-            }
-        }
-        return false;
+    public boolean inBuildingRadius(MovingEntity me, Building b) {
+        return (Math.pow(b.getX() - me.getX(), 2) + Math.pow(b.getY() - me.getY(), 2)) < Math.pow(b.getBuildingRadius(), 2);
     }
 
     /**
