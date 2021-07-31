@@ -2,6 +2,7 @@ package unsw.loopmania.character;
 
 import java.util.ArrayList;
 
+import javafx.scene.media.AudioClip;
 import unsw.loopmania.MovingEntity;
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.items.BodyArmourStrategy;
@@ -212,6 +213,9 @@ public class Character extends MovingEntity {
             return;
         }
 
+        AudioClip launchAttackSound = new AudioClip("file:src/sounds/launchattack.wav");
+        launchAttackSound.play();
+
         if (inCampfireRadius)
             giveDamage *= 2;
 
@@ -236,10 +240,12 @@ public class Character extends MovingEntity {
             int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
             actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
             actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
-
+            
             if (actualDamage < 0)
-                actualDamage = 0;
-
+            actualDamage = 0;
+            
+            AudioClip receiveAttackSound = new AudioClip("file:src/sounds/receiveattack.wav");
+            receiveAttackSound.play();
             this.health -= actualDamage;
             if (this.health < 0)
                 this.health = 0;
