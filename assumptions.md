@@ -123,5 +123,17 @@
 ## Campfire Building
 - Radius = 4 tiles
 
+# Graphics Sources
 
+Lunar Lander:
+https://opengameart.org/content/apollo-moon-landing-sprites
+
+Helmet:
+https://www.reddit.com/r/PixelArt/comments/hlpdvs/astronaut_helmet_by_me/
+
+Astronaut:
+http://pixelartmaker.com/art/0b861aa4c9f88f9
+
+Menu Background
+https://i.pinimg.com/originals/86/b9/32/86b932f7e7a14702128570465d5e897e.png
 

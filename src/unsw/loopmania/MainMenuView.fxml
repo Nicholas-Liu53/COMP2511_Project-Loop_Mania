@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
@@ -17,13 +19,18 @@
    <children>
       <Pane prefHeight="435.0" prefWidth="342.0">
          <children>
+            <ImageView fitHeight="491.0" fitWidth="822.0" layoutX="-107.0" layoutY="-28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/background.png" />
+               </image>
+            </ImageView>
             <!-- clicking button should start/resume the game -->
             <Button fx:id="setGamemodeButton" layoutX="316.0" layoutY="226.0" onAction="#switchToGamemode" prefHeight="78.0" prefWidth="123.0" text="Set Gamemode">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label layoutX="76.0" layoutY="53.0" text="LOOP MANIA">
+            <Label layoutX="76.0" layoutY="53.0" text="LOOP MANIA" textFill="#66ff00">
                <font>
                   <Font name="Comic Sans MS Bold Italic" size="55.0" />
                </font>
@@ -35,7 +42,7 @@
                   </DropShadow>
                </effect>
             </Label>
-            <Label layoutX="28.0" layoutY="35.0" opacity="0.67" rotate="-17.7" text="Welcome to">
+            <Label layoutX="28.0" layoutY="35.0" opacity="0.67" rotate="-17.7" text="Welcome to" textFill="#66ff00">
                <font>
                   <Font name="Comic Sans MS Italic" size="26.0" />
                </font>

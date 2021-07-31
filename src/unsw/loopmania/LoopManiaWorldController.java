@@ -216,6 +216,12 @@ public class LoopManiaWorldController implements WorldStateObserver {
     private Image doggieEnemyImage;
     private Image elanMuskeEnemyImage;
 
+    // Equip slots
+    private Image weaponSlot;
+    private Image shieldSlot;
+    private Image helmetSlot;
+    private Image armourSlot;
+
     private int spawnCycle;
 
     // Path Starting position
@@ -331,6 +337,10 @@ public class LoopManiaWorldController implements WorldStateObserver {
         doggieCoinImage = new Image((new File("src/images/doggiecoin.png")).toURI().toString());
         andurilImage = new Image((new File("src/images/anduril.png")).toURI().toString());
         treeStumpImage = new Image((new File("src/images/tree_stump.png")).toURI().toString());
+        weaponSlot = new Image((new File("src/images/sword_unequipped.png")).toURI().toString());
+        shieldSlot = new Image((new File("src/images/shield_unequipped.png")).toURI().toString());
+        helmetSlot = new Image((new File("src/images/helmet_slot.png")).toURI().toString());
+        armourSlot = new Image((new File("src/images/empty_slot.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -943,6 +953,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                         else if (oldWeapon instanceof TreeStump)
                                             loadItem(world.loadItem("TreeStump"));
                                         // Placing in sword cell
+                                        targetGridPane.add(new ImageView(weaponSlot), 0, 1, 1, 1);
                                         targetGridPane.add(image, 0, 1, 1, 1);
                                     }
                                 } else if (x == 2 && y == 1) {
@@ -959,6 +970,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                         else if (oldShield instanceof TreeStump)
                                             loadItem(world.loadItem("TreeStump"));
                                         // Placing in shield cell
+                                        targetGridPane.add(new ImageView(shieldSlot), 2, 1, 1, 1);
                                         targetGridPane.add(image, 2, 1, 1, 1);
                                     }
                                 }
@@ -980,6 +992,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 else if (oldWeapon instanceof TreeStump)
                                     loadItem(world.loadItem("TreeStump"));
                                 // Placing in sword cell
+                                targetGridPane.add(new ImageView(weaponSlot), 0, 1, 1, 1);
                                 targetGridPane.add(image, 0, 1, 1, 1);
                                 break;
                             case BODYARMOUR:
@@ -989,6 +1002,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 if (oldBodyArmour instanceof BodyArmour)
                                     loadItem(world.loadItem("BodyArmour"));
                                 // Placing in body armour cell
+                                targetGridPane.add(new ImageView(armourSlot), 1, 1, 1, 1);
                                 targetGridPane.add(image, 1, 1, 1, 1);
                                 break;
                             case SHIELD:
@@ -1004,6 +1018,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 else if (oldShield instanceof TreeStump)
                                     loadItem(world.loadItem("TreeStump"));
                                 // Placing in shield cell
+                                targetGridPane.add(new ImageView(shieldSlot), 2, 1, 1, 1);
                                 targetGridPane.add(image, 2, 1, 1, 1);
                                 break;
                             case HELMET:
@@ -1013,6 +1028,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
                                 if (oldHelmet instanceof Helmet)
                                     loadItem(world.loadItem("Helmet"));
                                 // Placing in helmet cell
+                                targetGridPane.add(new ImageView(helmetSlot), 1, 0, 1, 1);
                                 targetGridPane.add(image, 1, 0, 1, 1);
                                 break;
                             default:
