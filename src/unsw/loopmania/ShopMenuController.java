@@ -247,6 +247,7 @@ public class ShopMenuController {
         } else {
             return false;
         }
+        playBuySound();
         world.addToUnequippedInventory(item);
         world.increaseUnequippedInventoryItemCount(item);
         world.updateItemProperty(item);
@@ -294,18 +295,7 @@ public class ShopMenuController {
 
     // General Sell function
     private boolean sell(String itemName) {
-        /* 
-            Pseudocode to sell
-            if no item to sell:
-                return false
-            for item in unequippedInventoryItems:
-                if item.getClass().getSimpleName().equals(itemName):
-                    delete item from inventory
-                    give money back
-                    break
-                end if
-            end for
-        */
+        boolean doggieCoinSold = false;
         for (Item item: world.getUnequippedItems()) {
             if (item.getClass().getSimpleName().equals(itemName)) {
                 // world.decreaseUnequippedInventoryItemCount(item);
@@ -334,12 +324,17 @@ public class ShopMenuController {
                         world.giveGold(HealthPotion.getSellPrice());
                         break;
                     case "DoggieCoin":
-                        AudioClip doggieCoinSellSound = new AudioClip("file:src/sounds/doggiecoinsell.wav");
-                        doggieCoinSellSound.play();
                         world.giveGold(world.getDoggieCoinPrice());
+                        doggieCoinSold = true;
                         break;
                     default:
                         break;
+                }
+                if (doggieCoinSold) {
+                    AudioClip doggieCoinSellSound = new AudioClip("file:src/sounds/doggiecoinsell.wav");
+                    doggieCoinSellSound.play();
+                } else {
+                    playSellSound();
                 }
                 world.goldProperty();
                 checkIfHitsZero(item);
@@ -539,12 +534,12 @@ public class ShopMenuController {
         shopResponseLabel.setText("");
     }
 
-    private void sellSound() {
+    private void playSellSound() {
         AudioClip sellSound = new AudioClip("file:src/sounds/sellsound.wav");
         sellSound.play();
     }
 
-    private void buySound() {
+    private void playBuySound() {
         AudioClip buySound = new AudioClip("file:src/sounds/buysound.wav");
         buySound.play();
     }
