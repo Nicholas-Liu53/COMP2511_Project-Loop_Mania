@@ -456,12 +456,16 @@ public class LoopManiaWorldController implements WorldStateObserver {
                     world.decreaseUnequippedInventoryItemCount(activatedOneRing);
                     startTimer();
                 } else {
+                    AudioClip gameOverSound = new AudioClip("file:src/sounds/gameoversound.wav");
+                    gameOverSound.play();
                     gameoverSwitcher.switchMenu();
                 }
             }
 
             // Check if goals have been achieved
             if (world.goalsAchieved() == true) {
+                AudioClip gameWonSound = new AudioClip("file:src/sounds/gamewonsound.wav");
+                gameWonSound.play();
                 pause();
                 gamewonSwitcher.switchMenu();
             }

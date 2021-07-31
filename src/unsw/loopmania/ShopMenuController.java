@@ -334,6 +334,8 @@ public class ShopMenuController {
                         world.giveGold(HealthPotion.getSellPrice());
                         break;
                     case "DoggieCoin":
+                        AudioClip doggieCoinSellSound = new AudioClip("file:src/sounds/doggiecoinsell.wav");
+                        doggieCoinSellSound.play();
                         world.giveGold(world.getDoggieCoinPrice());
                         break;
                     default:
@@ -535,6 +537,16 @@ public class ShopMenuController {
 
     public void resetResponseText() {
         shopResponseLabel.setText("");
+    }
+
+    private void sellSound() {
+        AudioClip sellSound = new AudioClip("file:src/sounds/sellsound.wav");
+        sellSound.play();
+    }
+
+    private void buySound() {
+        AudioClip buySound = new AudioClip("file:src/sounds/buysound.wav");
+        buySound.play();
     }
 
     public void setCountersToZero() {

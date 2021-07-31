@@ -898,8 +898,8 @@ public class LoopManiaWorld {
 
         if (potionFound) {
             character.restoreHealthPoints();
-            AudioClip drinkHealthPotion = new AudioClip("file:src/sounds/healthpotion.wav");
-            drinkHealthPotion.play();
+            AudioClip drinkHealthPotionSound = new AudioClip("file:src/sounds/healthpotion.wav");
+            drinkHealthPotionSound.play();
         }
 
         healthProperty();
@@ -1182,6 +1182,8 @@ public class LoopManiaWorld {
 
                     if (e.getHealth() == 0) {
                         // Remove enemy
+                        AudioClip enemyDeathSound = new AudioClip("file:src/sounds/enemydeath.wav");
+                        enemyDeathSound.play();
                         defeatedEnemies.add(e);
                         character.removeEnemyFromBattle(e);
                     }
