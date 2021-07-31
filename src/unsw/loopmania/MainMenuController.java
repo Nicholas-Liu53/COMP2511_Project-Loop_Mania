@@ -3,6 +3,7 @@ package unsw.loopmania;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.media.AudioClip;
 
 /**
  * controller for the main menu.
@@ -30,6 +31,7 @@ public class MainMenuController {
     @FXML
     private void switchToGame() throws IOException {
         startGameButton.setText("Resume Game");
+        buttonClickedSound();
         gameSwitcher.switchMenu();
     }
 
@@ -44,6 +46,7 @@ public class MainMenuController {
     @FXML
     private void switchToGamemode() throws IOException {
         startGameButton.setText("Resume Game");
+        buttonClickedSound();
         gamemodeSwitcher.switchMenu();
     }
 
@@ -53,6 +56,14 @@ public class MainMenuController {
 
     @FXML
     private void switchToInstructions() throws IOException {
+        buttonClickedSound();
         instructionsSwitcher.switchMenu();
+        
+    }
+
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
     }
 }

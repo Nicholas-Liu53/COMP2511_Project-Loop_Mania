@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 import unsw.loopmania.buildingcards.*;
@@ -1333,6 +1334,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
+        buttonClickedSound();
         pause();
         mainMenuSwitcher.switchMenu();
     }
@@ -1344,6 +1346,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     void switchToGoalMenu() throws IOException {
+        buttonClickedSound();
         pause();
         goalsMenuSwitcher.switchMenu();
     }
@@ -1392,6 +1395,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
     @FXML
     private void switchToInstructions() throws IOException {
+        buttonClickedSound();
         instructionsSwitcher.switchMenu();
     }
 
@@ -1532,5 +1536,14 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     public void notifyTick(Character mainChar, LoopManiaWorld world) {
         return;
+    }
+    
+    //*--------------------------------------------------------------------------
+    //*                                 Sounds
+    //*--------------------------------------------------------------------------
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
     }
 }

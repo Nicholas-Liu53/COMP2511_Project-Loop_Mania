@@ -36,6 +36,8 @@ import javafx.scene.control.Label;
 // import javafx.scene.input.MouseEvent;
 // import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.AudioClip;
+
 // import javafx.util.Duration;
 import org.javatuples.Pair;
 import unsw.loopmania.items.*;
@@ -149,6 +151,7 @@ public class ShopMenuController {
      */
     @FXML
     private void switchToGame() throws IOException {
+        buttonClickedSound();
         world.goldProperty();
         worldController.startTimer();
         gameSwitcher.switchMenu();
@@ -537,5 +540,11 @@ public class ShopMenuController {
     public void setCountersToZero() {
         this.numHealthPotionsBought = 0;
         this.numArmourBought = 0;
+    }
+
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
     }
 }
