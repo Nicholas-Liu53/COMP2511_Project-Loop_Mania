@@ -49,6 +49,21 @@ public class LoopManiaWorldTest {
         assertEquals(List.of("the_one_ring", "anduril_flame_of_the_west", "tree_stump"), world.getAvailableRareItems());
 
         // SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
+
+        // all string properties that communicate with controller should be null when
+        // initialising the game
+        assertEquals(null, world.getAndurilProperty().get());
+        assertEquals(null, world.getBodyArmourProperty().get());
+        assertEquals(null, world.getShieldProperty().get());
+        assertEquals(null, world.getSwordProperty().get());
+        assertEquals(null, world.getOneRingProperty().get());
+        assertEquals(null, world.getTreeStumpProperty().get());
+        assertEquals(null, world.getStaffProperty().get());
+        assertEquals(null, world.getStakeProperty().get());
+        assertEquals(null, world.getDoggieCoinProperty().get());
+        assertEquals(null, world.getHealthPotionProperty().get());
+        assertEquals(null, world.getHelmetProperty().get());
+
         ZombieEnemy zombie1 = new ZombieEnemy(new PathPosition(4, orderedPath));
         VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
 
