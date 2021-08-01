@@ -62,6 +62,9 @@ public class LoopManiaWorldTest {
         TowerBuilding tb = new TowerBuilding(
                 new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(tb);
+        world.addObserver(tb);
+        world.removeBuilding(tb);
+        world.removeDeadObservers();
         VillageBuilding vb = new VillageBuilding(
                 new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(vb);

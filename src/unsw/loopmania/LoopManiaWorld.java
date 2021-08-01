@@ -299,7 +299,7 @@ public class LoopManiaWorld {
     public void addBuilding(Building b) {
         this.buildingEntities.add(b);
         this.locationOfPlacedBuildings.add(new Pair<Integer, Integer>(b.getX(), b.getY()));
-        this.observers.add(b);
+        this.addObserver(b);
     }
 
     /**
@@ -1284,7 +1284,7 @@ public class LoopManiaWorld {
         Building newBuilding = BuildingFactory.getBuilding(card, newLocation);
 
         if (newBuilding != null) {
-            this.observers.add(newBuilding);
+            this.addObserver(newBuilding);
             this.buildingEntities.add(newBuilding);
             this.locationOfPlacedBuildings.add(newLocation);
 
@@ -1881,7 +1881,7 @@ public class LoopManiaWorld {
      * 
      * @param wc the LoopManiaWorldController to observe this backend
      */
-    public void addObserver(LoopManiaWorldController wc) {
+    public void addObserver(WorldStateObserver wc) {
         this.observers.add(wc);
     }
 
