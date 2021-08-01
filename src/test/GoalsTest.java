@@ -187,6 +187,43 @@ public class GoalsTest {
     }
 
     @Test
+    public void complexSingleGoalTest() {
+        // Testing a complex goal using AND
+        LoopManiaWorld testWorld = TestHelper.generateWorld();
+        XpBaseGoal xpGoal = new XpBaseGoal(100);
+
+        PathPosition position = null;
+
+        try {
+            position = TestHelper.generatePathPosition("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using gradle, different path is needed
+            try {
+                position = TestHelper.generatePathPosition("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                // Failed to generate PathPostion
+                assertTrue(false);
+            }
+        }
+
+        Character mainChar = new Character(position);
+        testWorld.setCharacter(mainChar);
+
+        // Constructing complex goal
+        ComplexGoalComposite complexGoal = new ComplexGoalComposite("NONE");
+        complexGoal.add(xpGoal);
+        assertEquals(1, complexGoal.getChildren().size());
+
+        assertEquals(false, complexGoal.achieved(testWorld));
+
+        // Give xp and test
+        mainChar.giveExperiencePoints(100);
+        assertEquals(true, complexGoal.achieved(testWorld));
+
+        assertEquals("( 100 XP )", complexGoal.getGoalString());
+    }
+
+    @Test
     public void complexAndTest() {
         // Testing a complex goal using AND
         LoopManiaWorld testWorld = TestHelper.generateWorld();
@@ -214,6 +251,8 @@ public class GoalsTest {
         ComplexGoalComposite complexGoal = new ComplexGoalComposite("AND");
         complexGoal.add(xpGoal);
         complexGoal.add(goldGoal);
+        assertEquals("AND", complexGoal.getOperation());
+        assertEquals(2, complexGoal.getChildren().size());
 
         assertEquals(false, complexGoal.achieved(testWorld));
 
@@ -281,9 +320,9 @@ public class GoalsTest {
     @Test
     public void parserTestOR() {
         // Testing that goals can be successfully parsed from JSON
-        
+
         JSONObject json = null;
-        
+
         // Getting JSON
         try {
             json = new JSONObject(new JSONTokener(new FileReader("bin/test/Resources/complex_goal3.json")));
@@ -312,7 +351,7 @@ public class GoalsTest {
             }
         }
 
-        //Constructing world
+        // Constructing world
         LoopManiaWorld testWorld = TestHelper.generateWorld();
         Character mainChar = new Character(position);
         testWorld.setCharacter(mainChar);
@@ -337,9 +376,9 @@ public class GoalsTest {
     @Test
     public void parserTestAND() {
         // Testing that goals can be successfully parsed from JSON
-        
+
         JSONObject json = null;
-        
+
         // Getting JSON
         try {
             json = new JSONObject(new JSONTokener(new FileReader("bin/test/Resources/complex_goal0.json")));
@@ -368,7 +407,7 @@ public class GoalsTest {
             }
         }
 
-        //Constructing world
+        // Constructing world
         LoopManiaWorld testWorld = TestHelper.generateWorld();
         Character mainChar = new Character(position);
         testWorld.setCharacter(mainChar);
