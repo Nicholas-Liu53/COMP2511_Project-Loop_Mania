@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 
 /**
  * controller for the main menu.
- * TODO = you could extend this, for example with a settings menu, or a menu to load particular maps.
  */
 public class MainMenuController {
     /**
@@ -19,12 +18,13 @@ public class MainMenuController {
     @FXML
     private Button startGameButton;
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
+    public void setGameSwitcher(MenuSwitcher gameSwitcher) {
         this.gameSwitcher = gameSwitcher;
     }
 
     /**
      * facilitates switching to main game upon button click
+     * 
      * @throws IOException
      */
     @FXML
@@ -33,12 +33,13 @@ public class MainMenuController {
         gameSwitcher.switchMenu();
     }
 
-    public void setGamemodeSwitcher(MenuSwitcher gamemodeSwitcher){
+    public void setGamemodeSwitcher(MenuSwitcher gamemodeSwitcher) {
         this.gamemodeSwitcher = gamemodeSwitcher;
     }
 
     /**
      * facilitates switching to main game upon button click
+     * 
      * @throws IOException
      */
     @FXML
@@ -47,7 +48,7 @@ public class MainMenuController {
         gamemodeSwitcher.switchMenu();
     }
 
-    public void setInstructionsSwitcher(MenuSwitcher instructionsSwitcher){
+    public void setInstructionsSwitcher(MenuSwitcher instructionsSwitcher) {
         this.instructionsSwitcher = instructionsSwitcher;
     }
 
