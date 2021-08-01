@@ -3,6 +3,8 @@ package unsw.loopmania.items;
 import org.javatuples.Pair;
 
 import unsw.loopmania.character.Character;
+import unsw.loopmania.enemies.DoggieEnemy;
+import unsw.loopmania.enemies.ElanMuskeEnemy;
 import unsw.loopmania.enemies.Enemy;
 
 /**
@@ -20,8 +22,11 @@ public class Anduril extends Item implements WeaponStrategy, RareItem, ShieldStr
     }
 
     public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
-        // Causes triple damage against bosses
-        enemy.receiveAttack(baseDamage + 15);
+        if (enemy instanceof ElanMuskeEnemy || enemy instanceof DoggieEnemy)
+            // Causes triple damage against bosses
+            enemy.receiveAttack(baseDamage * 3);
+        else
+            enemy.receiveAttack(baseDamage);
     }
 
     public void setConfusingItem(Item item) {
@@ -32,9 +37,9 @@ public class Anduril extends Item implements WeaponStrategy, RareItem, ShieldStr
         return confusingItem;
     }
 
-    public int receiveAttack(int damage) {
+    public int receiveAttack(Enemy enemy, int damage) {
         // TreeStump provides 3 defence
         ShieldStrategy shield = (ShieldStrategy) confusingItem;
-        return shield.receiveAttack(damage);
+        return shield.receiveAttack(enemy, damage);
     }
 }
