@@ -461,16 +461,19 @@ public class LoopManiaWorldController implements WorldStateObserver {
             // Check if character is dead
             if (world.getCharacterHealth() == 0) {
                 pause();
+                Item activatedOneRing = null;
                 if (world.getNumOneRing() > 0) {
-                    Item activatedOneRing = world.activateOneRing();
-                    world.decreaseUnequippedInventoryItemCount(activatedOneRing);
-                    startTimer();
-                } else {
+                    activatedOneRing = world.activateOneRing();
+                } 
+                if (activatedOneRing == null) {
                     AudioClip deathSound = new AudioClip("file:src/sounds/characterdeathsound.wav");
                     deathSound.play();
                     AudioClip gameOverSound = new AudioClip("file:src/sounds/gameoversound.wav");
                     gameOverSound.play();
                     gameoverSwitcher.switchMenu();
+                } else {
+                    world.decreaseUnequippedInventoryItemCount(activatedOneRing);
+                    startTimer();
                 }
             }
 
