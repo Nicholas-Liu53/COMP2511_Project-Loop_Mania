@@ -716,7 +716,7 @@ public class LoopManiaWorld {
                 break;
             case "OneRing":
                 item = new OneRing(firstAvailableSlot);
-                if (gamemode.equals("Confusing")) {
+                if (this.gamemode.equals("Confusing")) {
                     item = processConfusingItem(item);
                 }
                 break;
@@ -725,13 +725,13 @@ public class LoopManiaWorld {
                 break;
             case "Anduril":
                 item = new Anduril(firstAvailableSlot);
-                if (gamemode.equals("Confusing")) {
+                if (this.gamemode.equals("Confusing")) {
                     item = processConfusingItem(item);
                 }
                 break;
             case "TreeStump":
                 item = new TreeStump(firstAvailableSlot);
-                if (gamemode.equals("Confusing")) {
+                if (this.gamemode.equals("Confusing")) {
                     item = processConfusingItem(item);
                 }
                 break;
@@ -1183,8 +1183,6 @@ public class LoopManiaWorld {
                     }
                 }
 
-                // @TODO: handle character death
-
             } else if (Math.pow((getCharacterX() - e.getX()), 2) + Math.pow((getCharacterY() - e.getY()), 2) < Math
                     .pow(e.getSupportRadius(), 2) && character.getInBattle() == true) {
                 // Support radius logic
@@ -1557,6 +1555,11 @@ public class LoopManiaWorld {
         return this.charAlliesProperty;
     }
 
+    /**
+     * Updates the string property of number of levels
+     * 
+     * @return charLevelProperty updated string property of levels count
+     */
     public StringProperty levelProperty() {
         this.charLevelProperty.set(String.valueOf(character.getLevel()));
         return this.charLevelProperty;
@@ -1571,11 +1574,6 @@ public class LoopManiaWorld {
         this.charGoalsProperty.set("Get " + this.goal.getGoalString());
         return this.charGoalsProperty;
     }
-
-    // public Double healthProperty() {
-    // charHealthProperty = character.getHealth() / 100.0;
-    // return charHealthProperty;
-    // }
 
     /**
      * Updates the string property of gold
@@ -1922,12 +1920,22 @@ public class LoopManiaWorld {
         return this.gamemode;
     }
 
+    /**
+     * Returns the seed of the confusing gamemode
+     * 
+     * @return confusingGamemodeSeed seed of the confusing gamemode
+     */
     public int setConfusingGamemodeSeed() {
         Random rand = new Random();
         confusingGamemodeSeed = rand.nextInt(100);
         return confusingGamemodeSeed;
     }
 
+    /**
+     * Processes the rareItem to have an confusing item in confusing gamemode
+     * 
+     * @return rareItem rareItem has set confusing item set to itself now
+     */
     public Item processConfusingItem(Item rareItem) {
         Item confusingItemToAdd;
         if (rareItem.getClass().getSimpleName().equals("OneRing")) {
@@ -1975,10 +1983,20 @@ public class LoopManiaWorld {
         return this.goal.achieved(this);
     }
 
+    /**
+     * Returns list of cards in the world
+     * 
+     * @return list of cards in the world
+     */
     public List<Card> getCards() {
         return this.cardEntities;
     }
 
+    /**
+     * Returns list of items in the inventory that are unequipped
+     * 
+     * @return list of unequipped items in the inventory
+     */
     public List<Item> getUnequippedInventoryItems() {
         return this.unequippedInventoryItems;
     }
