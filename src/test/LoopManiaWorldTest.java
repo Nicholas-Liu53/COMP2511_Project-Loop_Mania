@@ -171,6 +171,8 @@ public class LoopManiaWorldTest {
             world.giveRandomRewards("noCard");
             world.giveRandomRewards("Card");
         }
+        world.setShowShopToFalse();
+        assertFalse(world.getShowShop());
         assertFalse(world.goalsAchieved());
     }
 
