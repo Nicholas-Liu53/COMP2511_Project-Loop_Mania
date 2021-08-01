@@ -44,7 +44,7 @@ public class LoopManiaWorldTest {
         assertEquals(16, world.getHeight());
         world.setCharacter(mainChar);
         world.addEntity(mainChar);
-        world.setGoals(new XpBaseGoal(1000000));
+        world.setGoals(new XpBaseGoal(100000000));
         assertEquals(new Pair<Integer, Integer>(0, 0), world.getStartingPoint());
         world.addAavailableRareItems("the_one_ring");
         world.addAavailableRareItems("anduril_flame_of_the_west");
@@ -88,16 +88,10 @@ public class LoopManiaWorldTest {
                 new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(cb);
 
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < 50000; i++) {
             if (world.getEnemiesList().size() == 0) {
-                // slug1 = new SlugEnemy(new
-                // PathPosition(rand.nextInt(orderedPath.size()),orderedPath));
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
-                // vcb = new VampireCastleBuilding(new
-                // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
-                // zpb = new ZombiePitBuilding(new
-                // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
                 tb = new TowerBuilding(
                         new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
                 vb = new VillageBuilding(
@@ -152,8 +146,6 @@ public class LoopManiaWorldTest {
                 assertFalse(world.canPlaceCard(new Pair<Integer, Integer>(2, 3), card2));
                 // assertNotEquals(null, world.convertCardToBuildingByCoordinates(card3.getX(),
                 // card3.getY(), 1, 1));
-                // world.addBuilding(vcb);
-                // world.addBuilding(zpb);
                 world.addBuilding(tb);
                 world.addBuilding(vb);
                 world.addBuilding(bb);
@@ -172,6 +164,7 @@ public class LoopManiaWorldTest {
             world.attemptToPickUpItems();
             world.drinkHealthPotion();
         }
+        assertFalse(world.goalsAchieved());
     }
 
     @Test
