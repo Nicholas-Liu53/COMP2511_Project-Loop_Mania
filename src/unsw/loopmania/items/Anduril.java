@@ -4,7 +4,6 @@ import org.javatuples.Pair;
 
 import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.Enemy;
-import unsw.loopmania.RareItem;
 
 /**
  * represents an equipped or unequipped anduril in the backend world

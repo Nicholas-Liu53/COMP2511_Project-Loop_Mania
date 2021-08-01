@@ -1,13 +1,13 @@
 package unsw.loopmania.items;
 
 import org.javatuples.Pair;
-import unsw.loopmania.RareItem;
+
 import unsw.loopmania.enemies.Enemy;
 import unsw.loopmania.character.Character;
 
 public class TreeStump extends Armour implements ShieldStrategy, RareItem, WeaponStrategy {
     private Item confusingItem;
-    
+
     public TreeStump(Pair<Integer, Integer> position) {
         super(position);
         this.damageReductionFactor = 0.6;
@@ -33,7 +33,7 @@ public class TreeStump extends Armour implements ShieldStrategy, RareItem, Weapo
     }
 
     public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
-        WeaponStrategy weapon = (WeaponStrategy)confusingItem;
+        WeaponStrategy weapon = (WeaponStrategy) confusingItem;
         weapon.launchAttack(enemy, baseDamage, mainChar);
     }
 }
