@@ -45,6 +45,7 @@ public class LoopManiaWorldTest {
         world.setCharacter(mainChar);
         world.addEntity(mainChar);
         world.setGoals(new XpBaseGoal(100000000));
+        world.setGamemode("Standard");
         assertEquals(new Pair<Integer, Integer>(0, 0), world.getStartingPoint());
         world.addAavailableRareItems("the_one_ring");
         world.addAavailableRareItems("anduril_flame_of_the_west");
