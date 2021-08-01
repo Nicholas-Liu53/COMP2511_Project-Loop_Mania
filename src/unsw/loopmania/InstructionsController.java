@@ -1,15 +1,12 @@
 package unsw.loopmania;
 
-// import java.io.File;
 import java.io.IOException;
-// import java.util.EnumMap;
-// import java.util.HashMap;
-// import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.media.AudioClip;
 
 /**
- * controller for the shop menu.
+ * controller for the instructions menu.
  * 
  */
 public class InstructionsController {
@@ -37,7 +34,14 @@ public class InstructionsController {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
+        buttonClickedSound();
         mainMenuSwitcher.switchMenu();
+    }
+
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
     }
 
 }

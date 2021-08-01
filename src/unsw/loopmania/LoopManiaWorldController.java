@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 import unsw.loopmania.buildingcards.*;
@@ -420,7 +421,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target
         // framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
 
             // Recieve rewards on defeating enemies
@@ -465,12 +466,18 @@ public class LoopManiaWorldController implements WorldStateObserver {
                     world.decreaseUnequippedInventoryItemCount(activatedOneRing);
                     startTimer();
                 } else {
+                    AudioClip deathSound = new AudioClip("file:src/sounds/characterdeathsound.wav");
+                    deathSound.play();
+                    AudioClip gameOverSound = new AudioClip("file:src/sounds/gameoversound.wav");
+                    gameOverSound.play();
                     gameoverSwitcher.switchMenu();
                 }
             }
 
             // Check if goals have been achieved
             if (world.goalsAchieved() == true) {
+                AudioClip gameWonSound = new AudioClip("file:src/sounds/gamewonsound.wav");
+                gameWonSound.play();
                 pause();
                 gamewonSwitcher.switchMenu();
             }
@@ -606,9 +613,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         return isPaused;
     }
 
-    // *-------------------------------------------------------------------------
-    // * Loaders
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Loaders
+    //*-------------------------------------------------------------------------
     /**
      * Load a card from the world, and pair it with an image in the GUI
      * 
@@ -803,9 +810,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Coordinates
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Coordinates
+    //*-------------------------------------------------------------------------
     /**
      * Remove the card from the world, and spawn and return a building instead where
      * the card was dropped
@@ -836,9 +843,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
     // world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     // }
 
-    // *-------------------------------------------------------------------------
-    // * Drag EventHandlers
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Drag EventHandlers
+    //*-------------------------------------------------------------------------
     /**
      * add drag event handlers for dropping into gridpanes, dragging over the
      * background, dropping over the background. These are not attached to invidual
@@ -1266,9 +1273,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Key Press
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Key Press
+    //*-------------------------------------------------------------------------
 
     /**
      * handle the pressing of keyboard keys. Specifically, we should pause when
@@ -1293,9 +1300,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         }
     }
 
-    // *-------------------------------------------------------------------------
-    // * Menu Switch
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Menu Switch
+    //*-------------------------------------------------------------------------
 
     /**
      * Set the menuswitcher for the main menu
@@ -1349,6 +1356,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
+        buttonClickedSound();
         pause();
         mainMenuSwitcher.switchMenu();
     }
@@ -1360,6 +1368,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     @FXML
     void switchToGoalMenu() throws IOException {
+        buttonClickedSound();
         pause();
         goalsMenuSwitcher.switchMenu();
     }
@@ -1386,6 +1395,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
      * @throws IOException
      */
     private void switchToShopMenu2() throws IOException {
+        enterShopSound();
         pause();
         shopMenuController.initialiseNumColours();
         shopMenuController.resetResponseText();
@@ -1408,6 +1418,7 @@ public class LoopManiaWorldController implements WorldStateObserver {
 
     @FXML
     private void switchToInstructions() throws IOException {
+        buttonClickedSound();
         instructionsSwitcher.switchMenu();
     }
 
@@ -1429,9 +1440,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         return world.getUnequippedItems();
     }
 
-    // *-------------------------------------------------------------------------
-    // * Track Position
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                         Track Position
+    //*-------------------------------------------------------------------------
     /**
      * Set a node in a GridPane to have its position track the position of an entity
      * in the world.
@@ -1502,9 +1513,9 @@ public class LoopManiaWorldController implements WorldStateObserver {
         });
     }
 
-    // *-------------------------------------------------------------------------
-    // * Threading
-    // *-------------------------------------------------------------------------
+    //*-------------------------------------------------------------------------
+    //*                             Threading
+    //*-------------------------------------------------------------------------
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application
@@ -1548,5 +1559,20 @@ public class LoopManiaWorldController implements WorldStateObserver {
      */
     public void notifyTick(Character mainChar, LoopManiaWorld world) {
         return;
+    }
+    
+    //*--------------------------------------------------------------------------
+    //*                                 Sounds
+    //*--------------------------------------------------------------------------
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
+    }
+
+    @FXML
+    private void enterShopSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/openshopsound.wav");
+        buttonPressed.play();
     }
 }
