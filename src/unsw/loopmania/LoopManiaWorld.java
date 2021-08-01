@@ -739,7 +739,7 @@ public class LoopManiaWorld {
         }
 
         if (item != null) {
-            this.unequippedInventoryItems.add(item);
+            addToUnequippedInventory(item);
             increaseUnequippedInventoryItemCount(item);
             updateItemProperty(item);
         }
@@ -1929,7 +1929,7 @@ public class LoopManiaWorld {
         } else if (rareItem.getClass().getSimpleName().equals("Anduril")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new OneRing();
-                numOneRing++;
+                increaseUnequippedInventoryItemCount(confusingItemToAdd);
             } else {
                 confusingItemToAdd = new TreeStump();
             }
@@ -1939,7 +1939,7 @@ public class LoopManiaWorld {
         } else if (rareItem.getClass().getSimpleName().equals("TreeStump")) {
             if (confusingGamemodeSeed > 50) {
                 confusingItemToAdd = new OneRing();
-                numOneRing++;
+                increaseUnequippedInventoryItemCount(confusingItemToAdd);
             } else {
                 confusingItemToAdd = new Anduril();
             }
