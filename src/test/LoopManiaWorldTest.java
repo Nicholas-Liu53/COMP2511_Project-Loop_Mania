@@ -117,14 +117,9 @@ public class LoopManiaWorldTest {
                 world.loadItem("Helmet");
                 world.loadItem("Shield");
                 world.loadItem("HealthPotion");
-                assertTrue(world.getUnequippedInventoryItems().size() > 0);
-                world.loadCard("BarracksCard");
-                world.loadCard("CampfireCard");
-                world.loadCard("TowerCard");
-                world.loadCard("TrapCard");
-                world.loadCard("VillageCard");
-                world.loadCard("ZombiePitCard");
-                world.loadCard("VampireCastleCard");
+                world.loadItem("OneRing");
+                world.loadItem("TreeStump");
+                world.loadItem("Anduril");
                 assertTrue(world.getUnequippedInventoryItems().size() > 0);
                 Card card1 = world.loadCard("BarracksCard");
                 Card card2 = world.loadCard("CampfireCard");
