@@ -247,3 +247,24 @@ Shop open sound:
 Door Shop Bell / 01
 --> https://www.youtube.com/watch?v=YfOdmwtCXxU
 
+Receive attack sound:
+Roblox Death Sound - Sound Effect (HD)
+--> https://www.youtube.com/watch?v=3w-2gUSus34
+
+Sell sound:
+Gold (Sound Effect) | Diablo II
+--> https://www.youtube.com/watch?v=fQRTXA7-Y7o
+
+Trap Disarmed sound:
+Caitlyn's 'W' (Yordle Snap Trap) in League of Legends
+
+Trap placed sound:
+Caitlyn's 'W' (Yordle Snap Trap) in League of Legends
+
+Vampire spawn/attack sound:
+All Witch Sounds (Minecraft) - Sound Effects for editing
+--> https://www.youtube.com/watch?v=Yd-Oo7I1hGM
+
+Zombie spawn/attack sound:
+Minecraft Zombie Bruh Sound Effect
+--> https://www.youtube.com/watch?v=UtbtPdqzcas
