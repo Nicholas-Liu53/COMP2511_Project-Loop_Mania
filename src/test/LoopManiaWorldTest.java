@@ -51,6 +51,7 @@ public class LoopManiaWorldTest {
         world.addAavailableRareItems("anduril_flame_of_the_west");
         world.addAavailableRareItems("tree_stump");
         assertEquals(List.of("the_one_ring", "anduril_flame_of_the_west", "tree_stump"), world.getAvailableRareItems());
+        assertEquals(0, world.getNumOneRing());
 
         // all string properties that communicate with controller should be null when
         // initialising the game
@@ -168,6 +169,47 @@ public class LoopManiaWorldTest {
             world.drinkHealthPotion();
         }
         assertFalse(world.goalsAchieved());
+    }
+
+    @Test
+    public void activateOneRingTest() {
+        List<Pair<Integer, Integer>> orderedPath = null;
+
+        try {
+            orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        } catch (FileNotFoundException e) {
+            // Using Gradle rather than VSCode, requires different path
+            try {
+                orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+            } catch (FileNotFoundException ee) {
+                assertEquals(true, false);
+            }
+        }
+
+        Character mainChar = new Character(new PathPosition(0, orderedPath));
+
+        LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+        assertEquals(8, world.getWidth());
+        assertEquals(16, world.getHeight());
+        world.setCharacter(mainChar);
+        world.addEntity(mainChar);
+        world.setGoals(new XpBaseGoal(100000000));
+        assertEquals(new Pair<Integer, Integer>(0, 0), world.getStartingPoint());
+        world.addAavailableRareItems("the_one_ring");
+        assertEquals(List.of("the_one_ring"), world.getAvailableRareItems());
+        assertEquals(0, world.getNumOneRing());
+        world.loadItem("OneRing");
+
+        SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
+        boolean done = false;
+        for (int i = 0; i < 100; i++) {
+            slug1.launchAttack(mainChar);
+            if (world.getCharacterHealth() == 0) {
+                world.activateOneRing();
+                done = true;
+            }
+        }
+        assertTrue(done);
     }
 
     @Test
