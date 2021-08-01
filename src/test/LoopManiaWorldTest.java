@@ -43,14 +43,13 @@ public class LoopManiaWorldTest {
         assertEquals(8, world.getWidth());
         assertEquals(16, world.getHeight());
         world.setCharacter(mainChar);
+        world.addEntity(mainChar);
         world.setGoals(new XpBaseGoal(1000000));
         assertEquals(new Pair<Integer, Integer>(0, 0), world.getStartingPoint());
         world.addAavailableRareItems("the_one_ring");
         world.addAavailableRareItems("anduril_flame_of_the_west");
         world.addAavailableRareItems("tree_stump");
         assertEquals(List.of("the_one_ring", "anduril_flame_of_the_west", "tree_stump"), world.getAvailableRareItems());
-
-        // SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
 
         // all string properties that communicate with controller should be null when
         // initialising the game
@@ -70,12 +69,6 @@ public class LoopManiaWorldTest {
         VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
 
         Random rand = new Random();
-        // VampireCastleBuilding vcb = new VampireCastleBuilding(new
-        // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
-        // world.addBuilding(vcb);
-        // ZombiePitBuilding zpb = new ZombiePitBuilding(new
-        // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
-        // world.addBuilding(zpb);
         TowerBuilding tb = new TowerBuilding(
                 new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(tb);
