@@ -1471,19 +1471,16 @@ public class LoopManiaWorld {
         if (rewardSetting.equals("withCard")) {
             int rareItemRandom = rand.nextInt(100);
             if (this.rareItemNames.contains("the_one_ring")) {
-                if (rareItemRandom == 50) {
+                if (rareItemRandom == 50)
                     return loadItem("OneRing");
-                }
             }
             if (this.rareItemNames.contains("anduril_flame_of_the_west")) {
-                if (rareItemRandom == 25) {
+                if (rareItemRandom == 25)
                     return loadItem("Anduril");
-                }
             }
             if (this.rareItemNames.contains("tree_stump")) {
-                if (rareItemRandom == 75) {
+                if (rareItemRandom == 75)
                     return loadItem("TreeStump");
-                }
             }
         }
 
@@ -1514,6 +1511,8 @@ public class LoopManiaWorld {
                     break;
                 case "equipment":
                     rewarded = loadItem(equipments.get(rand.nextInt(7)));
+                    break;
+                default:
                     break;
             }
         }
