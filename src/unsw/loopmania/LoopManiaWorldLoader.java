@@ -49,7 +49,7 @@ public abstract class LoopManiaWorldLoader {
         JSONArray jsonRareItems = json.getJSONArray("rare_items");
         if (jsonRareItems != null) {
             for (int i = 0; i < jsonRareItems.length(); i++) {
-                world.availableRareItems(jsonRareItems.get(i).toString());
+                world.addAavailableRareItems(jsonRareItems.get(i).toString());
             }
         }
 
@@ -79,7 +79,6 @@ public abstract class LoopManiaWorldLoader {
         assert indexInPath != -1;
 
         Entity entity = null;
-        // TODO = load more entity types from the file
         switch (type) {
             case "hero_castle":
                 Character character = new Character(new PathPosition(indexInPath, orderedPath));
@@ -89,7 +88,6 @@ public abstract class LoopManiaWorldLoader {
                 break;
             case "path_tile":
                 throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
-            // TODO Handle other possible entities
         }
         world.addEntity(entity);
     }
@@ -199,6 +197,5 @@ public abstract class LoopManiaWorldLoader {
     public abstract void onLoad(Character character);
 
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
-
 
 }

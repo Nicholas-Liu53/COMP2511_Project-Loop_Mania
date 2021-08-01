@@ -1,7 +1,6 @@
 package unsw.loopmania.items;
 
 import org.javatuples.Pair;
-import unsw.loopmania.RareItem;
 
 import unsw.loopmania.character.Character;
 import unsw.loopmania.enemies.Enemy;
@@ -30,13 +29,13 @@ public class OneRing extends Item implements RareItem, WeaponStrategy, ShieldStr
     }
 
     public void launchAttack(Enemy enemy, int baseDamage, Character mainChar) {
-        WeaponStrategy weapon = (WeaponStrategy)confusingItem;
+        WeaponStrategy weapon = (WeaponStrategy) confusingItem;
         weapon.launchAttack(enemy, baseDamage, mainChar);
     }
 
-    public int receiveAttack(int damage) {
+    public int receiveAttack(Enemy enemy, int damage) {
         // TreeStump provides 3 defence
         ShieldStrategy shield = (ShieldStrategy) confusingItem;
-        return shield.receiveAttack(damage);
+        return shield.receiveAttack(enemy, damage);
     }
 }

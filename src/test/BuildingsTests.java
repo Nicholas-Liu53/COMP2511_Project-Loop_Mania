@@ -26,14 +26,16 @@ public class BuildingsTests {
         // List<Pair<Integer, Integer>> orderedPath = null;
 
         // try {
-        //     orderedPath = TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
+        // orderedPath =
+        // TestHelper.generatePathTiles("bin/test/Resources/world_with_twists_and_turns.json");
         // } catch (FileNotFoundException e) {
-        //     // Using Gradle rather than VSCode, requires different path
-        //     try {
-        //         orderedPath = TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
-        //     } catch (FileNotFoundException ee) {
-        //         assertEquals(true, false);
-        //     }
+        // // Using Gradle rather than VSCode, requires different path
+        // try {
+        // orderedPath =
+        // TestHelper.generatePathTiles("src/test/Resources/world_with_twists_and_turns.json");
+        // } catch (FileNotFoundException ee) {
+        // assertEquals(true, false);
+        // }
         // }
 
         // Character mainChar = new Character(new PathPosition(0, orderedPath));
@@ -43,36 +45,36 @@ public class BuildingsTests {
 
         // // Test shop appears at the end of cycle 1
         // while (world.getCurrCycle() < 1) {
-        //     world.runTickMoves();
-        //     // System.out.println(world.getShowShop());
+        // world.runTickMoves();
+        // // System.out.println(world.getShowShop());
         // }
         // assertTrue(world.getShowShop());
 
         // // Test shop appears at the end of cycle 3
         // while (world.getCurrCycle() < 3) {
-        //     world.runTickMoves();
-        //     // System.out.println(world.getShowShop());
+        // world.runTickMoves();
+        // // System.out.println(world.getShowShop());
         // }
         // assertTrue(world.getShowShop());
 
         // // Test shop appears at the end of cycle 6
         // while (world.getCurrCycle() < 6) {
-        //     world.runTickMoves();
-        //     // System.out.println(world.getShowShop());
+        // world.runTickMoves();
+        // // System.out.println(world.getShowShop());
         // }
         // assertTrue(world.getShowShop());
 
         // // Test shop appears at the end of cycle 10
         // while (world.getCurrCycle() < 10) {
-        //     world.runTickMoves();
-        //     // System.out.println(world.getShowShop());
+        // world.runTickMoves();
+        // // System.out.println(world.getShowShop());
         // }
         // assertTrue(world.getShowShop());
 
         // // Test shop appears at the end of cycle 15
         // while (world.getCurrCycle() < 15) {
-        //     world.runTickMoves();
-        //     // System.out.println(world.getShowShop());
+        // world.runTickMoves();
+        // // System.out.println(world.getShowShop());
         // }
         // assertTrue(world.getShowShop());
     }
@@ -116,7 +118,7 @@ public class BuildingsTests {
         for (int i = 0; i < 1000; i++) {
             world.runTickMoves();
             List<Enemy> enemies = world.getNewEnemiesList();
-            
+
             for (Enemy enemy : enemies) {
                 if (enemy instanceof VampireEnemy) {
                     vampireSpawned = true;
@@ -166,7 +168,7 @@ public class BuildingsTests {
         for (int i = 0; i < 1000; i++) {
             world.runTickMoves();
             List<Enemy> enemies = world.getNewEnemiesList();
-            
+
             for (Enemy enemy : enemies) {
                 if (enemy instanceof ZombieEnemy) {
                     zombieSpawned = true;
@@ -208,6 +210,7 @@ public class BuildingsTests {
             if (b.equals(tower))
                 towerFound = true;
         assertTrue(towerFound);
+        assertEquals("Building", tower.getStaticEntityType());
     }
 
     @Test
@@ -231,11 +234,12 @@ public class BuildingsTests {
             }
         }
         Character mainChar = new Character(new PathPosition(0, orderedPath));
+        SlugEnemy slug = new SlugEnemy(null);
         VillageBuilding village = new VillageBuilding(orderedPath.get(2));
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
         world.setGoals(new XpBaseGoal(1000000));
-        mainChar.receiveAttack(50);
+        mainChar.receiveAttack(slug, 50);
         while (!(village.getX() == mainChar.getX()) && village.getY() == mainChar.getY()) {
             village.notifyTick(mainChar, world);
             assertEquals(mainChar.getHealth(), 50);
@@ -412,5 +416,6 @@ public class BuildingsTests {
         card = BuildingCardFactory.getCard("ZombiePitCard", location);
         assertTrue(card instanceof ZombiePitCard);
         assertTrue(BuildingFactory.getBuilding(card, location) instanceof ZombiePitBuilding);
+        assertEquals("Card", card.getStaticEntityType());
     }
 }

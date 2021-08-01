@@ -83,7 +83,7 @@ public class WeaponTest {
                 criticalCheck = true;
                 int beforeHealth = mainChar.getHealth();
                 // Simulate enemy ally use in battles
-                mainChar.receiveAttack(5);
+                mainChar.receiveAttack(enemy, 5);
                 assertEquals(beforeHealth, mainChar.getHealth());
             }
         }
