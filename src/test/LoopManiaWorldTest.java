@@ -40,9 +40,11 @@ public class LoopManiaWorldTest {
         Character mainChar = new Character(new PathPosition(0, orderedPath));
 
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
-
+        assertEquals(8, world.getWidth());
+        assertEquals(16, world.getHeight());
         world.setCharacter(mainChar);
         world.setGoals(new XpBaseGoal(1000000));
+        assertEquals(new Pair<Integer, Integer>(0, 0), world.getStartingPoint());
         world.addAavailableRareItems("the_one_ring");
         world.addAavailableRareItems("anduril_flame_of_the_west");
         world.addAavailableRareItems("tree_stump");
