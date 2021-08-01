@@ -190,6 +190,7 @@ public class LoopManiaWorldTest {
         world.setCharacter(mainChar);
         world.setGoals(new XpBaseGoal(1000000));
         world.setGamemode("Confusing");
+        assertEquals(world.getGamemode(), "Confusing");
         int seedNum = world.setConfusingGamemodeSeed();
         boolean testedOver50 = false, testedUnder50 = false;
         while (!testedOver50 || !testedUnder50) {
