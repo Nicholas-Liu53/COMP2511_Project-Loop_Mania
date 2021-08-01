@@ -155,6 +155,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
     @FXML
     private Label levelNum;
 
+    AudioClip backgroundSound;
+
     // All image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -353,6 +355,8 @@ public class LoopManiaWorldController implements WorldStateObserver {
         anchorPaneRootSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
         gridPaneNodeSetOnDragEntered = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
         gridPaneNodeSetOnDragExited = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
+
+        backgroundSound = new AudioClip("file:src/sounds/gamebackground.wav");
     }
 
     @FXML
@@ -461,16 +465,19 @@ public class LoopManiaWorldController implements WorldStateObserver {
             // Check if character is dead
             if (world.getCharacterHealth() == 0) {
                 pause();
+                Item activatedOneRing = null;
                 if (world.getNumOneRing() > 0) {
-                    Item activatedOneRing = world.activateOneRing();
-                    world.decreaseUnequippedInventoryItemCount(activatedOneRing);
-                    startTimer();
-                } else {
+                    activatedOneRing = world.activateOneRing();
+                } 
+                if (activatedOneRing == null) {
                     AudioClip deathSound = new AudioClip("file:src/sounds/characterdeathsound.wav");
                     deathSound.play();
                     AudioClip gameOverSound = new AudioClip("file:src/sounds/gameoversound.wav");
                     gameOverSound.play();
                     gameoverSwitcher.switchMenu();
+                } else {
+                    world.decreaseUnequippedInventoryItemCount(activatedOneRing);
+                    startTimer();
                 }
             }
 
@@ -1564,15 +1571,21 @@ public class LoopManiaWorldController implements WorldStateObserver {
     //*--------------------------------------------------------------------------
     //*                                 Sounds
     //*--------------------------------------------------------------------------
-    @FXML
     private void buttonClickedSound() {
         AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
         buttonPressed.play();
     }
 
-    @FXML
     private void enterShopSound() {
         AudioClip buttonPressed = new AudioClip("file:src/sounds/openshopsound.wav");
         buttonPressed.play();
+    }
+
+    public void playBackgroundSound() {
+        backgroundSound.play();
+    }
+
+    public void stopBackgroundSound() {
+        backgroundSound.stop();
     }
 }

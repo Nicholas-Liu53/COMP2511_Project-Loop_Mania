@@ -90,9 +90,11 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, mainMenuRoot, primaryStage);
         });
         mainGameController.setGoalsMenuSwitcher(() -> {
+            mainGameController.stopBackgroundSound();
             switchToRoot(scene, goalsMenuRoot, primaryStage);
         });
         mainGameController.setShopMenuSwitcher(() -> {
+            mainGameController.stopBackgroundSound();
             switchToRoot(scene, shopMenuRoot, primaryStage);
         });
         mainGameController.setGameoverSwitcher(() -> {
@@ -103,6 +105,7 @@ public class LoopManiaApplication extends Application {
         });
         mainMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
+            mainGameController.playBackgroundSound();
             mainGameController.startTimer();
         });
         mainMenuController.setInstructionsSwitcher(() -> {
@@ -113,15 +116,18 @@ public class LoopManiaApplication extends Application {
             // mainGameController.startTimer();
         });
         shopMenuController.setGameSwitcher(() -> {
+            mainGameController.playBackgroundSound();
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
         gamemodeController.setGameSwitcher(() -> {
             mainMenuController.stopBackgroundMusic();
+            mainGameController.playBackgroundSound();
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });
         goalsMenuController.setGameSwitcher(() -> {
+            mainGameController.playBackgroundSound();
             switchToRoot(scene, gameRoot, primaryStage);
             // mainGameController.startTimer();
         });

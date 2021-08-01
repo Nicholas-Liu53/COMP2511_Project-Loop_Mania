@@ -358,7 +358,10 @@ public class Character extends MovingEntity {
 
     @Override
     public void moveDownPath() {
-        if (!this.getInBattle())
+        if (!this.getInBattle()) {
             super.moveDownPath();
+            AudioClip footsteps = new AudioClip("file:src/sounds/footsteps.wav");
+            footsteps.play();
+        }
     }
 }
