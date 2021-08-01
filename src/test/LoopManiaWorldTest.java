@@ -167,6 +167,8 @@ public class LoopManiaWorldTest {
             world.runBattles();
             world.attemptToPickUpItems();
             world.drinkHealthPotion();
+            world.giveRandomRewards("withCard");
+            world.giveRandomRewards("noCard");
         }
         assertFalse(world.goalsAchieved());
     }
