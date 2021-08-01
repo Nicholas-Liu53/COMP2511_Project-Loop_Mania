@@ -79,7 +79,6 @@ public abstract class LoopManiaWorldLoader {
         assert indexInPath != -1;
 
         Entity entity = null;
-        // TODO = load more entity types from the file
         switch (type) {
             case "hero_castle":
                 Character character = new Character(new PathPosition(indexInPath, orderedPath));
@@ -89,7 +88,6 @@ public abstract class LoopManiaWorldLoader {
                 break;
             case "path_tile":
                 throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
-            // TODO Handle other possible entities
         }
         world.addEntity(entity);
     }
