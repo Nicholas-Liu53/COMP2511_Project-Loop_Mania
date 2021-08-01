@@ -211,6 +211,9 @@ public class LoopManiaWorldTest {
 
         SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
         boolean done = false;
+
+        world.activateOneRing();
+
         for (int i = 0; i < 100; i++) {
             slug1.launchAttack(mainChar);
             if (world.getCharacterHealth() == 0) {
