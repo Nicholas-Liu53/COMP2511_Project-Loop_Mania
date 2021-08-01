@@ -91,12 +91,14 @@ public abstract class Enemy extends MovingEntity implements Ally {
 
     /**
      * Adds health points to the enemy
+     * 
      * @param health
      */
     public void addHealth(int health) {
         this.health += health;
 
-        if (this.health > this.maxHealth) this.health = this.maxHealth;
+        if (this.health > this.maxHealth)
+            this.health = this.maxHealth;
     }
 
     /**
@@ -125,14 +127,14 @@ public abstract class Enemy extends MovingEntity implements Ally {
      * @return whether the enemy has used a special attack that needs to be handled
      */
     public boolean launchAttack(Character mainChar) {
-        mainChar.receiveAttack(this.damage);
+        mainChar.receiveAttack(this, this.damage);
         return false;
     }
 
     public void launchAttack(Enemy enemy) {
         enemy.receiveAttack(this.damage);
     }
- 
+
     /**
      * Allows enemy to receive an attack, takes in the amount of damage to be done
      * and subtracts the relavent amount from health after defence is factored in

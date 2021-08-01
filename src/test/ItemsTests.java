@@ -3,7 +3,11 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import unsw.loopmania.enemies.DoggieEnemy;
+import unsw.loopmania.enemies.ElanMuskeEnemy;
+import unsw.loopmania.enemies.SlugEnemy;
 import unsw.loopmania.items.*;
+import unsw.loopmania.character.Character;
 
 public class ItemsTests {
 
@@ -119,8 +123,29 @@ public class ItemsTests {
 
     @Test
     public void AndurilTest() {
+        Character c = new Character(null);
+        ElanMuskeEnemy em = new ElanMuskeEnemy(null);
+        DoggieEnemy d = new DoggieEnemy(null);
+        SlugEnemy s = new SlugEnemy(null);
         Anduril a = new Anduril();
         assertEquals("Anduril", a.getClass().getSimpleName());
+        assertEquals(100, c.getHealth());
+        assertEquals(150, em.getHealth());
+        a.launchAttack(em, 10, c);
+        assertEquals(100, c.getHealth());
+        assertEquals(129, em.getHealth());
+
+        assertEquals(100, c.getHealth());
+        assertEquals(25, s.getHealth());
+        a.launchAttack(s, 10, c);
+        assertEquals(100, c.getHealth());
+        assertEquals(15, s.getHealth());
+
+        assertEquals(100, c.getHealth());
+        assertEquals(110, d.getHealth());
+        a.launchAttack(d, 10, c);
+        assertEquals(100, c.getHealth());
+        assertEquals(86, d.getHealth());
     }
 
     @Test
@@ -136,9 +161,15 @@ public class ItemsTests {
 
     @Test
     public void treeStumpTest() {
+        ElanMuskeEnemy em = new ElanMuskeEnemy(null);
+        SlugEnemy s = new SlugEnemy(null);
+        DoggieEnemy d = new DoggieEnemy(null);
         TreeStump ts = new TreeStump();
         assertEquals("TreeStump", ts.getClass().getSimpleName());
         assertEquals(0.6, ts.getDamageReductionFactor());
+        assertEquals((int) 2.25, ts.receiveAttack(em, 5));
+        assertEquals((int) 1, ts.receiveAttack(s, 5));
+        assertEquals((int) 2.25, ts.receiveAttack(d, 5));
     }
 
     @Test

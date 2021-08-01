@@ -30,9 +30,9 @@ public class CharacterTest {
         assertEquals(character.getEquippedItems().size(), 0);
 
         boolean correctStrategy = true;
-        if (!(character.getBodyArmour() instanceof Melee) || !(character.getHelmet() instanceof Melee) || !(character.getShield() instanceof Melee) ||
-            !(character.getWeapon() instanceof Melee)) {
-            
+        if (!(character.getBodyArmour() instanceof Melee) || !(character.getHelmet() instanceof Melee)
+                || !(character.getShield() instanceof Melee) || !(character.getWeapon() instanceof Melee)) {
+
             correctStrategy = false;
         }
 
@@ -44,17 +44,18 @@ public class CharacterTest {
         Character character = new Character(null);
 
         // Testing basic damage, and checking that health never goes beyond 0
-        character.receiveAttack(0);
+        SlugEnemy slug = new SlugEnemy(null);
+        character.receiveAttack(slug, 0);
         assertEquals(100, character.getHealth());
-        character.receiveAttack(10);
+        character.receiveAttack(slug, 10);
         assertEquals(90, character.getHealth());
-        character.receiveAttack(5);
+        character.receiveAttack(slug, 5);
         assertEquals(85, character.getHealth());
-        character.receiveAttack(3);
+        character.receiveAttack(slug, 3);
         assertEquals(82, character.getHealth());
-        character.receiveAttack(82);
+        character.receiveAttack(slug, 82);
         assertEquals(0, character.getHealth());
-        character.receiveAttack(3);
+        character.receiveAttack(slug, 3);
         assertEquals(0, character.getHealth());
     }
 

@@ -26,14 +26,15 @@ public class ArmourTest {
     public void BodyArmourTest() {
         BodyArmourStrategy bodyArmour = new BodyArmour();
         Character mainChar = new Character(null);
+        SlugEnemy slug = new SlugEnemy(null);
 
         mainChar.equipItem(bodyArmour);
         // Testing only body armour
-        mainChar.receiveAttack(10);
+        mainChar.receiveAttack(slug, 10);
         assertEquals(95, mainChar.getHealth());
-        mainChar.receiveAttack(20);
+        mainChar.receiveAttack(slug, 20);
         assertEquals(85, mainChar.getHealth());
-        mainChar.receiveAttack(50);
+        mainChar.receiveAttack(slug, 50);
         assertEquals(60, mainChar.getHealth());
     }
 
@@ -41,12 +42,13 @@ public class ArmourTest {
     public void ShieldTest() {
         ShieldStrategy shield = new Shield();
         Character mainChar = new Character(null);
+        SlugEnemy slug = new SlugEnemy(null);
 
         mainChar.equipItem(shield);
         // Testing only shield
-        mainChar.receiveAttack(15);
+        mainChar.receiveAttack(slug, 15);
         assertEquals(88, mainChar.getHealth());
-        mainChar.receiveAttack(30);
+        mainChar.receiveAttack(slug, 30);
         assertEquals(64, mainChar.getHealth());
         // Testing against vampire attack
         for (int i = 0; i < 100; i++) {
@@ -62,12 +64,13 @@ public class ArmourTest {
     public void helmetTest() {
         HelmetStrategy helmet = new Helmet();
         Character mainChar = new Character(null);
+        SlugEnemy slug = new SlugEnemy(null);
 
         mainChar.equipItem(helmet);
         // Testing only helmet
-        mainChar.receiveAttack(10);
+        mainChar.receiveAttack(slug, 10);
         assertEquals(92, mainChar.getHealth());
-        mainChar.receiveAttack(20);
+        mainChar.receiveAttack(slug, 20);
         assertEquals(74, mainChar.getHealth());
 
         // Testing attack reduction
