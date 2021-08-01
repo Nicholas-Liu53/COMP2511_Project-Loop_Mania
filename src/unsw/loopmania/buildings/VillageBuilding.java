@@ -20,7 +20,7 @@ public class VillageBuilding extends Building {
     }
 
     private void restoreHealthIfInVillage(LoopManiaWorld world, Character mainChar) {
-        if (getX() == (mainChar.getX()) && getY() == (mainChar.getY())) {
+        if (getX() == (mainChar.getX()) && getY() == (mainChar.getY()) && !mainChar.isFullHealth()) {
             AudioClip restoredHP = new AudioClip("file:src/sounds/village.wav");
             restoredHP.play();
             mainChar.restoreHealthPoints();

@@ -625,9 +625,11 @@ public class LoopManiaWorld {
 
         for (Item pathItem : this.pathItems) {
             if (canPickUpItem(pathItem)) {
-                if (pathItem instanceof GoldPile)
+                if (pathItem instanceof GoldPile) {
+                    AudioClip goldSound = new AudioClip("file:src/sounds/sellsound.wav");
+                    goldSound.play();
                     this.numGoldPileSpawned--;
-                else
+                } else
                     this.numHealthPotionSpawned--;
                 pickedUpItems.add(pathItem);
                 pathItem.destroy();
@@ -971,6 +973,7 @@ public class LoopManiaWorld {
      * @param num the amount of gold to be added
      */
     public void giveGold(int num) {
+
         character.giveGold(num);
     }
 
