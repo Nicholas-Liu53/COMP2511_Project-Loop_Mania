@@ -210,6 +210,7 @@ public class BuildingsTests {
             if (b.equals(tower))
                 towerFound = true;
         assertTrue(towerFound);
+        assertEquals("Building", tower.getStaticEntityType());
     }
 
     @Test
@@ -415,5 +416,6 @@ public class BuildingsTests {
         card = BuildingCardFactory.getCard("ZombiePitCard", location);
         assertTrue(card instanceof ZombiePitCard);
         assertTrue(BuildingFactory.getBuilding(card, location) instanceof ZombiePitBuilding);
+        assertEquals("Card", card.getStaticEntityType());
     }
 }
