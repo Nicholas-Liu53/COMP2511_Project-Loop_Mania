@@ -121,6 +121,10 @@ public class LoopManiaWorldTest {
                 world.equipArmourByCoordinates(h.getX(), h.getY());
                 Item sh = world.loadItem("Shield");
                 world.equipArmourByCoordinates(sh.getX(), sh.getY());
+                Item hp = world.loadItem("HealthPotion");
+                world.addItem(hp);
+                Item gp = world.loadItem("GoldPile");
+                world.addItem(gp);
                 world.loadItem("OneRing");
                 world.loadItem("TreeStump");
                 world.loadItem("Anduril");
