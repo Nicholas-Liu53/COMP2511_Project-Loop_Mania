@@ -95,21 +95,6 @@ public class LoopManiaWorldTest {
                 new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(cb);
 
-        BarracksCard card1 = new BarracksCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        CampfireCard card2 = new CampfireCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        TowerCard card3 = new TowerCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        TrapCard card4 = new TrapCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        VillageCard card5 = new VillageCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        ZombiePitCard card6 = new ZombiePitCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        VampireCastleCard card7 = new VampireCastleCard(
-                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-
         for (int i = 0; i < 5000; i++) {
             if (world.getEnemiesList().size() == 0) {
                 // slug1 = new SlugEnemy(new
@@ -151,7 +136,16 @@ public class LoopManiaWorldTest {
                 world.loadCard("VillageCard");
                 world.loadCard("ZombiePitCard");
                 world.loadCard("VampireCastleCard");
+                assertTrue(world.getUnequippedInventoryItems().size() > 0);
+                Card card1 = world.loadCard("BarracksCard");
+                Card card2 = world.loadCard("CampfireCard");
+                Card card3 = world.loadCard("TowerCard");
+                Card card4 = world.loadCard("TrapCard");
+                Card card5 = world.loadCard("VillageCard");
+                Card card6 = world.loadCard("ZombiePitCard");
+                Card card7 = world.loadCard("VampireCastleCard");
                 assertTrue(world.getCards().size() > 0);
+
                 world.convertCardToBuildingByCoordinates(card1.getX(), card1.getY(), bb.getX(), bb.getY());
                 world.convertCardToBuildingByCoordinates(card2.getX(), card2.getY(), cb.getX(), cb.getY());
                 world.convertCardToBuildingByCoordinates(card3.getX(), card3.getY(), tb.getX(), tb.getY());
@@ -161,6 +155,10 @@ public class LoopManiaWorldTest {
                         rand.nextInt(orderedPath.size()));
                 world.convertCardToBuildingByCoordinates(card7.getX(), card7.getY(), rand.nextInt(orderedPath.size()),
                         rand.nextInt(orderedPath.size()));
+                assertFalse(world.canPlaceCard(new Pair<Integer, Integer>(0, 0), card1));
+                assertFalse(world.canPlaceCard(new Pair<Integer, Integer>(2, 3), card2));
+                // assertNotEquals(null, world.convertCardToBuildingByCoordinates(card3.getX(),
+                // card3.getY(), 1, 1));
                 // world.addBuilding(vcb);
                 // world.addBuilding(zpb);
                 world.addBuilding(tb);
