@@ -22,26 +22,6 @@ import unsw.loopmania.buildingcards.*;
 
 public class LoopManiaWorldTest {
     @Test
-    public void constructTest() {
-        // Testing construction + basic getters
-
-        // Create new world
-        // LoopMania world = new LoopManiaWorld(3, 3, x);
-
-        // Test Case A:
-        // Start a battle
-        // Check if character and enemy damage reduce as expected during the battle
-
-        // Test Case B:
-        // Ensure that probability of receiving different rewards is random such as
-        // gold/xp/item - how tho?
-        // Check for rewards when discarding oldest card of any type (currently
-        // applicable to vampireCard)
-        // Check for rewards when discarding oldest item of any type (currently
-        // applicable to unequippedSword)
-    }
-
-    @Test
     public void freeRun() {
         List<Pair<Integer, Integer>> orderedPath = null;
 
@@ -67,41 +47,63 @@ public class LoopManiaWorldTest {
         VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
 
         Random rand = new Random();
-        // VampireCastleBuilding vcb = new VampireCastleBuilding(new Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
+        // VampireCastleBuilding vcb = new VampireCastleBuilding(new
+        // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
         // world.addBuilding(vcb);
-        // ZombiePitBuilding zpb = new ZombiePitBuilding(new Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
+        // ZombiePitBuilding zpb = new ZombiePitBuilding(new
+        // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
         // world.addBuilding(zpb);
-        TowerBuilding tb = new TowerBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TowerBuilding tb = new TowerBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(tb);
-        VillageBuilding vb = new VillageBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        VillageBuilding vb = new VillageBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(vb);
-        BarracksBuilding bb = new BarracksBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        BarracksBuilding bb = new BarracksBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(bb);
-        TrapBuilding tp = new TrapBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TrapBuilding tp = new TrapBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(tp);
-        CampfireBuilding cb = new CampfireBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        CampfireBuilding cb = new CampfireBuilding(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(cb);
 
-        BarracksCard card1 = new BarracksCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        CampfireCard card2 = new CampfireCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        TowerCard card3 = new TowerCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        TrapCard card4 = new TrapCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        VillageCard card5 = new VillageCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        ZombiePitCard card6 = new ZombiePitCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-        VampireCastleCard card7 = new VampireCastleCard(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        BarracksCard card1 = new BarracksCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        CampfireCard card2 = new CampfireCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TowerCard card3 = new TowerCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        TrapCard card4 = new TrapCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        VillageCard card5 = new VillageCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        ZombiePitCard card6 = new ZombiePitCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+        VampireCastleCard card7 = new VampireCastleCard(
+                new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
 
         for (int i = 0; i < 5000; i++) {
             if (world.getEnemiesList().size() == 0) {
-                // slug1 = new SlugEnemy(new PathPosition(rand.nextInt(orderedPath.size()),orderedPath));
+                // slug1 = new SlugEnemy(new
+                // PathPosition(rand.nextInt(orderedPath.size()),orderedPath));
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
-                // vcb = new VampireCastleBuilding(new Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
-                // zpb = new ZombiePitBuilding(new Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
-                tb = new TowerBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                vb = new VillageBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                bb = new BarracksBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                tp = new TrapBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
-                cb = new CampfireBuilding(new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                // vcb = new VampireCastleBuilding(new
+                // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
+                // zpb = new ZombiePitBuilding(new
+                // Pair<Integer,Integer>(rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size())));
+                tb = new TowerBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                vb = new VillageBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                bb = new BarracksBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                tp = new TrapBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
+                cb = new CampfireBuilding(
+                        new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
                 world.possiblySpawnEnemies();
                 world.setEnemy(zombie1);
                 world.setEnemy(vampire1);
@@ -129,8 +131,10 @@ public class LoopManiaWorldTest {
                 world.convertCardToBuildingByCoordinates(card3.getX(), card3.getY(), tb.getX(), tb.getY());
                 world.convertCardToBuildingByCoordinates(card4.getX(), card4.getY(), tp.getX(), tp.getY());
                 world.convertCardToBuildingByCoordinates(card5.getX(), card5.getY(), vb.getX(), vb.getY());
-                world.convertCardToBuildingByCoordinates(card6.getX(), card6.getY(), rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size()));
-                world.convertCardToBuildingByCoordinates(card7.getX(), card7.getY(), rand.nextInt(orderedPath.size()),rand.nextInt(orderedPath.size()));
+                world.convertCardToBuildingByCoordinates(card6.getX(), card6.getY(), rand.nextInt(orderedPath.size()),
+                        rand.nextInt(orderedPath.size()));
+                world.convertCardToBuildingByCoordinates(card7.getX(), card7.getY(), rand.nextInt(orderedPath.size()),
+                        rand.nextInt(orderedPath.size()));
                 // world.addBuilding(vcb);
                 // world.addBuilding(zpb);
                 world.addBuilding(tb);
@@ -181,13 +185,13 @@ public class LoopManiaWorldTest {
                 Item item1 = world.loadItem("OneRing");
                 Item item2 = world.loadItem("Anduril");
                 Item item3 = world.loadItem("TreeStump");
-               
+
                 OneRing oneRing = (OneRing) item1;
                 assertTrue(oneRing.getConfusingItem() instanceof TreeStump);
-    
+
                 Anduril anduril = (Anduril) item2;
                 assertTrue(anduril.getConfusingItem() instanceof TreeStump);
-    
+
                 TreeStump treeStump = (TreeStump) item3;
                 assertTrue(treeStump.getConfusingItem() instanceof Anduril);
                 testedUnder50 = true;
@@ -195,13 +199,13 @@ public class LoopManiaWorldTest {
                 Item item1 = world.loadItem("OneRing");
                 Item item2 = world.loadItem("Anduril");
                 Item item3 = world.loadItem("TreeStump");
-               
+
                 OneRing oneRing = (OneRing) item1;
                 assertTrue(oneRing.getConfusingItem() instanceof Anduril);
-    
+
                 Anduril anduril = (Anduril) item2;
                 assertTrue(anduril.getConfusingItem() instanceof OneRing);
-    
+
                 TreeStump treeStump = (TreeStump) item3;
                 assertTrue(treeStump.getConfusingItem() instanceof OneRing);
                 testedOver50 = true;
@@ -238,21 +242,21 @@ public class LoopManiaWorldTest {
                 Item item1 = world.loadItem("OneRing");
                 Item item2 = world.loadItem("Anduril");
                 Item item3 = world.loadItem("TreeStump");
-               
+
                 OneRing oneRing = (OneRing) item1;
                 assertTrue(oneRing.getConfusingItem() instanceof TreeStump);
-    
+
                 Anduril anduril = (Anduril) item2;
                 assertTrue(anduril.getConfusingItem() instanceof TreeStump);
-    
+
                 TreeStump treeStump = (TreeStump) item3;
                 assertTrue(treeStump.getConfusingItem() instanceof Anduril);
                 testedUnder50 = true;
-                
+
                 mainChar.equipItem((ShieldStrategy) item1);
                 mainChar.receiveAttack(10);
                 assertEquals(mainChar.getHealth(), 94);
-                
+
                 mainChar.equipItem((ShieldStrategy) item2);
                 mainChar.receiveAttack(10);
                 assertEquals(mainChar.getHealth(), 88);
@@ -266,13 +270,13 @@ public class LoopManiaWorldTest {
                 Item item1 = world.loadItem("OneRing");
                 Item item2 = world.loadItem("Anduril");
                 Item item3 = world.loadItem("TreeStump");
-               
+
                 OneRing oneRing = (OneRing) item1;
                 assertTrue(oneRing.getConfusingItem() instanceof Anduril);
-    
+
                 Anduril anduril = (Anduril) item2;
                 assertTrue(anduril.getConfusingItem() instanceof OneRing);
-    
+
                 TreeStump treeStump = (TreeStump) item3;
                 assertTrue(treeStump.getConfusingItem() instanceof OneRing);
                 testedOver50 = true;
