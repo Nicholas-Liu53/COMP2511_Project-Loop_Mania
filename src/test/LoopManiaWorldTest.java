@@ -128,6 +128,7 @@ public class LoopManiaWorldTest {
                 world.loadItem("OneRing");
                 world.loadItem("TreeStump");
                 world.loadItem("Anduril");
+                world.loadItem("xyz");
                 assertTrue(world.getUnequippedInventoryItems().size() > 0);
                 Card card1 = world.loadCard("BarracksCard");
                 Card card2 = world.loadCard("CampfireCard");
