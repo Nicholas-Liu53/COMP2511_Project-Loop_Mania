@@ -49,7 +49,7 @@ public abstract class LoopManiaWorldLoader {
         JSONArray jsonRareItems = json.getJSONArray("rare_items");
         if (jsonRareItems != null) {
             for (int i = 0; i < jsonRareItems.length(); i++) {
-                world.availableRareItems(jsonRareItems.get(i).toString());
+                world.addAavailableRareItems(jsonRareItems.get(i).toString());
             }
         }
 
@@ -199,6 +199,5 @@ public abstract class LoopManiaWorldLoader {
     public abstract void onLoad(Character character);
 
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
-
 
 }

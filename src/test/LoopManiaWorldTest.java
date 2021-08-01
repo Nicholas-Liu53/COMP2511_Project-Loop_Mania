@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -39,8 +40,13 @@ public class LoopManiaWorldTest {
         Character mainChar = new Character(new PathPosition(0, orderedPath));
 
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
+
         world.setCharacter(mainChar);
         world.setGoals(new XpBaseGoal(1000000));
+        world.addAavailableRareItems("the_one_ring");
+        world.addAavailableRareItems("anduril_flame_of_the_west");
+        world.addAavailableRareItems("tree_stump");
+        assertEquals(List.of("the_one_ring", "anduril_flame_of_the_west", "tree_stump"), world.getAvailableRareItems());
 
         // SlugEnemy slug1 = new SlugEnemy(new PathPosition(2, orderedPath));
         ZombieEnemy zombie1 = new ZombieEnemy(new PathPosition(4, orderedPath));

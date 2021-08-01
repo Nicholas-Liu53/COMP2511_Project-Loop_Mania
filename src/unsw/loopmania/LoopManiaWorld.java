@@ -371,14 +371,19 @@ public class LoopManiaWorld {
         this.goal = goals;
     }
 
+    public List<String> getAvailableRareItems() {
+        return this.rareItemNames;
+    }
+
     /**
      * Adds the rare item type that will have a chance of dropping from a slain
      * enemy
      * 
      * @param rareItemType name of the rare item type
      */
-    public void availableRareItems(String rareItemType) {
-        this.rareItemNames.add(rareItemType);
+    public void addAavailableRareItems(String rareItemType) {
+        if (!this.rareItemNames.contains(rareItemType))
+            this.rareItemNames.add(rareItemType);
     }
 
     /**
@@ -1948,20 +1953,17 @@ public class LoopManiaWorld {
     // *-------------------------------------------------------------------------
     // * Goals
     // *-------------------------------------------------------------------------
+    /**
+     * Returns boolean of whether the goal has been achieved
+     * 
+     * @return boolean of whether the goal has been achieved
+     */
+    public boolean goalsAchieved() {
+        return this.goal.achieved(this);
+    }
 
-    ns
-
-    boolean of
-    whether the
-    goal has
-    been achievern
-    boolenof wheher
-    the goal
-    h
-    ic
-    boolean goals return this.goal.achieved(this);}
-
-    pu b return this.cardEntities;
+    public List<Card> getCards() {
+        return this.cardEntities;
     }
 
     public List<Item> getUnequippedInventoryItems() {
