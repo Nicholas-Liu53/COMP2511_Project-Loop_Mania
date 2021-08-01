@@ -1,11 +1,14 @@
 package unsw.loopmania;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.javatuples.Pair;
 
+import javafx.scene.media.AudioClip;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import unsw.loopmania.buildingcards.*;
@@ -622,9 +625,11 @@ public class LoopManiaWorld {
 
         for (Item pathItem : this.pathItems) {
             if (canPickUpItem(pathItem)) {
-                if (pathItem instanceof GoldPile)
+                if (pathItem instanceof GoldPile) {
+                    AudioClip goldSound = new AudioClip("file:src/sounds/sellsound.wav");
+                    goldSound.play();
                     this.numGoldPileSpawned--;
-                else
+                } else
                     this.numHealthPotionSpawned--;
                 pickedUpItems.add(pathItem);
                 pathItem.destroy();
@@ -893,8 +898,11 @@ public class LoopManiaWorld {
             }
         }
 
-        if (potionFound)
+        if (potionFound) {
             character.restoreHealthPoints();
+            AudioClip drinkHealthPotionSound = new AudioClip("file:src/sounds/healthpotion.wav");
+            drinkHealthPotionSound.play();
+        }
 
         healthProperty();
     }
@@ -965,6 +973,7 @@ public class LoopManiaWorld {
      * @param num the amount of gold to be added
      */
     public void giveGold(int num) {
+
         character.giveGold(num);
     }
 
@@ -1176,6 +1185,8 @@ public class LoopManiaWorld {
 
                     if (e.getHealth() == 0) {
                         // Remove enemy
+                        AudioClip enemyDeathSound = new AudioClip("file:src/sounds/enemydeath.wav");
+                        enemyDeathSound.play();
                         defeatedEnemies.add(e);
                         character.removeEnemyFromBattle(e);
                     }
@@ -1200,6 +1211,13 @@ public class LoopManiaWorld {
             // if we killEnemy in prior loop, we get
             // java.util.ConcurrentModificationException
             // due to mutating list we're iterating over
+            if (e instanceof ElanMuskeEnemy) {
+                ElanMuskeEnemy elan = (ElanMuskeEnemy) e;
+                elan.stopElanSong();
+            } else if (e instanceof DoggieEnemy) {
+                DoggieEnemy dog = (DoggieEnemy) e;
+                dog.stopDoggieSong();
+            }
             killEnemy(e);
         }
 

@@ -2,6 +2,7 @@ package unsw.loopmania.enemies;
 
 import java.util.Random;
 
+import javafx.scene.media.AudioClip;
 import unsw.loopmania.path.PathPosition;
 import unsw.loopmania.character.Character;
 import unsw.loopmania.character.Soldier;
@@ -22,6 +23,7 @@ public class ZombieEnemy extends Enemy {
         super(position, 50, 3, 3, 10, 10);
         // Setting up speedDelay
         this.speedDelay = 2;
+        playZombieSpawnSound();
     }
 
     /**
@@ -52,6 +54,8 @@ public class ZombieEnemy extends Enemy {
     public boolean launchAttack(Character mainChar) {
         if (this.doAction()) {
             super.launchAttack(mainChar);
+            playZombieSpawnSound();
+
 
             // Citical bite implementation
             int criticalCheck = (new Random()).nextInt(10);
@@ -66,5 +70,10 @@ public class ZombieEnemy extends Enemy {
         }
 
         return false;
+    }
+
+    private void playZombieSpawnSound() {
+        AudioClip zombieSpawned = new AudioClip("file:src/sounds/zombiespawn.wav");
+        zombieSpawned.play();
     }
 }

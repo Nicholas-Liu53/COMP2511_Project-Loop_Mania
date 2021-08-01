@@ -2,6 +2,7 @@ package unsw.loopmania;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 
 public class GoalsMenuController {
@@ -23,6 +24,7 @@ public class GoalsMenuController {
 
     @FXML
     public void returnGame(ActionEvent event) {
+        buttonClickedSound();
         world.goldProperty();
         worldController.startTimer();
         gameSwitcher.switchMenu();
@@ -38,5 +40,11 @@ public class GoalsMenuController {
 
     public void setWorld(LoopManiaWorld world) {
         this.world = world;
+    }
+
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
     }
 }

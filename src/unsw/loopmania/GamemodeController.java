@@ -40,6 +40,7 @@ import javafx.fxml.FXML;
 // import javafx.util.Duration;
 // import org.javatuples.Pair;
 // import unsw.loopmania.items.*;
+import javafx.scene.media.AudioClip;
 
 /**
  * controller for the shop menu.
@@ -88,6 +89,7 @@ public class GamemodeController {
     @FXML
     private void setGamemodeToStandard() throws IOException {
         world.setGamemode("Standard");
+        buttonClickedSound();
         worldController.startTimer();
         gameSwitcher.switchMenu();
     }
@@ -95,6 +97,7 @@ public class GamemodeController {
     @FXML
     private void setGamemodeToSurvival() throws IOException {
         world.setGamemode("Survival");
+        buttonClickedSound();
         worldController.startTimer();
         gameSwitcher.switchMenu();
     }
@@ -102,6 +105,7 @@ public class GamemodeController {
     @FXML
     private void setGamemodeToBerserker() throws IOException {
         world.setGamemode("Berserker");
+        buttonClickedSound();
         worldController.startTimer();
         gameSwitcher.switchMenu();
     }
@@ -109,7 +113,14 @@ public class GamemodeController {
     @FXML
     private void setGamemodeToConfusing() throws IOException {
         world.setGamemode("Confusing");
+        buttonClickedSound();
         worldController.startTimer();
         gameSwitcher.switchMenu();
+    }
+
+    @FXML
+    private void buttonClickedSound() {
+        AudioClip buttonPressed = new AudioClip("file:src/sounds/defaultbuttonclick.wav");
+        buttonPressed.play();
     }
 }
