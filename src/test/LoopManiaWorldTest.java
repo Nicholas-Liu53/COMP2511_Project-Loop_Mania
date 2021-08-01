@@ -89,7 +89,11 @@ public class LoopManiaWorldTest {
                 new Pair<Integer, Integer>(rand.nextInt(orderedPath.size()), rand.nextInt(orderedPath.size())));
         world.addBuilding(cb);
 
-        for (int i = 0; i < 50000; i++) {
+        mainChar.giveExperiencePoints(8000);
+        for (int i = 0; i < 5000; i++) {
+            if (i % 40 == 0 && mainChar.getExperience() > 10000) {
+                world.possiblySpawnEnemies();
+            }
             if (world.getEnemiesList().size() == 0) {
                 zombie1 = new ZombieEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
                 vampire1 = new VampireEnemy(new PathPosition(rand.nextInt(orderedPath.size()), orderedPath));
