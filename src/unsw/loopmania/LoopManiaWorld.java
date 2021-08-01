@@ -25,9 +25,9 @@ import unsw.loopmania.path.*;
  * can occupy the same square.
  */
 public class LoopManiaWorld {
-    //*-------------------------------------------------------------------------
-    //*                             Variables
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Variables
+    // *-------------------------------------------------------------------------
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
 
@@ -122,9 +122,9 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
     private Pair<Integer, Integer> startingPoint;
 
-    //--------------------------------------------------------------------------
-    //                              Constructor
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+    // Constructor
+    // --------------------------------------------------------------------------
     /**
      * create the world (constructor)
      * 
@@ -198,9 +198,9 @@ public class LoopManiaWorld {
         this.confusingGamemodeSeed = 0;
     }
 
-    //--------------------------------------------------------------------------
-    //                          General Methods
-    //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+    // General Methods
+    // --------------------------------------------------------------------------
     /**
      * Returns the width of the map
      * 
@@ -422,9 +422,9 @@ public class LoopManiaWorld {
         return this.startingPoint;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Spawn
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Spawn
+    // *-------------------------------------------------------------------------
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * 
@@ -605,9 +605,9 @@ public class LoopManiaWorld {
         return spawnPosition;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                         Items/Inventory
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Items/Inventory
+    // *-------------------------------------------------------------------------
     private boolean canPickUpItem(Item item) {
         return Math.pow((getCharacterX() - item.getX()), 2) + Math.pow((getCharacterY() - item.getY()), 2) == 0;
     }
@@ -753,16 +753,6 @@ public class LoopManiaWorld {
         updateItemProperty(temp);
         item.destroy();
         this.unequippedInventoryItems.remove(item);
-    }
-
-    /**
-     * remove an item by x,y coordinates
-     * 
-     * @param x x coordinate from 0 to width-1
-     * @param y y coordinate from 0 to height-1
-     */
-    public void removeUnequippedInventoryItemByCoordinates(int x, int y) {
-        removeUnequippedInventoryItem(getUnequippedInventoryItemEntityByCoordinates(x, y));
     }
 
     /**
@@ -919,7 +909,7 @@ public class LoopManiaWorld {
                     removeUnequippedInventoryItem(activatedOneRing);
                     oneRingAvailable = true;
                     break;
-                } 
+                }
             }
         }
 
@@ -1122,9 +1112,9 @@ public class LoopManiaWorld {
         }
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Battles
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Battles
+    // *-------------------------------------------------------------------------
     /**
      * kill an enemy
      * 
@@ -1219,9 +1209,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                         Building Cards
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Building Cards
+    // *-------------------------------------------------------------------------
     /**
      * checks if card pile if full i.e. has attained it max width, if so, then
      * removes card the oldest card of cards (as per position in gridpane of
@@ -1330,9 +1320,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Movement
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Movement
+    // *-------------------------------------------------------------------------
     /**
      * Run moves which occur with every tick without needing to spawn anything
      * immediately
@@ -1352,7 +1342,8 @@ public class LoopManiaWorld {
         getCycleOrCyclesProperty();
         getDoggieCoinPriceProperty();
 
-        if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1() && !character.getInBattle()) {
+        if (getCharacterX() == this.startingPoint.getValue0() && getCharacterY() == this.startingPoint.getValue1()
+                && !character.getInBattle()) {
             updateCharacterCycles();
         } else {
             showShop = false;
@@ -1448,9 +1439,9 @@ public class LoopManiaWorld {
         return true;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Rewards
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Rewards
+    // *-------------------------------------------------------------------------
     /**
      * Gives various rewards on type on mode selected Various modes are withCard,
      * noCard, and OnlyGoldXP
@@ -1525,9 +1516,9 @@ public class LoopManiaWorld {
         return rewarded;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                                 UIS
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * UIS
+    // *-------------------------------------------------------------------------
     /**
      * Updates the string property of health points
      * 
@@ -1758,9 +1749,9 @@ public class LoopManiaWorld {
         return this.doggieCoinPriceProperty;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                     Buildings Helper Functions
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Buildings Helper Functions
+    // *-------------------------------------------------------------------------
 
     /**
      * Returns boolean value of whether the moving entity is in the campfire radius
@@ -1770,7 +1761,8 @@ public class LoopManiaWorld {
      * @return boolean value of whether the moving entity is in the campfire radius
      */
     public boolean inBuildingRadius(MovingEntity me, Building b) {
-        return (Math.pow(b.getX() - me.getX(), 2) + Math.pow(b.getY() - me.getY(), 2)) < Math.pow(b.getBuildingRadius(), 2);
+        return (Math.pow(b.getX() - me.getX(), 2) + Math.pow(b.getY() - me.getY(), 2)) < Math.pow(b.getBuildingRadius(),
+                2);
     }
 
     /**
@@ -1876,9 +1868,9 @@ public class LoopManiaWorld {
         return this.buildingEntities;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Observer
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Observer
+    // *-------------------------------------------------------------------------
     /**
      * Adds an observer to connect this backend to a frontend
      * 
@@ -1888,9 +1880,9 @@ public class LoopManiaWorld {
         this.observers.add(wc);
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Game Mode
-    //*-------------------------------------------------------------------------
+    // *-------------------------------------------------------------------------
+    // * Game Mode
+    // *-------------------------------------------------------------------------
     /**
      * Sets the gamemode of the game
      * 
@@ -1953,20 +1945,23 @@ public class LoopManiaWorld {
         return rareItem;
     }
 
-    //*-------------------------------------------------------------------------
-    //*                             Goals
-    //*-------------------------------------------------------------------------
-    /**
-     * Returns boolean of whether the goal has been achieved
-     * 
-     * @return boolean of whether the goal has been achieved
-     */
-    public boolean goalsAchieved() {
-        return this.goal.achieved(this);
-    }
+    // *-------------------------------------------------------------------------
+    // * Goals
+    // *-------------------------------------------------------------------------
 
-    public List<Card> getCards() {
-        return this.cardEntities;
+    ns
+
+    boolean of
+    whether the
+    goal has
+    been achievern
+    boolenof wheher
+    the goal
+    h
+    ic
+    boolean goals return this.goal.achieved(this);}
+
+    pu b return this.cardEntities;
     }
 
     public List<Item> getUnequippedInventoryItems() {
