@@ -112,7 +112,8 @@ public class LoopManiaWorldTest {
                 world.spawnHealthPotion();
                 Item sw = world.loadItem("Sword");
                 world.equipArmourByCoordinates(sw.getX(), sw.getY());
-                world.loadItem("Stake");
+                Item st = world.loadItem("Stake");
+                world.equipWeaponByCoordinates(st.getX(), st.getY());
                 world.loadItem("Staff");
                 Item ba = world.loadItem("BodyArmour");
                 world.equipArmourByCoordinates(ba.getX(), ba.getY());
