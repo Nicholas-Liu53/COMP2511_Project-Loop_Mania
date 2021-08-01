@@ -33,9 +33,9 @@ public class OneRing extends Item implements RareItem, WeaponStrategy, ShieldStr
         weapon.launchAttack(enemy, baseDamage, mainChar);
     }
 
-    public int receiveAttack(int damage) {
+    public int receiveAttack(Enemy enemy, int damage) {
         // TreeStump provides 3 defence
         ShieldStrategy shield = (ShieldStrategy) confusingItem;
-        return shield.receiveAttack(damage);
+        return shield.receiveAttack(enemy, damage);
     }
 }

@@ -157,8 +157,7 @@ public class Character extends MovingEntity {
     }
 
     /**
-     * Checks first ally and removes them if they have run
-     * out of health
+     * Checks first ally and removes them if they have run out of health
      */
     private void updateAllies() {
         if (this.allies.get(0).getHealth() == 0) {
@@ -206,7 +205,7 @@ public class Character extends MovingEntity {
             this.allies.get(0).launchAttack(enemy);
             return;
         }
-        
+
         if (isStunned) {
             isStunned = false;
             return;
@@ -225,7 +224,7 @@ public class Character extends MovingEntity {
      * 
      * @param damage
      */
-    public void receiveAttack(int damage) {
+    public void receiveAttack(Enemy enemy, int damage) {
         // Allies receive damage first
         if (this.allies.size() > 0) {
             Ally currAlly = this.allies.get(0);
@@ -233,9 +232,9 @@ public class Character extends MovingEntity {
             this.updateAllies();
         } else {
             // Subtracting armour defence
-            int actualDamage = damage - this.bodyArmourStrat.receiveAttack(damage);
-            actualDamage = actualDamage - this.helmetStrat.receiveAttack(damage);
-            actualDamage = actualDamage - this.shieldStrat.receiveAttack(damage);
+            int actualDamage = damage - this.bodyArmourStrat.receiveAttack(enemy, damage);
+            actualDamage = actualDamage - this.helmetStrat.receiveAttack(enemy, damage);
+            actualDamage = actualDamage - this.shieldStrat.receiveAttack(enemy, damage);
 
             if (actualDamage < 0)
                 actualDamage = 0;

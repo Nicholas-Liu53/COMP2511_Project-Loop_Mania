@@ -15,7 +15,7 @@ public class VampireEnemy extends Enemy {
     private int criticalAttackDmg;
     private int criticalAttackUses;
     private int criticalAttackUsesMax;
-    
+
     // Basic constructor
     public VampireEnemy(PathPosition position) {
         super(position, 75, 4, 3, 15, 20);
@@ -27,8 +27,8 @@ public class VampireEnemy extends Enemy {
     }
 
     /**
-     * Uses parent class attack functionality while adding special
-     * 'critical bite' behaviour that vampires must use
+     * Uses parent class attack functionality while adding special 'critical bite'
+     * behaviour that vampires must use
      */
     @Override
     public boolean launchAttack(Character mainChar) {
@@ -38,9 +38,9 @@ public class VampireEnemy extends Enemy {
         // Use critical attack logic
         if (this.criticalAttack) {
             // Attacks character a second time with bonus damage
-            mainChar.receiveAttack(this.criticalAttackDmg);
+            mainChar.receiveAttack(this, this.criticalAttackDmg);
             this.criticalAttackUses++;
-            
+
             // Critical attack has been used max number of times
             if (this.criticalAttackUses >= this.criticalAttackUsesMax) {
                 this.criticalAttack = false;
@@ -51,10 +51,10 @@ public class VampireEnemy extends Enemy {
             // 10% chance without shield, 4% with
             int criticalCheck;
 
-            if (mainChar.getShield() instanceof Shield) 
+            if (mainChar.getShield() instanceof Shield)
                 criticalCheck = (new Random()).nextInt(25);
-            else 
-                criticalCheck = (new Random()).nextInt(10); 
+            else
+                criticalCheck = (new Random()).nextInt(10);
 
             if (criticalCheck == 5) {
                 // Sets critical attack variables in preparation

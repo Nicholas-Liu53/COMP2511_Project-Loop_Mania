@@ -1,5 +1,7 @@
 package unsw.loopmania.items;
 
+import unsw.loopmania.enemies.Enemy;
+
 /**
  * Interface used for implementing armour items
  */
@@ -11,5 +13,5 @@ public interface ArmourStrategy {
      * @param damage
      * @return
      */
-    public int receiveAttack(int damage);
+    public int receiveAttack(Enemy enemy, int damage);
 }

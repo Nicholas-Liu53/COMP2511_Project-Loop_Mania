@@ -297,6 +297,7 @@ public class LoopManiaWorldTest {
         }
 
         Character mainChar = new Character(new PathPosition(0, orderedPath));
+        SlugEnemy slug = new SlugEnemy(null);
 
         LoopManiaWorld world = new LoopManiaWorld(8, 16, orderedPath);
         world.setCharacter(mainChar);
@@ -306,32 +307,28 @@ public class LoopManiaWorldTest {
         boolean testedOver50 = false, testedUnder50 = false;
         while (!testedOver50 || !testedUnder50) {
             if (seedNum <= 50 && !testedUnder50) {
-                Item item1 = world.loadItem("OneRing");
-                Item item2 = world.loadItem("Anduril");
-                Item item3 = world.loadItem("TreeStump");
+                OneRing item1 = (OneRing) world.loadItem("OneRing");
+                Anduril item2 = (Anduril) world.loadItem("Anduril");
+                TreeStump item3 = (TreeStump) world.loadItem("TreeStump");
 
-                OneRing oneRing = (OneRing) item1;
-                assertTrue(oneRing.getConfusingItem() instanceof TreeStump);
+                assertTrue(item1.getConfusingItem() instanceof TreeStump);
+                assertTrue(item2.getConfusingItem() instanceof TreeStump);
+                assertTrue(item3.getConfusingItem() instanceof Anduril);
 
-                Anduril anduril = (Anduril) item2;
-                assertTrue(anduril.getConfusingItem() instanceof TreeStump);
-
-                TreeStump treeStump = (TreeStump) item3;
-                assertTrue(treeStump.getConfusingItem() instanceof Anduril);
                 testedUnder50 = true;
 
                 mainChar.equipItem((ShieldStrategy) item1);
-                mainChar.receiveAttack(10);
-                assertEquals(mainChar.getHealth(), 94);
+                mainChar.receiveAttack(slug, 10);
+                assertEquals(92, mainChar.getHealth());
 
                 mainChar.equipItem((ShieldStrategy) item2);
-                mainChar.receiveAttack(10);
-                assertEquals(mainChar.getHealth(), 88);
+                mainChar.receiveAttack(slug, 10);
+                assertEquals(84, mainChar.getHealth());
 
                 VampireEnemy vampire1 = new VampireEnemy(new PathPosition(6, orderedPath));
                 mainChar.equipItem((WeaponStrategy) item3);
                 mainChar.launchAttack(vampire1, false);
-                assertEquals(vampire1.getHealth(), 59);
+                assertEquals(vampire1.getHealth(), 71);
 
             } else if (seedNum > 50 && !testedOver50) {
                 Item item1 = world.loadItem("OneRing");

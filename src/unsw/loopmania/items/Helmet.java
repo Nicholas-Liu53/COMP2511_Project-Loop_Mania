@@ -2,6 +2,8 @@ package unsw.loopmania.items;
 
 import org.javatuples.Pair;
 
+import unsw.loopmania.enemies.Enemy;
+
 public class Helmet extends Armour implements HelmetStrategy {
     public Helmet(Pair<Integer, Integer> position) {
         super(position);
@@ -13,7 +15,7 @@ public class Helmet extends Armour implements HelmetStrategy {
         this.damageReductionFactor = 0.8;
     }
 
-    public int receiveAttack(int damage) {
+    public int receiveAttack(Enemy enemy, int damage) {
         // Helmet provides 1 defence
         int recvDamage = 2;
         return recvDamage;
