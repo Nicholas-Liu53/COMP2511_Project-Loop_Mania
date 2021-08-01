@@ -152,12 +152,14 @@ public class LoopManiaWorldTest {
                 world.addBuilding(tp);
                 world.addBuilding(cb);
                 assertTrue(world.getBuildingsList().size() > 0);
+                assertTrue(world.getBuildingEntities().size() > 0);
                 world.getGold();
                 world.getUnequippedItems();
                 world.giveGold(5);
                 assertTrue(world.getGold() > 0);
                 world.deductGold(5);
                 world.cardEntityIsFull();
+                world.giveDoggieCoin();
             }
             world.runTickMoves();
             world.runBattles();
